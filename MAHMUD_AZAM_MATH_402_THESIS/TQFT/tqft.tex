@@ -1,0 +1,165 @@
+
+\subsection{Topological Quantum Field Theories}
+
+We are now equipped to define topological quantum field theories in enough
+generality to connect them to quantum information.
+
+\begin{defn}[{$(d, \mathbf{k})$}--TQFT]
+A topological quantum field theory of dimension $d$ over a field $\mathbf{k}$
+or a $(d, \mathbf{k})$--TQFT is a strong symmetric monoidal functor
+$\fn{Z}{(\Cob_d, \amalg, \varnothing)}
+{(\Vect_{\mathbf{k}}, \otimes, \mathbf{k})}$.
+\end{defn}
+
+This definition captures the original definition of TQFTs as formulated by
+Atiyah \cite{Atiyah1}. According to this definition, a TQFT:
+\begin{enumerate}[(i)]
+\item associates to each closed manifold $X$ of dimension $d - 1$, a
+$\mathbf{k}$--vector space (or module) $Z(X)$
+
+\item associates to each $d$--manifold $M$ with boundary $X^* \amalg Y$, an
+element $Z(M) \in Z(X^*) \otimes Z(Y)$
+
+\item requires, for $(d - 1)$--manifolds $X$ and $Y$,
+$Z(X \amalg Y) \cong Z(X) \otimes Z(Y)$
+
+\item requires, for each $(d - 1)$--manifold $X$, $Z(X^*) \cong Z(X)^*$ where
+$(-)^*$ is orientation reversal on the left and taking the dual vector space on
+the right.
+\end{enumerate}
+
+Property (i) is clearly captured by our definition. For (ii), we observe that if
+we can prove (iv), then $Z(X^*) \otimes Z(Y) \cong Z(X)^* \otimes Z(Y) \cong
+\Hom_{\Vect_{\mathbf{k}}}(Z(X), Z(Y))$ so that $Z(M)$ is, in fact, a linear map
+$Z(X) \to Z(Y)$ which is captured by the functoriality in our definition.
+Property (iii) is implied in the preservation of monoidal products (up to
+natural isomorphism) by a symmetric monoidal functor. In order to prove that
+(iv) is captured by our definition, we first note a sufficient condition for a
+vector space $V$ to be isomorphic to the dual of a vector space $W$ -- the proof
+of this can be found in \cite{Corominas}.
+
+\begin{lem}\label{vect:nondegen}
+For any $V \in \Vect_{\mathbf{k}}$, let
+$\rho_V : V \otimes \mathbf{k} \longleftrightarrow \mathbf{k} \otimes V :
+\lambda_V$ be the unitor isomorphisms arising from the symmetric monoidal
+structure of $\Vect_{\mathbf{k}}$.
+For $V, W \in \Vect_{\mathbf{k}}$, if a pair of linear maps
+$\fn{\alpha}{V \otimes W}{\mathbf{k}}$ and
+$\fn{\beta}{\mathbf{k}}{W \otimes V}$ satisfy the following:
+\begin{eqnarray*}
+\begin{tikzcd}[column sep=large]
+V \otimes \mathbf{k}
+  \arrow[d, "\id_{V} \otimes \beta" left]
+  \arrow[rd, "\rho_V" above right] & \\
+V \otimes W \otimes V \arrow[r, "\alpha \otimes \id_V" below]
+& \mathbf{k} \otimes V
+\end{tikzcd} &
+\begin{tikzcd}[column sep=large]
+\mathbf{k} \otimes W
+  \arrow[r, "\beta \otimes \id_{W}" above]
+  \arrow[rd, "\lambda_{W}" below left] &
+W \otimes V \otimes W \arrow[d, "\id_W \otimes \alpha" right] \\
+& W \otimes \mathbf{k}
+\end{tikzcd}
+\end{eqnarray*}
+then $V \cong W^*$ and $W \cong V^*$.
+\end{lem}
+
+\begin{defn}\label{vect:nondegen:def}
+A map $\alpha$ satisfying the previous theorem is called a non-degenerate
+pairing between $V$ and $W$. Given that $\alpha$ is non-degenerate, $\beta$ is
+called a copairing between $V$ and $W$.
+\end{defn}
+
+We now observe that for any $d$--manifold $X$, $X \times I$ is a cobordism
+$\varnothing \to X^* \amalg X$ for the boundary of $X \times I$ can be written
+$\varnothing \amalg ((X \times \{0\})^* \amalg (X \times \{1\}))$. Taking
+$a_{X \times I}$ as the empty map $\varnothing \to X \times I$ and
+$b_{X \times I}(x) $ to be $(x, 0)$ when $x \in X^*$ and $(x, 1)$ when
+$x \in X$,
+$\fn{(X \times I, a_{X \times I}, b_{X \times I})}{\varnothing}{X^* \amalg X}$
+is the desired cobordism -- we denote this $\eta_X$. An analogous construction
+shows that $X \times I$ is also a cobordism $X \amalg X^* \to \varnothing$ with
+the appropriate boundary inclusions -- we denote this $\eps_X$.
+
+\begin{defn}[Evaluation/Coevaluation]
+The cobordisms $\eps_X$ and $\eta_X$ above are respectively called the
+evaluation and coevaluation cobordisms of $X$.
+\end{defn}
+
+We now sketch the proof of a fundamental theorem concerning evaluation and
+coevaluation cobordisms \cite[\S 1.1.8]{KockFA} which yields (iv) in Atiyah's
+definition as a corollary.
+
+\begin{thm}[Snake Identities]\label{tqft:nondegen}
+For any object $X \in \Cob_d$, if $\sgm_X$ is the commutator
+$\varnothing \amalg X \cong X \amalg \varnothing$, then the following diagrams
+commute in $\Cob_d$:
+\begin{eqnarray*}
+\begin{tikzcd}[column sep=large]
+X \amalg \varnothing
+  \arrow[d, "\id_{X} \amalg \eta_X" left]
+  \arrow[rd, "\sgm_X" above right] & \\
+X \amalg X^* \amalg X \arrow[r, "\eps_X \amalg \id_X" below]
+& \varnothing \amalg X
+\end{tikzcd} &
+\begin{tikzcd}[column sep=large]
+\varnothing \amalg X^*
+  \arrow[r, "\eta_X \amalg \id_{X^*}" above]
+  \arrow[rd, "\sgm_{X^*}" below left] &
+X^* \amalg X \amalg X^* \arrow[d, "\id_X \amalg \eps_X" right] \\
+& X^* \amalg \varnothing
+\end{tikzcd}
+\end{eqnarray*}
+\end{thm}
+\begin{proof}[Proof Sketch]
+By construction, $\sgm_X$ arises from a homotopy
+$\phi : \id_{\varnothing \amalg X} \Rightarrow \id_{X \amalg \varnothing}$ with
+each $\im \phi_t$ for $t \in [0, 1]$ diffeomorphic to $X$. This allows us to
+construct a diffeomorphism $\fn{g}{\sgm_X}{X \times I}$ such that
+$g(\varnothing \amalg X) = X = g(X \amalg \varnothing)$. Now, the cylinder
+$X \times I$ is a four-fold gluing of itself:
+\[
+  X \times I \eqcob X_4 \circ X_3 \circ X_2 \circ X_1 \text{, where each }
+    X_i \eqcob X \times I
+\]
+We then have diffeomorphisms $X_1, X_4 \to X \times I$, $X_2 \to \eps_X$
+and $X_3 \to \eta_X$ which allow us to construct a diffeomorphism
+$\fn{f}{X \times I}{(\id_X \amalg \eps_X) \circ (\eta_X \amalg \id_X)}$,
+piecewise. Finally, it can be checked that $gf$ restricts to the identity on
+$\partial \sgm_X$ showing
+$\sgm_X \eqcob (\id_X \amalg \eps_X) \circ (\eta_X \amalg \id_X)$.
+The diagram on the right is proved by duality.
+\end{proof}
+
+\begin{cor}
+If $Z$ is a $(d, \mathbf{k})$--TQFT, then for each object $X \in \Cob_d$,
+$Z(X^*) \cong Z(X)^*$.
+\end{cor}
+\begin{proof}
+By applying $Z$ to the diagrams in \ref{tqft:nondegen}, we obtain a
+non-degenerate pairing of $Z(X)$ with $Z(X^*)$ so that, by \ref{vect:nondegen},
+$Z(X^*) \cong Z(X)^*$.
+\end{proof}
+
+\begin{rmk}
+As noted in \cite{Corominas}, we have proved a stronger statement: $Z(X)$ must
+be finite dimensional as well.
+\end{rmk}
+
+%In addition, orientation reversal is strictly involutive on objects and easily
+%verified to be contravariant on morphisms in $\Cob_d$. If
+%$\fn{(M, a, b)}{X}{Y} \in \Cob_d$ with $\partial M = W_0 \amalg W_1$, then
+%$\partial M^* = W_0^* \amalg W_1^*$ and $a$ becomes orientation preserving
+%while $b$ becomes orientation reversing yielding $(M^*, b, a)$ as a cobordism
+%$Y^* \to X^*$. $(-)^*$ is easily seen to be functorial. Finally,
+%\ref{tqft:nondegen} yields:
+%
+%\begin{thm}
+%$\Cob_d$ is a compact category \cite{channels}.
+%\end{thm}
+%
+%For completeness, we note that a compact category is a symmetric monoidal
+%category with an involutive, contravariant endofunctor as $(-)^*$ above,
+%satisfying the snake identities.
+

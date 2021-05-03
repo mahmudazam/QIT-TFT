@@ -1,0 +1,97 @@
+
+\subsection{Normalizers for Planar Cobordisms}\label{pft}
+
+We begin by observing that $\Thick$ (as well as $\Cob_d$ for all $d$) comes with
+a natural dagger structure as follows. For a (planar) cobordism
+$\fn{(M, a, b)}{X}{Y}$, if we consider $M^*$, then $a$ yields an orientation
+preserving boundary inclusion $X \to M^*$ and $b$, an orientation reversing
+boundary inclusion $Y \to M^*$. Thus, defining
+$X^{\dagger} := X$, $Y^{\dagger} := Y$ and $M^{\dagger} := M^*$, it is easy to
+see that $(-)^{\dagger}$ is a dagger on $\Thick$ (the same argument applies for
+$\Cob_d$ for all $d$). A series of routine checks can be carried out to show
+that this dagger structure is compatible with the duality in the following
+sense:
+\begin{align*}
+(M \amalg N)^{\dagger} &\eqcob M^{\dagger} \amalg N^{\dagger}
+  \text{, for all cobordisms } M, N, \\
+\eps_{A}^{\dagger} &\eqcob \eta_{A^*}
+  \text{, for every object } A \text{ and} \\
+\text{the} & \text{ associators and unitors are all unitary.}
+\end{align*}
+so that $\Thick$ is a dagger compact category. We can further verify that PFT's
+preserve this dagger compact structure. 
+
+Normalizability for a Frobenius algebra $(A, m, e, w, c)$ in $\Vect_{\C}$
+requires a central positive definite map $z$ on $A$ satisfying
+$\eps_A(m \m \id_{A^*})(z^2 \m \eta_{A^*}) = c$. Now, suppose that $F$ is
+the PFT defined by $F(I) = A$. For convenience, we define $M$ to be the planar
+pair of pants; $E$, the planar disk or the cup; $W = M^*$, the planar
+co-pair-of-pants; $C = E^*$, the planar codisk or the cap; $R$, the rectangle or
+the identity on $I$. Just as for $(2, \C)$--TQFTs, we can see that the following
+identities must hold:
+\begin{align*}
+  F(M) &= m &
+  F(W) &= w \\
+  F(E) &= e &
+  F(C) &= c
+\end{align*}
+
+At this point, the fundamental question is this: when $A$ is a normalizable
+dagger Frobenius algebra with normalizer $z$, is there a cobordism $I \to I$
+whose image under $F$ is $z$. Let us suppose there is -- call it $Z$. Then, $Z$,
+being a cobordism $I \to I$, must be (the class of) a surface embedded in the
+plane with boundary $I^* \amalg I$ and $n$ holes for some $n \in \N$. In this
+case, by the dagger strong monoidal functoriality of $F$, we have
+\begin{align*}
+F(\eps_{I} \circ (M \amalg E) \circ (Z^2 \amalg \eta_{I^*}))
+  &= F\eps_I(FM \m F\id_{I^*})((FZ)^2 \m F\eta_{I^*})\\
+  &= \eps_{A}(m \m \id_{A^*})(z^2 \m \eta_{A^*})\\
+  &= c
+\end{align*}
+
+However, what is this manifold
+$\eps_{I} \circ (M \amalg E) \circ (Z^2 \amalg \eta_{I^*})$? It is not hard to
+see that it is the manifold obtained by glueing $Z^2$ to one of the legs of the
+pair-of-pants and then glueing the ``output'' or ``waiste'' end to the other
+leg -- a cobordism from $I$ to $\varnothing$ with $2n + 1$ holes, where $n$ is
+the number of holes in $Z$. We will refer to such a manifold as a
+$(2n + 1)$--pod\footnote{This is meant to be a reference to the picture of the
+manifold on the plane -- a pea-pod with $n$ ``seeds''.}. The existence of such a
+pod means that the PFT $F$ identifies a $(2n + 1)$--pod with the cap. We must
+keep in mind that the $(2n + 1)$--pod is not the cap simply because of the
+difference in genus -- a PFT that accounts for the normalizability of a
+Frobenius algebra must simply make one of these identifications. Thus a morphism
+in $\Thick$ (or $\Cob_d$) cannot be a normalizer as defined for algebras but,
+accepting this, we may as well call a manifold $Z$ that maps to a normalizer
+under a PFT, a normalizer of the interval in $\Thick$.
+
+We note that this is by no means a complete picture. We have not said anything
+about the existence of such a $Z$ for a given PFT $F$ nor about any method for
+finding one or all of such manifolds. We also have not addressed the question of
+whether the positive definiteness of a normalizer is accounted for by any
+cobordism, although this is not strictly necessary for the possible connection
+described above. Nevertheless, without much work, we can take the analogy a
+little further. The following is a well known result \cite[Def. 2.5]{channels}:
+
+\begin{thm}
+For any $\mathbf{k}$--algebra A, a map $\fn{f}{A}{A}$ is central if and only if
+there exists a central element $\fn{a}{\mathbf{k}}{A}$ of $A$ with
+$f \circ x = m \circ (a \m x)$ for every element $\fn{x}{\mathbf{k}}{A}$.
+\end{thm}
+
+If $A$ is a normalizable Frobenius algebra with normalizer $z$, then there is an
+element $\fn{a}{\mathbf{k}}{A}$ which gives rise to $z$ by multiplication, since
+$z$ is central. Now, if under some PFT $F$, a cobordism $Z$ has image $z$, then
+we see that $Z' := Z \circ E$ is a cobordism $\varnothing \to I$ with the same
+number of holes as $Z$, say $n$. It is easy to see that
+$M \circ (Z' \amalg E) \eqcob Z$. Thus, $Z'$ must have image $a$ under $F$ since
+$a$ uniquely determines $z$, which is consistent with the analogy.
+
+We finally note that the cobordisms $\varnothing \to I$, up to diffeomorphism,
+are in bijection with the natural numbers -- each cobordism is mapped to its
+genus. Therefore, given a Frobenius algebra $A$, the number of central maps of
+$A$ and, by extension, normalizers that are accounted for by PFTs are countable
+so that if there are uncountably many normalizers for a given Frobenius algebra,
+the language of PFTs, as is, will not capture the normalizability of it
+completely.
+

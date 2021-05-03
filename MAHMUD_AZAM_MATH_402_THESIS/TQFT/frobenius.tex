@@ -1,0 +1,137 @@
+
+\subsection{Commutative Frobenius Algebras}\label{sec:frob}
+
+TQFTs of dimension $2$ give rise to (and arise from) a simple well-known
+algebraic structure. We now build our way to this result which will prove to be
+the inital point of connection with quantum information. It is known that
+connected $1$--dimensional manifolds are diffeomorphic to either the circle
+$S^1$ or some real interval \cite{MilnorDiff}. Since a real interval either has
+a boundary or is non-compact, the objects in $\Cob_2$ are diffeomorphic to
+disjoint unions of $S^1$. Given that diffeomorphisms are isomorphisms in
+$\textbf{Diff}_{d - 1}$ and functors preserve isomorphisms, the functor $R$
+defined in \ref{disjunion:cylinderconst} yields isomorphisms in $\Cob_2$ from
+any object to a disjoint union of circles. The monoidal functoriality of
+$2$--dimensional TQFTs, then, establishes the following fundamental facts as
+easy corollaries.
+
+\begin{cor}
+Let $Z$ be a $(2, \mathbf{k})$--TQFT and $X$, any object in $\Cob_2$. Then, for
+some index set $I$, we have $X \cong_{\Cob_d} \coprod_{i \in I} S^1$ and hence,
+$Z(X) \cong_{\Vect_{\mathbf{k}}} \bigotimes_{i \in I}Z(S^1)$.
+\end{cor}
+
+\begin{cor}
+The object function of a $(2, \mathbf{k})$--TQFT is determined completely (up to
+isomorphism) by the image of $S^1$.
+\end{cor}
+
+For a particular $(2, \mathbf{k})$--TQFT $Z$, we let $A := Z(S^1)$ and then
+examine the action of $Z$ on cobordisms. It is well known that every
+$2$--dimensional manifold with boudary has a collection of loops that cut it to
+yield a decomposition into the following shapes (up to diffeomorphism)
+\cite{Atiyah2}:
+\begin{enumerate}[(i)]
+  \item the cylinder $C$ (on $S^1$),
+  \item the pair of pants $P$ (a cobordism $S^1 \amalg S^1 \to S^1$ of genus
+  $0$) and
+  \item the disk $D$ (a cobordism $S^1 \to \varnothing$ or vice versa).
+\end{enumerate}
+Thus, the action of a $(2, \mathbf{k})$--TQFT $Z$ on cobordisms is given by
+composing $Z(C)$, $Z(P)$ and $Z(D)$ in all possible ways.
+
+Visibly, $\fn{Z(P)}{A \otimes A}{A}$ uniquely determines a bilinear map
+$\fn{m}{A \times A}{A}$. It is easy to construct (componentwise) a
+diffeomorphism $P \circ (C \amalg P) \to P \circ (P \amalg C)$ that restricts
+to the identity on the boundary such that these are equivalent cobordisms. Under
+a TQFT, this yields:
+\begin{align*}
+  Z(P) \circ (Z(C) \otimes Z(P)) = Z(P) \circ (Z(P) \otimes Z(P))
+\end{align*}
+which extends to the associativity of $m$, seen as a bilinear multiplication on
+$A$. If we take $E$ as the cobordism $\varnothing \to S^1$ obtained by reversing
+the orientation of $D$, then by observing that
+$P \circ (E \amalg C) \eqcob C \eqcob P \circ (C \amalg E)$, we get:
+\begin{align*}
+  Z(P) \circ (Z(E) \otimes \id_{A})
+    &= Z(P) \circ (Z(E) \otimes Z(C))\\
+    &= Z(P \circ (E \amalg C))\\
+    &= Z(C)\\
+    &= Z(P \circ (C \amalg E))\\
+    &= Z(P) \circ (Z(C) \otimes Z(E))\\
+    &= Z(P) \circ (\id_{A} \otimes Z(E))
+\end{align*}
+so that $Z(E)$ acts as the identity when $Z(P)$ is seen as a bilinear
+multiplication. Furhtermore, let $\sgm_{X, Y}$ be the commutator diffeomorphism
+$X \amalg Y \to Y \amalg X$ in $\textbf{Diff}_{1}$. Then, $R(\sgm_{X, Y})$ is
+the commutator cobordism in $\Cob_2$. We then observe that
+$R(\sgm_{A, A}) \circ P \eqcob P$ yielding
+\[
+  Z(R(\sgm_{A, A})) \circ Z(P) = Z(P)
+\]
+Since $R(\sgm_{A, A})$ is a commutator in $\Cob_2$ by construction and $Z$ is a
+symmetric monoidal functor, $Z(R(\sgm_{A, A}))$ must be the commutator of
+$\Vect_{\mathbf{k}}$. Together, these establish:
+
+\begin{thm}
+$Z(P)$ induces an associative and commutative bilinear multiplication $m$ on $A$
+with unit $Z(C)$, making $A$ a commutative $\mathbf{k}$--algebra.
+\end{thm}
+
+An additional structure on $A$ gives it the form which allows us to bridge TQFTs
+with quantum information. For this, we define:
+\begin{defn}
+For a $\mathbf{k}$--algebra $A$ with multipliction $m$, a linear map
+$\fn{\beta}{A \otimes A}{\mathbf{k}}$ satisfying $\beta \circ (m \otimes \id_A)
+= \beta \circ (\id_A \otimes m)$ is called an associative pairing of $A$ with
+itself.
+\end{defn}
+
+\begin{defn}[Frobenius Algebra]
+A $\mathbf{k}$--algebra $A$ equipped with an associative pairing which is also
+non-degenerate in the sense of \ref{vect:nondegen:def} is called a Frobenius
+algebra.
+\end{defn}
+
+We note that for an associative pairing to be non-degenerate, it must have an
+associated copairing, by definition. Setting $B = D \circ P$ and $\beta = Z(B)$,
+we observe that $B \circ (C \amalg P) \eqcob B \circ (P \amalg C)$ -- the
+argument is similar to that for the associativity of $P$ -- yielding
+\[
+  \beta \circ (Z(P) \amalg Z(C)) = \beta \circ (Z(C) \amalg Z(P))
+\]
+We can further set $B' := (D \circ P)^* \eqcob P^* \circ D^*$ and
+$\alpha := Z(B')$, and show that the following diagrams commute using an
+argument identical to the proof of \ref{tqft:nondegen}:
+\begin{eqnarray}\label{frob:s1nondegen}
+\begin{tikzcd}[column sep=large]
+  S^1 \amalg \varnothing
+    \arrow[rd, "\sgm" above right]
+    \arrow[d, "\id_{S^1} \amalg B" left] & \\
+  S^1 \amalg S^1 \amalg S^1
+    \arrow[r, "B' \amalg \id_{S^1}" below] &
+  \varnothing \amalg S^1
+\end{tikzcd} &
+\begin{tikzcd}[column sep=large]
+  \varnothing \amalg S^1
+    \arrow[r, "B' \amalg \id_{S^1}" above]
+    \arrow[rd, "\sgm" below left] &
+  S^1 \amalg S^1 \amalg S^1
+    \arrow[d, "\id_{S^1} \amalg B"]\\
+  & S^1 \amalg \varnothing
+\end{tikzcd}
+\end{eqnarray}
+Applying $Z$ to these diagrams shows that $\beta$ is an associative,
+non-degenerate pairing of $A = Z(S^1)$ with itself with copairing $\alpha$,
+establishing $A$ as a commutative Frobenius algebra with multiplication $m$
+induced by $Z(P)$, unit $e := Z(C)$ and pairing $\beta$. We stress that the
+commutativity is due to the commutator in $\Cob_2$.
+
+Conversely, if we have a commutative Frobenius algebra $(A, m, e, \beta)$, we
+can set $Z$ accordingly, giving rise to a $(2, \mathbf{k})$--TQFT by (finite)
+glueing of disjoint unions and orientation reversals of the generating objects
+and morphisms in $\Cob_2$. Finally, we can further show that monoidal natural
+transformations between $2$--dimensional TQFTs give rise to homomorphisms of
+commutative Frobenius algebras and vice versa. This correspondence can be
+further shown to be an equivalence of categories, the details of which can be
+found in \cite{Jorge}.
+

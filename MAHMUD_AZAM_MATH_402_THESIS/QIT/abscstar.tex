@@ -1,0 +1,150 @@
+
+\subsection{Abstract \texorpdfstring{$C^*$}{C--star} Algebras}
+
+For any finite dimensional $\mathbf{k}$--vector space $V$, the evaluation
+$\fn{\eps_V}{V \m V^*}{\mathbf{k}}$ defined on any basis of
+$V \m V^*$ by $a \m f \mapsto f(a)$ and the coevaluation
+$\fn{\eta_V}{\mathbf{k}}{V^* \m V}$ defined by
+$z \mapsto z\sum b_i^* \m b_i$ (where, the $b_i$ form a basis of $V$ and
+the $b_i^*$ are the corresponding dual basis elements) can be verified to
+satisfy the non-degeneracy condition of \ref{vect:nondegen}. That very theorem
+states that if there is a non-degerate pairing of $V$ and $W$, then they are
+each (isomorphic) to the dual of the other. The notion of duality is thus a
+categorical one -- we can define the dual of an object $V$ in a monoidal
+category to be another object $V^*$ that admits a non-degerate pairing with $V$.
+
+\begin{defn}[Compact Category]
+A monoidal category in which each object has a dual and a non-degenerate pairing
+with its dual is called a compact category.
+\end{defn}
+
+\begin{exm}
+$\Cob_d$ and $\Thick$ are compact categories precisely because of theorem
+\ref{tqft:nondegen} (and its planar analogue), with duals given by orientation
+reversal.
+\end{exm}
+
+\begin{exm}
+$\Vect_{\mathbf{k}}$ is obviously compact.
+\end{exm}
+
+Given a $\mathbf{k}$--linear map $\fn{f}{A}{B}$, we can define a linear map
+$\fnr{f^*}{B^*}{A^*}{g}{g \circ f}$. A straightforward but lengthy computation
+then shows that the following diagram commutes:
+\begin{eqnarray*}
+\begin{tikzcd}[column sep=large]
+& A^* \m \mathbf{k} \arrow[drr, bend left=10] & & \\
+B^* \cong B^* \m \mathbf{k}
+  \arrow[r, "1_{B^*} \m \eta_{A^*}"]
+  \arrow[ur, bend left=20, "f^* \m 1_{\mathbf{k}}"]
+  \arrow[dr, bend right=20] &
+B^* \m A \m A^* \arrow[r, "1 \m f \m 1"] &
+B^* \m B \m A^* \arrow[r, "\eps_{B^*} \m 1_{A^*}"] &
+\mathbf{k} \m A^* \cong A^* \\
+& \mathbf{k} \m B^*
+  \arrow[urr, bend right=10, "1_{\mathbf{k}} \m f^*"] & &
+\end{tikzcd}
+\end{eqnarray*}
+where the unlabelled arrows are the respective commutators for the tensor
+product. By the various isomorphisms, we are also guaranteed that $f^*$ is the
+unique map making the above commute. Hence we can take this to be the definition
+of $f^*$, as done in \cite[6]{channels}.
+
+Carrying on in this direction, if we denote the conjugate transpose of some
+linear map $f$ as $f^{\dagger}$, we have $f^{\dagger \dagger} = f$. Furthermore,
+we can verify that the conjugate of $f$ is $f_* = (f^{\dagger})^* =
+(f^*)^{\dagger}$ If we now define $A^{\dagger} = A$ for each $A \in
+\Vect_{\mathbf{k}}$, then it is easy to verify that $(-)^{\dagger}$ is a
+contravariant functor on $\Vect_{\mathbf{k}}$ that is the identity on objects
+and is involutive on morphisms and which satisfies that the associators, unitors
+and commutators of $\m$ are all unitary\footnote{A linear map $u$ with
+$u^{\dagger}$ acting as its two sided inverse is said to be unitary. One can
+verify that these are precisely the norm-preserving maps on Hilbert spaces.},
+$\eps_{A}^{\dagger} = \eta_{A^*}$ and
+$(f \m g)^{\dagger} = f^{\dagger} \m g^{\dagger}$.
+
+While the proofs of these claims may require us to use properties of vector
+spaces and linear maps, the constructs themsleves are fundamentally categorical,
+allowing us to define the following structures in monoidal categories that
+fascilitate the formulation of $C^*$ algebras in completely catgorical terms
+\cite{channels}. In what follows, we assume all objects and morphisms are in a
+monoidal category $\s{V}$ with monoidal product $\m$ and unit object $U$.
+
+\begin{defn}[Dagger Compact Category]
+A contravariant functor $(-)^{\dagger}$ that is the identity on objects and is
+involutive on morphisms is called a dagger. A category equipped with a dagger is
+called a dagger category. A compact category equipped with a dagger satisfying
+all the conditions as above is said to be dagger compact.
+\end{defn}
+
+\begin{defn}[Frobenius Monoid]
+An object $A$ equipped with a $\m$--monoid structure $(m, e)$ and a
+$\m$--comonoid\footnote{The structure obtained by reversing the arrows of a
+monoid structure.} structure $(w, c)$ is said to be a Frobenius $\m$--monoid if
+the following diagrams called Frobenius identities commute:
+\begin{eqnarray*}
+\begin{tikzcd}
+A \m A \arrow[r, "w \m 1_A"] \arrow[d, "m" left] &
+A \m A \m A \arrow[d, "1_A \m m" right] \\
+A \arrow[r, "w" below] &
+A \m A
+\end{tikzcd} \hspace{5em} &
+\begin{tikzcd}
+A \m A \arrow[r, "1_A \m w"] \arrow[d, "m" left] &
+A \m A \m A \arrow[d, "m \m 1_A" right] \\
+A \arrow[r, "w" below] &
+A \m A
+\end{tikzcd}
+\end{eqnarray*}
+We say that $A$ is symmetric if $c \circ m \circ \sgm = c \circ m$, where $\sgm$
+is the commutator $A \m A \to A \m A$.
+\end{defn}
+
+\begin{rmk}
+This formulation of Frobenius monoids is equivalent to the one in terms of a
+non-degenerate pairing \cite[Prop. 1]{NonCommTQFT}.
+\end{rmk}
+
+\begin{defn}[Dagger Frobenius Algebra]
+If $\s{V}$ is equipped with a dagger, a Frobenius $\m$--monoid $(A, m, e, w, c)$
+satisfying $w = m^{\dagger}$ and $c = e^{\dagger}$ is called a dagger Frobenius
+algebra.
+\end{defn}
+
+\begin{defn}[Positive Definiteness]
+A map $g$ in $\s{V}$ is said to be positive if there exists some map $h$ in the
+category with $g = h^{\dagger} \circ h$, assuming $\s{V}$ has a dagger. Positive
+isomorphisms are said to be positive definite.
+\end{defn}
+
+\begin{defn}[Centrality]
+Given a $\m$--monoid $(A, m, e)$, a map $\fn{z}{A}{A}$ is said to be central if
+$m \circ (z \m \id_A) = z \circ m = m \circ (\id_A \m z)$.
+\end{defn}
+
+\begin{defn}[Normalizable Frobenius Algebra]
+A (not necessarily dagger) Frobenius algebra $(A, m, e, w, c)$ is said to be
+normalizable if it is equipped with a central positive definite map
+$\fn{z}{A}{A}$ satisfying:
+\begin{eqnarray*}
+\begin{tikzcd}[column sep=large]
+A \m U \arrow[r, "c" above] \arrow[d, "z^2 \m \eta_{A^*}" left]&
+U \\
+A \m A \m A^* \arrow[r, "m \m \id_{A^*}" below] &
+A \m A^* \arrow[u, "\eps_{A}" right]
+\end{tikzcd}
+\end{eqnarray*}
+where $z^2 = z \circ z$.
+\end{defn}
+
+Coecke et al. \cite[10]{channels} have shown that finite direct sums of complex
+square matrix algebras of the form $\bigoplus_{i = 1}^k \M_{n_i}$ (for some
+$n_1, \dots, n_k \in \N$) with product given by matrix multiplication in every
+component $\M_{n_i}$ are normalizable dagger Frobenius algebras. Furthermore, it
+is known that every finite dimensional $C^*$ algebra is $*$--isomorphic to such
+a direct sum algebra. Finally, \cite[Thm. 2.8]{channels} shows precisely that in
+$\FHilb$ every normalizable dagger Frobenius algebra is a finite dimensional
+$C^*$ algebra. It is then immediate that the finite dimensional complex $C^*$
+algebras are precisely the normalizable dagger Frobenius algebras in $\FHilb$.
+We build on this in the next subsection.
+

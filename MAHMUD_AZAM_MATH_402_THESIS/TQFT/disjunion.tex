@@ -1,0 +1,215 @@
+
+\subsection{Disjoint Unions of Cobordisms}
+
+The category of $d$--cobordisms has additional structure that we can build from
+the coproduct in $\Man$ -- the disjoint union of manifolds. For any cobordism
+$\fn{(M, \iota_{0, M}, \iota_{1, M})}{X}{Y}$, we adopt the notation
+$a_M := \iota_{0, M}$ and $b_M := \iota_{1, M}$ for convenience. We then prove
+a useful lemma involving the disjoint union of cobordisms.
+
+\begin{thm}\label{disjunion:welldef}
+If $\fn{M, M'}{U}{V}$ and $\fn{N, N'}{X}{Y}$ are cobordisms with $M \eqcob M'$
+and $N \eqcob N'$, then $M \amalg N \eqcob M' \amalg N'$ as cobordisms
+$U \amalg X \to V \amalg Y$.
+\end{thm}
+\begin{proof}
+The universal property of $\amalg$ yields unique maps $a_{M} \amalg a_{N}$ and
+$b_{M} \amalg b_{N}$ as below:
+\begin{eqnarray*}
+\begin{tikzcd}[column sep=small]
+& & M \amalg N & & \\
+& M \arrow[ur, "q_M"] & & N \arrow{ul}[above, xshift=1.5ex]{q_N} & \\
+U \arrow[ur, "a_{M}"] \arrow[rr, "q_U" below]
+& & U \amalg X
+    \arrow[uu, dashed, "a_{M} \amalg a_{N}" description]
+& & X \arrow{ul}[right, yshift=1ex]{a_{N}} \arrow[ll, "q_X"]
+\end{tikzcd} & \hspace{1.5em} &
+\begin{tikzcd}[column sep=small]
+& & M \amalg N & & \\
+& M \arrow[ur, "q_M"] & & N \arrow{ul}[above, xshift=1.5ex]{q_N} & \\
+V \arrow[ur, "b_{M}"] \arrow[rr, "q_V" below]
+& & V
+    \amalg Y \arrow[uu, dashed, "b_{M} \amalg b_{N}" description]
+& & Y \arrow{ul}[right, yshift=1ex]{b_{N}} \arrow[ll, "q_Y"]
+\end{tikzcd}
+\end{eqnarray*}
+where the $q_R$ maps are the natrual inclusions into the respective coproducts.
+If $\partial (M \amalg N) = R_0 \amalg R_1$, then it is easy to see that
+$a_{M} \amalg a_{N}$ is a diffeomorphism from $U \amalg X$ onto
+$R_0$ and $b_{M} \amalg b_{N}$ is a diffeomorphism from
+$V \amalg Y$ onto $R_1$. Hence, if we set
+$a_{M \amalg N} := a_{M} \amalg a_{N}$ and
+$b_{M \amalg N} := b_{M} \amalg b_{N}$, then
+$\fn{(M \amalg N, a_{M \amalg N}, b_{M \amalg N})}
+{U \amalg X}{V \amalg Y}$ is a $d$--cobordism. A similar construction yields
+a cobordism
+$\fn{(M' \amalg N', a_{M' \amalg N'}, b_{M' \amalg N'})}
+{U \amalg X}{V \amalg Y}$.
+
+Let $\phi : M \longleftrightarrow M' : \phi^{-1}$ and
+$\psi : N \longleftrightarrow N' : \psi^{-1}$ be the diffeomorpsisms realizing
+the respective equivalences of cobordisms. By the universal property of $\amalg$
+again, we have unique morphisms $\phi \amalg \psi$ and
+$\phi^{-1} \amalg \psi^{-1}$ making the following diagram commute:
+\begin{eqnarray*}
+\begin{tikzcd}[column sep=huge, row sep=large]
+  U \arrow[r, "a_{M}"] \arrow[d, "q_{U}" left]
+  & M \arrow[r, shift left=1ex, "\phi" above]
+      \arrow[d, "q_M" left]
+  & M' \arrow[l, shift left=1ex, "\phi^{-1}" below]
+       \arrow[d, "q_{M'}" right]
+  & U \arrow[l, "a_{M'}" above] \arrow[d, "q_{U}" right]\\
+    U \amalg X \arrow[r, "a_{M \amalg N}"]
+  & M \amalg N \arrow[r, dashed, shift left=1ex, "\phi \amalg \psi"]
+  & M' \amalg N' \arrow[l, dashed, shift left=1ex, "\phi^{-1} \amalg \psi^{-1}"]
+  & U \amalg X \arrow[l, "a_{M' \amalg N'}" above]\\
+    X \arrow[r, "a_{N}"] \arrow[u, "q_{X}" left]
+  & N \arrow[r, shift left=1ex, "\psi" above]
+      \arrow[u, "q_N" left]
+  & N' \arrow[l, shift left=1ex, "\psi^{-1}" below]
+       \arrow[u, "q_{N'}" right]
+  & X \arrow[l, "a_{N'}" below] \arrow[u, "q_X" right]
+\end{tikzcd}
+\end{eqnarray*}
+
+In particular, we observe that $a_{M' \amalg N'}
+= (\phi \amalg \psi) \circ a_{M \amalg N}$ and $a_{M \amalg N}
+= (\phi^{-1} \amalg \psi^{-1}) \circ a_{M' \amalg N'}$. A similar pasting
+shows the analogous identities involving $b_{M \amalg N}$ and $b_{M' \amalg N'}$
+so that it now suffices to show that $\phi \amalg \psi$ and
+$\phi^{-1} \amalg \psi^{-1}$ are inverses. This then follows from the
+observation that their composites and the respective identity maps both make
+the same coproduct diagrams commute.
+\end{proof}
+
+If, in addition to $M$ and $N$ as
+above, we have $d$--cobordisms $\fn{(P, a_{P}, b_{P})}{V}{W}$ and
+$\fn{(Q, a_{Q}, b_{Q})}{Y}{Z}$, we again have a cobordism
+$\fn{(P \amalg Q, a_{P \amalg Q}, b_{P \amalg Q})}{V \amalg Y}
+{W \amalg Z}$. We then see that
+
+\begin{thm}\label{disjunion:glue}
+$(P \amalg Q) \circ (M \amalg N) \eqcob (P \circ M) \amalg (Q \circ N)$
+\end{thm}
+\begin{proof}
+By taking the disjoint union of the pushout diagrams of $P \circ M$ and
+$Q \circ N$, and simultaneously pushing out
+$M \amalg N \ot[b_{M \amalg N}] V \amalg Y \to[a_{P \amalg Q}] P \amalg Q$, we
+get:
+\begin{eqnarray*}
+\begin{tikzcd}
+V \amalg Y
+  \arrow[r, "a_{P \amalg Q}" above]
+  \arrow[d, "b_{M \amalg N}" left]
+& P \amalg Q
+  \arrow[d, "r_0 \amalg s_0" right]
+  \arrow[rdd, bend left, "h_0"]
+& \\
+M \amalg N
+  \arrow[r, "r_1 \amalg s_1" below]
+  \arrow[rrd, bend right, "h_1" below]
+& (P \circ M) \amalg (Q \circ N)
+  \arrow[rd, dashed, shift left=1ex, "\phi" description]
+& \\
+& & (P \amalg Q) \circ (M \amalg N)
+  \arrow[ul, dashed, shift left=1ex, "\psi" description]
+\end{tikzcd}
+\end{eqnarray*}
+where $a_{P} \amalg a_{Q} = a_{P \amalg Q}$ and
+$b_{M} \amalg b_{N} = b_{M \amalg N}$, as defined before,
+and the $r_i, s_j$ and $h_k$ are the respective pushed out maps. Furthermore,
+$\psi$ is a unique smooth map derived from the pushout property of
+$(P \amalg Q) \circ (M \amalg N)$ and $\phi$ is a unique smooth map derived from
+the universal property of the coproduct $(P \circ M) \amalg (Q \circ N)$.
+Leveraging the universality of the respective identity maps and the composites
+$\phi\psi$ and $\psi\phi$, we can show that $\phi$ and $\psi$ are inverses.
+Finally, using similar pastings as in the proof of \ref{disjunion:welldef} or
+\ref{cobglue:welldef}, we can produce a commutative diagram involving $\phi$ and
+$\psi$ that realizes $(P \circ M) \amalg (Q \circ N) \eqcob
+(P \amalg Q) \circ (M \amalg N)$.
+\end{proof}
+
+As a corollary of the above theorems, we have the following:
+\begin{thm}\label{disjunion:id}
+$((U \times I) \amalg (X \times I)) \circ (M \amalg N) \eqcob M \amalg N$
+and $((M \amalg N) \circ (V \times I) \amalg (Z \times I)) \eqcob M \amalg N$
+\end{thm}
+\begin{proof}
+For the first equivalence, by \ref{disjunion:glue}, it suffices to
+show $((W \times I) \circ M) \amalg ((X \times I) \circ N) \eqcob M \amalg N$.
+We know that $(W \times I) \circ M \eqcob M$ and
+$(X \times I) \circ N \eqcob N$. Thus, by $\ref{disjunion:welldef}$, we get the
+desired equivalence. The second equivalence is similar.
+\end{proof}
+
+\begin{cor}
+$\fn{\amalg}{\Cob_d \times \Cob_d}{\Cob_d}$ is a bifunctor.
+\end{cor}
+
+We know that $\Set$ is symmetric monoidal with respect to $\amalg$ with unit
+$\varnothing$. The associators, unitors and commutators of $\amalg$ in $\Set$
+can be verified to be diffeomorphisms when we restrict attention to $\Man$ --
+this involves simple computations involving charts. Furthermore, given the
+naturality of these maps in $\Man$ (following from their naturality in $\Set$),
+we can show that they yield associator, unitor and commutator cobordisms for
+$\amalg$ in $\Cob_d$ as a consequence of the following results \cite{RayanCor1}
+whose proofs we only sketch.
+
+\begin{thm}\label{frob:diffcob}
+For each diffeomorphism $\fn{f}{X}{Y}$ for $X, Y \in \Cob_d$, there is a
+cobordism $\fn{R(f)}{X}{Y}$ in $\Cob_d$.
+\end{thm}
+\begin{proof}[Proof Sketch]
+We observe that $f$ yields a smooth structure on $X$ as follows. Given a chart
+$y_V$ on some open set $V \subset Y$, we have a chart $y_V \circ f$ on the
+the open set $f^{-1}(V)$ of $X$. Since $f$ is a homeomorphism, the sets
+$f^{-1}(V)$ cover $X$ and $\set[y_V \circ f]{y_V \text{ is in the atlas of } Y}$
+is a smooth atlas for $X$. Thus, we can view $Y$ as another smooth structure on
+$X$ and vice versa.
+
+Let Smooth($X$) be the space of smooth structures on $X$ and Diff($X$) be the
+group of diffeomorphisms of $X$ which acts on Smooth($X$) by precomposition with
+charts. Then, $X$ and $Y$ are in the same orbit under this action. Since each
+orbit is a path connected subspace of $\text{Smooth}(X)$, this yields a path
+$\fn{\psi}{[0, 1]}{\text{Diff}(X)}$ such that $\psi(0) = \id_X$ and
+$\psi(1) = f$. This path yields a $d$--manifold
+$\coprod_{t \in [0, 1]} \psi(t)(X)$ with boundary
+$\psi(0)(X) \amalg \psi(1)(X) = X \amalg Y$. We let this $d$--manifold be
+$R(f)$.
+\end{proof}
+
+\begin{rmk}
+The path $\psi$ in the above proof is, loosely, a homotopy
+$\id_{X} \Rightarrow f$, if we consider $X$ and $Y$ to be the same topological
+space with possibly different atlases.
+\end{rmk}
+
+\begin{cor}[Cylinder Construction]\label{disjunion:cylinderconst}
+Let $\textbf{Diff}_d$ be the groupoid of diffeomorphisms between closed
+$d$--manifolds. Then, $R$ is a functor $\textbf{Diff}_{d - 1} \to \Cob_d$.
+\end{cor}
+\begin{proof}[Proof Sketch]
+Let $f$ and $g$ be composable pairs of diffeomorphisms. Then the path in
+Diff($X$) associated to $gf$ by the construction in \ref{frob:diffcob} can be
+shown to be a concatenation of the paths associated to $g$ and $f$, after
+reparametrization. This corresponds to a glueing that shows
+$R(g) \circ R(f) \eqcob R(gf)$. The identity diffeomorphism on a manifold must
+produce a path $\psi$ in Diff($X$) with the same value at each $t \in [0, 1]$
+for all $(d - 1)$--manifolds $X$. In particular, $\psi(t)(x) = \psi(0)(x) =
+\id_X(x) = x$ for all $t \in [0, 1]$ and $x \in X$ so that
+$\coprod_{t \in [0, 1]} \psi(t)(X) = \coprod_{t \in [0, 1]} X$ which is
+diffeomorphic to $X \times I$. This shows that $R(\id_X) \eqcob X \times I$.
+\end{proof}
+
+\begin{rmk}
+As in \cite{Jorge}, we could also take the cobordism $R(f)$ to be
+$(X \times I, a_{X \times I}, f^{-1})$ where $a_{X \times I}$ is the orientation
+reversal map. However, this would involve a significant amount of diagram
+chasing to prove the functoriality of $R$.
+\end{rmk}
+
+The theorems proved so far yield the following result.
+\begin{thm}
+$(\Cob_d, \amalg, \varnothing)$ is a symmetric monoidal category.
+\end{thm}
+

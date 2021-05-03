@@ -1,0 +1,108 @@
+
+\subsection{The \texorpdfstring{$\CPS$}{CP Star} Construction}
+
+In the usual sense, in $\Vect_{\mathbf{k}}$, a completely positive map
+$\fn{f}{A}{B}$ of $C^*$ algebras is one which satisfies the condition that
+$(f \m 1_{\M_n})(a)$ is a positive element of $B \m \M_{n}$ for all positive
+elements $a$ of $A \m \M_n$, for all $n \in \N$. Using only morphisms, a
+a map $f$ is completely positive if for all $n \in \N$ and for all
+positive $\fn{a}{\mathbf{k}}{A \m \M_n}$,
+$(f \m 1_{\M_n}) \circ a$ is a positive map $\mathbf{k} \to B \m \M_n$. In the
+abstract setting, we may define complete positivity with an analogous statement
+but with an arbitrary dagger Frobenius algebra $C$ in place of $\M_n$. Taking a
+slightly different perspective, for any $X \in \Vect_{\mathbf{k}}$, it can be
+verified that the map
+$\fn{1_{X^*} \m \eps_X \m 1_X}{X^* \m X \m X^* \m X}{X^* \m X}$ gives $X^* \m X$
+the structure of a normalizable dagger Frobenius algebra
+\cite[Prop. 2.11]{channels} with unit $\eta_X$. We then observe that
+$X^* \m X \cong \Hom_{\Vect_{\mathbf{k}}}(X, X)$ so that $X^* \m X$ can be
+regarded as a matrix algebra and this formulation of matrix algebras works in
+any abstract dagger compact category.  Then, we may define $f$ to be
+completely positive if and only if $(f \m 1_{X^* \m X}) \circ a$ is a positive
+map $\mathbf{k} \to B \m X^* \m X$ whenever $\fn{a}{\mathbf{k}}{A \m X^* \m X}$
+is positive for every object $X$ in the category.
+
+Coecke et al. have shown in \cite[Prop. 3.4]{channels} that both of these
+abstract formulations are equivalent to satisfying a certain ``$\CPS$
+condition'' in any dagger compact category and that they specialize to the usual
+notion for finite dimensional complex $C^*$ algebras. Consider any dagger
+compact category $\s{V}$ with product $\m$, unit $U$ and the usual symbols for
+the dagger and the dual. Given any $C^*$ algebra -- by which we mean a
+normalizable dagger Frobenius algebra -- $(A, m, e, w, c)$ in $\s{V}$ we define
+the following notation:
+\begin{eqnarray*}
+  \wh{m} :=&
+  \begin{tikzcd}[column sep=large]
+    U \m A \arrow[r, "\eta_A \m \id_A"] &
+    A^* \m A \m A \arrow[r, "\id_{A^*} \m m"] &
+    A^* \m A
+  \end{tikzcd}\\
+  \wh{w} :=&
+  \begin{tikzcd}[column sep=large]
+    A^* \m A \arrow[r, "\id_{A^*} \m w"] &
+    A^* \m A \m A \arrow[r, "\eps_{A^*} \m \id_{A}"] &
+    U \m A
+  \end{tikzcd}
+\end{eqnarray*}
+We now let $(A, m, e, w, c)$ and $(B, m', e', w', c')$ be $C^*$ algebras in
+$\s{V}$ with a map $\fn{f}{A}{B}$ and observe that $\wh{m'} f \wh{w}$ can be a
+well defined composition when unitors are placed appropriately.
+\begin{defn}[{$\CPS$} Condition]
+If there exists a map $\fn{g}{A}{X \m B}$ for some object $X \in \s{V}$
+satisfying
+\begin{equation}\label{cpstar:cond}
+  \wh{m'}f\wh{w} = (1_{B*} \m \eps_{X^*} \m 1_{B}) \circ (g_* \m g)
+\end{equation}
+then $f$ is said to satisfy the $\CPS$ condition.
+\end{defn}
+
+\begin{rmk}
+This is equation (2) is \cite[13]{channels}.
+\end{rmk}
+
+We thus define:
+\begin{defn}[Completely Positive Map]
+A map $\fn{f}{A}{B}$ of normalizable dagger Frobenius algebras in a dagger
+compact category is said to be completely positive if it satisfies
+\eqref{cpstar:cond}.
+\end{defn}
+
+Let $\CPS[\s{V}]$ denote the collection of normalizable dagger Frobenius
+algebras in $\s{V}$ together with the completely positive maps
+between them. The central results of \cite{channels} are as follows.
+The completely positive maps in $\s{V}$ compose to give completely positive,
+making $\CPS[\s{V}]$ a category. Next, the associators, unitors and commutators
+for normalizable dagger Frobenius algebras in $\s{V}$ are completely positive,
+making $(A, m, e, w, c) \m (B, m', e', w', c')
+:= (A \m B, m \m m', e \m e', w \m w', c \m c')$ a symmetric monoidal product
+for $\CPS[\s{V}]$ with unit $\mathbf{k}$\footnote{We skip the description of the
+Frobenius structure of $\mathbf{k}$ because it contributes little to our
+discussion.}.  Finally, daggers and duals of completely positive maps are also
+completely positive and preserve normalizable dagger Frobenius structures while
+satisfying all compatibility conditions to make $\CPS[\s{V}]$ dagger compact.
+All of this can then be summarized in the following fundamental theorem
+\cite[Thm. 3.3]{channels}.\footnote{The proofs of the claims made in this
+paragraph can be found on pages 14--16 in \cite{channels}.}
+
+\begin{thm}[{$\CPS$} Construction]
+Given any dagger compact category $\s{V}$, the category whose objects are
+normalizable dagger Frobenius algebras
+$(A, m, e, w, c)\footnote{Note that the whole dagger Frobenius structure is an
+object, as opposed to just $A$.} \in \s{V}$ and whose morphisms are completely
+positive maps in $\s{V}$ is a well-defined dagger compact category, denoted as
+$\CPS[\s{V}]$, whose monoidal product and unit are the same as in $\s{V}$.
+\end{thm}
+
+The central result in \cite{channels} concerning QIT, then, is the following.
+\begin{thm}
+There is an equivalence of categories $\CPS[\FHilb] \lr \CStar$ where $\CStar$
+is the subcategory of usual $C^*$ algebras and completely positive maps in
+$\Vect_{\C}$.
+\end{thm}
+
+Since the $\CPS$ construction completely describes $C^*$ algebras in the
+abstract and at the same time Planar Field Theories are in bijection with
+(not necessarily normalizable dagger) Frobenius algebras in $\Vect_{\C}$, it is
+natural to ask: what happens when the image of the interval $I$ is a nomalizable
+dagger Frobenius algebra? We proceed towards an answer to this question next.
+

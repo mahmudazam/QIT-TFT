@@ -1,0 +1,71 @@
+
+\pagebreak
+
+\section{Introduction}
+
+A qubit in quantum information and computing is modelled as a variable taking
+values in the complex vector space $\C^2$.\footnote{This simple description will
+be sufficient for us.} A register of length $n$, then, is a variable taking
+values in the $n$--fold tensor product $Q_n := \bigotimes_{i = 1}^n \C^2$. State
+transformations in quantum mechanics and hence gates in quantum computing are
+modelled by unitary maps $Q_n \to Q_m$. Quantum circuits are sequences of
+unitary maps, the composites of which are again unitary maps. A standard result
+in linear algebra is that the space $\s{L}(V) := \Hom_{\Vect_{\C}}(V, V)$ of
+operators on a finite dimensional Hilbert space $V$ form a $C^*$ algebra with
+the product given by composition and the involution given by the conjugate
+transpose, since the operators are necessarily bounded. The unitary maps on $V$
+then form a $*$--subalgebra of $\s{L}(V)$, as the conjugate transpose of a
+unitary map is again unitary.
+
+The basic scenario in quantum information is where Bob sends a message to Alice
+in the form of a quantum mechanical system. Bob prepares a quantum system in
+some specific state and transmits the state to Alice through a medium. The
+medium for sending the message, referred to as a channel, may introduce some
+noise. To capture this communication scenario mathematically, we assume that the
+message sent by Bob is a probability distribution of possible quantum states.
+More explicitly, a message from Bob is a probability density function
+$\fn{p}{\mathcal{X}}{\sbr{0, 1}}$ along with a set of quantum states
+$\set{\psi_x}_{x \in \mathcal{X}}$ in some Hilbert space, typically finite
+dimensional, satisfying that $p(x)$ is the probability that the state prepared
+and sent by Bob is $\psi_x$ \cite{cqshannon}. We note that in the case that
+there is no channel noise, we can simply take $p(x) = 1$ if $\psi_x$ is the
+state prepared by Bob and $p(x) = 0$, otherwise.
+
+Suppose we have a collection of projective measurement operators $\Pi_j$ such
+that $\sum_{j} \Pi_j$ is the identity. It can be shown that the probability that
+we obtain measurement outcome $j$ upon measuring a message is
+\[
+  \text{trace}\br{\Pi_j \sum_{x \in \mathcal{X}} p(x) \br{\psi_x \m \psi_x}}
+\]
+where $\rho := \sum_{x \in \mathcal{X}} p(x) \br{\psi_x \m \psi_x}$ is called
+the density operator of the message. Furthermore, the density operator contains
+all the information necessary to compute the probabilities for any measurement
+on the given message and hence we can take a message to be its density operator.
+The evolution of messages is also captured in this formalism. It is natural to
+define the action of a unitary transformation $U$ on a message
+$(p, \set{\psi_x}_{x \in \mathcal{X}})$ with density operator $\rho$ as:
+\[
+  U \cdot (p, \set{\psi_x}_{x \in \mathcal{X}})
+    \mapsto (p, \set{U\psi_x}_{x \in \mathcal{X}})
+\]
+We can then show that the density operator of this new message is
+$U \rho U^{\dagger}$, where $(-)^{\dagger}$ is the conjugate transpose. Finally,
+the density operators form a $C^*$ algebra with multiplication given by
+composition and involution, by the conjugate transpose, noting that density
+operators are invariant under the conjugate transpose. The proofs of the claims
+above can be found in \cite[{$\S 4$}]{cqshannon}.
+
+We observe that all of the constructs above are captured by the formalism of
+$C^*$ algebras making them fundamental objects of study in quantum information.
+Furthermore, the theory of $C^*$ algebras can be treated completely in the
+language of symmetric monoidal categories. This has been shown in
+\cite{channels} by proving an equivalence of categories between the category of
+finite dimensional $C^*$ algebras under completely positive maps and a category
+constructed from the so called normalizable dagger Frobenius algebra objects in
+$\FHilb$\footnote{the category of finite dimensional Hilbert spaces and linear
+maps} under morphisms satisfying a condition equivalent to complete positivity.
+Furthermore, it is well known that two dimensional topological quantum field
+theories (TQFTs) are equivalent to commutative Frobenius algebras. In this
+thesis, we outline a modification of TQFTs that allows us to connect them to
+$C^*$ algebras and, by extension, quantum information and computing.
+

@@ -1,0 +1,240 @@
+
+\subsection{Gluing Cobordisms}
+
+If we have cobordisms $\fn{(M, \iota_{0, M}, \iota_{1, M})}{X}{Y}$ and
+$\fn{(N, \iota_{0, N}, \iota_{1, N})}{Y}{Z}$, we can define a cobordism
+$\fn{(N \circ M, \iota_{0, N \circ M}, \iota_{1, N \circ M})}{X}{Z}$ by taking a
+$d$--manifold $N \circ M := N \amalg_{Y} M$ obtained by gluing $M$ and $N$ along
+the common boundary component (diffeomorphic to) $Y$ -- we note that we have to
+make precise what the inclusions $\iota_{k, N \circ M}$ ($k = 0, 1$) must be but
+we defer this until we have some more context. We first precisely define gluing
+\cite{Jorge}.
+\begin{defn}[Gluing of Cobordisms]
+Given $\fn{(M, \iota_{0, M}, \iota_{1, M})}{X}{Y}$ and
+$\fn{(N, \iota_{0, N}, \iota_{1, N})}{Y}{Z}$. We define $N \circ M$ to be the
+pushout of $N \ot[\iota_{0, N}] Y \to[\iota_{1, M}] M$ in $\Man$, the category
+of manifolds and smooth maps:
+\[\begin{tikzcd}
+  Y \arrow[r, "\iota_{1, M}"] \arrow[d, "\iota_{0, N}" left]
+  & M \arrow[d, "p_0"]\\
+  N \arrow[r, "p_1" below]
+  & N \circ M
+\end{tikzcd}\]
+\end{defn}
+
+\begin{rmk}
+We can make this definition concrete if needed. We consider the sets
+$S_1 = \im \iota_{1, M} \subset M$ and $S_0 = \im \iota_{0, N} \subset N$
+diffeomorphic to $Y$. Then,
+$N \circ M = (N \setminus S_0) \cup (M \setminus S_1) \cup S$ where $S$ can be
+either $S_0$ or $S_1$. Without loss of generlity, we can take $S = S_1$. We then
+have $p_0(x) = x$ for all $x \in M$ and $p_1(x) = x$ if $x \not\in S_0$ and
+$p_1(x) = p_0(\iota_{1, M}^{-1}(x))$ otherwise -- noting that
+$\iota_{1, M}^{-1}(x)$ is a unique element of $Y$ when $x \in S_0$ since
+$\iota_{1, M}$ is injective. It is easy to see that $\im p_0 = M$,
+$\im p_1 = (N \setminus S_0) \cup S_1$, $\im p_1 \cap \im p_0 = S_1$ and
+$N \circ M = \im p_1 \cup \im p_0$. Finally, although this is the same
+definition as in $\Set$, it can be shown that $p_0$ and $p_1$ are smooth maps --
+in fact, diffeomorphisms onto their images.
+\end{rmk}
+
+It is not clear that $N \circ M$ is well-defined since it seems possible that,
+given any other representatives $(M', \iota_{0, M'}, \iota_{1, M'})$ and $(N',
+\iota_{0, N'}, \iota_{1, N'})$ of the cobordism classes of $M$ and $N$
+respectively, the class of $N' \circ M'$ might be different from that of $N
+\circ M$, but we have the following lemma.
+
+\begin{lem}\label{cobglue:welldef}
+If $M \eqcob M'$ and $N \eqcob N'$, then $N \circ M \eqcob N' \circ M'$.
+\end{lem}
+\begin{proof}
+We observe that there are diffeomorphisms
+$\fn{f}{M}{M'}$ and $\fn{g}{N}{N'}$ making the relevant analogues of the square
+in \ref{cob:equiv} commute so that $f \circ \iota_{1, M} = \iota_{1, M'}$ and
+$g \circ \iota_{1, N} = \iota_{1, N'}$. Then, we have that $N \circ M$ is the
+pushout of $M \ot[\iota_{1, M}] Y \to[\iota_{0, N}] N$ in $\Man$ and similarly
+$N' \circ M'$ is the pushout of $M' \ot[\iota_{1, M'}] Y \to[\iota_{0, N'}] N'$
+in $\Man$, by the definition of gluing. Together, these yield the following
+pasting of commutative diagrams:
+\begin{equation}\label{cob:gluing}
+\begin{tikzcd}[column sep=large, row sep=large]
+  Y \arrow{r}{\iota_{1, M}} \arrow{d}[right]{\iota_{0, N}}
+      \arrow[rr, bend left, "\iota_{1, M'}"]
+      \arrow[dd, bend right, "\iota_{0, N'}" left]
+  & M \arrow{r}{f} \arrow{d}{p_0}
+  & M' \arrow{dd}{p_0'} \\
+  N \arrow{r}[below]{p_1} \arrow{d}[right]{g}
+  & N \circ M \arrow[dr, dashed, shift left=1ex, "\phi" description]
+  & \\
+  N' \arrow{rr}[below]{p_1'}
+  &
+  & N' \circ M' \arrow[ul, dashed, shift left=1ex, "\psi" description]
+\end{tikzcd}
+\end{equation}
+where the squares $Y, M, N \circ M, N$ and $Y, M', N' \circ M', N'$ being
+pushouts yield unique smooth maps $\phi$ and $\psi$ making the above diagram
+commute. At this point, if we define boundary inclusions
+$\iota_{0, N \circ M} := p_0 \circ \iota_{0, M}$ and
+$\iota_{1, N \circ M} := p_1 \circ \iota_{1, N}$ with similar definitions for
+$\iota_{k, N' \circ M'}$ ($k = 0, 1$), by pasting the triangles for $X$ and $Z$
+which realize $M \eqcob M'$ and $N \eqcob N'$ to the
+squares $M, M', N' \circ M', N \circ M$ and $N, N \circ M, N' \circ M', N'$
+respectively in diagram \ref{cob:gluing}, we get:
+\[
+\begin{tikzcd}
+  & X \arrow{dl}[above,xshift=-2.5ex]{\iota_{0, M}} \arrow[dr, "\iota_{0, M'}"]
+    & \\
+  M \arrow[rr, "f"] \arrow[d, "p_0" left] & & M' \arrow[d, "p_0'" right]\\
+  N \circ M \arrow[rr, shift left=1ex, "\phi"] &
+    & N' \circ M' \arrow[ll, shift left=1ex, "\psi"]\\
+  N \arrow[rr, "g"] \arrow[u, "p_1" left] & & N' \arrow[u, "p_1'" right]\\
+  & Z \arrow[ul, "\iota_{1, N}"] \arrow{ur}[below,xshift=2.5ex]{\iota_{1, N'}} &
+\end{tikzcd} \implies
+\begin{tikzcd}
+  & X
+    \arrow{dl}[left, yshift=5pt]{\iota_{0, N \circ M}}
+    \arrow[dr, "\iota_{0, N' \circ M'}"] & \\
+  N \circ M \arrow[rr, shift left=1ex, "\phi"] &
+    & N' \circ M' \arrow[ll, shift left=1ex, "\psi"]\\
+  & Z
+    \arrow{ul}{\iota_{1, N \circ M}}
+    \arrow{ur}[right, yshift=-5pt]{\iota_{1, N' \circ M'}}
+\end{tikzcd}
+\]
+
+It now suffices to show that $\phi$ and $\psi$ are inverses in $\Man$. We first
+observe from the diagram above that $\psi p_0' f = p_0$ and
+$\phi p_0 f^{-1} = p_0'$ yielding $\psi \phi p_0 = p_0$. We can similarly show
+that $\psi \phi p_1 = p_1$. The pushout property of $N \circ M$ now yields that
+$\psi\phi = \id_{N \circ M}$. A similar argument shows that
+$\phi\psi = \id_{N' \circ M'}$.
+\end{proof}
+
+We can prove that $- \circ -$ is an associative operation when defined.
+\begin{lem}\label{cobglue:assoc}
+For cobordisms $\fn{(L, \iota_{0, L}, \iota_{1, L})}{W}{X}$,
+$\fn{(M, \iota_{0, N}, \iota_{1, N})}{X}{Y}$ and
+$\fn{(N, \iota_{0, N}, \iota_{1, N})}{Y}{Z}$,
+\[
+  N \circ (M \circ L) \eqcob (N \circ M) \circ L
+\]
+\end{lem}
+\begin{proof}
+The pushout diagrams for $M \circ L$ and $N \circ M$ paste to give:
+\[\begin{tikzcd}
+  & X \arrow[r, "\iota_{1, L}" above] \arrow[d, "\iota_{0, M}" left]
+  & L \arrow[d, "p_0" right] \\
+  Y \arrow[r, "\iota_{1, M}" above] \arrow[d, "\iota_{0, N}" left]
+  & M \arrow[r, "p_1" below] \arrow[d, "q_0" right]
+  & M \circ L \\
+  N \arrow[r, "q_1" below]
+  & N \circ M & \\
+\end{tikzcd}\]
+
+Pushing out $N \ot[\iota_{0, N}] Y \to[\iota_{1, M}] M \to[p_1] M \circ L$
+and $N \circ M \ot[q_0] M \ot[\iota_{0, M}] X \to[\iota_{1, L}] L$, we get:
+\[\begin{tikzcd}
+  & X \arrow[r, "\iota_{1, L}" above] \arrow[d, "\iota_{0, M}" left]
+  & L \arrow[d, green!55!black, "p_0" right] \arrow[rdd, bend left, "s_0"] \\
+  Y \arrow[r, "\iota_{1, M}" above] \arrow[d, "\iota_{0, N}" left]
+  & M \arrow[r, "p_1" below] \arrow[d, "q_0" right]
+  & M \circ L \arrow[dd, green!55!black, near end, "r_0"]
+      \arrow[rd, dashed, red, "\alpha" description]\\
+  N \arrow[r, red, "q_1" below] \arrow[rrd, bend right, "r_1"]
+  & N \circ M \arrow[rr, near start, crossing over, red, "s_1"]
+      \arrow[rd, dashed, green!55!black, "\beta" description]
+  &
+  & (N \circ M) \circ L
+      \arrow[dl, dashed, shift right=1ex, "\phi" description] \\
+  & & N \circ (M \circ L)
+      \arrow[ur, dashed, shift right=1ex, "\psi" description] &
+\end{tikzcd}\]
+where $\alpha$ and $\beta$ are smooth maps obtained by the pushout properties of
+$M \circ L$ and $N \circ M$ respectively. The green paths in the diagram yield
+a smooth map $\fn{\phi}{(N \circ M) \circ L}{N \circ (M \circ L)}$ by the
+pushout property of $(N \circ M) \circ L$. Similarly, the red paths yield a
+smooth map $\fn{\psi}{N \circ (M \circ L)}{(N \circ M) \circ L}$.
+
+By our definition of gluing of cobordisms, the above diagram yields:
+\begin{align*}
+  \iota_{0, (N \circ M) \circ L} =& s_0 \iota_{0, L}
+    & \iota_{1, (N \circ M) \circ L} =& s_1 \iota_{1, N \circ M} \\
+  =& \psi r_0 p_0 \iota_{0, L}
+    & =& s_1 q_1 \iota_{1, N} \\
+  =& \psi r_0 \iota_{0, M \circ L}
+    & =& \psi r_1 \iota_{1, N} \\
+  =& \psi \iota_{0, N \circ (M \circ L)}
+    & =& \psi \iota_{1, N \circ (M \circ L)}
+\end{align*}
+This and a similar argument involving $\phi$, $\iota_{k, (N \circ M) \circ L}$
+and $\iota_{k, N \circ (M \circ L)}$ for $k \in \set{0, 1}$ shows that the
+following diagram commutes:
+\[\begin{tikzcd}
+  & W
+      \arrow{ld}[left, yshift=5pt]{\iota_{0, (N \circ M) \circ L}}
+      \arrow[rd, "\iota_{0, N \circ (M \circ L)}"] & \\
+  (N \circ M) \circ L
+      \arrow[rr, shift left=1ex, "\phi"]
+  &
+  & N \circ (M \circ L)
+      \arrow[ll, shift left=1ex, "\psi"] \\
+  & Z
+      \arrow[lu, "\iota_{1, (N \circ M) \circ L}"]
+      \arrow{ru}[right, yshift=-5pt]{\iota_{1, N \circ (M \circ L)}} &
+\end{tikzcd}\]
+
+Similar to \ref{cobglue:welldef}, using the universal property of pushouts, we
+can show that $\psi\phi = \id_{(N \circ M) \circ L}$ and
+$\phi\psi = \id_{N \circ (M \circ L)}$.
+\end{proof}
+
+\begin{rmk}
+The proofs of \ref{cobglue:welldef} and \ref{cobglue:assoc} apply in any
+category with pushouts and show that the pushing out of two maps can be
+``extended via isomorphisms'' as in \ref{cobglue:welldef} and, when seen as a
+binary operation, it is associative up to isomorphism. Reversing all arrows in
+these proofs yields dual results for pullbacks.
+\end{rmk}
+
+Furthermore, for any $(d - 1)$--manifold $X$, the $d$--manifold $X \times I$,
+called the cylinder on $X$, has boundary
+$(X \times \{0\})^* \amalg (X \times \{1\})$ so that
+$\fn{(X \times I, \iota_0, \iota_1)} {X}{X}$ is a $d$--cobordism where $\iota_0$
+is the orientation reversing diffeomorphism $X \to (X \times \{0\})^*$ and
+$\iota_1$, the inclusion of $X$ into $X \times I$ with image $X \times \{1\}$.
+By \cite[339, Thm. 2]{collar}, for some cobordism $\fn{M}{W}{X}$ there is an
+open set $U \subset M$ such that $X \times I$ is diffeomorphic to the closure of
+$U$, allowing us to extend the identity function on $M$ to a diffeomorphism
+$M \to M \circ (X \times I)$ which restricts to the identities on $X$ and $W$
+establishing $M \circ (X \times I) \eqcob M$. A similar construction yields
+$(X \times I) \circ N \eqcob N$ for some cobordism $\fn{N}{X}{Y}$. This shows:
+
+\begin{lem}\label{cobglue:id}
+For any manifold $X$, $X \times I$ acts as a two sided identity for $X$ with
+respect to $- \circ -$.
+\end{lem}
+
+\ref{cobglue:welldef}, \ref{cobglue:assoc} and $\ref{cobglue:id}$ then establish
+the following as a corollary.
+
+\begin{thm}\label{cobcat}
+$d$--cobordisms taken as morphisms form a category with $(d - 1)$--manifolds as
+the objects and composition given by the gluing operation $- \circ -$.
+\end{thm}
+
+\begin{defn}[{$\Cob_d$}]
+The category in \ref{cobcat} is called the category of $d$--cobordisms and is
+denoted $\Cob_d$.
+\end{defn}
+
+\begin{rmk}
+We note that gluing of cobordisms is not a pushout in $\Cob_d$ but rather of
+smooth maps in $\Man$. The cobordism so obtained is the pushed out manifold. We
+further note that gluing preserves the dimensionality of the cobordisms
+involved.
+\end{rmk}
+
+The domain of a TQFT will be $\Cob_d$ for some $d \geq 0$. However, there is
+additional structure that $\Cob_d$ can be given and TQFTs can preserve (up to
+isomorphism) and we consider this next.
+

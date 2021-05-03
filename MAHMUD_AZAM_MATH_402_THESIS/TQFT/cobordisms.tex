@@ -1,0 +1,82 @@
+
+\subsection{Cobordisms}
+
+We first define some fundamental structures arising from manifolds. For $d > 0$
+and closed $(d - 1)$--manifolds $X$ and $Y$, let $M$ be a compact $d$--manifold
+such that $\partial M = W_0 \amalg W_1$ and $\fn{\iota_0}{X}{M}$ and
+$\fn{\iota_1}{Y}{M}$ are smooth maps that are diffeomorphisms onto $W_0$ and
+$W_1$, respectively, with the added assumption that $\iota_0$ is
+\textit{orientation reversing}\footnote{This is one of the rare situations,
+where we assume a diffeomorphism does not preserve orientation.}. It should be
+noted that we could take $\iota_0$ to be an orientation preserving
+diffeomorphism $X^* \to M$ but this would complicate our notation and diagram
+chases later on.
+
+\begin{defn}[{$d$}--Cobordism]
+In the above scenario, $(M, \iota_0, \iota_1)$ or simply $M$ is called a
+$d$--cobordism or simply a cobordism (when $d$ is clear from context) from $X$
+to $Y$, and is denoted as $\fn{(M, \iota_0, \iota_1)}{X}{Y}$ or simply
+$\fn{M}{X}{Y}$.
+\end{defn}
+
+\begin{defn}[Equivalent Cobordisms]\label{cob:equiv}
+Let $M$ and $M'$ be compact $d$--manifolds with $\partial M = W_0 \amalg W_1,
+\partial M' = W_0' \amalg W_1'$ such that diffeomorphisms
+$\fn{\iota_0}{X}{M}, \fn{\iota_1}{Y}{M}, \fn{\iota_0'}{X}{M'},
+\fn{\iota_1'}{Y}{M'}$ realize $M$ and $M'$ as cobordisms $X \to Y$. Let
+$\fn{f}{M}{M'}$ be a diffeomorphism making the following sqaure commute:
+\[\begin{tikzcd}
+  & X \arrow{dl}[above, xshift=-5pt]{\iota_0} \arrow[dr, "\iota_0'"] & \\
+  M \arrow[rr, "f"] & & M'\\
+  & Y \arrow[ul, "\iota_1"] \arrow[ur, "\iota_1'" below] &
+\end{tikzcd}\]
+Then, we say $M$ and $M'$ are equivalent cobordisms $X \to Y$ and write this as
+the relation $(M, \iota_0, \iota_1) \eqcob (M', \iota_0', \iota_1')$
+or simply $M \eqcob M'$.
+\end{defn}
+
+\begin{rmk}
+If we only have $\fn{(M, \iota_0, \iota_1)}{X}{Y}$ but a diffeomorphism
+$\fn{f}{M}{M'}$ for an arbitrary $d$--manifold $M'$ such that $f$ restricts to
+the identity function on $\partial M$, then we must have
+$\partial M' = \partial M$. As a result, $M'$ is also a cobordism $X \to Y$
+with boundary inclusions $f \circ \iota_i$ for $i = 0, 1$ and $M \eqcob M'$.
+\end{rmk}
+
+\begin{thm}
+$\eqcob$ is an equivalence relation.
+\end{thm}
+\begin{proof}
+Reflexivity is obvious by taking the identity diffeomorphism and symmetry
+follows from taking the inverse of $f$ in the following square:
+\[\begin{tikzcd}
+  & X \arrow{dl}[above, xshift=-5pt]{\iota_0} \arrow[dr, "\iota_0'"] & \\
+  M & & M' \arrow[ll, "f^{-1}"] \\
+  & Y \arrow[ul, "\iota_1"] \arrow[ur, "\iota_1'" below] &
+\end{tikzcd}\]
+which commutes because the square in \ref{cob:equiv} commutes. The following
+pasting shows transitivity:
+\[\begin{tikzcd}[row sep=large, column sep=large]
+  & X
+    \arrow{dl}[above, xshift=-5pt]{\iota_0}
+    \arrow[d, "\iota_0'"]
+    \arrow[dr, "\iota_0''"] &\\
+  M \arrow[r, "f"] & M' \arrow[r, "g"] & M''\\
+  & Y
+    \arrow[ul, "\iota_1"]
+    \arrow[u, "\iota_1'"]
+    \arrow{ur}[below, xshift=5pt]{\iota_1''} &
+\end{tikzcd}\]
+\end{proof}
+
+We then define what will be the morphisms of our domain category by updating our
+definition of cobordism to refer to the equivalence classes under
+$\eqcob$.
+\begin{defn}[{$d$}--Cobordism (Class)]
+Given a compact $d$--manifold $M$ with $\fn{M}{X}{Y}$ as above, from this point
+onwards, we will also call the equivalence class of $M$ under $\eqcob$ a
+$d$--cobordism or simply a cobordism from $X$ to $Y$ when $d$ is clear from
+context. We continue to write $\fn{M}{X}{Y}$ to mean that the class of $M$ is a
+cobordism from $X$ to $Y$.
+\end{defn}
+

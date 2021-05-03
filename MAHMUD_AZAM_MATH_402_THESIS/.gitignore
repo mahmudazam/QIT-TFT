@@ -1,0 +1,13 @@
+
+build
+*.aux
+*.log
+*.out
+*.bbl
+*.bcf
+*.blg
+*.xml
+*.toc
+*.sage.py
+*.out
+*.pdf
