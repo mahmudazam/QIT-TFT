@@ -1,0 +1,119 @@
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{chngcntr}
+\usepackage{enumerate}
+\usepackage{fancyvrb}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% Referencing:
+\usepackage[pdftex,pdfpagelabels,bookmarks,hyperindex,hyperfigures]{hyperref}
+\hypersetup{
+  colorlinks,
+  linkcolor={red!50!black},
+  urlcolor={blue!80!black},
+  citecolor={green!50!black}
+}
+
+% Theorem Environments:
+\newtheorem{thm}{Theorem}
+\counterwithin*{thm}{section}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{numexc}[thm]{Exercise}
+\newtheorem*{exc}{Exercise}
+\newtheorem{defn}[thm]{Definition}
+\theoremstyle{definition}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{alg}[thm]{Algorithm}
+\newtheorem{exm}[thm]{Example}
+
+% Symbols:
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}[1][]{\ifthenelse{\equal{#1}{}}{\mathbb{Z}}
+                                              {\mathbb{Z}/#1\mathbb{Z}}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\G}{\mathcal{G}}
+\newcommand{\fn}[3]{#1 : #2 \rightarrow #3}
+\newcommand{\br}[1]{\left( #1 \right)}
+\newcommand{\curly}[1]{\left\{ #1 \right\}}
+\newcommand{\set}[2]{\curly{#1\ \textbf{:}\ #2}}
+\newcommand{\im}{\text{im }}
+\newcommand{\codom}{\text{codom }}
+\newcommand{\dom}{\text{dom }}
+\newcommand{\bmat}[1]{\begin{bmatrix} #1 \end{bmatrix}}
+\newcommand{\sbr}[1]{\left[ #1 \right]}
+\newcommand{\eqn}[1]{\begin{eqnarray*} #1 \end{eqnarray*}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\eps}{\epsilon}
+\newcommand{\del}{\delta}
+\newcommand{\sgm}{\sigma}
+\newcommand{\limit}[3]{\lim_{#1 \rightarrow #2}#3}
+\newcommand{\diff}[2]{\dfrac{d^{#1}}{d#2^{#1}}}
+\newcommand{\sdiff}[3][]{\dfrac{d^{#1}#2}{d#3^{#1}}}
+\newcommand{\fnr}[5]{\fn{#1}{#2}{#3} : #4 \mapsto #5}
+\newcommand{\Gal}[2]{\text{Gal}\br{#1/#2}}
+\newcommand{\id}{\textbf{id}}
+\newcommand{\gen}[1]{\left\langle #1 \right\rangle}
+\newcommand{\monic}[1][]{\stackrel{#1}{\rightarrowtail}}
+\newcommand{\map}[1][]{\stackrel{#1}{\longrightarrow}}
+\newcommand{\Hom}[1]{\text{Hom}\br{#1}}
+\newcommand{\Fn}[3]{#1 : #2 \Rightarrow #3}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Set}{\textbf{Set}}
+\newcommand{\Fib}{\textbf{Fib}}
+\renewcommand{\Re}[1]{\textbf{Re}\br{#1}}
+\renewcommand{\Im}[1]{\textbf{Im}\br{#1}}
+\newcommand{\flr}[1]{\left\lfloor #1 \right\rfloor}
+
+% Code Block Settings:
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    xleftmargin={2.5em},
+    %xrightmargin={2.5em},
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Bibliography:
+\usepackage[style=numeric]{biblatex}
+\renewcommand{\subtitlepunct}{: }
+\addbibresource{Thick_TQFTs_and_Quantum_Information.bib}
+
+% Main Page Settings:
+\usepackage[margin=1.5in]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{}
+\fancyhead[R]{\rightmark}
+\fancyfoot[C]{\thepage}
+

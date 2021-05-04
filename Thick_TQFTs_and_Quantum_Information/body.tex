@@ -1,0 +1,37 @@
+
+\section{Normalizers}
+
+Consider a planar cobordism $\fn{Z}{I}{I}$ with genus $n$. Let $P$ be the pair
+of pants. Then, we observe that $Z \circ P$, $P \circ (Z \amalg \varnothing)$
+and $P \circ (\varnothing \amalg Z)$ all have the same genus and are hence equal
+making $Z$ central for the product $P$.
+
+We now consider the case that $n = 2k + 1$. If we number the holes in $Z$ from
+$1$ to $2k + 1$, viewing them as arranged from one end of the pod to the other,
+then we can cut the pod across the middle or $(\flr{k} + 1)$--th hole to get a
+decomposition of $Z$ as some $Q' \circ Q$ for cobordisms $\fn{Q}{I}{I \amalg I}$
+and $\fn{Q'}{I \amalg I}{I}$, each with genus $k$. It is then easy to see that
+$Q' = Q^{\dagger} = Q^{*}$ so that $Z = Q^{\dagger} \circ Q$ satisfies the
+definition of positivity in a monoidal category.
+
+Letting $R$ denote the rectangle $I \times I$, we wish to impose definiteness on
+$Z$ as well as the loop condition on the pod:
+$\eps \circ (P \amalg R) \circ (Z^2 \amalg \eta^{\dagger}) = C$, where $C$ is
+the cap. For definiteness, suppose that $Z$ has an inverse $H$ in some suitable
+category with genus $m$.  Then, in this category, for a morphism $I \to I$,
+having $2k + 1 + m$ holes is the same having $0$ holes. The loop condition then
+implies that having $2(2k + 1) + 1 = 4k + 2 + 1 = 4k + 3$ holes is the same as
+having $0$ holes. Combining these, if $2k + 1 + m \geq 4k + 3$, then we can
+remove $2k + 1 + m$ holes from the pod to get $4k + 3 - 2k - 1 - m = 2k + 2 - m$
+holes which must again be the same as having $0$ holes. If
+$2k + 1 + m \geq 4k + 3$, by removing holes from $Z \circ H$, we see that
+having $2k + 1 + m - 4k - 3 = m - 2k - 2$ must be the same as having $0$ holes.
+
+We then notice that each hole is given by the glueing of a pair-of-pants and a
+co-pair-of-pants. So, we may now check if we get the counit when we compose
+co-multiplication followed by multiplication some number of times, with the last
+multiplication capped by the co-unit, for a concrete matrix algebra that is
+known to be Frobenius, keeping in mind the above relations. We can take an
+instantiation of the abstract matrix algebra given in
+\cite[12, Prop. 2.11]{CatQChan}.
+
