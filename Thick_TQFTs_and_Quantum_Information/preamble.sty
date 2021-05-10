@@ -35,6 +35,7 @@
 \newtheorem{exm}[thm]{Example}
 
 % Symbols:
+\newcommand{\M}{\mathbb{M}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
@@ -42,10 +43,14 @@
                                               {\mathbb{Z}/#1\mathbb{Z}}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\G}{\mathcal{G}}
+\renewcommand{\to}{\longrightarrow}
+\renewcommand{\mapsto}{\longmapsto}
 \newcommand{\fn}[3]{#1 : #2 \rightarrow #3}
 \newcommand{\br}[1]{\left( #1 \right)}
 \newcommand{\curly}[1]{\left\{ #1 \right\}}
-\newcommand{\set}[2]{\curly{#1\ \textbf{:}\ #2}}
+\newcommand{\set}[2][]{\ifthenelse{\equal{#1}{}}
+                                  {\curly{#2}}
+                                  {\curly{#1\ \textbf{:}\ #2}}}
 \newcommand{\im}{\text{im }}
 \newcommand{\codom}{\text{codom }}
 \newcommand{\dom}{\text{dom }}
@@ -73,6 +78,10 @@
 \renewcommand{\Re}[1]{\textbf{Re}\br{#1}}
 \renewcommand{\Im}[1]{\textbf{Im}\br{#1}}
 \newcommand{\flr}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\Tr}{\text{Tr}}
+\newcommand{\cnj}[1]{\overline{#1}}
+
+\newcommand{\Thick}{\mathbf{Thick}}
 
 % Code Block Settings:
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -113,7 +122,8 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{}
-\fancyhead[R]{\rightmark}
-\fancyfoot[C]{\thepage}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\pagestyle{fancy}
+\usepackage[bottom]{footmisc}
 
