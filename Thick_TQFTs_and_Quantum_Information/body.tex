@@ -1,6 +1,8 @@
 
 \section{Matrix Algebras}
 
+\subsection{Scaled matrix product}
+
 Let $\M_n$ be the set of $n \times n$ matrices with complex entries equipped
 with a multiplication:
 \begin{eqnarray*}
@@ -189,24 +191,158 @@ If we are satisfied with the above, we may also look at the $\text{CP}^*$
 condition or complete-positivity of mappings between $C^*$ algebras and their
 relations with monoidal natural transformations between PFTs.
 
-We may think of more interesting multiplications, for interest's sake. For
-instance, we can take the map
+\subsection{Matrix product with intervening matrix}
+
+We now think of more interesting multiplications. For instance, we can take the
+map
 \[
-  m_c : (a \otimes b) \mapsto acb
+  m_r : (a \otimes b) \mapsto arb
 \]
-for some invertible $c \in \M_n$. This is easliy seen to be associative:
+for some invertible $r \in \M_n$. This is easliy seen to be associative:
 \[
-  (acb)cd = ac(bcd)
+  (arb)rd = ar(brd)
 \]
-with unit $c^{-1}$:
+with unit $e_r : 1 \mapsto r^{-1}$:
 \[
-  acc^{-1} = a = c^{-1}ca
+  arr^{-1} = a = r^{-1}ra
 \]
 This product also inherits bilinearity from matrix multiplication:
 \[
-  (p_1a_1 + p_2a_2)c(p_3a_3 + p_4a_4)
-    = p_1p_3a_1ca_3 + p_1p_4a_1ca_4 + p_2p_3a_2ca_3 + p_2p_4a_2ca_4
+  (p_1a_1 + p_2a_2)r(p_3a_3 + p_4a_4)
+    = p_1p_3a_1ra_3 + p_1p_4a_1ra_4 + p_2p_3a_2ra_3 + p_2p_4a_2ra_4
 \]
+
+We define a useful map:
+\begin{defn}
+We call the map $\fn{u_n}{\M_n}{\C^{n^2}}$ defined by
+\[
+  u_n\br{\bmat{a_{11} & \dots & a_{1n} \\
+             \vdots & \ddots & \vdots\\
+             a_{n1} & \dots & a_{nn}}}
+    = \bmat{a_{11} & \dots & a_{1n} & a_{21} & \dots & a_{2n} &
+            \dots & a_{n1} & \dots & a_{nn}}^{T}
+\]
+a row serialization\footnote{This is a computer science term, in case the reader
+is wondering -- serialization typically refers to the representation of any kind
+of data as an array of numbers.} of $\M_n$ and the map $v_n := u_n((-)^T)$, a
+column serialization of $\M_n$.
+\end{defn}
+
+\begin{rmk}
+It might be convenient to note that we are choosing the convention of sending
+matrices to column vectors as opposed to row vectors. At the same time, $u_n(a)$
+and $v_n(a)$ are not transposes of each other -- they are both column vectors
+but have different orderings of the entries of the matrices.
+\end{rmk}
+
+Noticing that $u_n$ and $v_n$ are isomorphisms, we can define maps
+$\M_n \to \M_m$ by defining maps $\C^{n^2} \to \C^{m^2}$, given by
+$m^2 \times n^2$ matrices. Viewing $\M_n$ as $\C^{n^2}$ and $\M_n \otimes \M_n$
+as $\C^{n^4}$ under $u_n$ and $u_{n^2}$ respectively, let $M_r$ be the
+$n^2 \times n^4$ matrix representing
+\[
+  \fn{m_r}{\M_n \otimes \M_n \cong \C^{n^4}}{\C^{n^2} \cong \M_n}
+\]
+where we are taking $\otimes$ as the Kronecker. We can then compute
+$u_{n^2}(a \otimes b)$ and try to get $arb$ from this product, by applying a
+linear map on it. If we let
+\[
+  a = [a_{ij}], b = [b_{ij}], r = [r_{ij}]
+\]
+then it is straightforward to check that $M_r$ is the following
+matrix\footnote{In reality, I only checked this for $n = 1, \dots, 5$ and
+concluded the same for all $n$, because that is how logic works!}:
+\[
+  \begin{bmatrix}
+    v_n(r)^T  & 0_n       & \dots   & 0_n     \\
+    0_n       & v_n(r)^T  & \dots   & 0_n     \\
+    \vdots    & \vdots    & \ddots  & \vdots  \\
+    0_n       & 0_n       & \dots   & v_n(r)^T
+  \end{bmatrix} \otimes I_{n}
+\]
+where the left multiplicand has $n$ rows, $I_n$ is the $n \times n$ identity
+matrix and $0_n$ is the row vector consisting of $n$ $0$'s. Let
+$W_r$ be the conjugate transpose of $M_r$ determining the adjoint $w_r$ of
+$m_r$. We also define $c_r$ as the conjugate transpose of $e_r$. I believe that
+since $(-)^{\dagger}$ is a contravariant functor, it automatically makes
+$(w_r, c_r)$ a coalgebra structure on $\M_n$.\footnote{Confirmation of this
+would be great.}
+
+We can use the matrix for $M_r$ to show that
+\begin{align*}
+  (m_r \otimes \id) \circ (\id \otimes w_r) = w_rm_r
+  &\iff (M_r \otimes I_{n^2}) \cdot (I_{n^2} \otimes W_r) = W_r \cdot M_r\\
+  (\id \otimes m_r) \circ (w_r \otimes \id) = w_rm_r
+  &\iff (I_{n^2} \otimes M_r) \cdot (W_r \otimes I_{n^2}) = W_r \cdot M_r
+\end{align*}
+making $(\M_n, m_r, e_r, w_r, c_r)$ a dagger Frobenius algebra.\footnote{Again,
+I assumed that showing these for small $n$ shows them for all $n$!}
+
+It is also straightforward to check that
+\[
+  M_rW_r = M_rM_r^{\dagger}
+    = \br{\sum_{i, j} |r_{ij}|^2}I_{n^2}
+\]
+Denoting $||r|| := \br{\sum_{i, j} |r_{ij}|^2}^{\frac{1}{2}}$, this shows that
+$m_rw_r(a) = ||r||^2a$ for all $a \in \M_n$. We now wish to compute
+$c_r(m_rw_r)^k$. For this, we need to compute $c_r := e_r^{\dagger}$. Now,
+$e_r$ is given by the matrix
+\[
+  E_r := u_n(r^{-1})
+\]
+so that $c_r$ is given by the matrix:
+\[
+  C_r = u_n(r^{-1})^{\dagger}
+\]
+Note that $C_r$ is the conjugate transpose of $u_n(r^{-1})$, not that of
+$r^{-1}$ itself so that to compute $C_r$ we take only the conjugate of
+$r^{-1}$ and treat it as a row vector as opposed to a column vector (after row
+serialization, of course).
+
+Letting $r^{-1} = [r'_{ij}]$, we have
+\[
+  c_r(a) = C_ru_n(a) = \sum_{i, j} \cnj{r'_{ij}}a_{ij}
+\]
+and
+\[
+  c_r(m_rw_r)^k(a) = ||r||^{2k} \sum_{i, j} \cnj{r'_{ij}}a_{ij}
+\]
+Finding a manageable formula for $r'_{ij}$ or the $(i, j)$--entry of $r^{-1}$
+seems central to understanding the above expression and, by extension, how PFTs
+interact with these ``$arb$'' matrix algebras. Doing a few computations on Sage
+with the greatest matrix inversion algorithm in the universe
+\cite{SteveInvFormula}, I was not sure if a simple formula can be found, even
+using this beautiful method.
+
+Another formula exists that tells us that the formula for $r'_{ij}$ might be
+complicated if we do not impose some constraints. If we denote the
+$(i, j)$--cofactor of $r$ as $D_{ij}(r)$, then it is well known that:
+\[
+  r^{-1} = \frac{1}{\det(r)}\bmat{
+    D_{11}(r) & \dots   & D_{1n}(r) \\
+    \vdots    & \ddots  & \vdots \\
+    D_{n1}(r) & \dots   & D_{nn}(r)
+  }^{T}
+\]
+so that
+\[
+  r'_{ij} = \frac{1}{\det(r)}D_{ji}(r)
+\]
+and
+\[
+  c_r(m_rw_r)^k(a) = ||r||^{2k} \frac{
+      \sum_{i, j} \cnj{D_{ji}}a_{ij}
+    }{
+      \sum_{p} \cnj{D_{1p}r_{1p}}
+    }
+\]
+
+I am not sure if there is a particularly simple formula for the right-hand side
+for an arbitrary invertible matrix $r$. If there is, then we are in luck --
+otherwise, we should, perhaps, look at restrictions on $r$, in addition to
+invertibility. At any rate, I think I need some guidance at this point.
+
+\section{Future Work}
 
 We can now try to compute whether this is a Frobenius algebra, but at this
 point, we might think of classifying bilinear multiplications on matrix
@@ -217,40 +353,4 @@ Then, we can also think about non-associative or non-unital Frobenius structures
 like a coproduct on a Lie algebra that satisfies Frobenius laws, if that is even
 possible. A google search with such terms reveals that these terms do exist
 together in the literature -- I haven't looked deeper than that.
-
-%\section{Normalizers}
-%
-%Consider a planar cobordism $\fn{Z}{I}{I}$ with genus $n$. Let $P$ be the pair
-%of pants. Then, we observe that $Z \circ P$, $P \circ (Z \amalg \varnothing)$
-%and $P \circ (\varnothing \amalg Z)$ all have the same genus and are hence equal
-%making $Z$ central for the product $P$.
-%
-%We now consider the case that $n = 2k + 1$. If we number the holes in $Z$ from
-%$1$ to $2k + 1$, viewing them as arranged from one end of the pod to the other,
-%then we can cut the pod across the middle or $(\flr{k} + 1)$--th hole to get a
-%decomposition of $Z$ as some $Q' \circ Q$ for cobordisms $\fn{Q}{I}{I \amalg I}$
-%and $\fn{Q'}{I \amalg I}{I}$, each with genus $k$. It is then easy to see that
-%$Q' = Q^{\dagger} = Q^{*}$ so that $Z = Q^{\dagger} \circ Q$ satisfies the
-%definition of positivity in a monoidal category.
-%
-%Letting $R$ denote the rectangle $I \times I$, we wish to impose definiteness on
-%$Z$ as well as the loop condition on the pod:
-%$\eps \circ (P \amalg R) \circ (Z^2 \amalg \eta^{\dagger}) = C$, where $C$ is
-%the cap. For definiteness, suppose that $Z$ has an inverse $H$ in some suitable
-%category with genus $m$.  Then, in this category, for a morphism $I \to I$,
-%having $2k + 1 + m$ holes is the same having $0$ holes. The loop condition then
-%implies that having $2(2k + 1) + 1 = 4k + 2 + 1 = 4k + 3$ holes is the same as
-%having $0$ holes. Combining these, if $2k + 1 + m \geq 4k + 3$, then we can
-%remove $2k + 1 + m$ holes from the pod to get $4k + 3 - 2k - 1 - m = 2k + 2 - m$
-%holes which must again be the same as having $0$ holes. If
-%$2k + 1 + m \geq 4k + 3$, by removing holes from $Z \circ H$, we see that
-%having $2k + 1 + m - 4k - 3 = m - 2k - 2$ must be the same as having $0$ holes.
-%
-%We then notice that each hole is given by the glueing of a pair-of-pants and a
-%co-pair-of-pants. So, we may now check if we get the counit when we compose
-%co-multiplication followed by multiplication some number of times, with the last
-%multiplication capped by the co-unit, for a concrete matrix algebra that is
-%known to be Frobenius, keeping in mind the above relations. We can take an
-%instantiation of the abstract matrix algebra given in
-%\cite[12, Prop. 2.11]{CatQChan}.
 
