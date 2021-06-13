@@ -5,7 +5,7 @@ BIB_DEPS=$(shell ls -1 *.bib)
 STY_DEPS=$(shell ls -1 *.sty)
 TEX_DEPS=$(shell ls -1 *.tex)
 
-all: ${PROJECT}.pdf
+all: mon_bicat_cob.pdf ${PROJECT}.pdf scaled_mat_prod.pdf mat_prod_int_mat.pdf
 
 build:
 	if [ ! -d build ]; then mkdir build; fi
@@ -28,9 +28,30 @@ ${PROJECT}.pdf:\
     ${TEX_DEPS}\
     ${PROJECT}.tex
 
+scaled_mat_prod.pdf:\
+    build\
+    ${BIB_DEPS}\
+    ${STY_DEPS}\
+    ${PROJECT}.tex\
+    scaled_mat_prod.tex
+
+mat_prod_int_mat.pdf:\
+    build\
+    ${BIB_DEPS}\
+    ${STY_DEPS}\
+    ${PROJECT}.tex\
+    mat_prod_int_mat.tex
+
+mon_bicat_cob.pdf:\
+    build\
+    ${BIB_DEPS}\
+    ${STY_DEPS}\
+    ${PROJECT}.tex\
+    mon_bicat_cob.tex
+
 clean:
 	rm -rf build
 
 Clean: clean
-	rm -f ${PROJECT}.pdf
+	rm -f *.pdf
 
