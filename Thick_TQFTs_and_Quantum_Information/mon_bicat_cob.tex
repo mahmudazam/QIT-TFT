@@ -62,7 +62,7 @@ bicategory where $2$--morphisms $f : M \To M'$ between cobordisms $\fn{M,
 M'}{X}{Y}$ are smooth maps $f : M \to M'$ making diagram \eqref{diag:eqcob}
 commute. We formalize this in the next subsections.
 
-\subsection{Data of the Bicategory}
+\subsection{The Base Bicategory}
 
 Our first observation is that we use almost none of the details of the manifold
 structures on objects in $\Thick_2$ in defining its morphisms and composition.
@@ -135,7 +135,7 @@ for completeness:
 \[
   \begin{tikzcd}
     & X \arrow[dl, "a" above left] \arrow[dr, "a'" above right] & \\
-    M \arrow[rr, "f" above, shift left] &
+    M \arrow[rr, "f" above] &
     & M' \\
     & Y \arrow[ul, "b" below left] \arrow[ur, "b'" below right] &
   \end{tikzcd}
@@ -145,17 +145,85 @@ $2$--morphisms $M \To M'$ as $\s{C}^*_{X, Y}(M, M')$ or $\s{C}^*_2(M, M')$ or
 $\s{C}^*(M, M')$ or $\s{C}^*_{M, M'}$.
 
 \item For objects $X, Y, Z \in \Ob \s{C}^*$ and $1$--morphisms
-$M \in \s{C}^*_{X, Y}$ and $N \in \s{C}^*_{Y, Z}$, we define:
+$M \in \s{C}^*_{X, Y}$ and $N \in \s{C}^*_{Y, Z}$, we define horizontal
+composition as follows:
 \begin{align*}
   - \circ_{X, Y, Z} -
-    &:& \s{C}^*_{Y, Z} \times \s{C}^*_{X, Y}
-      &\to& \s{C}^*_{X, Z} \\
-    &:& ((N, a_N, b_N), (M, a_M, b_M))
-      &\mapsto& (M \amalg_{Y} N, p_Ma_M, p_Nb_N)
+    &: \s{C}^*_{Y, Z} \times \s{C}^*_{X, Y}
+    &  \to
+    &&  \s{C}^*_{X, Z} \\
+    &: ((N, a_N, b_N), (M, a_M, b_M))
+    &  \mapsto
+    &&  (M \amalg_{Y} N, p_Ma_M, p_Nb_N)
 \end{align*}
 where $p_M$ and $p_N$ are pushed-out maps as in \eqref{diag:gluingdef}.
 
+\item For objects $X, Y \in \Ob \s{C}^*$ and $2$--morphisms
+$f : P \To Q$, $g : Q \To R$ in $\s{C}^*_{X, Y}$, we define vertical
+composition as the comoposition in $\s{C}$:
+\[
+  (g, f) \mapsto g \circ f
+\]
+
 \end{enumerate}
+
+It is easy to see that vertical composition is well-defined and strictly
+associative. For associativity of horizontal composition up to
+$1$--isomorphisms, we prove the following lemma:
+\begin{lem}
+Let $W, X, Y, Z$ be objects of $\s{C}^*$ with $1$--morphisms, $L : W \to X$,
+$M : X \to Y$ and $N : Y \to Z$. Then, there is a $2$--isomorphism
+\[
+  \alpha_{L, M, N}
+  : N \circ (M \circ L) = (L \amalg_X M) \amalg_Y N
+  \To L \amalg_X (M \amalg_Y N) = (N \circ M) \circ L
+\]
+natural in $L, M, N$.
+\end{lem}
+\begin{proof}
+We let $a_R, b_R$ be the boundary inclusions and $p_R, q_R$ for suitable
+choices of $R$. For instance, $a_M$ is the boundary inclusion $X \monic M$,
+$b_M$ is the boundary inclusion $Y \monic M$ while $p_{M \circ L}$ is the
+pushout inclusion $L \monic M \circ L$ and $q_{M \circ L}$ is the pushout
+inclusion $M \monic M \circ L$. As shown in \cite{Mahmud2021}, we get the
+following pasting of pushout diagrams:
+\[\begin{tikzcd}[column sep=large, row sep=large]
+  & X \arrow[r, "b_{L}" above] \arrow[d, "a_{M}" left]
+  & L \arrow[d, green!55!black, "p_{M \circ L}" right]
+      \arrow[rdd, bend left, "p_{(N \circ M) \circ L}"] \\
+  Y \arrow[r, "b_{M}" above] \arrow[d, "a_{N}" left]
+  & M \arrow[r, "q_{M \circ L}" below] \arrow[d, "p_{N \circ M}" right]
+  & M \circ L \arrow[dd, green!55!black, near end, "r_{N \circ (M \circ L)}"]
+      \arrow[rd, dashed, red, "\alpha" description]\\
+  N \arrow[r, red, "q_{N \circ M}" below]
+    \arrow[rrd, bend right, "q_{N \circ (M \circ L)}"]
+  & N \circ M
+      \arrow[rr, near start, crossing over, red, "q_{(N \circ M) \circ L}"]
+      \arrow[rd, dashed, green!55!black, "\beta" description]
+  &
+  & (N \circ M) \circ L
+      \arrow[dl, dashed, shift right=1ex, "\phi" description] \\
+  & & N \circ (M \circ L)
+      \arrow[ur, dashed, shift right=1ex, "\psi" description] &
+\end{tikzcd}\]
+where $\alpha$ and $\beta$ are smooth maps obtained by the pushout properties
+of $M \circ L$ and $N \circ M$ respectively. The green paths in the diagram
+yield a smooth map $\fn{\phi}{(N \circ M) \circ L}{N \circ (M \circ L)}$ by the
+pushout property of $(N \circ M) \circ L$. Similarly, the red paths yield a
+smooth map $\fn{\psi}{N \circ (M \circ L)}{(N \circ M) \circ L}$. The maps
+$\psi$ and $\phi$ are then shown to be $2$--morphisms as well as inverse to
+each other in \cite{Mahmud2021}.
+
+\begin{small}
+\[\begin{tikzcd}[column sep=large, row sep=large]
+  &   &   & X \\
+  &   & M &   \\
+  & Y &   &   \\
+N &   &   &   \\
+\end{tikzcd}\]
+\end{small}
+
+\end{proof}
 
 \end{document}
 
