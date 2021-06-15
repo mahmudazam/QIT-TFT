@@ -1,0 +1,66 @@
+
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRADkByEAX1PUy58hFACZyVWoxZsAmr34gM2PASIAWCdXrNWiEAFlufASuFEAbFqm62ADQWmhalAA5rOmfoAyxxcucRZHEARklPPQ5OAAIAHViAYywAJwToo0clQVUgqzDtaUijOMSUtN9MgJyiMlFwwrZ2SuzzFE06gtt9A2azF2R3DpsvEG9ewKJxAGZ6ro4SpNT08eqUKxnOkYMFsuixkyy+oPF1WZGuHaWACmL4xfLOAEoV1uQrU83Iq4u73aNHy4PF79cQWM6RdiA6I3KHeZ4HKqvKxgz5sb5QgwA35LfaSGBQADm8CIoAAZskIABbJBkEA4CBIADsqP0pIA+k1qAw6AAjGAMAAKLRcICwYGwsEy5KpNOo9KQAFYWSAAI5s4BcIw8EBc3n8oVHNhiiWsA7S6mIWnyxAhcTDSJqjWcG6cXyPbW6vmC4UiUXirCSs0Ui0hOUMy3KujqrgekDcr0Gib6Y0B02Kc1IUN08N2iJsHnqrU6uN672G5P+wPp4OZsNMyPR2Px-U+o2VtNkms2uuIdz2-Nsnqelvlv0mqVdu3Wvt51mD4vNstJsepicyxBT8NK-v6NDqsCcIvDperFdVzvrzdIKw71WF12cJulxOnlPnkAZxBTHuaW8F4C+E+CathW45Buu37ZkguYNPoUbAEeJbAaOb4dh+XaQdaACcyr-t4QEjsuqFrhamHhjOsEgPBiGLi+rRnmhn6-thyrsmMx50SKxHgRazHhjes5UeqlIPgRJ70dx1brnxmaQYJe7AN8h5PIBC7PiBDEkYqPYhLSgnshqBhiZxvrEVyYqRFAdBwAAFviWmINu1ohHJlGOkp-yqRxGmSReFo3s5Wb6dGRlqchRHtguFlsFZtn2Tx146TBcwKVwLpusZPmRQliDMlBNp6W5IWZSh2VSRaeXOb+gmOuwNxwiVEVgeVSB9oFyqOgY+FhYRr5lX5rU6YVKXFT14lcf16Hrjh+UhEFlEKV1jV9c1A2IDNznbvJbJXN8mJwmNJltqtU0hla4YhFtRWKew+3uodWUnZ+c06dVC3RvV93eaVT1drar2sR9XVfUhvUSZF5lgJZ1l2VADn-bNrlzPEaDYNw31NaukPQ3FcPULZWCkjgSAALSiDlLk6VdcwGXtjzdRjK1Y3G0X6LFsPw2RmbJSMKM2Vg6Og+NpkQyzUMxTD9n4-zROk+TLU2jJNrU7zsSo1gD0-czDCsyA7NSyABOy4gZMU05F1vcjav85rmOStjEu48WRvEyb5MUDwQA
+\begin{tikzcd}[column sep=large, row sep=huge]
+ & &
+Y
+  \arrow[lld, "a_{N'}" description]
+  \arrow[rrd, "b_{M'}" description]
+  \arrow[llddd, "a_{N}" description, near start]
+  \arrow[rrddd, "b_M" description, near start] & & & &
+X
+  \arrow[rrd, "b_{L'}" description]
+  \arrow[lld, "a_{M'}" description]
+  \arrow[rrddd, "b_{L}" description, near start]
+  \arrow[llddd, "a_{M}" description, near start] & & \\
+N'
+  \arrow[dd, "f_N" description]
+  \arrow[rrd, "q_{N'M'}" description]
+  \arrow[rrdddd, "q_{N'(M'L')}" description, bend right=25, near end,
+        shift left=2] & & & &
+M'
+  \arrow[dd, "f_M" description]
+  \arrow[lld, "p_{N'M'}" description]
+  \arrow[rrd, "q_{M'L'}" description] & & & &
+L'
+  \arrow[dd, "f_L" description]
+  \arrow[lld, "p_{M'L'}" description]
+  \arrow[lldddd, "p_{(N'M')L'}" description, near end, bend left=25,
+        shift right=2] \\ &  &
+N'M'
+  \arrow[dd, "f_{NM}" description, dashed]
+  \arrow[rrrrddd, "q_{(N'M')L'}" description, near start]
+  \arrow[ddd, "\beta'" description, bend left] & & & &
+M'L'
+  \arrow[dd, "f_{ML}" description, dashed]
+  \arrow[llllddd, "p_{N'(M'L')}" description, near start]
+  \arrow[ddd, "\gamma'" description, bend right] & & \\
+N
+  \arrow[rrd, "q_{NM}" description, near end]
+  \arrow[rrdddd, "q_{N(ML)}" description, bend right] & & & &
+M
+  \arrow[rrd, "q_{ML}" description]
+  \arrow[lld, "p_{NM}" description] & & & &
+L
+  \arrow[lld, "p_{ML}" description, near end]
+  \arrow[lldddd, "p_((NM)L)" description, bend left] \\ & &
+NM
+  \arrow[rrrrddd, "q_{(NM)L)}" description, near end]
+  \arrow[ddd, "\beta" description, bend right=45] & & & &
+ML
+  \arrow[llllddd, "p_{N(ML)}" description, near end]
+  \arrow[ddd, "\gamma" description, bend left=45] & & \\ & &
+N'(M'L')
+  \arrow[dd, "f_{N(ML)}" description, dashed]
+  \arrow[rrrr, "\alpha_{L', M', N'}" above, shift left=2,
+         crossing over] &  & & &
+(N'M')L'
+  \arrow[dd, "f_{(NM)L}" description, dashed]
+  \arrow[llll, "\alpha_{L', M', N'}^{-1}" below, near start,
+         shift left=2, crossing over]
+& & \\ & & & & & & & & \\ & &
+N(ML)
+  \arrow[rrrr, "\alpha_{L, M, N}" above, shift left=2] & & & &
+(NM)L
+  \arrow[llll, "\alpha_{L, M, N}^{-1}" below, shift left=2] & &
+\end{tikzcd}
+

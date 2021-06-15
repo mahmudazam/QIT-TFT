@@ -34,13 +34,15 @@ composite is the class of the manifold obtained by gluing $M$ and $N$ along $Y$
 -- that is, $N \circ M \in \Thick_d(X, Z)$ is the pushout $M \amalg_Y N$:
 \begin{equation}\label{diag:gluingdef}
   \begin{tikzcd}
-    Y \arrow[r, "b_M" above] \arrow[d, "a_N" left] & M \arrow[d, "p_M" right] \\
-    N \arrow[r, "p_N" below] & M \amalg_Y N := N \circ M
+    Y \arrow[r, "b_M" above] \arrow[d, "a_N" left] &
+    M \arrow[d, "p_{NM}" right] \\
+    N \arrow[r, "q_{NM}" below] &
+    M \amalg_Y N := N * M
   \end{tikzcd}
 \end{equation}
 with boundary inclusions
-$a_{N \circ M} = p_Ma_M : X \monic N \circ M$ and
-$b_{N \circ M} = p_Nb_N : Z \monic N \circ M$. It is also straightforward to
+$a_{N \circ M} = p_{NM}a_M : X \monic N * M$ and
+$b_{N \circ M} = q_{NM}b_N : Z \monic N * M$. It is also straightforward to
 check that $(\amalg, \varnothing)$ is a monoidal structure on $\Thick_d$.
 
 $\Thick_2$, then, is the category of planar cobordisms or thick tangles, which
@@ -130,46 +132,162 @@ $\s{C}^*(X, Y)$.
 \item For each pair of objects $X, Y \in \Ob \s{C}^*$ and each pair of
 $1$--morphisms $(M, a, b)$ and $(M', a', b')$ in $\s{C}^*_{X, Y}$, a
 $2$--morphism $f : (M, a, b) \To (M', a', b')$ is a morphism $\fn{f}{M}{M'}$ in
-$\s{C}$ making diagram \eqref{diag:eqcob} commute -- we include the diagram here
-for completeness:
-\[
-  \begin{tikzcd}
-    & X \arrow[dl, "a" above left] \arrow[dr, "a'" above right] & \\
-    M \arrow[rr, "f" above] &
-    & M' \\
-    & Y \arrow[ul, "b" below left] \arrow[ur, "b'" below right] &
-  \end{tikzcd}
-\]
+$\s{C}$ making diagram \eqref{diag:eqcob} commute -- we include the diagram
+again here for completeness:
+\[\begin{tikzcd}
+  & X \arrow[dl, "a" above left] \arrow[dr, "a'" above right] & \\
+  M \arrow[rr, "f" above] &
+  & M' \\
+  & Y \arrow[ul, "b" below left] \arrow[ur, "b'" below right] &
+\end{tikzcd}\]
 We denote the set of
 $2$--morphisms $M \To M'$ as $\s{C}^*_{X, Y}(M, M')$ or $\s{C}^*_2(M, M')$ or
 $\s{C}^*(M, M')$ or $\s{C}^*_{M, M'}$.
 
 \item For objects $X, Y, Z \in \Ob \s{C}^*$ and $1$--morphisms
 $M \in \s{C}^*_{X, Y}$ and $N \in \s{C}^*_{Y, Z}$, we define horizontal
-composition as follows:
-\begin{align*}
-  - \circ_{X, Y, Z} -
-    &: \s{C}^*_{Y, Z} \times \s{C}^*_{X, Y}
-    &  \to
-    &&  \s{C}^*_{X, Z} \\
-    &: ((N, a_N, b_N), (M, a_M, b_M))
-    &  \mapsto
-    &&  (M \amalg_{Y} N, p_Ma_M, p_Nb_N)
-\end{align*}
-where $p_M$ and $p_N$ are pushed-out maps as in \eqref{diag:gluingdef}.
+composition or \textit{gluing} as follows for objects:
+\[\begin{array}{ccccc}
+  - *_{X, Y, Z} -
+  &:& \s{C}^*_{Y, Z} \times \s{C}^*_{X, Y}
+  &  \to
+  &  \s{C}^*_{X, Z} \\
+  &:& ((N, a_N, b_N), (M, a_M, b_M))
+  &  \mapsto
+  &  (M \amalg_{Y} N, p_{NM}a_M, q_{N}b_N)
+\end{array}\]
+where $p_{NM}$ and $q_{NM}$ are pushed-out maps as in \eqref{diag:gluingdef}.
+For $2$--morphisms as shown below:
+\begin{equation}
+\begin{tikzcd}[column sep=85]
+  X \arrow[r, bend left=35,
+          "{(M_1, a_{M_1}, b_{M_1})}"{name=M1, description}]
+    \arrow[r, bend right=35,
+          "{(M_2, a_{M_2}, b_{M_2})}"{name=M2, description}] &
+  Y \arrow[r, bend left=35,
+          "{(N_1, a_{N_1}, b_{N_1})}"{name=N1, description}]
+    \arrow[r, bend right=35,
+          "{(N_2, a_{N_2}, b_{N_2})}"{name=N2, description}] &
+  Z
+  \arrow[Rightarrow, from=M1, to=M2, "f_M"]
+  \arrow[Rightarrow, from=N1, to=N2, "f_N"]
+\end{tikzcd}
+\end{equation}
+we expand the diagram using the definition of a $2$--morphism and then push out
+the boundary inclusions of Y to get the following diagram:
+\begin{equation}\label{diag:horizontalcomp}
+\begin{scriptsize}
+\begin{tikzcd}[column sep=50, row sep=huge]
+  & &
+  N_1 * M_1 \arrow[dd, "\phi" description, dashed] & & \\
+  & & & & \\&
+  M_1 \arrow[ruu, "p_{N_1M_1}" above left] \arrow[dd, "f_M" description] &
+  N_2 * M_2 &
+  N_1 \arrow[luu, "q_{N_1M_1}" above right] \arrow[dd, "f_N" description] & \\
+  X \arrow[ru, "a_{M_1}"] \arrow[rd, "a_{M_2}" below left] & &
+  Y \arrow[ru, "a_{N_1}" description, near end]
+    \arrow[lu, "b_{M_1}" description, near end]
+    \arrow[ld, "b_{M_2}" below right]
+    \arrow[rd, "a_{N_2}" below left] & &
+  Z \arrow[lu, "b_{N_1}" above right] \arrow[ld, "b_{N_2}" below right] \\ &
+  M_2 \arrow[ruu, "p_{N_2M_2}" description, crossing over] & &
+  N_2 \arrow[luu, "q_{N_2M_2}" description, crossing over] &
+\end{tikzcd}
+\end{scriptsize}
+\end{equation}
+This yields a unique map $\phi : N_1 * M_1 \to N_2 * M_2$ by the pushout
+property of $N_1M_1$ in $\s{C}$. We define:
+\[
+  f_N *_{X, Y, Z} f_M = f_M \amalg_Y f_N := \phi
+\]
 
 \item For objects $X, Y \in \Ob \s{C}^*$ and $2$--morphisms
 $f : P \To Q$, $g : Q \To R$ in $\s{C}^*_{X, Y}$, we define vertical
 composition as the comoposition in $\s{C}$:
 \[
-  (g, f) \mapsto g \circ f
+  (g, f) \mapsto g \circ_{\s{C}} f = gf
 \]
 
 \end{enumerate}
 
-It is easy to see that vertical composition is well-defined and strictly
-associative. For associativity of horizontal composition up to
-$1$--isomorphisms, we prove the following lemma:
+We now proceed to verify that the data above forms a bicategory. We note the
+most straightforward observation first:
+\begin{lem}
+Vertical composition is well-defined, strictly associative and unital making
+each $\s{C}^*_{X, Y}$, for all $X, Y \in \Ob \s{C}^*$, a category.
+\end{lem}
+\begin{proof}
+We need only paste the relevant analogues of diagram \eqref{diag:eqcob}.
+\end{proof}
+
+The next most immediate fact is as follows.
+\begin{lem}
+Let $X, Y, Z \in \s{C}^*$. Then,
+$- *_{X, Y, Z} - : \s{C}^*_{Y, Z} \times \s{C}^*_{X, Y} \to \s{C}^*_{X, Z}$
+is a functor of $1$--categories.
+\end{lem}
+\begin{proof}
+We consider $2$--morphisms as shown below:
+\begin{equation}
+\begin{tikzcd}[column sep=100]
+  X \arrow[r, bend left=50,
+          "{(M_1, a_{M_1}, b_{M_1})}"{name=M1, description}]
+    \arrow[r, "{(M_2, a_{M_2}, b_{M_2})}"{name=M2, description}]
+    \arrow[r, bend right=50,
+          "{(M_3, a_{M_3}, b_{M_3})}"{name=M3, description}] &
+  Y \arrow[r, bend left=50,
+          "{(N_1, a_{N_1}, b_{N_1})}"{name=N1, description}]
+    \arrow[r, "{(N_2, a_{N_2}, b_{N_2})}"{name=N2, description}]
+    \arrow[r, bend right=50,
+          "{(N_3, a_{N_3}, b_{N_3})}"{name=N3, description}] &
+  Z
+  \arrow[Rightarrow, from=M1, to=M2, "f_M"]
+  \arrow[Rightarrow, from=M2, to=M3, "g_M"]
+  \arrow[Rightarrow, from=N1, to=N2, "f_N"]
+  \arrow[Rightarrow, from=N2, to=N3, "g_N"]
+\end{tikzcd}
+\end{equation}
+We extend \eqref{diag:horizontalcomp} to get:
+\begin{equation}
+\begin{scriptsize}
+\begin{tikzcd}[column sep=65, row sep=huge]
+& &
+N_1 * M_1 \arrow[d, "f_N * g_N" description, blue!55!black]
+          \arrow[dd, bend right=65, shift right=5, green!55!black,
+                "g_Nf_N * g_Mf_M" left, near start] & & \\ & &
+N_2 * M_2 \arrow[d, "g_N * g_M" description, red!55!black] & & \\ &
+M_1 \arrow[ruu] \arrow[d, "f_M" description] &
+N_3 * M_3 &
+N_1 \arrow[luu] \arrow[d, "f_N" description] & \\
+X \arrow[ru, "a_{M_1}" description]
+  \arrow[r, "a_{M_2}" description]
+  \arrow[rd, "a_{M_3}" description] &
+M_2 \arrow[ruu] \arrow[d, "g_M" description] &
+Y \arrow[ru, "a_{N_1}" description]
+  \arrow[r, "a_{N_2}"  description, near start]
+  \arrow[rd, "a_{N_3}" description]
+  \arrow[lu, "b_{M_1}" description]
+  \arrow[l, "b_{M_2}"  description, near start]
+  \arrow[ld, "b_{M_3}" description] &
+N_2 \arrow[luu, crossing over] \arrow[d, "g_N" description] &
+Z \arrow[lu, "b_{N_1}" description]
+  \arrow[l, "b_{N_2}"  description]
+  \arrow[ld, "b_{N_3}" description] \\
+& M_3 \arrow[ruu, crossing over] & & N_3 \arrow[luu, crossing over] &
+\end{tikzcd}
+\end{scriptsize}
+\end{equation}
+where the unlabelled arrows are pushed-out maps. We get
+\[
+  g_Nf_N * g_Mf_M = (g_N * g_M)(f_N * f_M)
+\]
+by the universal property of pushouts in $\s{C}^*$, showing that
+$- *_{X, Y, Z} -$ preserves composition. The universal property again yields
+preservation of identities by taking $f_N$ and $f_M$ to be identities in
+\eqref{diag:horizontalcomp}.
+\end{proof}
+
+We also have associativity of horizontal composition up to $2$--isomorphisms.
 \begin{lem}
 Let $W, X, Y, Z$ be objects of $\s{C}^*$ with $1$--morphisms, $L : W \to X$,
 $M : X \to Y$ and $N : Y \to Z$. Then, there is a $2$--isomorphism
@@ -181,47 +299,72 @@ $M : X \to Y$ and $N : Y \to Z$. Then, there is a $2$--isomorphism
 natural in $L, M, N$.
 \end{lem}
 \begin{proof}
-We let $a_R, b_R$ be the boundary inclusions and $p_R, q_R$ for suitable
-choices of $R$. For instance, $a_M$ is the boundary inclusion $X \monic M$,
-$b_M$ is the boundary inclusion $Y \monic M$ while $p_{M \circ L}$ is the
-pushout inclusion $L \monic M \circ L$ and $q_{M \circ L}$ is the pushout
-inclusion $M \monic M \circ L$. As shown in \cite{Mahmud2021}, we get the
+We let $a_R, b_R$ be the boundary inclusions and $p_S, q_S$ for suitable choices
+of $R$ and $S$. For instance, $a_M$ is the boundary inclusion $X \monic M$,
+$b_M$ is the boundary inclusion $Y \monic M$ while $p_{M * L}$ is the
+pushout inclusion $L \monic M * L$ and $q_{M * L}$ is the pushout
+inclusion $M \monic M * L$. As shown in \cite{Mahmud2021}, we get the
 following pasting of pushout diagrams:
-\[\begin{tikzcd}[column sep=large, row sep=large]
+\begin{equation}\label{assoc1}
+\begin{tikzcd}[column sep=large, row sep=large]
   & X \arrow[r, "b_{L}" above] \arrow[d, "a_{M}" left]
-  & L \arrow[d, green!55!black, "p_{M \circ L}" right]
-      \arrow[rdd, bend left, "p_{(N \circ M) \circ L}"] \\
+  & L \arrow[d, green!55!black, "p_{ML}" right]
+      \arrow[rdd, bend left, "p_{(NM)L}"] \\
   Y \arrow[r, "b_{M}" above] \arrow[d, "a_{N}" left]
-  & M \arrow[r, "q_{M \circ L}" below] \arrow[d, "p_{N \circ M}" right]
-  & M \circ L \arrow[dd, green!55!black, near end, "r_{N \circ (M \circ L)}"]
-      \arrow[rd, dashed, red, "\alpha" description]\\
-  N \arrow[r, red, "q_{N \circ M}" below]
-    \arrow[rrd, bend right, "q_{N \circ (M \circ L)}"]
-  & N \circ M
-      \arrow[rr, near start, crossing over, red, "q_{(N \circ M) \circ L}"]
+  & M \arrow[r, "q_{ML}" below] \arrow[d, "p_{NM}" right]
+  & ML \arrow[dd, green!55!black, near end, "r_{N(ML)}"]
+      \arrow[rd, dashed, red, "\gamma" description]\\
+  N \arrow[r, red, "q_{NM}" below]
+    \arrow[rrd, bend right, "q_{N(ML)}"]
+  & NM
+      \arrow[rr, near start, crossing over, red, "q_{(NM)L}"]
       \arrow[rd, dashed, green!55!black, "\beta" description]
   &
-  & (N \circ M) \circ L
+  & (NM)L
       \arrow[dl, dashed, shift right=1ex, "\phi" description] \\
-  & & N \circ (M \circ L)
+  & & N(ML)
       \arrow[ur, dashed, shift right=1ex, "\psi" description] &
-\end{tikzcd}\]
-where $\alpha$ and $\beta$ are smooth maps obtained by the pushout properties
-of $M \circ L$ and $N \circ M$ respectively. The green paths in the diagram
-yield a smooth map $\fn{\phi}{(N \circ M) \circ L}{N \circ (M \circ L)}$ by the
-pushout property of $(N \circ M) \circ L$. Similarly, the red paths yield a
-smooth map $\fn{\psi}{N \circ (M \circ L)}{(N \circ M) \circ L}$. The maps
-$\psi$ and $\phi$ are then shown to be $2$--morphisms as well as inverse to
-each other in \cite{Mahmud2021}.
+\end{tikzcd}
+\end{equation}
+where $\gamma$ and $\beta$ are maps obtained by the pushout properties of
+$M * L$ and $N * M$ respectively in $\s{C}$. The green paths in the diagram
+yield a map $\fn{\phi}{(N * M) * L}{N * (M * L)}$ by the pushout property of
+$(N * M) * L$. Similarly, the red paths yield a map
+$\fn{\psi}{N * (M * L)}{(N * M) * L}$. The maps $\psi$ and $\phi$ are then shown
+to be $2$--morphisms as well as inverse to each other in $\s{C}$, in
+\cite{Mahmud2021}. We let
+$\alpha_{L, M, N} := \psi, \alpha^{-1}_{L, M, N} := \phi$.
 
-\begin{small}
-\[\begin{tikzcd}[column sep=large, row sep=large]
-  &   &   & X \\
-  &   & M &   \\
-  & Y &   &   \\
-N &   &   &   \\
-\end{tikzcd}\]
-\end{small}
+For naturality, let
+\[
+\begin{array}{ccccc}
+  f_L & : & (L', a_{L'}, b_{L'}) & \To & (L, a_L, b_L) \\
+  f_M & : & (M', a_{M'}, b_{M'}) & \To & (M, a_M, b_M) \\
+  f_N & : & (N', a_{N'}, b_{N'}) & \To & (N, a_N, b_N)
+\end{array}
+\]
+be $2$--morphisms. Using the same argument as above, we obtain a diagram
+involving $L', M', N'$ analogous to \eqref{assoc1}. Pasting this diagram to
+\eqref{assoc1} using $f_L, f_M, f_N$ we get the following commutative
+diagram\footnote{This diagram was generated using a tikzcd-editor
+\cite{tikzcdeditor}.} in $\s{C}$:
+\begin{figure}[H]\label{fig:glue_assoc}
+\begin{center}
+\begin{scriptsize}
+\input{glue_assoc}
+\end{scriptsize}
+\end{center}
+\caption{Weak Associativity of Gluing}
+\end{figure}
+Here, the dashed arrows are obtained by the universal properties of the relevant
+pushout objects. By the uniqueness of these dashed arrows, we also have
+\[
+  f_{N * (M * L)} = f_N * f_{M * L}  \text{ and }
+  f_{(N * M) * L} = f_{N * M} * f_L
+\]
+Thus, the square forming the front face of diagram \ref{fig:glue_assoc} shows
+that $\alpha$ is a natural isomorphism
+$- \circ (- \circ -) \To (- \circ -) \circ -$.
 
 \end{proof}
 
