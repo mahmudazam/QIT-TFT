@@ -1,0 +1,64 @@
+\begin{tikzpicture}[baseline=(a).base]
+\node[scale=0.675] (a) at (0, 0){
+\begin{tikzcd}[row sep=30]
+&
+W
+\arrow[rrd]
+\arrow[ld] & & & &
+X
+\arrow[rrd]
+\arrow[lld] & & & &
+Y
+\arrow[rd]
+\arrow[lld] & \\
+K
+\arrow[rd]
+\arrow[r]
+\arrow[rrrddddddd, bend right]
+\arrow[rrrddddd, bend right, shift left] &
+LK
+\arrow[rrd]
+\arrow[rrrrdddd] & &
+L
+\arrow[rrrrd]
+\arrow[rr]
+\arrow[ll] & &
+ML
+\arrow[rrrrd]
+\arrow[lllld] & &
+M
+\arrow[lllld]
+\arrow[rr]
+\arrow[ll] & &
+NM
+\arrow[lld]
+\arrow[lllldddd] &
+N
+\arrow[ld]
+\arrow[l]
+\arrow[lllddddd, bend left, shift right]
+\arrow[lllddddddd, bend left] \\ &
+(ML)K
+\arrow[rrrrrrdddddd, bend right=15] & &
+M(LK)
+\arrow[rrrrdddd, bend left] & & & &
+(NM)L
+\arrow[lllldddd, bend right] & &
+N(ML)
+\arrow[lllllldddddd, bend left=15]
+& \\ & & & & & & & & & & \\ & & & & & & & & & & \\ & & & & &
+(NM)(LK)
+\arrow[lld, crossing over, green!55!black, "\alpha_{K, L, NM}" description]
+& & & & & \\ & & &
+((NM)L)K & & & &
+N(M(LK))
+\arrow[llu, crossing over, green!55!black, "\alpha_{LK, M, N}" description]
+\arrow[dd, green!55!black, dashed, "\phi" description]
+& & & \\ & & & & & & & & & & \\ & & &
+(N(ML))K
+\arrow[uu, green!55!black, dashed, "\psi" description] & & & &
+N((ML)K)
+\arrow[llll, green!55!black, "\alpha_{K, ML, N}" description] & & &
+\end{tikzcd}
+};
+\end{tikzpicture}

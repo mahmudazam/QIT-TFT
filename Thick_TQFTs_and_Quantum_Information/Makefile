@@ -48,6 +48,7 @@ mon_bicat_cob.pdf:\
     ${STY_DEPS}\
     ${PROJECT}.tex\
     glue_assoc.tex\
+    glue_assoc_coherence.tex\
     mon_bicat_cob.tex
 
 clean:
