@@ -4,13 +4,43 @@
 \usepackage{preamble}
 \usepackage{subfiles}
 
-\begin{document}
-
+\AtBeginDocument{
 \input{title}
 \input{abstract}
 \input{frontmatter}
-\input{body}
+}
+
+\AtEndDocument{
 \input{references}
+}
+
+\begin{document}
+
+\section{Matrix Algebras}
+
+\subsection{Scaled matrix product}
+
+\subfile{scaled_mat_prod}
+
+\subsection{Matrix product with intervening matrix}
+
+\subfile{mat_prod_int_mat}
+
+\pagebreak
+
+\subfile{mon_bicat_cob}
+
+%\section{Future Work}
+%
+%We can now try to compute whether this is a Frobenius algebra, but at this
+%point, we might think of classifying bilinear multiplications on matrix
+%algebras. When is a morphism $\M_n \otimes \M_n \to \M_n$ associative, unital,
+%dagger Frobenius and normalizable? I am not sure how easy that is.
+%
+%Then, we can also think about non-associative or non-unital Frobenius structures
+%like a coproduct on a Lie algebra that satisfies Frobenius laws, if that is even
+%possible. A google search with such terms reveals that these terms do exist
+%together in the literature -- I haven't looked deeper than that.
 
 \end{document}
 
