@@ -1,0 +1,127 @@
+
+\documentclass[./Thick_TQFTs_and_Quantum_Information.tex]{subfiles}
+
+\begin{document}
+
+\section{Parallel Transport}
+
+Consider the monoidal double (or bi-) category of thick tangles, $\DThick$. We
+give a concrete method to define a functor of monoidal double (or bi-)
+categories from $\DThick$ to some suitable monoidal double (or bi-) category of
+complex vector spaces. Note that we do not yet define the codomain of this
+under-construction functor. We will define the codomain so as to make this
+functor sensible.
+
+The object function $F_0$ of a functor is given by assigning to each disjoint
+union $X = I^{\amalg n}$ the $n$--th tensor power $F_0(X) = A^{\tensor n}$ of
+some fixed algebra $A$ -- we may be specific enough to say that the bracketing
+pattern of the image is the same as the preimage. It is easy to see that this
+assignment is well-defined.
+
+Next, we consider the horizontal $1$--morphisms or the cobordisms. Cobordisms
+$Y : I^{\amalg n} \to I^{\amalg m}$ in $\DThick$, for positive $m$ and $n$, are
+surfaces with boundary $I^{\amalg n} \amalg I^{\amalg m}$ and are hence
+determined up to diffeomorphism by genus. We first consider some ``canonical''
+genus $k$ cobordism $Y : I \to I$ where the holes are circles with centers along
+a straight line from one boundary interval to another. This cobordism then
+decomposes into a $k$--fold composition of $M * W : I \to I$ with itself where
+$M$ is the ``canonical'' pair-of-pants and $W$ is the canonical
+co-pair-of-pants. In associating a linear map ``functorially'' to $Y$, it
+suffices to associate linear maps to $M$ -- we can then associate a linear map
+to $W$ by duality and get a linear map for $Y$ by composition.
+
+For associating a linear map to $M$, we take the trivial bundle
+$\mathcal{O} : M \times A \to M$ with a connection $\nabla$. Then, we choose two
+paths: one from the mid-point of each in-boundary interval to the mid-point of
+the out-boudnary interval. By parallel transport along each curve, we get two
+linear maps $l_1, l_2 : A \to A$. We then have a linear map
+$l : A \tensor A \to A$ given by $l(x \tensor y) = l_1(x)l_2(y)$ where the
+product in the right is the algebra product in $A$. Then, the linear map
+associated to $W$ is the conjugate transpose $l^{\dagger}$.
+
+We then obtain a linear map associated to $Y$: the $k$--fold composite
+$(ll^{\dagger})^k$. We set $F_1(Y) := (ll^{\dagger})^k$. Now, consider a
+cobordism $Z : I^{\amalg n} \to I^{\amalg m}$ of genus $k$ such that
+$Z = RYQ$, where $Q$ is a cobordism $I^{\amalg n} \to I$ formed in some
+``canonical'' way by a gluing of pairs of pants and cylinders and $R$ is a
+cobordism $I \to I^{\amalg m}$ formed again in a ``canonical'' way from
+co-pairs pants and cylinders. Of course, we associate a linear map to the
+cylinder by another parallel transport along a curve between the mid-points of
+its two boundaries. Then, again by composition, we get a linear map
+$F_1 : A^{\tensor n} \to A^{\tensor m}$.
+
+This gives an assignment $F_1(Z)$ for a representative $Z$ of each
+diffeomorphism class of cobordisms in $\DThick$. For the assignment of a linear
+map to every cobordism in $\DThick$, we take the following approach. Let $Z'$
+be an arbitrary cobordism in the class of some $Z$ for which $F_1(Z)$ has been
+defined as above. Then we pick a boundary preserving diffeomorphism
+$f \in \Aut_{\Man}(Z)$ such that $f(Z) = Z'$\footnote{Of course, we take the
+underlying topological space for each manifold in a diffeomorphism class to be
+the same}. Let $\set{\gamma_i}$ be the family of curves which along which
+parallel transport gave us the linear maps $F_1(Z)$. Then,
+$\set{f \circ \gamma_i}$ is a family of curves in $Z'$ with the following nice
+propeties.
+\begin{thm}
+If $\gamma_i$ and $\gamma_j$ share an end-point, then so do $f\gamma_i$ and
+$f\gamma_j$.
+\end{thm}
+\begin{proof}
+{\color{blue!55!black} TODO}
+\end{proof}
+
+\begin{thm}
+The parallel transport ``assembly'' developed above is respected.
+{\color{blue!55!black} TODO: Need to make this precise. Roughly, we need to
+remember each $\gamma_i$, how it glues to the others and when to multiply or
+take tensor products.}
+\end{thm}
+
+We now turn our attention to the case when $m$ or $n$ is zero. We can treat the
+case $n = 0$ and obtain the other case by duality. Let
+$Z : \varnothing \to I^{\amalg m}$ with genus $k$. Then $Z$ decomposes as
+$Y * Z'$ where $Z'$ is a genus zero cobordism $\varnothing \to I$ which we will
+call an ``atomic element'' cobordism. We call $Z$ an element cobordism and hence
+$Z'$ is deemed atomic because we will not decompose it further. $Z'$ has a
+boundary preserving diffeomorphism $f : Z \to Z'$ for some atomic
+element $Z''$ deemed ``canonical''. We associate a linear map $a : \C \to A$ to
+$Z''$ as follows. Take a loop $\gamma$ in $Z''$ on the mid-point of its only
+boundary interval and obtain an element $a \in A$, or equivalently linear map
+$a : \C \to A$ by parallel transport of some fixed element $a_0 \in A$. We set
+$F_1(Z'') = a$ and get $F_1(Z')$ by parallel transport of $a_0$ along $f\gamma$.
+$F_1(Z)$ is then obtained by composition.
+
+This completes the definition of an object function $F_1$ for the
+morphism category of $\DThick$. Now, we turn our attention to $2$--morphisms --
+boundary preserving diffeomorphisms between cobordisms. Let $f : Z \to Z'$ be
+one such diffeomorphism. We must assign to $f$ some object that functions as
+roughly a ``morphism of morphisms of vector spaces''. We have a few ways ways
+of achieving this from which we will ultimately have to pick one to formulate
+the codomain double (or bi-) category -- $F_1(f) : F_1(Z) \to F_1(Z')$ could be:
+\begin{enumerate}[(i)]
+
+\item a function
+\[
+\Hom{\dom F_1(Z), \codom F_1(Z)} \to \Hom{\dom F_1(Z), \codom F_1(Z)}
+\]
+such that $F_1(f)(F_1(Z)) = F_1(Z')$.
+
+\item a homotopy class of a path in $\Hom{\dom F_1(Z), \codom F_1(Z)}$ from
+$F_1(Z)$ to $F_1(Z')$
+
+\item a pair of mappings $f_d : \dom F_1(Z) \to \dom F_1(Z')$ and
+$f_c : \codom F_1(Z) \to \codom F_1(Z')$ such that the following square commutes:
+\begin{equation}\label{diag:eqcob}
+\begin{tikzpicture}[baseline=(a).base]
+\node[scale=\diagscale] (a) at (0, 0){
+\begin{tikzcd}
+\dom F_1(Z) \arrow[r, "F_1(Z)" above] \arrow[d, "f_d" left] &
+\codom F_1(Z) \arrow[d, "f_c" right] \\
+\dom F_1(Z') \arrow[r, "F_1(Z')" below] & \codom F_1(Z')
+\end{tikzcd}
+};
+\end{tikzpicture}
+\end{equation}
+\end{enumerate}
+
+\end{document}
+
