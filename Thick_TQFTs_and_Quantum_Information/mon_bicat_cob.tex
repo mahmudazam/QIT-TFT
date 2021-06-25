@@ -236,22 +236,221 @@ isomorphism, or simply morphism, of connections.
 \end{defn}
 
 From the work above, we have established the following results.
-\begin{thm}[Category of Connections]
-There exists a groupoid whose objects are connections and whose morphisms are
-isomorphisms of connections.
+\begin{thm}
+There exists a groupoid, denoted $\Conn$, whose objects are connections and
+whose morphisms are isomorphisms of connections.
 \end{thm}
+\begin{defn}[Category of Connections]
+We will call the category of the above function the category or groupoid of
+connections. We will denote this category $\Conn$.
+\end{defn}
 
-We observe that the category of connections has a monoidal structure. Let
-$\nabla_1$ and $\nabla_2$ be two connections with underlying bundles
-$\pi_1 : E_1 \to M_1$ and $\pi_2 : E_2 \to M_2$ respectively. Then, the
-coproduct or disjoint union of these bundles is given by
-$\pi_1 \amalg \pi_2 : E_1 \amalg E_2 \to M_1 \amalg M_2$, the transition
-functions of which are defined component-wise. Then, we can also define a
-function of sets $\nabla := \nabla_1 \amalg \nabla_2$. However, component-wise,
-$\nabla$ satisfies the relations of a connection and is hence a connection.
+We now try to establish a monoidal structure for a subcategory of the category
+of connections. Let $\nabla_1$ and $\nabla_2$ be two connections with underlying
+bundles $\pi_1 : E_1 \to M_1$ and $\pi_2 : E_2 \to M_2$ respectively. We will
+consider the coproduct or disjoint union of these bundles in the category of
+manifolds. There exists a smooth map
+$\pi_1 \amalg \pi_2 : E_1 \amalg E_2 \to M_1 \amalg M_2$ which we will give the
+structure of a vector bundle as follows. For this, we additionally assume that
+the fibres of $E_1$ and $E_2$ are the same vector space. Let
+$U = U_1 \amalg U_2, V = V_1 \amalg V_2$ be open sets in $M_1 \amalg M_2$ with
+$U_i, V_i \subset M_i$ for $i \in \set{1, 2}$, and consider
+$(U_1 \amalg U_2) \cap (V_1 \amalg V_2) = (U_1 \cap V_1) \amalg (U_2 \cap V_2)$.
+We have a transition function $G_{U_1, V_1}$ on $U_1 \cap V_1$ from the bundle
+$\pi_1$ and one $H_{U_2, V_2}$ on $U_2 \cap V_2$ from $\pi_2$. We define a
+function $(G \amalg H)_{U, V} : U \cap V \to \GL_n(\C)$ piecewise, as
+follows:
+\[
+  (G \amalg H)_{U, V}(x) := \begin{cases}
+    G_{U_1, V_1}(x), & x \in U_1 \cap V_1 \subset M_1 \\
+    H_{U_2, V_2}(x), & x \in U_2 \cap V_2 \subset M_2
+  \end{cases}
+\]
+which is smooth since it is a disjoint union of smooth functions. Therefore,
+\[
+  G \amalg H := \set[(G \amalg H)_{U, V}]
+                    {U, V \subset M_1 \amalg M_2 \text{ are open}}
+\]
+is a vector bundle structure on $\pi_1 \amalg \pi_2$. A section of
+$E_1 \amalg E_2$ is a smooth map
+\[
+  s : M_1 \amalg M_2 \to E_1 \amalg E_2
+\]
+satisfying $(\pi_1 \amalg \pi_2)s = \id_{M_1 \amalg M_2}$. We note that this
+guarantees that the $s = s_1 \amalg s_2$ where $s_i$ is a section of
+$E_i$, $i \in \set{1, 2}$.
 
-\TODO{Show that there exist natural associators and unitors for this disjoint
-union of connections. Does it even work for bundles?}
+Similarly, $TM_1 \amalg TM_2 \to M_1 \amalg M_2$ is a vector bundle when $M_1$
+and $M_2$ have the same dimension, and we can take this to be the definition of
+the tangent bundle $T(M_1 \amalg M_2)$ on $M_1 \amalg M_2$. Now, let
+$\pi_3 : E_3 \to M_3$ be another bundle where all the $E_i$ have the same fibres
+and all the $M_i$ are equidimensional.
+
+We can pick a convention for disjoint unions of sets as follows:
+\[
+  A \amalg B = (A \times \set{0}) \cup (B \times \set{1})
+\]
+Under this convention,
+\[
+  E_1 \amalg (E_2 \amalg E_3)
+    = \set[(x_1, 0)]{x_1 \in E_1}
+      \cup \set[((x_2, 0), 1)]{x_2 \in E_2}
+      \cup \set[((x_3, 1), 1)]{x_3 \in E_3}
+\]
+and
+\[
+  (E_1 \amalg E_2) \amalg E_3
+    = \set[((x_1, 0), 0)]{x_1 \in E_1}
+      \cup \set[((x_2, 1), 0)]{x_2 \in E_2}
+      \cup \set[(x_3, 1)]{x_3 \in E_3}
+\]
+We have similar descriptions for the two distinct parenthesizations for
+$M_1 \amalg M_2 \amalg M_3$. Now, the map
+\[
+  \alpha_{E_1, E_2, E_3} : E_1 \amalg (E_2 \amalg E_3)
+                           \to (E_1 \amalg E_2) \amalg E_3
+\]
+defined by
+\[
+  (x_1, 0) \mapsto ((x_1, 0), 0),
+  ((x_2, 0), 1) \mapsto ((x_2, 1), 0),
+  ((x_3, 1), 1) \mapsto (x_3, 1)
+\]
+is easily seen to be bijective and fibre-preserving. Smoothness and naturality
+in the subscripts follow from those of associators in $\Man$. We can make a
+similar argument for similarly defined unitors $\rho_E$ and $\lambda_E$. We thus
+have the following theorem.
+\begin{thm}
+The subcategory of the category of bundles formed by base spaces of a fixed
+dimension $d$ and total spaces with equal fibres is monoidal under the disjoint
+union of manifolds.
+\end{thm}
+\begin{defn}[Category of {$(V, d)$--bundles}]
+The subcategory of the category of bundles in the above theorem is called the
+category of $V$--fibred bundles on $d$--dimensional manifolds or of
+$(V, d)$--bundles and is denoted $\Bund^V_d$.
+\end{defn}
+
+We now define a function
+\[
+  \nabla_1 \amalg \nabla_2
+    : \Gamma(T(M_1 \amalg M_2) \tensor E_1 \amalg E_2)
+    \to \Gamma(E_1 \amalg E_2)
+\]
+as follows, for $i \in \set{0, 1}$:
+\[
+  (\nabla_1 \amalg \nabla_2)((X_1 \amalg X_2) \tensor (s_1 \amalg s_2))(x, i)
+    = \nabla_{i + 1}(X_{i + 1} \tensor s_{i + 1})(x)
+\]
+It is easy to see that this function satisfies the connection identities
+piecewise so that it satisfies these identities on its entire domain. Thus,
+$\nabla_1 \amalg \nabla_2$ is a connection. We then consider a connection
+$\nabla_3$ on $\pi_3$. Letting
+$f = (u, v) = (\alpha_{M_1, M_2, M_3}, \alpha_{E_1, E_2, E_3})$, we now wish to
+verify that
+\[
+  f(\nabla_1 \amalg (\nabla_2 \amalg \nabla_2))
+    = (\nabla_1 \amalg \nabla_2) \amalg \nabla_3
+\]
+For this, we will need to inspect the expression:
+\begin{align*}
+  & f(\nabla_1 \amalg (\nabla_2 \amalg \nabla_2))(
+      (X_1 \amalg X_2) \amalg X_3
+      \tensor (s_1 \amalg s_2) \amalg s_3
+      ) \\
+  =& v(\nabla_1 \amalg (\nabla_2 \amalg \nabla_3))\br{
+    du^{-1}((X_1 \amalg X_2) \amalg X_3)u
+    \tensor v^{-1}((s_1 \amalg s_2) \amalg s_3)u
+  }u^{-1} \\
+  =& v(\nabla_1 \amalg (\nabla_2 \amalg \nabla_3))\br{
+    du^{-1}((X_1 \amalg X_2) \amalg X_3)u
+    \tensor (s_1 \amalg (s_2 \amalg s_3))
+  }u^{-1}
+\end{align*}
+We then observe the following basic fact.
+\begin{lem}
+For bundles $\pi : E_i \to M_i$, $i \in \set{1, 2, 3}$, we have
+$d\alpha_{M_1, M_2, M_3} = \alpha_{E_1, E_2, E_3}$.
+\end{lem}
+\begin{proof}
+We denote $\alpha_{TM} := \alpha_{TM_1, TM_2, TM_3}$,
+$\alpha_{M} := \alpha_{M_1, M_2, M_3}$.
+Let $R$ be a manifold, and $x$ and $y$, smooth maps making the following
+diagram commute:
+\[\begin{tikzpicture}[baseline=(a).base]
+\node[scale=\diagscale] (a) at (0, 0){
+\begin{tikzcd}[column sep=large, row sep=huge]
+&
+(TM_1 \amalg TM_2) \amalg TM_3
+  \ar[d, "\pi_{(12)3}" description]
+  \ar[rrd, "x" above right] & \\
+TM_1 \amalg (TM_2 \amalg TM_3)
+  \ar[ur, "\alpha_{TM}" above left]
+  \ar[dr, "\pi_{1(23)}" below left] &
+(M_1 \amalg M_2) \amalg M_3
+  \ar[rr, "y\alpha_{M}^{-1}" description, dashed] & &
+R \\ &
+M_1 \amalg (M_2 \amalg M_3)
+  \ar[u, "\alpha_{M}" description]
+  \ar[urr, "y" below right] &
+\end{tikzcd}
+};
+\end{tikzpicture}\]
+The map $y\alpha_M^{-1}$ satisfies $(y\alpha_M^{-1})\alpha_M = y$ and
+$(y\alpha_M^{-1})\pi_{(12)3} = y\pi_{1(23)}\alpha_{TM} = x$. Suppose another map
+$r$ satisfies $r\alpha_M = y$. Then, $r = y\alpha_M^{-1}$ showing that
+$y\alpha_M^{-1}$ is unique.
+
+Therefore, $\alpha_{TM}$ makes part of the diagram excluding $R$ a pushout and
+hence must be $d\alpha_M$, by the uniqueness of the derivative.
+\end{proof}
+
+The above theorem yields:
+\begin{align*}
+  & f(\nabla_1 \amalg (\nabla_2 \amalg \nabla_2))(
+      (X_1 \amalg X_2) \amalg X_3
+      \tensor (s_1 \amalg s_2) \amalg s_3
+      ) \\
+  =& v(\nabla_1 \amalg (\nabla_2 \amalg \nabla_3))\br{
+    du^{-1}((X_1 \amalg X_2) \amalg X_3)u
+    \tensor (s_1 \amalg (s_2 \amalg s_3))
+  }u^{-1}\\
+  =& v(\nabla_1 \amalg (\nabla_2 \amalg \nabla_3))\br{
+    (X_1 \amalg (X_2 \amalg X_3))
+    \tensor (s_1 \amalg (s_2 \amalg s_3))
+  }u^{-1} \\
+  =& \alpha_{TM_1, TM_2, TM_3}(\nabla_1 \amalg (\nabla_2 \amalg \nabla_3))\br{
+    (X_1 \amalg (X_2 \amalg X_3))
+    \tensor (s_1 \amalg (s_2 \amalg s_3))
+  }\alpha_{M_1, M_2, M_3}^{-1}
+\end{align*}
+where the last expression is easily seen to be
+\[
+  ((\nabla_1 \amalg \nabla_2) \amalg \nabla_3)(
+    (X_1 \amalg X_2) \amalg X_3 \tensor (s_1 \amalg s_2) \amalg s_3
+  )
+\]
+We can similarly show that the unitors in $\Man$ yield unitors for disjoint
+unions of connections of equidimensional bundles with equal fibres.
+We have thus proved the following theorem.
+\begin{thm}
+For a vector space $V$ and a non-negative integer $d$, the subcategory of the
+category of connections consisting of all connections on objects in
+$\Bund_d^{V}$ and all morphisms of connections between them is a monoidal
+category under disjoint union.
+\end{thm}
+\begin{defn}[Category of {$(V, d)$}--Connections]
+We call the subcategory of the category of connections in the above theorem the
+category of connections on $V$--fibred bundles on $d$--dimensional manifolds or
+of $(V, d)$--connections. We denote this category $\Conn^V_d$.
+\end{defn}
+
+\subsection{Quantum Information Theoretic Cobordisms}
+
+In order to obtain linear maps by parallel transport on manifolds, we need one
+last piece on top of connections. These are collections of paths on manifolds
+along which we will parallel transport vectors in the fibres of a bundle with
+connection. We shall now formalize this apparatus into yet another category.
 
 \end{document}
 
