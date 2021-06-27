@@ -461,9 +461,11 @@ with functions (not necessarily injective or surjective)
 \[
   \iota : V \to M \text{ and } \gamma_{-, -} : E \to C^0(I, M)
 \]
-such that $\gamma_{u, v}(0) = \iota(u)$ and $\gamma_{u, v}(1) = \iota(v)$.
+such that, for all $(u, v) \in E$, $\gamma_{u, v}(0) = \iota(u)$ and
+$\gamma_{u, v}(1) = \iota(v)$.
 \end{defn}
-\begin{defn}[Path Assembly]
+
+\begin{defn}[Transport Graph]
 Let $G = ((V, E), \iota, \gamma_{-, -})$ be a graph in a manifold $M$ satisfying
 the following properties:
 \begin{enumerate}[(i)]
@@ -473,11 +475,21 @@ the following properties:
 $1 \leq i < k$
 \item each point in $V_{i}$ has at least one edge to a point in $V_{i + 1}$,
 $1 \leq i < k$
-\item points in $V_1$ have no incoming edges
-\item points in $V_k$ have no outgoing edges
+\item if $(u, v) \in E$, then $u \in V_i$ and $v \in V_{i + 1}$ for some
+$i \in \set{1, \dots, k - 1}$
 \end{enumerate}
-Then $G$ is called a path assembly.
+Then $G$ is called a transport graph and for any vertex $v \in V$, we write
+$p_{G}(v)$ to denote the part of which $v$ is an element -- that is,
+$p_G(v) = i$ if and only if $v \in V_i$.
 \end{defn}
+
+\begin{rmk}
+Property (iv) above guarantees that $V_1$ has no incoming edges, $V_k$ has no
+outgoing edges and there are no edges ``going backwards'' or ``staying within
+parts'' -- that is, from $V_j$ to $V_i$ for $i \leq j$. It also guarantees that
+there are no edges ``skipping the next part'' -- that is, from $V_i$ to
+$V_j$ for $j > i + 1$.
+\end{rmk}
 
 \begin{exm}
 Consider the graph consisting of nine vertices $1, \dots, 9$ with
@@ -488,17 +500,106 @@ $V_4 = \set{8, 9}$, along with edges:
   (3, 5) &,& (3, 6) &,& (4, 7),\\
   (5, 8) &,& (6, 9) &,& (7, 9)
 \end{array}\]
-It is easy to check that this graph satisfies conditions (i) through (v) in the
+It is easy to check that this graph satisfies conditions (i) through (iv) in the
 previous definition. Then, we consider a mapping of the vertices into a surface
 along with a mapping of the edges to paths on the surface as shown
 below.\footnote{This diagram was generated using \cite{Mathcha}.}
 \begin{figure}[H]
 \begin{center}
-\input{path_assembly_diag_1}
+\input{path_graph_diag_1}
 \end{center}
-\caption{A Path Assembly}
+\caption{A Transport Graph}
 \end{figure}
+Notice that we can describe this transport graph with an ``algebraic'' expression
+of the form:
+\[
+  (\gamma_{5, 8} \tensor (\gamma_{6, 9} \cdot \gamma_{7, 9})) \circ
+  (\gamma_{3, 5} \tensor \gamma_{3, 6} \tensor \gamma_{4, 7}) \circ
+  ((\gamma_{1, 3} \cdot \gamma_{2, 3}) \tensor \gamma_{1, 4})
+\]
+where the rule of forming such an expression is roughly to connect
+expressions between two consecutive parts with the ``same end point'' with a
+`$\cdot$', expressions between two consecutive parts without the
+``same end-point'' with a `$\tensor$' and ``composeable'' expressions with a
+`$\circ$'. We note that if end-points are replaces with copies of an algebra $A$
+and paths, with appropriate linear maps, the whole expression is also a linear
+map from some tensor power of $A$ to another tensor power of $A$.
 \end{exm}
+
+We observe that we can take disjoint unions of manifolds equipped with transport
+graphs but the result is not a transport graph in general. For this, we define
+the following.
+
+\begin{defn}[Transport Forest]
+A disjoint union of transport graphs in a manifold $M$ is called a transport
+forest in $M$.
+\end{defn}
+
+It is then easy to see that taking the disjoint union of two manifolds $M$ and
+$N$ with transport forests $G$ and $H$ respectively along with the disjoint
+union of $G$ and $H$, yields a manifold $M \amalg N$ with a transport forest
+$G \amalg H$. In particular, we can consider the empty manifold equipped with
+the empty graph as a zero-fold disjoint union of transport forests. Associators
+and unitors from the category of sets then yield associators and unitors for
+transport forests. In order to obtain a monoidal category of transport forests,
+we define the following notion.
+
+\begin{defn}[Transport Homomorphism]
+Let
+\[
+  G = \coprod_{i = 1}^{n} G_1 = ((V_G, E_G), \iota_G, \gamma^G_{-, -})
+  \text{ and }
+  H = \coprod_{j = 1}^{m} H_1 = ((V_H, E_H), \iota_H, \gamma^H_{-, -})
+\]
+be transport forests in manifolds $M$ and $N$ respectively. Then, a
+component-wise graph homomorphism $h : (V_G, E_G) \to (V_H, E_H)$ satisfying
+\[
+  p_{G_i}(u) = p_{G_i}(v) \iff p_{H_j}(f)(u) = p_{H_j}(f(v))
+\]
+along with a smooth map $f : M \to N$ making the following diagrams commute is
+called a morphism of transport forests:
+\[
+\begin{tikzpicture}[baseline=(a).base]
+\node[scale=\diagscale] (a) at (0, 0){
+\begin{tikzcd}
+V_G \ar[d, "\iota_G" left] \ar[r, "h" above] &
+V_H \ar[d, "\iota_H" right] \\
+M \ar[r, "f" below] &
+N
+\end{tikzcd}
+};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[baseline=(a).base]
+\node[scale=\diagscale] (a) at (0, 0){
+\begin{tikzcd}
+E_G \ar[d, "\gamma^G_{-, -}" left] \ar[r, "h" above] &
+E_H \ar[d, "\gamma^H_{-, -}" right] \\
+C^0(I, M) \ar[r, "f_*" below] &
+C^0(I, N)
+\end{tikzcd}
+};
+\end{tikzpicture}
+\]
+where $f_*$ is the post-composition map.
+\end{defn}
+
+Pasting the commutative squares above along the $\iota$ and $\gamma$ sides, we
+observe that morphisms of transport graphs compose associatively. Taking $h$ and
+$f$ as the identity maps yields an identity morphism of transport graphs. This
+yields the following theorem.
+
+\begin{thm}
+Transport forests along with morphisms of transport forests form a monoidal
+category with disjoint union as the monoidal product and the empty manifolds
+equipped with the empty transport forests as monoidal units.
+\end{thm}
+
+\begin{defn}
+The monoidal category of the above theorem is called the category of transport
+forests and denoted $\TF$. The monoidal subcategory of $\TF$ consisting on
+manifolds of a fixed dimension $d$ is denoted $\TF_d$.
+\end{defn}
 
 \end{document}
 
