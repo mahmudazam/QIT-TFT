@@ -455,19 +455,8 @@ will require a notion of "graph on a manifold" whose ``vertices'' are points,
 possibly repeated, on the manifold and whose ``edges'' are paths on the
 manifold.
 
-\begin{defn}[Directed Graph in a Manifold]
-Let $M$ be a manifold. A directed graph in $M$ is a graph $G = (V, E)$ equipped
-with functions (not necessarily injective or surjective)
-\[
-  \iota : V \to M \text{ and } \gamma_{-, -} : E \to C^0(I, M)
-\]
-such that, for all $(u, v) \in E$, $\gamma_{u, v}(0) = \iota(u)$ and
-$\gamma_{u, v}(1) = \iota(v)$.
-\end{defn}
-
 \begin{defn}[Transport Graph]
-Let $G = ((V, E), \iota, \gamma_{-, -})$ be a graph in a manifold $M$ satisfying
-the following properties:
+Let $G = (V, E)$ be a directed graph satisfying the following properties:
 \begin{enumerate}[(i)]
 \setlength{\itemsep}{0pt}
 \item $V = V_1 \amalg \dots \amalg V_k$ for some $k \geq 2 \in \N$
@@ -491,6 +480,20 @@ there are no edges ``skipping the next part'' -- that is, from $V_i$ to
 $V_j$ for $j > i + 1$.
 \end{rmk}
 
+\begin{defn}[Graph in a Manifold]
+A graph in a manifold $M$ is a directed graph $G = (V, E)$ equipped with a
+function $\gamma_{-, -} : E \to C^0(I, M)$.
+\end{defn}
+
+\begin{rmk}
+A graph in a manifold is essentially a collection of paths in a manifold but we
+use a directed graph to ``identify'' their end-points even though these paths
+need not share end-points -- that is, we do not strictly require
+$\gamma_{u, v}(1) = \gamma_{v, w}(0)$. We will ultimately be interested in
+transport graphs or ``forests'' in manifolds, which will provide us a way to
+associate linear maps to manifolds.
+\end{rmk}
+
 \begin{exm}
 Consider the graph consisting of nine vertices $1, \dots, 9$ with
 $V_1 = \set{1, 2}$, $V_2 = \set{3, 4}$, $V_4 = \set{5, 6, 7}$ and
@@ -501,14 +504,15 @@ $V_4 = \set{8, 9}$, along with edges:
   (5, 8) &,& (6, 9) &,& (7, 9)
 \end{array}\]
 It is easy to check that this graph satisfies conditions (i) through (iv) in the
-previous definition. Then, we consider a mapping of the vertices into a surface
-along with a mapping of the edges to paths on the surface as shown
-below.\footnote{This diagram was generated using \cite{Mathcha}.}
+definition of a transport graph. Then, we consider a mapping of the edges to
+paths on a surface as shown below.\footnote{This diagram was generated using
+\cite{Mathcha}.} Note that here we have $\gamma_{u, v}(1) = \gamma_{v, w}(0)$ for
+most points but not all.
 \begin{figure}[H]
 \begin{center}
 \input{path_graph_diag_1}
 \end{center}
-\caption{A Transport Graph}
+\caption{A Transport Graph in a Surface}
 \end{figure}
 Notice that we can describe this transport graph with an ``algebraic'' expression
 of the form:
@@ -531,18 +535,20 @@ graphs but the result is not a transport graph in general. For this, we define
 the following.
 
 \begin{defn}[Transport Forest]
-A disjoint union of transport graphs in a manifold $M$ is called a transport
-forest in $M$.
+A disjoint union of transport graphs $G = G_1 \amalg \dots \amalg G_n$ is called
+a transport forest. We have a part function for each component transport graph --
+that is, $p_{G_i}(u) = j$ if and only if $u \in G_i$, the vertex set of $G_i$ is
+$V_{i, 1} \amalg \dots \amalg V_{i, k}$ and $u \in V_{i, j}$.
 \end{defn}
 
 It is then easy to see that taking the disjoint union of two manifolds $M$ and
-$N$ with transport forests $G$ and $H$ respectively along with the disjoint
-union of $G$ and $H$, yields a manifold $M \amalg N$ with a transport forest
-$G \amalg H$. In particular, we can consider the empty manifold equipped with
-the empty graph as a zero-fold disjoint union of transport forests. Associators
-and unitors from the category of sets then yield associators and unitors for
-transport forests. In order to obtain a monoidal category of transport forests,
-we define the following notion.
+$N$ equipped with transport forests $G$ and $H$ respectively along with the
+disjoint union of $G$ and $H$, yields a manifold $M \amalg N$ with a transport
+forest $G \amalg H$ in $M \amalg N$. In particular, we can consider the empty
+manifold equipped with the empty forest as a zero-fold disjoint union of
+transport forests.  Associators and unitors from the category of sets then yield
+associators and unitors for transport forests. In order to obtain a monoidal
+category of transport forests, we define the following notion.
 
 \begin{defn}[Transport Homomorphism]
 Let
@@ -552,24 +558,15 @@ Let
   H = \coprod_{j = 1}^{m} H_1 = ((V_H, E_H), \iota_H, \gamma^H_{-, -})
 \]
 be transport forests in manifolds $M$ and $N$ respectively. Then, a
-component-wise graph homomorphism $h : (V_G, E_G) \to (V_H, E_H)$ satisfying
-\[
-  p_{G_i}(u) = p_{G_i}(v) \iff p_{H_j}(f)(u) = p_{H_j}(f(v))
-\]
+graph homomorphism $h : (V_G, E_G) \to (V_H, E_H)$ satisfying
+\begin{enumerate}[(i)]
+\item for all $i \in \set{1, \dots, n}$, $h(G_i) \subset H_j$ for some
+$j \in \set{1, \dots, m}$
+\item $p_{G_i}(u) = p_{G_i}(v) \iff p_{H_j}(h(u)) = p_{H_j}(h(v))$
+\end{enumerate}
 along with a smooth map $f : M \to N$ making the following diagrams commute is
-called a morphism of transport forests:
+called a morphism of transport forests in manifolds or a transport homomorphism:
 \[
-\begin{tikzpicture}[baseline=(a).base]
-\node[scale=\diagscale] (a) at (0, 0){
-\begin{tikzcd}
-V_G \ar[d, "\iota_G" left] \ar[r, "h" above] &
-V_H \ar[d, "\iota_H" right] \\
-M \ar[r, "f" below] &
-N
-\end{tikzcd}
-};
-\end{tikzpicture}
-\qquad
 \begin{tikzpicture}[baseline=(a).base]
 \node[scale=\diagscale] (a) at (0, 0){
 \begin{tikzcd}
@@ -581,25 +578,64 @@ C^0(I, N)
 };
 \end{tikzpicture}
 \]
-where $f_*$ is the post-composition map.
+where $f_*$ is the post-composition map $g \mapsto f \circ g$.
 \end{defn}
 
-Pasting the commutative squares above along the $\iota$ and $\gamma$ sides, we
-observe that morphisms of transport graphs compose associatively. Taking $h$ and
-$f$ as the identity maps yields an identity morphism of transport graphs. This
-yields the following theorem.
+\begin{rmk}
+The condition in the above definition ensures that $h$ restricted to each
+transport graph in its domain forest is also a homomorphism into a transport
+graph in the codomain forest. It also ensures that the images of $h$ and $f^*$
+together form a transport forest.
+\end{rmk}
+
+Pasting the commutative squares as the above along the $\gamma$ sides, we observe
+that morphisms of transport forests in manifolds compose associatively. Taking
+$h$ and $f$ as the identity maps yields an identity morphism of transport
+forests. This yields the following theorem.
 
 \begin{thm}
-Transport forests along with morphisms of transport forests form a monoidal
+Transport forests in manifolds along with transport homomorphisms form a monoidal
 category with disjoint union as the monoidal product and the empty manifolds
 equipped with the empty transport forests as monoidal units.
 \end{thm}
 
 \begin{defn}
 The monoidal category of the above theorem is called the category of transport
-forests and denoted $\TF$. The monoidal subcategory of $\TF$ consisting on
-manifolds of a fixed dimension $d$ is denoted $\TF_d$.
+forests in manifolds and denoted $\TF$. The monoidal subcategory of $\TF$
+consisting on manifolds of a fixed dimension $d$ is denoted $\TF_d$.
 \end{defn}
+
+\subsection{Connections with Transport Forests}
+
+We have a notion of gluing for cobordisms of a fixed dimension that gives
+$\Cob_d$ the structure of a monoidal bicategory. We now try to extend this to
+connections and transport forests. This will yield a bicategory that will
+function as the domain of our notion of TQFTs which can handle quantum
+information.
+
+We first address the notion of gluing transport forests. We define the ``source''
+and ``target'' ends of a transport forest in the obvious way.
+\begin{defn}
+Let $G = \coprod_{i = 1}^{n} G_i$ be a transport graph on a manifold $M$ with
+$G_i$ having the vertex partition $\coprod_{j = 1}^{k_i} V_{i, j}$. Then, we
+define the source of $G$ as $S(G) = \coprod_{i = 1}^{n} V_{i, 1}$ and the target
+of $G$ as $T(G) = \coprod_{i = 1}^{n} V_{i, k_i}$.
+\end{defn}
+
+\begin{defn}
+Let $G$ and $H$ be transport forests in manifolds $M$ and $N$ respectively such
+that $|S(H)| = |T(G)|$. Let $X \to M \ot Y$ and $Y \to N \ot Z$ be cobordisms of
+some dimension $d$. Then, we define a gluing operation in $\TF_d$ as follows:
+\[
+  (M, G) \amalg_Y (N, H) = (M \amalg_Y N, G \amalg_{S(H) \cong T(H)} H)
+\]
+\end{defn}
+
+\TODO{We need to make precise the exact pattern order of the vertices in $G$ and
+$H$. We possibly need a total ordering of vertices in each part of each vertex
+set.}
+
+\TODO{Need a notion of gluing bundles.}
 
 \end{document}
 
