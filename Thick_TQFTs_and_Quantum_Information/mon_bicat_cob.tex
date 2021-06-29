@@ -15,7 +15,7 @@ function
 \]
 satisfying some algebraic properties that are not important at the moment.
 Suppose we have another bundle $\pi_{E'} : E \to M$ with a bundle morphism
-$f = (u, v) : E \to E'$ -- a pair of maps  $u : M \to M'$ and $v : E \to E'$
+$f = (u, v) : E \to E'$ -- a pair of maps $u : M \to M'$ and $v : E \to E'$
 with $v$ linear on each fibres of $E$, making the following diagram commute:
 \[\begin{tikzpicture}[baseline=(a).base]
 \node[scale=\diagscale] (a) at (0, 0){
@@ -451,15 +451,20 @@ In order to obtain linear maps by parallel transport on manifolds, we need one
 last piece on top of connections. These are collections of paths on manifolds
 along which we will parallel transport vectors in the fibres of a bundle with
 connection. We shall now formalize this apparatus into yet another category. We
-will require a notion of "graph on a manifold" whose ``vertices'' are points,
+will require a notion of ``graph on a manifold'' whose ``vertices'' are points,
 possibly repeated, on the manifold and whose ``edges'' are paths on the
-manifold.
+manifold. What follows is a first attempt that will require modification to make
+it compatible with gluing of manifolds. As a matter of convention, we will take
+all graphs to mean multigraphs, where we allow parallel edges including
+self-loops.
 
-\begin{defn}[Transport Graph]
-Let $G = (V, E)$ be a directed graph satisfying the following properties:
+\begin{defn}[Transport Graph (First Attempt)]
+Let $G = (V, E)$ be a finite directed graph satisfying the following properties:
 \begin{enumerate}[(i)]
 \setlength{\itemsep}{0pt}
-\item $V = V_1 \amalg \dots \amalg V_k$ for some $k \geq 2 \in \N$
+\item $V = V_1 \amalg \dots \amalg V_k$ for some $k \geq 2 \in \N$, with each
+$V_i$ totally ordered as $V_i = \set{v_{i, 1}, \dots, v_{i, q_i}}$ for some
+$q_i \in \N$
 \item each point in $V_{i + 1}$ has at least one edge from a point in $V_{i}$,
 $1 \leq i < k$
 \item each point in $V_{i}$ has at least one edge to a point in $V_{i + 1}$,
@@ -471,6 +476,11 @@ Then $G$ is called a transport graph and for any vertex $v \in V$, we write
 $p_{G}(v)$ to denote the part of which $v$ is an element -- that is,
 $p_G(v) = i$ if and only if $v \in V_i$.
 \end{defn}
+
+\begin{rmk}
+The total ordering on vertex set parts is needed for defining a ``composition''
+or gluing of transport graphs later on.
+\end{rmk}
 
 \begin{rmk}
 Property (iv) above guarantees that $V_1$ has no incoming edges, $V_k$ has no
@@ -490,8 +500,8 @@ A graph in a manifold is essentially a collection of paths in a manifold but we
 use a directed graph to ``identify'' their end-points even though these paths
 need not share end-points -- that is, we do not strictly require
 $\gamma_{u, v}(1) = \gamma_{v, w}(0)$. We will ultimately be interested in
-transport graphs or ``forests'' in manifolds, which will provide us a way to
-associate linear maps to manifolds.
+transport graphs or ``forests'' in manifolds, which will provide us with a way
+to associate linear maps to manifolds.
 \end{rmk}
 
 \begin{exm}
@@ -514,8 +524,8 @@ most points but not all.
 \end{center}
 \caption{A Transport Graph in a Surface}
 \end{figure}
-Notice that we can describe this transport graph with an ``algebraic'' expression
-of the form:
+Notice that we can describe this transport graph with an ``algebraic''
+expression of the form:
 \[
   (\gamma_{5, 8} \tensor (\gamma_{6, 9} \cdot \gamma_{7, 9})) \circ
   (\gamma_{3, 5} \tensor \gamma_{3, 6} \tensor \gamma_{4, 7}) \circ
@@ -534,7 +544,7 @@ We observe that we can take disjoint unions of manifolds equipped with transport
 graphs but the result is not a transport graph in general. For this, we define
 the following.
 
-\begin{defn}[Transport Forest]
+\begin{defn}[Transport Forest (First Attempt)]
 A disjoint union of transport graphs $G = G_1 \amalg \dots \amalg G_n$ is called
 a transport forest. We have a part function for each component transport graph --
 that is, $p_{G_i}(u) = j$ if and only if $u \in G_i$, the vertex set of $G_i$ is
@@ -546,16 +556,16 @@ $N$ equipped with transport forests $G$ and $H$ respectively along with the
 disjoint union of $G$ and $H$, yields a manifold $M \amalg N$ with a transport
 forest $G \amalg H$ in $M \amalg N$. In particular, we can consider the empty
 manifold equipped with the empty forest as a zero-fold disjoint union of
-transport forests.  Associators and unitors from the category of sets then yield
-associators and unitors for transport forests. In order to obtain a monoidal
-category of transport forests, we define the following notion.
+transport forests in manifolds. Associators and unitors from the category of
+sets then yield associators and unitors for transport forests. In order to
+obtain a monoidal category of transport forests, we define the following notion.
 
-\begin{defn}[Transport Homomorphism]
+\begin{defn}[Transport Homomorphism (First Attempt)]
 Let
 \[
-  G = \coprod_{i = 1}^{n} G_1 = ((V_G, E_G), \iota_G, \gamma^G_{-, -})
+  G = \coprod_{i = 1}^{n} G_i = ((V_G, E_G), \iota_G, \gamma^G_{-, -})
   \text{ and }
-  H = \coprod_{j = 1}^{m} H_1 = ((V_H, E_H), \iota_H, \gamma^H_{-, -})
+  H = \coprod_{j = 1}^{m} H_j = ((V_H, E_H), \iota_H, \gamma^H_{-, -})
 \]
 be transport forests in manifolds $M$ and $N$ respectively. Then, a
 graph homomorphism $h : (V_G, E_G) \to (V_H, E_H)$ satisfying
@@ -622,20 +632,155 @@ define the source of $G$ as $S(G) = \coprod_{i = 1}^{n} V_{i, 1}$ and the target
 of $G$ as $T(G) = \coprod_{i = 1}^{n} V_{i, k_i}$.
 \end{defn}
 
+\begin{rmk}
+We notice that the total ordering of vertex set parts of each transport graph in
+a transport forest along with the ordering of the transport graphs themselves in
+the transport induces a total ordering of $S(G)$ and $T(G)$ respectively.
+\end{rmk}
+
 \begin{defn}
 Let $G$ and $H$ be transport forests in manifolds $M$ and $N$ respectively such
-that $|S(H)| = |T(G)|$. Let $X \to M \ot Y$ and $Y \to N \ot Z$ be cobordisms of
-some dimension $d$. Then, we define a gluing operation in $\TF_d$ as follows:
+that $|S(H)| = |T(G)|$. Let $X \to[a_M] M \ot[b_M] Y$ and
+$Y \to[a_N] N \ot[b_N] Z$ be cobordisms of some dimension $d$. We then have
+$S(H)$ and $T(G)$ totally ordered with a unique order-preserving bijection
+$\psi_{G, H} : T(G) \to S(H)$. Then, we define a gluing operation in $\TF_d$ as
+follows:
 \[
-  (M, G) \amalg_Y (N, H) = (M \amalg_Y N, G \amalg_{S(H) \cong T(H)} H)
+  (N, H) * (M, G) = (M \amalg_{Y} N, G \amalg_{T(G)} H)
 \]
+where the gluing $\amalg_{T(G)}$ is the pushout of the diagram
+$G \hookleftarrow T(G) \stackrel{\psi_{G, H}}{\hookrightarrow} H$ in
+$\Set$.
 \end{defn}
 
-\TODO{We need to make precise the exact pattern order of the vertices in $G$ and
-$H$. We possibly need a total ordering of vertices in each part of each vertex
-set.}
+We now wish to define a unit for this gluing operation. Given a cobordism
+$X \to M \ot Y$ with a transport forest $G$ in $M$, the gluing identities of $M$
+in $\Cob_d$ are the cylinder $X \times I$ and $Y \times I$ on $Y$. Then, the
+gluing identities of $G$ should be a transport forests in $X \times I$ and
+$Y \times I$ that act like cylinders on $S(G)$ and $T(G)$ respectively. For
+simplicity, we consider that this ``cylinder'' on $S(G)$ is the graph with
+vertex set $V = V_1 \amalg V_2$ where each $V_i$ is isomorphic to $S(G)$ with an
+order preserving isomorphism. The edges are $(u, v)$ where $u \in V_1$ and
+$v \in V_2$ are in the same order position. Then $\gamma_{u, v}$ is some path
+in $X \times I$ which will hopefully yield the identity linear map under
+parallel transport with respect to some connection. We call this graph
+$1_{S(G)}$. Such a graph on a surface could look like the following, for
+instance:
+\begin{figure}[H]
+\begin{center}
+\input{path_graph_diag_2}
+\end{center}
+\caption{A ``Cylinder'' Transport Forest}
+\end{figure}
 
-\TODO{Need a notion of gluing bundles.}
+The issue, however, is that there is no transport homomorphism
+\[
+  ((X \times I) \amalg_X M, 1_{S(G)} \amalg_{S(G)} G) \to (M, G)
+\]
+because $1_{S(G)}$ cannot be collapsed to $S(G)$ as $S(G)$ has no self edges.
+There is no transport homomorphism in the other direction either because we
+cannot ``expand'' $S(G)$ to $1_{S(G)}$ since this would require the duplication
+of vertices and creation of edges from none. We are thus forced to modify our
+definition of transport forests and transport homomorphisms. In particular, we
+add self-loops in transport graphs and forests. We start redefining these
+notions as follows, with modifications in bold.
+
+\begin{defn}[Transport Graph]
+Let $G = (V, E)$ be a finite directed graph satisfying the following properties:
+\begin{enumerate}[(i)]
+\setlength{\itemsep}{0pt}
+\item $V = V_1 \amalg \dots \amalg V_k$ for some $k \geq 2 \in \N$, with each
+$V_i$ totally ordered as $V_i = \set{v_{i, 1}, \dots, v_{i, q_i}}$ for some
+$q_i \in \N$
+\item each point in $V_{i + 1}$ has at least one edge from a point in $V_{i}$,
+$1 \leq i < k$
+\item each point in $V_{i}$ has at least one edge to a point in $V_{i + 1}$,
+$1 \leq i < k$
+\item \textbf{for every vertex $u$, there exists exactly one loop $(u, u) \in E$
+on $u$}
+\item if $(u, v) \in E$, then \textbf{either $u = v$ or} $u \in V_i$ and
+$v \in V_{i + 1}$ for some $i \in \set{1, \dots, k - 1}$
+\end{enumerate}
+Then $G$ is called a transport graph and for any vertex $v \in V$, we write
+$p_{G}(v)$ to denote the part of which $v$ is an element -- that is,
+$p_G(v) = i$ if and only if $v \in V_i$.
+\end{defn}
+
+%\begin{defn}[Admissible Transport Graph in a Manifold]
+%We call a transport graph in a manifold admissible if $\gamma_{u, u}$ is the
+%constant path on some point.
+%\end{defn}
+
+\begin{defn}[Graph Multimorphism]
+Let $G = (V, E)$ and $H = (V', E')$ be directed graphs. Let $f : V \to V'$ be a
+relation such that for every $u \in V$, there exists $v' \in V'$ with
+$(v, v') \in f$ every pair of vertices $u, v \in V$ and for every
+$(u, u'), (v, v') \in f$, if $(u, v)$ is an edge in $G$ then $(u', v')$ is an
+edge in $H$. Then, $f$ is called a graph multimorphism.\footnote{We note that
+this definition is identical to the one given in \cite{PcLinTop}. Although we
+defined this before consulting \cite{PcLinTop}, the definition there reminded us
+that a relation need not have an image for every point in the domain.
+\textbf{This footnote is mainly for Steve. We may remove most of it in the
+final write-up.}}
+\end{defn}
+
+\begin{defn}
+The relational composites of graph multimorphisms are again graph
+multimorphisms so that directed graphs with multimorphisms form a category. We
+denote this category $\DGraph_{\Rel}$.
+\end{defn}
+
+\begin{defn}[Transport Homomorphism]
+Let
+\[
+  G = \coprod_{i = 1}^{n} G_i = ((V_G, E_G), \iota_G, \gamma^G_{-, -})
+  \text{ and }
+  H = \coprod_{j = 1}^{m} H_j = ((V_H, E_H), \iota_H, \gamma^H_{-, -})
+\]
+be transport forests in manifolds $M$ and $N$ respectively. Then, a graph
+\textbf{multimorphism} $h : (V_G, E_G) \to (V_H, E_H)$ satisfying
+\begin{enumerate}[(i)]
+\item for all $i \in \set{1, \dots, n}$, $h(G_i) \subset H_j$ for some
+$j \in \set{1, \dots, m}$
+\item $p_{G_i}(u) = p_{G_i}(v) \iff p_{H_j}(h(u)) = p_{H_j}(h(v))$
+\end{enumerate}
+along with a smooth map $f : M \to N$ making the following diagram commute
+\textbf{in $\Rel$} is called a morphism of transport forests in manifolds or a
+transport homomorphism:
+\[
+\begin{tikzpicture}[baseline=(a).base]
+\node[scale=\diagscale] (a) at (0, 0){
+\begin{tikzcd}
+E_G \ar[d, "\gamma^G_{-, -}" left] \ar[r, "h" above] &
+E_H \ar[d, "\gamma^H_{-, -}" right] \\
+C^0(I, M) \ar[r, "f_*" below] &
+C^0(I, N)
+\end{tikzcd}
+};
+\end{tikzpicture}
+\]
+where $f_*$ is the post-composition map $g \mapsto f \circ g$.
+\end{defn}
+
+It is now easy to see that there is a transport homomorphism, in this new sense,
+\[
+  \phi : ((X \times I) \amalg_X M, 1_{S(G)} \amalg_{S(G)} G) \longleftrightarrow
+         (M, G) : \psi
+\]
+defined in the obvious way by ``collapsing'' $1_{S(G)}$ to $S(G)$ by sending the
+edges, including loops, in $1_{S(G)}$ to the corresponding loops in $S(G)$; and,
+for the other direction, ``exapanding'' $S(G)$ to $1_{S(G)}$ by ``duplicating''
+loops on $S(G)$ into corresponding edges and loops in $1_{S(G)}$, respectively.
+
+\TODO{This collapsing of edges and expanding of vertices might have issues at
+the very end of paths in diffeomorphism groups. For instance, for all but one of
+the points in the path from $\id$ to $\phi$ in the diffeomorphism group, the
+associated graph multimorphism is the identity but suddenly, at the end point,
+it is a collapse of several edges. We might need a truly geometric formulation
+of trasport graphs that still remembers the graph theoretic data -- I think the
+graph theoretic data is essential. There may, however, be hope in the fact that
+the graph theoretic data has essentially nothing to do with the smooth data --
+more on this in a possible meeting, perhaps.}
 
 \end{document}
 
