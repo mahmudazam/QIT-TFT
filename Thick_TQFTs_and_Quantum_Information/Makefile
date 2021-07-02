@@ -49,6 +49,13 @@ mon_bicat_cob.pdf:\
     ${PROJECT}.tex\
     mon_bicat_cob.tex
 
+graph.pdf:\
+    build\
+    ${BIB_DEPS}\
+    ${STY_DEPS}\
+    ${PROJECT}.tex\
+    graph.tex
+
 vect.pdf:\
     build\
     ${BIB_DEPS}\
