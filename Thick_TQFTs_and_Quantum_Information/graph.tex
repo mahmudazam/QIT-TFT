@@ -13,7 +13,7 @@ categories. We will require a notion of graphs on manifolds whose vertices are
 points, possibly repeated, on the manifold and whose edges are paths on the
 manifold.
 
-\subsection{Graphs Encoding Algebraic Expressions}
+\subsection{Graphs Encoding Monoidal Expression}
 
 We will now define a class of graphs that encode expressions involving tensor
 products, point-wise algebra products and composition of linear maps $A \to A$
@@ -30,19 +30,21 @@ Let $G = (V, E)$ be a finite graph satisfying the following properties:
 
 \item \label{eeg:part}
 $V = V_1 \amalg \dots \amalg V_k$ for some $k \in \N \cup \set{0}$, with each
-$V_i$ totally ordered as $V_i = \set{v_{i, 1}, \dots, v_{i, q_i}}$ for some
-$q_i \in \N$
+$V_i$ totally ordered as
+$V_i = \set{v_{i, 1}, \dots, v_{i, q_i}}$ for some $q_i \in \N$; note that we
+we distinguish between the set $\set{*}$ and the set $\set{v_{i, 1}}$; also, we
+keep track of the order of the $V_i$
 
 \item \label{eeg:forward}
 for every edge from $u$ to $v$ in $E$, $u \in V_i$ and
 $v \in V_{i + 1}$ for some $i \in \set{1, \dots, k - 1}$, when $k \geq 2$
 
 \item \label{eeg:nonredright}
-each point in $V_{i + 1}$ has at least one edge from a point in $V_{i}$,
+each element in $V_{i + 1}$ has at least one edge from an element in $V_{i}$,
 $1 \leq i < k$
 
 \item \label{eeg:nonredleft}
-each point in $V_{i}$ has at least one edge to a point in $V_{i + 1}$,
+each element in $V_{i}$ has at least one edge to an element in $V_{i + 1}$,
 $1 \leq i < k$
 
 \end{enumerate}
@@ -118,71 +120,31 @@ the pieces of the disjoint union do not all have the same number of parts. For
 this, we define the following.
 
 \begin{defn}[Expression Graph]
-A disjoint union of elementary expression graphs
+An ordered disjoint union of elementary expression graphs
 $G = G_1 \amalg \dots \amalg G_n$ is called an expression graph. We have a part
 function for each component expression graph -- that is, $p_{G_i}(u) = j$ if and
 only if $u \in G_i$, the vertex set of $G_i$ is $\coprod_{j = 1}^{k_i} V_{i, j}$
-and $u \in V_{i, j}$ for some $j$.
+and $u \in V_{i, j}$ for some $j$. These collectively give a part function for
+$G$ -- $p_G(v) = (i, j) \iff v \in V_{i, j}$
 \end{defn}
 
-In order to obtain a category of expression graphs with monoidal structure given
-by disjoint union, we define morphisms of expression graphs.
+We now define morphisms of expression graphs.
 
 \begin{defn}[Expression Homomorphism]
-For $i = 1, \dots, n$ and $j = 1, \dots, m$, let
+A graph homomorphism $h : G \to H$ between expression graphs satisfying
 \[
-  G_i = \br{\coprod_{k = 1}^{p_i} V_{G_i, k}, E_{G_i}} \text{ and }
-  H_j = \br{\coprod_{k = 1}^{q_i} V_{H_j, k}, E_{H_j}}
+  p_G(u) = p_G(v) \implies p_H(h(u)) = p_H(h(v))
 \]
-be elementary expression graphs such that $G = \coprod_{i} G_i$ and
-$H = \coprod_{j} H_j$ are expression graphs. Then, an expression homomorphism is
-a graph homomorphism $h : G \to H$ satisfying the following:
-\begin{enumerate}[(i)]
-
-\item\label{exhom:elem}
-for all $i = 1, \dots, n$, $h(G_i) \subset H_j$ for some
-$j \in \set{1, \dots, m}$
-
-\item\label{exhom:part}
-for vertices $u, v \in V(G_i)$ with $h(u), h(v) \in V(H_j)$,
+and
 \[
-  p_{G_i}(u) = p_{G_i}(v) \iff p_{H_j}(h(u)) = p_{H_j}(h(v))
+  u \leq v \implies h(u) \leq h(v)
 \]
-
-\item\label{exhom:monotone}
-for all $i, j, k, k'$, $h|_{V_{G_i, k}} : V_{G_i, k} \to V_{H_j, k'}$ is
-monotone or order-preserving
-
-\end{enumerate}
 \end{defn}
 
 \begin{rmk}
 The conditions in the definition above ensures that $h$ restricted to each
-elementary expression graph in its domain is also a homomorphism into an
-elementary expression graph in the codomain.
-\end{rmk}
-
-It is easy to see that expression graphs with expression homomorphisms form a
-category with monoidal structure given by disjoint union as the monoidal product
-and the empty expression graph as the monoidal unit. The associators and unitors
-transfer over from the category of sets and are easily verified to be transport
-homomorphisms. The associators and unitors satisfy the coherence axioms since
-they do so in the category of sets. \TODO{Add an appendix entry for this.}
-
-\begin{defn}[Category of Expression Graphs]
-We call this monoidal category the category of expression graphs and denote it
-$\EG$. We denote the maximal subgroupoid of $\EG$ as $\EG^{\text{iso}}$
-\end{defn}
-
-\begin{defn}[Category of Single Part Expression Graphs]
-The subcategory of $\EG$ consisting of expression graphs with only one vertex
-part is called the category of single part expression graphs and denoted
-$\EG_1$. We denote the maximal subgroupoid of $\EG_1$ as $\EG_1^{\text{iso}}$.
-\end{defn}
-
-\begin{rmk}
-The isomorphisms in $\EG_1$ are unique because they are monotone bijections
-between finite sets of equal size.
+elementary expression graph in its domain is also an expression homomorphism
+into an elementary expression graph in the codomain.
 \end{rmk}
 
 We will now define a notion of gluing for expression graphs. To this end, we
@@ -238,191 +200,17 @@ the category of sets are expression homomorphisms. Hence, these associators and
 unitors also satisfy associativity and unity coherence axioms to make the
 following theorem true. \TODO{Add and appendix entry for the proof of this.}
 
-\begin{thm}
-The following data form a monoidal double category:
-\begin{enumerate}[(i)]
-\setlength{\itemsep}{0pt}
-\item Object Category, $D_0 = \EG_1^{\text{iso}}$
-\item Morphism Category, $D_1 = \EG^{\text{iso}}$
-\item Source Functor, $S$: $G \mapsto S(G)$ for $G \in \EG^{\text{iso}}$ and
-for isomorphisms $f : G \to H$, $S(f)$ is the unique isomorphism $S(G) \to S(H)$
-\item Target Functor, $T$: defined similarly as $S$
-\item Unit Functor, $U = \id$
-\item Horizontal Composition Associators, $\mathfrak{a}$: pushout associators
-inherited from $\Set$
-\item Horizontal Composition Unitors, $\mathfrak{r}$, $\mathfrak{l}$: pushout
-unitors inherited from $\Set$
-\item Monoidal Product: disjoint union
-\item Monoidal Unit: empty expression graph
-\end{enumerate}
-\end{thm}
-
-\begin{defn}[Double Category of Expression Graphs]
-The double category of the above theorem is called the double category of
-expression graphs and is denoted $\DEG$
-\end{defn}
-
-\begin{rmk}
-We could instead show that $\EG$ has all pushouts so that the above double
-category is merely a sub-category of the double category of cospans in $\EG$. In
-fact, I think this is how we should prove it in the appendix if we do.
-\end{rmk}
-
-\subsection{Geometric Realization}
-
-We wish to use expression graphs to generate linear maps by viewing the edges as
-paths in a manifold equipped with an algebra-fibred bundle with connection,
-taking their associated parallel transport maps, and combining these maps in a
-pattern encoded in the expression graph. To accomplish this, we use the
-following simple notion of geometric realization of graphs.
-
-\begin{defn}[Geometric Graph]
-A graph in a manifold $M$ or a geometric graph is a graph $G = (V, E)$ equipped
-with a function $\gamma : E \to C^0(I, M)$, called a geometric realization of
-$G$. We call $M$ the realizing manifold of $G$ under $\gamma$. For an edge from
-$u$ to $v$ we write $\gamma_{u, v}$ to denote the path associated to that edge.
-\end{defn}
-
-\begin{rmk}
-A geometric graph is essentially a collection of paths in a manifold but we
-consider one or more copies of each path and ``identify'' their end-points in a
-pattern encoded by a graph, even though these paths need not share end-points --
-that is, we do not strictly require $\gamma_{u, v}(1) = \gamma_{v, w}(0)$. We
-will see that this relaxation is essential to defining our notion of TQFTs. We
-will ultimately be interested in expression graphs in manifolds, which will
-provide us with a way to associate linear maps to manifolds.
-\end{rmk}
-
-\begin{exm}\label{exm:geomegraph}
-Consider the graph in example \ref{exm:egraph1}. Then, we consider a mapping of
-the edges to paths on a surface as shown below.\footnote{This diagram was
-generated using \cite{Mathcha}.} Note that here we have
-$\gamma_{u, v}(1) = \gamma_{v, w}(0)$ for most points but not all -- for
-instance, $\gamma_{2, 3}$ and $\gamma_{3, 5}$ do not share any end-points.
-\begin{figure}[H]
-\begin{center}
-\input{path_graph_diag_1}
-\end{center}
-\caption{An elementary transport graph}
-\end{figure}
-We notice that the same algebraic expression carries over:
-\[
-  (\gamma_{5, 8} \tensor (\gamma_{6, 9} \cdot \gamma_{7, 9})) \circ
-  (\gamma_{3, 5} \tensor \gamma_{3, 6} \tensor \gamma_{4, 7}) \circ
-  ((\gamma_{1, 3} \cdot \gamma_{2, 3}) \tensor \gamma_{1, 4})
-\]
-\end{exm}
-
-\begin{defn}[Transport Graph]
-We call a geometric expression graph a transport graph.
-\end{defn}
-
-\begin{defn}[Geometric Homomorphism]
-Let $G$ and $H$ be graphs in manifolds $M$ and $N$ with geometric realizations
-$\gamma^G$ and $\gamma^H$ respectively, then a homomorphism $h : G \to H$
-equipped with a smooth map $f : M \to N$ making the following diagram commute is
-called a geometric homomorphism:
-\[
-\begin{tikzpicture}[baseline=(a).base]
-\node[scale=\diagscale] (a) at (0, 0){
-\begin{tikzcd}
-E(G) \ar[d, "\gamma^G" left] \ar[r, "h" above] &
-E(H) \ar[d, "\gamma^H" right] \\
-C^0(I, M) \ar[r, "f_*" below] &
-C^0(I, N)
-\end{tikzcd}
-};
-\end{tikzpicture}
-\]
-where $f_*$ is the post-composition map $g \mapsto f \circ g$.
-\end{defn}
-
-\begin{defn}[Transport Homomorphism]
-A geometric expression homomorphisms is called a transport homomorphism.
-\end{defn}
-
-Pasting commutative squares as the one above along the $\gamma$ sides, we
-observe that geometric homomorphisms compose associatively. Taking
-$h$ and $f$ as the identity maps yields an identity morphism of geometric
-graphs. It is also straightforward to verify that disjoint union gives
-geometric graphs along with geometric homomorphisms a monoidal structure with
-the empty graph in the empty manifold as the monoidal unit.
-\TODO{Add an appendix entry for this.}
-
-\begin{defn}[Categories of Geometric Graphs]
-We denote the monoidal category of geometric graphs and geometric
-homomorphisms as $\textbf{Graph}_{\Man}$. The subcategory of
-$\textbf{Graph}_{\Man}$ consiting of transport graphs and transport
-homomorphisms is denoted $\TG$. The subcategory of
-$\TG$ obtained by considering transport graphs realized in manifolds
-within a subcategory $\s{C}$ of $\Man$ is denoted $\TG_{\s{C}}$.
-\end{defn}
-
-\begin{exm}
-If $\Diff_d$ is the subcategory of $\Man$ consisting of $d$--dimensional
-manifolds and diffeomorphisms only, then $\TG_{\Diff_d}$ is the corresponding
-subcategory of $\TG$.
-\end{exm}
-
-\begin{exm}
-Let $\Man(M)$ be the subcategory of $\Man$ consisting of a manifold $M$ and all
-smooth maps $M \to M$. $\TG_{\Man(M)}$ is the corresponding subcategory of
-$\TG$. In this case, we also denote this subcategory as $\TG_M$.
-\end{exm}
-
-\begin{exm}
-Let $\CCob_{d + 1}$ be the double category of cobordisms \cite{SymMonBicat}.
-Then, we consider the subcategory of $\Man$ consisting of the
-$(d + 1)$--dimensional cobordisms and boundary-preserving diffeomorphisms or the
-morphism category $\CCob_{d + 1}^1$ of $\CCob_{d + 1}$. We denote the
-corresponding category of transport graphs $\TG_{d + 1}$. We denote its maximal
-sub-groupoid as $\TG^{\text{iso}}_{d + 1}$
-\end{exm}
-
-We wish to eventually formulate transport graphs as a double category. To this
-end, we extend the definition to gluing of expression graphs as gluings of
-geometric expression graphs as follows.
-
-\begin{lem}
-Let $G$ and $H$ be expression graphs in $d$--dimensional cobordisms
-$M : X \to Y$ and $N : Y \to Z$ with geometric realizations $\gamma^G$ and
-$\gamma^H$ respectively such that $G$ and $H$ are gluable at $S(H) \cong T(G)$.
-Then, there exists a geometric realization
-\[
-  \gamma^H * \gamma^G : E(H * G) \to C^0(I, N * M)
-\]
-of $H * G$ in $N * M$.
-\end{lem}
-\begin{proof}
-We can define $\gamma^H * \gamma^G$ piecewise away from $S(H) \cong T(G)$. That
-is, we define $(\gamma^H * \gamma^G)(e)$ to be
-$\gamma^G(e)$ if $e \in E(G) \setminus E(T(G))$ and to be
-$\gamma^H(e)$ if $e \in E(H) \setminus E(S(H))$.
-If $e \in E(T(G))$, we choose $(\gamma^H * \gamma^G)(e)$ to be $\gamma^G(e)$ and
-if $e \in E(S(H))$, we choose $(\gamma^H * \gamma^G)(e)$ to be
-$\gamma^G(\psi_{G, H}^{-1}(e))$\footnote{Recall that $\psi_{G, H}$ is the unique
-isomorphism $T(G) \to S(H)$.}, so that $\gamma^H * \gamma^G$ agrees on
-$S(H) \cong T(G)$.
-\end{proof}
-
-This is enough structure to develop a system for doing algebra using paths on a
-manifold. We develop this primitive notion of TQFTs next. \TODO{I am not sure if
-it is appropriate call this a notion of TQFTs.}
-
-\subsection{Algebra on a Manifold}
+\subsection{Extracting Expressions}
 
 One immediate way to associate linear maps to a manifold $M$, using the geometry
-of the manifold, is to consider the category $\EG_{M}$ of geometric expression
-graphs realized in $M$ and geometric expression homomorphisms. We also consider
-a smooth bundle $\pi : E \to M$ with some algebra $A$ as fibres. In this case,
-for each object $(G, \gamma)$ of $\EG_M$ -- where $G$ is an expression graph
-with geometric realization $\gamma$ -- we can take the linear map obtained by
-parallel transport of elements of $A$ along each path in the image of $\gamma$.
-We can then use $G$ to obtain a linear map
-$A^{\amalg |S(G)|} \to A^{\amalg |T(G)|}$, using the same kind of formula we
-used in examples \ref{exm:egraph1} and \ref{exm:geomegraph}. We are thus
-motivated to formalize the notion of expression associated to an expression
-graph.
+of the manifold, is to consider an expression graph $G$ with a mapping $\gamma$
+of edges to paths on a manifold $M$ equipped with an $A$--fibred bundle
+$\pi : E \to M$ along with connection a connection $\nabla$ on $\pi$. In this
+case, we can take the linear map obtained by parallel transport of elements of
+$A$ along each path in the image of $\gamma$. We can then use $G$ to obtain a
+linear map $A^{\amalg |S(G)|} \to A^{\amalg |T(G)|}$, using the same kind of
+formula we obtained in example \ref{exm:egraph1}. We are thus motivated to
+formalize the notion of an expression associated to an expression graph.
 
 \begin{defn}[Elementary Expression]
 Given an elementary expression graph $G$ with vertex set
@@ -434,13 +222,13 @@ $V_i = \set{v_{i, 1}, v_{i, 2}, \dots, v_{i, k_i}}$, we define:
 \item For $j \in \set{1, \dots, k_1}$, the expression associated to $v_{1, j}$
 is:
 \[
-  \Exp{G}_{1, j} := \id
+  \Exp{G}_{1, j} := *\footnote{$\varnothing$ is formal symbol.}
 \]
 
 \item The expression associated to the vertex set part $V_1$ is:
 \[
-  \Exp{G}_1 := \overbrace{\id \tensor \id \tensor \cdots
-                          \tensor \id}^{k_1 \text{ times}}
+  \Exp{G}_1 :=
+    \overbrace{* \tensor * \tensor \cdots \tensor *}^{k_1 \text{ times}}
 \]
 
 \item For
@@ -456,13 +244,13 @@ is:
 \item For $i \in \set{2, \dots, n}$, the expression associated to the vertex set
 part $V_{i}$ is:
 \[
-  \Exp G_{i} := \Exp{G}_{i, 1} \tensor \Exp{G}_{i, 2} \tensor \cdots
+  \Exp{G}_{i} := \Exp{G}_{i, 1} \tensor \Exp{G}_{i, 2} \tensor \cdots
                  \tensor \Exp{G}_{i, k_{i}}
 \]
 
 \item The expression associated to $G$ is:
 \[
-  \Exp G := \Exp{G}_n \circ \Exp{G}_{n - 1} \circ \cdots \Exp{G}_{2}
+  \Exp{G} := \Exp{G}_n \circ \Exp{G}_{n - 1} \circ \cdots \Exp{G}_{2}
             \circ \Exp{G}_1
 \]
 
@@ -539,7 +327,7 @@ $G \stackrel{!}{\longleftrightarrow} H$.
 Let $G$ and $H$ be expression graphs composed of elementary expression graphs
 $G_1 \amalg \cdots \amalg G_n$ and $H_1 \amalg \cdots \amalg H_n$ respectively.
 Then, we say that $\Exp{G} = \Exp{H}$, if there exists an expression isomorphism
-$h : G \longleftrightarrow H$ with $h(G_i) = h(H_i)$ for all $i = 1, \dots, n$.
+$h : G \longleftrightarrow H$ with $h(G_i) = H_i$ for all $i = 1, \dots, n$.
 \end{defn}
 
 \begin{thm}
@@ -553,6 +341,236 @@ and
   \Exp{H * G} = \Exp{H} \circ \Exp{G}
 \]
 \end{thm}
+
+\begin{defn}[Expression Substitution]
+Given an expression graph $G$, we write $\Exp{G}[f]$ to denote the expression
+obtained by replacing and edge $(u, v) \in G$ in $\Exp{G}$ with some expression
+$f(u, v)$, depending on $(u, v)$.
+\end{defn}
+
+\subsection{Geometric Realization}
+
+We wish to use expression graphs to generate linear maps by viewing the edges as
+paths in a manifold equipped with an algebra-fibred bundle with connection,
+taking their associated parallel transport maps, and combining these maps in a
+pattern encoded in the expression graph. To accomplish this, we use the
+following simple notion of geometric realization of graphs.
+
+\begin{defn}[Geometric Graph]
+A graph in a manifold $M$ or a geometric graph is a graph $G = (V, E)$ equipped
+with a function $\gamma : E \to C^0(I, M)$, called a geometric realization of
+$G$. We call $M$ the realizing manifold of $G$ under $\gamma$. For an edge from
+$u$ to $v$ we write $\gamma_{u, v}$ to denote the path associated to that edge.
+\end{defn}
+
+\begin{rmk}
+A geometric graph is essentially a collection of paths in a manifold but we
+consider one or more copies of each path and ``identify'' their end-points in a
+pattern encoded by a graph, even though these paths need not share end-points --
+that is, we do not strictly require $\gamma_{u, v}(1) = \gamma_{v, w}(0)$. We
+will see that this relaxation is essential to defining our notion of TQFTs. We
+will ultimately be interested in expression graphs in manifolds, which will
+provide us with a way to associate linear maps to manifolds.
+\end{rmk}
+
+\begin{exm}\label{exm:geomegraph}
+Consider the graph in example \ref{exm:egraph1}. Then, we consider a mapping of
+the edges to paths on a surface as shown below.\footnote{This diagram was
+generated using \cite{Mathcha}.} Note that here we have
+$\gamma_{u, v}(1) = \gamma_{v, w}(0)$ for most points but not all -- for
+instance, $\gamma_{2, 3}$ and $\gamma_{3, 5}$ do not share any end-points.
+\begin{figure}[H]
+\begin{center}
+\input{path_graph_diag_1}
+\end{center}
+\caption{An elementary transport graph}
+\end{figure}
+We notice that the same algebraic expression carries over:
+\[
+  (\gamma_{5, 8} \tensor (\gamma_{6, 9} \cdot \gamma_{7, 9})) \circ
+  (\gamma_{3, 5} \tensor \gamma_{3, 6} \tensor \gamma_{4, 7}) \circ
+  ((\gamma_{1, 3} \cdot \gamma_{2, 3}) \tensor \gamma_{1, 4})
+\]
+\end{exm}
+
+\begin{defn}[Transport Graph]
+We call a geometric expression graph with an arbitrary vertex $2$--colouring --
+that is, we do not require adjacent vertices to have different colours --
+a transport graph.
+\end{defn}
+
+\begin{defn}[Geometric Homomorphism]
+Let $G$ and $H$ be graphs in manifolds $M$ and $N$ with geometric realizations
+$\gamma^G$ and $\gamma^H$ respectively, then a homomorphism $h : G \to H$
+equipped with a smooth map $f : M \to N$ making the following diagram commute is
+called a geometric homomorphism:
+\[
+\begin{tikzpicture}[baseline=(a).base]
+\node[scale=\diagscale] (a) at (0, 0){
+\begin{tikzcd}
+E(G) \ar[d, "\gamma^G" left] \ar[r, "h" above] &
+E(H) \ar[d, "\gamma^H" right] \\
+C^0(I, M) \ar[r, "f_*" below] &
+C^0(I, N)
+\end{tikzcd}
+};
+\end{tikzpicture}
+\]
+where $f_*$ is the post-composition map $g \mapsto f \circ g$.
+\end{defn}
+
+\begin{defn}[Transport Homomorphism]
+A colour-preserving geometric expression homomorphism of transport graphs is
+called a transport homomorphism.
+\end{defn}
+
+Pasting commutative squares as the one above along the $\gamma$ sides, we
+observe that geometric homomorphisms compose associatively. Taking
+$h$ and $f$ as the identity maps yields an identity morphism of geometric
+graphs. It is also straightforward to verify that disjoint union gives
+geometric graphs along with geometric homomorphisms a monoidal structure with
+the empty graph in the empty manifold as the monoidal unit.
+\TODO{Add an appendix entry for this.}
+
+We wish to eventually formulate transport graphs as a double category. To this
+end, we extend the definition to gluing of expression graphs as gluings of
+geometric expression graphs as follows.
+
+\begin{lem}
+Let $G$ and $H$ be expression graphs in $d$--dimensional cobordisms
+$M : X \to Y$ and $N : Y \to Z$ with geometric realizations $\gamma^G$ and
+$\gamma^H$ respectively such that $G$ and $H$ are gluable at $S(H) \cong T(G)$.
+Then, there exists a geometric realization
+\[
+  \gamma^H * \gamma^G : E(H * G) \to C^0(I, N * M)
+\]
+of $H * G$ in $N * M$.
+\end{lem}
+\begin{proof}
+We can define $\gamma^H * \gamma^G$ piecewise away from $S(H) \cong T(G)$. That
+is, we define $(\gamma^H * \gamma^G)(e)$ to be
+$\gamma^G(e)$ if $e \in E(G) \setminus E(T(G))$ and to be
+$\gamma^H(e)$ if $e \in E(H) \setminus E(S(H))$.
+If $e \in E(T(G))$, we choose $(\gamma^H * \gamma^G)(e)$ to be $\gamma^G(e)$ and
+if $e \in E(S(H))$, we choose $(\gamma^H * \gamma^G)(e)$ to be
+$\gamma^G(\psi_{G, H}^{-1}(e))$\footnote{Recall that $\psi_{G, H}$ is the unique
+isomorphism $T(G) \to S(H)$.}, so that $\gamma^H * \gamma^G$ agrees on
+$S(H) \cong T(G)$.
+\end{proof}
+
+\begin{defn}[Gluing Transport Graphs]
+For transport graphs $(G, \gamma^G)$ and $(H, \gamma^H)$ with $S(H) \cong T(G)$
+with a transport homomorphism, we define their gluing in the obvious way:
+\[
+  (H, \gamma^H) * (G, \gamma^G) := (H * G, \gamma^H * \gamma^G)
+\]
+\end{defn}
+
+This is enough structure to develop a simple system for doing algebra using
+paths on a manifold. We develop this primitive notion of TQFTs next. \TODO{I am
+not sure if it is appropriate call this a notion of TQFTs.}
+
+\subsection{Single Manifold TQFT}
+
+Consider the following data for a simple monoidal double category:
+\begin{enmrt}
+\li Object category: objects are totally ordered, $2$--coloured, finite sets;
+morphisms are order-preserving, colour-preserving (unique) bijections
+$V \stackrel{!}{\longleftrightarrow} V'$
+
+\li Morphism category: objects (horizontal $1$--morphisms) are tuples
+$(G, \gamma)$, where for a fixed manifold $M$, a fixed bundle $\pi : E \to M$,
+and a fixed connection $\nabla$ on $\pi$, $G$ is a transport graph and $\gamma$
+is a geometric realization of $G$ in $M$; morphisms are tuples
+\[
+  (f_0, f_1, h) : (G_1, \gamma^1) \to (G_2, \gamma^2)
+\]
+where $(f_0, f_1)$ is a morphism of connections $\nabla \to \nabla$ and
+$(f_0, h)$ is a transport isomorphism $(G_1, \gamma^1) \to (G_2, \gamma^2)$
+\footnote{It is possible that this condition forces $(f_0, f_1) = (\id, \id)$.}
+
+\li Source functor: $S : G \mapsto S(G)$; for a $2$--morphism $(f_0, f_1, h)$,
+$S(f_0, f_1, h)$ is the unique order-preserving bijection
+$S(\dom h) \to S(\codom h)$
+
+\li Target functor: $T : G \mapsto T(G)$, defined similarly as $S$
+
+\li Unit functor: $U : V \mapsto V$; $U : f \to f$ -- each finite,
+totally-ordered set is a transport graph with no edges and order- and colour-
+preserving bijections between finite sets are unique transport isomorphisms
+
+\li Horizontal composition:
+$(G_2, \gamma^2) * (G_1, \gamma^1) = (G_2 * G_1, \gamma^2 * \gamma^1)$
+
+\li Horizontal associators: inherited from the categories of sets and manifolds
+
+\li Horizontal unitors: inherited like associators
+
+\li Monoidal product: disjoint union
+
+\li Monoidal unit: empty set for object category, empty graph for morphism
+category
+\end{enmrt}
+
+It is straightforward to verify that the above data does form a monoidal double
+category.
+
+\begin{defn}[Double Category of Transport Graphs in a Manifold]
+The above data defines the double category of transport graphs in $M$ and we
+denote it as $\TG(M)$. We denote the object category as $\TG(M)_0$ and the
+morphism category as $\TG(M)_1$.
+\end{defn}
+
+We then consider a double functor defined as follows.
+
+\begin{defn}
+For a finite, totally-ordered set $V = \set{v_1, \dots, v_n}$ in $\TG(M)_0$, we
+set
+\[
+  F(V) := \bigotimes_{i = 1}^{n} c(v_i)
+\]
+where $c(v) = A$ if $v$ is blue and $c(v) = \C$ if $v$ is red,
+for some algebra $A$.
+
+For every unique order- and colour-preserving bijection $f : V \to V'$ in
+$\TG(M)_0$, we set $F(f) := \id_{F(V)} = \id_{F(V')}$.
+
+For a transport graph $(G, \gamma)$ in $M$ -- an object in $\TG(M)_1$ -- and an
+edge $(u, v) \in G$, we denote $\nabla^{\gamma_{u, v}}$ to be the parallel
+transport map $A \to A$ obtained from $\gamma_{u, v}$. We then define:
+\[
+  F\br{\nabla^{\gamma_{u, v}}} := \begin{cases}
+    \nabla^{\gamma_{u, v}}
+      & u \text{ is blue and } v \text{ is blue} \\
+    \text{ev}_{a}\br{\nabla^{\gamma_{u, v}}}
+      & u \text{ is red and } v \text{ is blue} \\
+    \text{trace}\br{\text{ev}_{a}\br{\nabla^{\gamma_{u, v}}}}
+      & u \text{ is red and } v \text{ is red} \\
+    \text{trace} \circ \nabla^{\gamma_{u, v}}
+      & u \text{ is red and } v \text{ is red}
+  \end{cases}
+\]
+We then obtain a linear map:
+\[
+  F(G, \gamma) := \Exp{G}[F\br{\nabla^{\gamma_{u, v}}}]
+    : F(S(G)) \to F(T(G))
+\]
+For a $2$--morphism
+$(f_0, f_1, h) : (G_1, \gamma_1) \to (G_2, \gamma_2)$ in $\TG(M)_1$, we consider
+the path $(r_t, s_t)$ in the isomorphism group of the bundle $\pi$ such that
+$(r_0, s_0) = (\id_M, \id_E)$ and $(r_1, s_1) = (f_0, f_1)$. We then have a
+smoothly varying family of functions $s_t\gamma : E(G) \to C^0(I, M)$
+where $(s_t\gamma)_{u, v} = s_t \circ \gamma_{u, v}$. This yields a smoothly
+varying family of linear maps, which we write as:
+\[
+  F(f_0, f_1, h) := \Exp{G}[s_t\gamma]
+    : F(S(G)) \to F(T(G)), t \in [0, 1]
+\]
+\end{defn}
+
+\TODO{Verify that this data does indeed form a monoidal double functor}
+
+\TODO{Define the codomain double category}
 
 \section{TQFTs from Parallel Transport}
 

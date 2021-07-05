@@ -109,3 +109,11 @@
 % Miscellaneous:
 \newcommand{\TODO}[1]{{\color{blue!55!black} *** TODO: #1 ***}}
 
+\newcommand{\li}[1][]{\ifthenelse{\equal{#1}{}}{\item}{\item \label{#1}}}
+\newenvironment{enmrt}{
+  \enumerate[(i)]
+  \setlength{\itemsep}{0pt}
+}{
+  \endenumerate
+}
+
