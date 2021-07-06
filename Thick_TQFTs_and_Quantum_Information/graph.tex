@@ -13,60 +13,18 @@ categories. We will require a notion of graphs on manifolds whose vertices are
 points, possibly repeated, on the manifold and whose edges are paths on the
 manifold.
 
-\subsection{Graphs Encoding Monoidal Expression}
+\subsection{Graphs Encoding Algebraic Expressions}
 
-We will now define a class of graphs that encode expressions involving tensor
-products, point-wise algebra products and composition of linear maps $A \to A$
-for some algebra $A$. As a matter of convention, we will take all graphs to mean
-directed graphs where we do not allow parallel edges or self-loops. However, we
-do allow the underlying undirected graph of any directed graph to be a forest.
-Given a graph $G = (V, E)$, we will write $V = V(G)$ and $E(G)$.
-
-\begin{defn}[Elementary Expression Graph]\label{eeg}
-Let $G = (V, E)$ be a finite graph satisfying the following properties:
-\begin{enumerate}[(i)]
-
-\setlength{\itemsep}{0pt}
-
-\item \label{eeg:part}
-$V = V_1 \amalg \dots \amalg V_k$ for some $k \in \N \cup \set{0}$, with each
-$V_i$ totally ordered as
-$V_i = \set{v_{i, 1}, \dots, v_{i, q_i}}$ for some $q_i \in \N$; note that we
-we distinguish between the set $\set{*}$ and the set $\set{v_{i, 1}}$; also, we
-keep track of the order of the $V_i$
-
-\item \label{eeg:forward}
-for every edge from $u$ to $v$ in $E$, $u \in V_i$ and
-$v \in V_{i + 1}$ for some $i \in \set{1, \dots, k - 1}$, when $k \geq 2$
-
-\item \label{eeg:nonredright}
-each element in $V_{i + 1}$ has at least one edge from an element in $V_{i}$,
-$1 \leq i < k$
-
-\item \label{eeg:nonredleft}
-each element in $V_{i}$ has at least one edge to an element in $V_{i + 1}$,
-$1 \leq i < k$
-
-\end{enumerate}
-Then $G$ is called an elementary expression graph and for any vertex $v \in V$,
-we write $p_{G}(v)$ to denote the number $i$ for which $v \in V_i$.
-\end{defn}
-
-\begin{rmk}
-The total ordering on vertex set parts in condition \eqref{eeg:part} is needed
-for defining a ``composition'' or gluing of expression graphs later on.
-\end{rmk}
-
-\begin{rmk}
-Property \eqref{eeg:forward} above guarantees that $V_1$ has no incoming edges,
-$V_k$ has no outgoing edges and there are no edges
-``going backwards'' or ``staying within parts'' -- that is, from $V_j$ to $V_i$
-for $i \leq j$. It also guarantees that there are no edges ``skipping the next
-part'' -- that is, from $V_i$ to $V_j$ for $j > i + 1$.
-\end{rmk}
+We will now describe a method of encoding expressions involving tensor products,
+point-wise algebra products and composition of linear maps $A \to A$ for some
+algebra $A$, using directed graphs. As a matter of convention, we will take all
+graphs to mean directed acyclic graphs where we do not allow parallel edges or
+self-loops. However, we do allow the underlying undirected graph of any directed
+graph to be a forest. Given a graph $G = (V, E)$, we will write $V = V(G)$ and
+$E = E(G)$.
 
 \begin{exm}\label{exm:egraph1}
-Consider the graph consisting of nine vertices $1, \dots, 9$ with
+Consider a graph consisting of nine vertices $1, \dots, 9$ with
 $V_1 = \set{1, 2}$, $V_2 = \set{3, 4}$, $V_4 = \set{5, 6, 7}$ and
 $V_4 = \set{8, 9}$, along with edges:
 \[\begin{array}{ccccc}
@@ -74,8 +32,7 @@ $V_4 = \set{8, 9}$, along with edges:
   (3, 5) &,& (3, 6) &,& (4, 7),\\
   (5, 8) &,& (6, 9) &,& (7, 9)
 \end{array}\]
-It is easy to check that this graph satisfies all conditions in the definition
-of an elementary expression graph by visualizing it as follows:
+We visualize this graph as follows:
 \[\begin{tikzpicture}[baseline=(a).base]
 \node[scale=\diagscale] (a) at (0, 0){
 \begin{tikzcd}[column sep=huge, row sep=tiny]
@@ -87,9 +44,9 @@ of an elementary expression graph by visualizing it as follows:
 \end{tikzcd}
 };
 \end{tikzpicture}\]
-
-We then observe that we can use this graph to generate an algebraic expression
-of the form:
+In particular, this diagram gives a topological ordering of vertices. We then
+observe that we can use this graph to generate an algebraic expression of the
+form:
 \[
   ((5, 8) \tensor ((6, 9) \cdot (7, 9))) \circ
   ((3, 5) \tensor (3, 6) \tensor (4, 7)) \circ
@@ -106,133 +63,72 @@ that the target of $E_1$ is the source of $E_2$, we call these expressions
 composeable and we form the new expression $E_2 \circ E_1$. This yields the
 whole expression above.
 
-One sees readily the edges can be replaced with paths in a manifold $M$ equipped
-with an $A$--fibred bundle with connection. These paths can then be replaced
-replaced with linear maps $A \to A$ yielding a linear map corresponding to the
-expression. We can associate this linear map to $M$ in some notion of TQFT. This
-will later motivate us to define an algorithm for obtaining a canonical
-expression from an expression graph.
+One sees readily that the edges can be replaced with paths in a manifold $M$
+equipped with an $A$--fibred bundle with connection. These paths can then be
+replaced replaced with linear maps $A \to A$ yielding a linear map corresponding
+to the expression. We can associate this linear map to $M$ in some notion of
+TQFT. This will later motivate us to define an algorithm for obtaining a
+canonical expression from an expression graph.
 \end{exm}
 
-We observe that we can take disjoint unions of elementary expression graphs but
-the result is not an \textit{elementary} expression graph, in general, because
-the pieces of the disjoint union do not all have the same number of parts. For
-this, we define the following.
+This motivates the following definitions, some of which are standard but we
+include for convenience.
 
-\begin{defn}[Expression Graph]
-An ordered disjoint union of elementary expression graphs
-$G = G_1 \amalg \dots \amalg G_n$ is called an expression graph. We have a part
-function for each component expression graph -- that is, $p_{G_i}(u) = j$ if and
-only if $u \in G_i$, the vertex set of $G_i$ is $\coprod_{j = 1}^{k_i} V_{i, j}$
-and $u \in V_{i, j}$ for some $j$. These collectively give a part function for
-$G$ -- $p_G(v) = (i, j) \iff v \in V_{i, j}$
-\end{defn}
+\begin{defn}[Level Ordering]
+Given a directed acyclic graph $G = (V, E)$, we let $V_1$ denote the subset of
+$V$ consisting of vertices with no incoming edges. We let $V_{k + 1}$ denote the
+subset of $V$ consisting of vertices that have incoming edges only from vertices
+in $V_{1} \cup V_{2} \cup \cdots \cup V_{k}$. We note that the $V_i$'s are
+disjoint for distinct $i$ such that there exist finitely many $V_i$
+such that $V = \coprod_{i = 1}^{N} V_i$ for some $N \in \N$. Then, the $V_i$'s
+are called the levels of $G$ and the set $\mathcal{V} = \set{V_1, \dots, V_N}$,
+a level ordering of $G$. In this case, we call $G$ level-ordered.
 
-We now define morphisms of expression graphs.
-
-\begin{defn}[Expression Homomorphism]
-A graph homomorphism $h : G \to H$ between expression graphs satisfying
-\[
-  p_G(u) = p_G(v) \implies p_H(h(u)) = p_H(h(v))
-\]
-and
-\[
-  u \leq v \implies h(u) \leq h(v)
-\]
+Given a level ordering as this, we can define a level
+function $l_{\mathcal{V}} : V \to \set{1, \dots, k}$, given by
+$l_{\mathcal{V}}(v) = i$ if and only if $v \in V_i$.
 \end{defn}
 
 \begin{rmk}
-The conditions in the definition above ensures that $h$ restricted to each
-elementary expression graph in its domain is also an expression homomorphism
-into an elementary expression graph in the codomain.
+The existence of a level ordering of a directed acyclic graph is well-known --
+consider any topological sorting algorithm -- but these orderings need not be
+unique -- consider the disjoint union of two directed acyclic graphs.
 \end{rmk}
 
-We will now define a notion of gluing for expression graphs. To this end, we
-define the ``source'' and ``target'' ends of an expression graph in the obvious
-way.
-
-\begin{defn}[Source and Target of an Expression Graph]
-Let $G = \coprod_{i = 1}^{n} G_i$ be an expression graph in a manifold $M$ with
-$G_i$ having the vertex partition $\coprod_{j = 1}^{k_i} V_{i, j}$. Then, we
-define the source of $G$ as the expression graph $S(G)$ with vertex set
-$\coprod_{i = 1}^{n} V_{i, 1}$ consisting of a single part and no edges.
-The target of $G$ is the expression graph $T(G)$ defined analogously with the
-vertex set $\coprod_{i = 1}^{n} V_{i, k_i}$.
-\end{defn}
-
-\begin{rmk}
-We notice that the total ordering of vertex set parts of each elementary
-expression graph in an expression graph along with the ordering of the elementary
-expression graphs themselves induces a total ordering of $S(G)$ and $T(G)$,
-respectively. At the same time, there are unique inclusion expression
-homomorphisms
-\[
-  S(G) \hto[s_G] G \hot[t_G] T(G)
-\]
+\begin{rmk}\label{rmk:lgraph_edge}
+We also note that if a vertex has no incoming nor outgoing edges, then it is
+placed at the lowest level. Vertices at any level cannot have outgoing edges to
+a lower level, for if they do, then the graph has a cycle. Finally, we note that
+if a vertex at some level has no edge from the immediate preceding level, we can
+move it to that level. Hence, we may assume that each vertex not at the first
+level has at least one edge from the immediate preceding level.
 \end{rmk}
 
-\begin{lem}
-Let $G$ and $H$ be expression graphs such that $|S(H)| = |T(G)|$.
-We then have a unique expression homomorphism $\psi_{G, H} : T(G) \to S(H)$ which
-is monotone on vertex sets. The pushout in $\EG$ of the follosing diagram
-exists:
+\begin{exm}
+A level-ordering of the graph in example \ref{exm:egraph1} is:
 \[
-  G \hot[t_G] T(G) \to[\psi_{G, H}] S(H) \hto[s_H] H
+  V_1 = \set{1, 2}, V_2 = \set{3, 4}, V_3 = \set{5, 6, 7}, V_4 = \set{8, 9}
 \]
-\end{lem}
-\begin{proof}
-We consider the pushout of the diagram in $\Set$ for both the vertex and edge
-sets. Then it is easy to see that the resulting vertex and edge sets satisfy the
-conditions of the definition of an expression graph -- we are simply identifying
-the isomorphic subgraphs $S(H)$ of $H$ and $T(G)$ of $G$ in the disjoint union
-$G \amalg H$.
-\end{proof}
+\end{exm}
 
-\begin{defn}[Gluing Expression Graphs]
-We define the pushout above to be the gluing $H * G = G \amalg_{S(H)} H$ in
-$\EG$. If $G$ and $H$ satisfy the condition $|S(H)| = |T(G)|$ as above, we call
-them gluable at $S(H) \cong T(G)$.
-\end{defn}
-
-Taking $S(G)$ and $T(G)$ as the identities of $G$ for this gluing operation, it
-is straightforward to verify that the associators and unitors for pushouts in
-the category of sets are expression homomorphisms. Hence, these associators and
-unitors also satisfy associativity and unity coherence axioms to make the
-following theorem true. \TODO{Add and appendix entry for the proof of this.}
-
-\subsection{Extracting Expressions}
-
-One immediate way to associate linear maps to a manifold $M$, using the geometry
-of the manifold, is to consider an expression graph $G$ with a mapping $\gamma$
-of edges to paths on a manifold $M$ equipped with an $A$--fibred bundle
-$\pi : E \to M$ along with connection a connection $\nabla$ on $\pi$. In this
-case, we can take the linear map obtained by parallel transport of elements of
-$A$ along each path in the image of $\gamma$. We can then use $G$ to obtain a
-linear map $A^{\amalg |S(G)|} \to A^{\amalg |T(G)|}$, using the same kind of
-formula we obtained in example \ref{exm:egraph1}. We are thus motivated to
-formalize the notion of an expression associated to an expression graph.
-
-\begin{defn}[Elementary Expression]
-Given an elementary expression graph $G$ with vertex set
-$\coprod_{i = 1}^{n} V_i$, where each part is ordered as
-$V_i = \set{v_{i, 1}, v_{i, 2}, \dots, v_{i, k_i}}$, we define:
+\begin{defn}[Expression of a Graph]
+Given a graph $G$ with a chosen level ordering $\set[V_i]{i = 1, \dots, N}$
+along with a chosen total ordering
+$V_i = \set{v_{i, 1}, v_{i, 2}, \dots, v_{i, k_i}}$ of each level, we define:
 \begin{enumerate}[(i)]
 \setlength{\itemsep}{0pt}
-
 \item For $j \in \set{1, \dots, k_1}$, the expression associated to $v_{1, j}$
 is:
 \[
-  \Exp{G}_{1, j} := *\footnote{$\varnothing$ is formal symbol.}
+  \Exp{G}_{1, j} := v_{1, 1}\footnote{We take this vertex as a formal symbol.}
 \]
-
-\item The expression associated to the vertex set part $V_1$ is:
+The expression associated to the layer $V_1$ is:
 \[
-  \Exp{G}_1 :=
-    \overbrace{* \tensor * \tensor \cdots \tensor *}^{k_1 \text{ times}}
+  \Exp{G}_1 := v_{1, 1} \tensor \cdots \tensor v_{1, k_1}
 \]
 
 \item For
-$i \in \set{2, \dots, n}$,
+$i \in \set{2, \dots, N}$,
 $j \in \set{1, \dots, k_i}$,
 let $\set{e_1, e_2, \dots, e_q}$ be the set of incoming edges on $v_{i, j}$,
 ordered by the source vertices. Then, the expression associated to $v_{i, j}$
@@ -240,112 +136,261 @@ is:
 \[
   \Exp{G}_{i, j} := e_1 \cdot e_2 \cdot \cdots \cdot e_q
 \]
-
-\item For $i \in \set{2, \dots, n}$, the expression associated to the vertex set
-part $V_{i}$ is:
+The expression associated to the layer $V_{i}$ is:
 \[
   \Exp{G}_{i} := \Exp{G}_{i, 1} \tensor \Exp{G}_{i, 2} \tensor \cdots
                  \tensor \Exp{G}_{i, k_{i}}
 \]
 
-\item The expression associated to $G$ is:
+\item If $N = 0$, the expression associated to $G$ is:
 \[
-  \Exp{G} := \Exp{G}_n \circ \Exp{G}_{n - 1} \circ \cdots \Exp{G}_{2}
-            \circ \Exp{G}_1
+  \Exp{G} := \varnothing
 \]
-
+If $N = 1$, the expression associated to $G$ is:
+\[
+  \Exp{G} := \Exp{G}_1
+\]
+If $N > 1$, the expression associated to $G$ is:
+\[
+  \Exp{G} := \Exp{G}_N \circ \Exp{G}_{N - 1} \circ \cdots \Exp{G}_{2}
+\]
 \end{enumerate}
-
-Then, $\Exp{G}$ is called the elementary expression of $G$.
+Then, $\Exp{G}$ is called the expression of $G$ for the given level ordering and
+the given total orderings of the levels.
 \end{defn}
 
-\begin{defn}[Expression]
-Given an expression graph $G$ composed of elementary expression graphs
-$G_1 \amalg G_2 \amalg \cdots \amalg G_n$, the expression of $G$ is defined as:
+From this definition it is clear that level-ordered sets encode algebraic
+expressions of the form we saw in example \ref{exm:egraph1}.
+
+\subsection{Disjoint Unions and Gluings}
+
+For defining a disjoint union of level-ordered graphs, we require an operation
+of level orders that yields a level ordering of the disjoint union of the
+graphs. We see an example first.
+
+\begin{exm}\label{exm:lgraph_disjunion}
+Consider the graph in example \ref{exm:egraph1} -- call it $G$ -- along with the
+following graph $H$:
+\[\begin{tikzpicture}[baseline=(a).base]
+\node[scale=\diagscale] (a) at (0, 0){
+\begin{tikzcd}[column sep=huge, row sep=tiny]
+                                &                    & 5' \\
+1' \ar[rru, bend left] \ar[rdd] & 3' \ar[ru] \ar[rd] &    \\
+                                &                    & 6' \\
+2' \ar[ruu]                     & 4' \ar[rd] \ar[ru] &    \\
+                                &                    & 7'
+\end{tikzcd}
+};
+\end{tikzpicture}\]
+We then observe the following diagram of $G \amalg H$:
+\[\begin{tikzpicture}[baseline=(a).base]
+\node[scale=\diagscale] (a) at (0, 0){
+\begin{tikzcd}[column sep=huge, row sep=tiny]
+                                    &                      & 5 \ar[rd] &    \\
+1 \ar[r] \ar[rdd]                   & 3 \ar[ru] \ar[rd]    &           & 8  \\
+                                    &                      & 6 \ar[rd] &    \\
+2 \ar[ruu]                          & 4 \ar[rd]            &           & 9  \\
+                                    &                      & 7 \ar[ur] &    \\
+                                    &                      &           &    \\
+                                    &                      &           & 5' \\
+1' \ar[rrru, bend left=20] \ar[rdd] & 3' \ar[rru] \ar[rrd] &           &    \\
+                                    &                      &           & 6' \\
+2' \ar[ruu]                         & 4' \ar[rrd] \ar[rru] &           &    \\
+                                    &                      &           & 7'
+\end{tikzcd}
+};
+\end{tikzpicture}\]
+This suggests one possible operation on level sets which yields a level
+ordering. We define this next.
+\end{exm}
+
+\begin{cor}
+Let $(G, \mathcal{V} = \set{V_i}_{i = 1}^{N})$ and
+$(H, \mathcal{W} = \set{W_i}_{i = 1}^{M})$ be level-ordered
+graphs. If $M \leq N$, the following set is a level ordering of $G \amalg H$:
 \[
-  \Exp{G} := \Exp{G_1} \tensor \Exp{G_2} \tensor \cdots \tensor \Exp{G_n}
+  \mathcal{V} \tensor \mathcal{W} :=
+  \set{V_1 \amalg W_1, V_2 \amalg W_2, \dots, V_{M - 1} \amalg W_{M - 1},
+  V_M, \dots, V_{N - 1}, V_N \amalg W_M}
 \]
+If $N \leq M$, the following set is a level ordering of $G \amalg H$:
+\[
+  \mathcal{V} \tensor \mathcal{W} :=
+  \set{V_1 \amalg W_1, V_2 \amalg W_2, \dots, V_{N - 1} \amalg W_{N - 1},
+  W_N, \dots, W_{M - 1}, V_N \amalg W_M}
+\]
+If $N = M$, these two descriptions coincide.
+\end{cor}
+
+This allows us to define a disjoint union of level-ordered graphs.
+\begin{defn}
+For level-ordered graphs $(G, \mathcal{V})$ and $(H, \mathcal{W})$, we define
+\[
+  (G, \mathcal{V}) \tensor (H, \mathcal{W}) :=
+    (G \amalg H, \mathcal{V} \tensor \mathcal{W})
+\]
+to be the disjoint union.
+\end{defn}
+
+\begin{rmk}
+We notice that if we choose total orderings of levels, then this disjoint union
+again gives total orderings of levels.
+\end{rmk}
+
+To see the associativity and unitality of this operation up to ``coherent
+isomorphism'', we require a notion of morphism of level-ordered graphs. We
+define this now.
+
+\begin{defn}[Level Homomorphism]
+Let $(G, \mathcal{V} = \set{V_i}_{i = 1}^{N})$ and
+$(H, \mathcal{W} = \set{W_i}_{i = 1}^{M})$ be level-ordered
+graphs. Then, a graph homomorphism $h : G \to H$ satisfying:
+\[
+  l_{\mathcal{V}}(u) = l_{\mathcal{V}}(v)
+  \implies l_{\mathcal{W}}(h(u)) = l_{\mathcal{W}}(h(v))
+\]
+\end{defn}
+
+It is then straightforward to verify that the associator and unitor isomorphisms
+for the disjoint union of vertex sets are level homomorphisms of graphs -- this
+is an exercise similar to verifying that disjoint unions of connections are
+associative and unital, as we saw in \S\ref{subsec:connctg}. We then proceed to
+define a gluing of level-ordered graphs.
+
+\begin{defn}[Source and Target]
+Let $(G, \mathcal{V} = \set{V_i}_{i = 1}^{N})$ be a level-ordered graph. Then,
+we define $V_1$ to be the source graph $S(G)$ of $G$ and $V_N$ to be the target
+graph $T(G)$ of $G$.
+\end{defn}
+
+It is obvious that $S(G)$ and $T(G)$ are single-level level-ordered graphs with
+obvious inclusion homomorphisms that are also level homomorphisms. However,
+gluing at source target-ends is not well-defined, unless we have a unique
+isomorphism between the source of one graph to the target of another. This is
+another reason we should consider total orderings of the levels. Recall that we
+required total orderings of levels to define expressions of level-ordered
+graphs. Hence, we define the following subclass of level-ordered graphs.
+
+\begin{defn}[Expression Graph]
+A level-ordered graph $(G, \mathcal{V})$ equipped with a total ordering of its
+levels is called an expression graphs.
+\end{defn}
+
+\begin{defn}[Expression Homomorphism]
+A level homomorphism that is order-preserving on levels is called an expression
+homomorphism.
+\end{defn}
+
+We then observe that $S(G)$ and $T(G)$ are totally ordered for any expression
+graph $G$. Then we have the following theorem.
+
+\begin{thm}\label{thm:expiso_unique}
+Expression isomorphisms are unique.
+\end{thm}
+\begin{proof}
+Let $f : (G, \mathcal{V}) \to (H, \mathcal{W})$ be an expression isomorphism,
+where $\mathcal{V} = \set{V_i}_{i = 1}^{N}$ and
+$\mathcal{W} = \set{W_j}_{i = 1}^{M}$. By remark \ref{rmk:lgraph_edge}, we have
+a path $v_1, v_2, \dots, v_N$ in $G$ with $v_i \in V_i$. Then,
+$f(v_1), f(v_2), \dots, f(v_N)$ is a path in $H$ with $f(v_i) \in W_{j(i)}$
+for some strictly increasing finite sequence
+$j : \set{1, \dots, N} \to \set{1, \dots, M}$, since edges always go forward in
+levels. This shows that $N \leq M$. Using $f^{-1}$ and a path in $H$, we can
+show that $M \leq N$ so that $N = M$. This also shows that $f(v_1) \in W_1$ and
+hence $f(v_i) \in W_i$ for each $i$, by counting.
+
+Now, if there is another vertex $v'_i \in V_i$ for any $i$, we have
+$l_{\mathcal{V}}(v'_i) = l_{\mathcal{V}}(v_i) \implies
+l_{\mathcal{V}}(f(v'_i)) = l_{\mathcal{V}}(f(v_i))$. Thus, $f(V_i) \subset W_i$.
+Using the same argument with $f^{-1}$, we have $f^{-1}(W_i) \subset V_i$. Hence,
+we must have $f(V_i) = W_i$ for all $i$. For any other isomorphism $f'$ with the
+same domain and codomain, we can similarly show that $f'(V_i) = W_i$ for all
+$i$. Finally, since order-preserving bijections between finite, totally ordered
+sets -- the levels -- are unique, we must have $f = f'$ on all $V_i$. Thus,
+$f = f'$ on all of $G$.
+\end{proof}
+
+\begin{defn}[Gluing of Expression Graphs]
+Let $(G, \mathcal{V} = \set{V_i}_{i = 1}^{N})$ and
+$(H, \mathcal{W} = \set{W_i}_{i = 1}^{M})$ be level-ordered
+graphs such that there is a unique expression isomorphism
+\[
+  \psi_{G, H} : W_1 = S(H) \to T(G) = V_N
+\]
+Then, we say that $G$ and $H$ are gluable at $S(H) \cong T(G)$. We define the
+pushout of the following span in $\Set$ to be the gluing $H * G$ of graphs.
+\[
+  H \hot S(H) \to[\phi] T(G) \hto G
+\]
+$H * G$ has the obvious level-ordering:
+\[
+  \mathcal{W} * \mathcal{V} :=
+  \set{V_1, \dots, V_N \cong W_1, W_2, \dots, W_M}
+\]
+We call $(H * G, \mathcal{W} * \mathcal{V})$ the gluing or composite of the
+given level-ordered graphs.
+\end{defn}
+
+\begin{exm}
+Consider $G$ and $H$ as in example \ref{exm:lgraph_disjunion}. We have the
+following diagram of $H * G$:
+\[\begin{tikzpicture}[baseline=(a).base]
+\node[scale=\diagscale] (a) at (0, 0){
+\begin{tikzcd}[column sep=huge, row sep=tiny]
+                  &                   & 5 \ar[rd] &                                     &                    & 5' \\
+1 \ar[r] \ar[rdd] & 3 \ar[ru] \ar[rd] &           & 8 \cong 1' \ar[rru, bend left] \ar[rdd] & 3' \ar[ru] \ar[rd] &    \\
+                  &                   & 6 \ar[rd] &                                     &                    & 6' \\
+2 \ar[ruu]        & 4 \ar[rd]         &           & 9 \cong 2' \ar[ruu]                     & 4' \ar[rd] \ar[ru] &    \\
+                  &                   & 7 \ar[ur] &                                     &                    & 7'
+\end{tikzcd}
+};
+\end{tikzpicture}\]
+\end{exm}
+
+It is then easy to verify that this gluing is associative and unital up to
+coherent isomorphism much like the disjoint union. In fact, associators and
+unitors of the disjoint union of level-ordered graphs also expression
+isomorphisms. We can further verify that the data of expression graphs defined
+so far form a monoidal double category whose objects are finite, ordered sets,
+vertical $1$--morphisms are unique order isomorphisms, horizontal $1$--morphisms
+$G : U \to V$ are expression graphs $G$ with $S(G) \cong U$ and $T(G) \cong V$,
+and $2$--morphisms are expression isomorphisms, with horizontal composition
+given by gluing and monoidal product given by disjoint union as defined above.
+
+\TODO{Maybe, we should have an appendix entry for the proof.}
+
+\subsection{Some Constructs on Expressions}
+
+We define some basic constructs on expressions obtained from expression graphs.
+
+\begin{defn}[Equality of Expressions]
+If $E_1$ and $E_2$ be expressions such that there exist isomorphic
+expression graphs $G$ and $H$ with $\Exp{G} = E_1$ and
+$\Exp{H} = E_2$, then we say that $E_1$ and $E_2$ are equal.
 \end{defn}
 
 \begin{defn}[Expression Composition]
-Let $G$ and $H$ expression graphs gluable at $S(H) \cong T(G)$. Then, we have
+Let $G$ and $H$ be expression graphs gluable at $S(H) \cong T(G)$. Then, we
+define:
 \[
-  \Exp{G} = \Exp{G_1} \tensor \cdots \tensor \Exp{G_n} \text{ and }
-  \Exp{G} = \Exp{H_1} \tensor \cdots \tensor \Exp{H_m}
-\]
-with
-\[
-  \Exp{G_i} = \Exp{G_i}_{p_i} \circ \cdots \circ \Exp{G_i}_{1} \text{ and }
-  \Exp{H_j} = \Exp{H_j}_{q_j} \circ \cdots \circ \Exp{H_j}_{1}
-\]
-We define:
-\[
-  \Exp{H} \circ \Exp{G} :=
-    \bigotimes_{j = 1}^{m} \Exp{H_j}_{q_j} \circ \cdots \circ \Exp{H_j}_{2}
-    \circ \bigotimes_{i = 1}^{n} \Exp{G_i}
+  \Exp{H} \circ \Exp{G} := \Exp{H * G}
 \]
 \end{defn}
 
-\begin{thm}
-Let $h_1, h_2 : G \to H$ be isomorphisms of elementary expression graphs. Then,
-$h_1 = h_2$.
-\end{thm}
-\begin{proof}
-Let the vertex parts of $G$ be $V_1 \amalg \cdots \amalg V_n$ and those of $H$
-be $V'_1 \amalg \cdots V'_m$. For $n = 1$, we have $V(G) = V_1$ so that there is
-$h_1 : V_1 \to V'_j$ is an order-preserving injection for some $j$. However,
-$|V(H)| = |V(G)| = |V_1| = |h_1(V_1)|$, so that $V(H) = V'_j = V'_1$ and $h_1$
-is an order-preserving bijection $V_1 \to V'_1$. We can argue the same about
-$h_2$. Sincer order-preserving bijections between finite sets are unique,
-$h_1 = h_2$.
-
-There exists $v \in V_1$ such that $h_1(v) \in V'_j$ for some $j > 1$. There
-exists a path $v = v_1v_2 \dots v_n = w$ from $v$ to some $w \in V_n$ such that
-$v_i \in V_i$, by the definition of expression graphs. Then,
-$h_1(v_1)h_1(v_2) \dots h_1(v_n)$ is a path in $H$ such that
-$h_1(v_i) \in V'_{j + i - 1}$. This shows that $m \geq n$. Using $h_1^{-1}$ some
-vertex $v' \in V'_1$, we can argue that $n \geq m$ so that $n = m$.
-In particular, we must have $j = 1$. We thus have $h_1(V_1) \subset V'_1$. Using
-$h_1^{-1}$ in place of $h_1$ in the above argument, we have
-$h_1^{-1}(V'_1) \subset V_1 \implies V'_1 \subset h_1(V_1)$, so that
-$V_1 = h_1(V'_1)$.
-
-We can repeat this argument with
-$h_1|_{G \setminus V_1} : G \setminus V_1 \to H \setminus V'_1$ to show that
-$h_1(V_2) = V'_2$ and so on. Then, $h_1|_{V_i} : V_i \to V'_i$ is an order
-preserving bijection. We can repeat this argument with $h_2$ so that
-$h_1 = h_2$ on all $V_i$. Thus, $h_1 = h_2$.
-\end{proof}
-
-\begin{defn}[Equality of Elementary Expressions]
-Let $G$ and $H$ be elementary expression graphs. We say that $\Exp{G} = \Exp{H}$
-if there exists a (unique) expression isomorphism
-$G \stackrel{!}{\longleftrightarrow} H$.
-\end{defn}
-
-\begin{defn}[Equality of Expressions]
-Let $G$ and $H$ be expression graphs composed of elementary expression graphs
-$G_1 \amalg \cdots \amalg G_n$ and $H_1 \amalg \cdots \amalg H_n$ respectively.
-Then, we say that $\Exp{G} = \Exp{H}$, if there exists an expression isomorphism
-$h : G \longleftrightarrow H$ with $h(G_i) = H_i$ for all $i = 1, \dots, n$.
-\end{defn}
-
-\begin{thm}
-Let $G$ and $G'$ be expression graphs. Let $H$ be an expression graph gluable
-with $G$ at $S(H) \cong T(G)$. Then, we have:
+\begin{defn}[Expression Tensor Product]
+Let $G$ and $H$ be expression graphs. We define:
 \[
-  \Exp{G \amalg G'} = \Exp{G} \tensor \Exp{G'}
+  \Exp{G} \tensor \Exp{H} := \Exp{G \tensor H}
 \]
-and
-\[
-  \Exp{H * G} = \Exp{H} \circ \Exp{G}
-\]
-\end{thm}
+\end{defn}
 
 \begin{defn}[Expression Substitution]
-Given an expression graph $G$, we write $\Exp{G}[f]$ to denote the expression
-obtained by replacing and edge $(u, v) \in G$ in $\Exp{G}$ with some expression
-$f(u, v)$, depending on $(u, v)$.
+Given an expression graph $G$, we write
+\[
+  \Exp{G}[f] \text{ or } \Exp{G}[f(u, v)] \text{ or } \Exp{G}[(u, v)/f(u, v)]
+\]
+to denote the expression obtained by replacing each edge $(u, v) \in G$ in
+$\Exp{G}$ with some string of symbols $f(u, v)$, depending on $(u, v)$.
 \end{defn}
 
 \subsection{Geometric Realization}
@@ -393,6 +438,45 @@ We notice that the same algebraic expression carries over:
 \]
 \end{exm}
 
+At this point, we make a necessary observation. Consider geometric expression
+graphs in a manifold equipped with an $A$--fibred bundle with connection. Then,
+consider the expression of an expression graph realized in this manifold. If we
+substitute the edges in the expression of the graph with the parallel transport
+maps along the paths associated to the edges, we obtain a linear map from a
+non-zero tensor power of $A$ to another such tensor power, given the graph has
+at least one edge. However, there is no immediate way to obtain a map of the
+form $\R \to A$ or $A \to \R$. For this, we may consider expression graphs with
+a $2$--colouring of its vertices but without any adjacency constraints. That is,
+adjacent vertices may or may not have the same colour. In this case, we will
+still get linear maps from positive tensor powers to positive tensor powers of
+$A$ but we can use the colouring to generate maps of the form $\R \to A$ or
+$A \to \R$ using linear maps $A \to A$, by composing some fixed maps
+$\R \to A$ or $A \to \R$ on either side. Hence, we define the following.
+
+\begin{defn}[Pretransport Graph]
+A pretransport graph is an expression graph with an arbitrary $2$--colouring of
+its vertices without adjcency constraints.
+\end{defn}
+
+\begin{defn}[Pretransport Homomorphism]
+A vertex colour preserving expression homomorphism is called a pretransport
+homomorphism.
+\end{defn}
+
+From \ref{thm:expiso_unique}, it is immediate that:
+
+\begin{cor}
+Pretransport isomorphisms are unique.
+\end{cor}
+
+\begin{cor}
+Gluing of expression graphs extends to gluing of pretransport graphs if we
+consider pretransport isomorphisms instead of expression isomorphisms.
+\end{cor}
+
+We then consider our main class of graphs that will yield our desired linear
+maps.
+
 \begin{defn}[Transport Graph]
 We call a geometric expression graph with an arbitrary vertex $2$--colouring --
 that is, we do not require adjacent vertices to have different colours --
@@ -416,45 +500,40 @@ C^0(I, N)
 };
 \end{tikzpicture}
 \]
-where $f_*$ is the post-composition map $g \mapsto f \circ g$.
+where $f_*$ is the post-composition map $g \mapsto f \circ g$, and the
+homomorphism $h$ is viewed as the function it induces on edge sets.
 \end{defn}
 
 \begin{defn}[Transport Homomorphism]
-A colour-preserving geometric expression homomorphism of transport graphs is
-called a transport homomorphism.
+A geometric pretransport homomorphism is called a transport homomorphism.
 \end{defn}
 
 Pasting commutative squares as the one above along the $\gamma$ sides, we
 observe that geometric homomorphisms compose associatively. Taking
 $h$ and $f$ as the identity maps yields an identity morphism of geometric
-graphs. It is also straightforward to verify that disjoint union gives
-geometric graphs along with geometric homomorphisms a monoidal structure with
-the empty graph in the empty manifold as the monoidal unit.
-\TODO{Add an appendix entry for this.}
+graphs. Similarly, transport homomorphism also compose associatively and have
+units. Furthermore, transport graphs inherit the disjoint union from their
+underlying expression graphs and manifolds. For their gluing, we require a
+notion of gluing geometric realizations.
 
-We wish to eventually formulate transport graphs as a double category. To this
-end, we extend the definition to gluing of expression graphs as gluings of
-geometric expression graphs as follows.
+We first observe that if $G$ and $H$ are transport graphs with a transport
+isomorphism $S(H) \to T(G)$, it is unique by \ref{thm:expiso_unique}, since
+there is only one map of path sets -- the empty map which always makes the
+rquired diagram commute. We then have the following basic fact.
 
-\begin{lem}
-Let $G$ and $H$ be expression graphs in $d$--dimensional cobordisms
-$M : X \to Y$ and $N : Y \to Z$ with geometric realizations $\gamma^G$ and
-$\gamma^H$ respectively such that $G$ and $H$ are gluable at $S(H) \cong T(G)$.
-Then, there exists a geometric realization
+\begin{cor}
+Let $G$ and $H$ be transport graphs realized in manifolds
+$M$ and $N$ with geometric realizations $\gamma^G$ and
+$\gamma^H$ respectively such that $\psi_{G, H} : S(H) \to T(G)$ is a unique
+pretransport homomorphism, and $M$ and $N$ are ``smoothly gluable'' at some
+part. Then, there exists a geometric realization
 \[
   \gamma^H * \gamma^G : E(H * G) \to C^0(I, N * M)
 \]
-of $H * G$ in $N * M$.
-\end{lem}
+of the pretransport graph $H * G$ in $N * M$.
+\end{cor}
 \begin{proof}
-We can define $\gamma^H * \gamma^G$ piecewise away from $S(H) \cong T(G)$. That
-is, we define $(\gamma^H * \gamma^G)(e)$ to be
-$\gamma^G(e)$ if $e \in E(G) \setminus E(T(G))$ and to be
-$\gamma^H(e)$ if $e \in E(H) \setminus E(S(H))$.
-If $e \in E(T(G))$, we choose $(\gamma^H * \gamma^G)(e)$ to be $\gamma^G(e)$ and
-if $e \in E(S(H))$, we choose $(\gamma^H * \gamma^G)(e)$ to be
-$\gamma^G(\psi_{G, H}^{-1}(e))$\footnote{Recall that $\psi_{G, H}$ is the unique
-isomorphism $T(G) \to S(H)$.}, so that $\gamma^H * \gamma^G$ agrees on
+We can define $\gamma^H * \gamma^G$ piecewise away from the gluing site
 $S(H) \cong T(G)$.
 \end{proof}
 
@@ -537,17 +616,18 @@ $\TG(M)_0$, we set $F(f) := \id_{F(V)} = \id_{F(V')}$.
 
 For a transport graph $(G, \gamma)$ in $M$ -- an object in $\TG(M)_1$ -- and an
 edge $(u, v) \in G$, we denote $\nabla^{\gamma_{u, v}}$ to be the parallel
-transport map $A \to A$ obtained from $\gamma_{u, v}$. We then define:
+transport map $A \to A$ obtained from $\gamma_{u, v}$. Fixing some element
+$a_{u, v} \in A$, we then define:
 \[
   F\br{\nabla^{\gamma_{u, v}}} := \begin{cases}
     \nabla^{\gamma_{u, v}}
       & u \text{ is blue and } v \text{ is blue} \\
-    \text{ev}_{a}\br{\nabla^{\gamma_{u, v}}}
-      & u \text{ is red and } v \text{ is blue} \\
-    \text{trace}\br{\text{ev}_{a}\br{\nabla^{\gamma_{u, v}}}}
+    1 \mapsto \text{trace}\br{\nabla^{\gamma_{u, v}}(a_{u, v})}
       & u \text{ is red and } v \text{ is red} \\
+    1 \mapsto \nabla^{\gamma_{u, v}}(a_{u, v})
+      & u \text{ is red and } v \text{ is blue} \\
     \text{trace} \circ \nabla^{\gamma_{u, v}}
-      & u \text{ is red and } v \text{ is red}
+      & u \text{ is blue and } v \text{ is red}
   \end{cases}
 \]
 We then obtain a linear map:
@@ -557,8 +637,8 @@ We then obtain a linear map:
 \]
 For a $2$--morphism
 $(f_0, f_1, h) : (G_1, \gamma_1) \to (G_2, \gamma_2)$ in $\TG(M)_1$, we consider
-the path $(r_t, s_t)$ in the isomorphism group of the bundle $\pi$ such that
-$(r_0, s_0) = (\id_M, \id_E)$ and $(r_1, s_1) = (f_0, f_1)$. We then have a
+the path $(r_t, s_t)$ in the isomorphism group of the connection $\nabla$ such
+that $(r_0, s_0) = (\id_M, \id_E)$ and $(r_1, s_1) = (f_0, f_1)$. We then have a
 smoothly varying family of functions $s_t\gamma : E(G) \to C^0(I, M)$
 where $(s_t\gamma)_{u, v} = s_t \circ \gamma_{u, v}$. This yields a smoothly
 varying family of linear maps, which we write as:
@@ -571,66 +651,6 @@ varying family of linear maps, which we write as:
 \TODO{Verify that this data does indeed form a monoidal double functor}
 
 \TODO{Define the codomain double category}
-
-\section{TQFTs from Parallel Transport}
-
-We then observe that if we take the gluing
-operation in $\EG_{\CCob_{d}}$ to be given by gluings $\EG$ and $\CCob_{d}$
-separately along with the gluing of geometric realizations as above, the gluing
-is coherently associative and unital up to geometric expression isomorphisms.
-The associators of $\EG$ and $\CCob_{d}$ can be verified to yield geometric
-expression isomorphisms. For a boundary manifold $X$, the gluing unit of $X$ is
-the cylinder $X \times I$ equipped with the single part expression graph with
-the same number of vertices as the components of $X$. This yields a double
-category of geometric expression graphs but we need the following definition
-first.
-
-\begin{defn}[{\color{blue!55!black} What's a good name?}]
-Consdier $\CCob_{d + 1}$. Let $\CCob_{d + 1}^0$ be its object category
-consisting of the boundary manifolds. We then have a functor
-$\text{Comp} : \CCob_{d + 1}^0 \to \N$, where $\N$ viewed as a discrete
-category, given by sending each manifold in $D_0$ to the number of components it
-has. Similarly, we can take functor $|S(-)| : \EG_1 \to \N$ sending each
-single-part graph to the number of its vertices. The pullback
-$\EG \prescript{}{|S(-)|}{\times}_{\text{Comp}} \CCob_{d + 1}^0$ is the category
-whose objects are pairs $(G, X)$ with $G \in \EG_1$ and $X \in \CCob_{d + 1}^0$
-such that $X$ has the same number of components as the number of vertices in
-$G$, and whose morphisms are pairs $(h, f)$ where $h$ is the unique expression
-homomorphism and $f$ is a diffeomorphism. We denote this category $\EG_{1, d}$.
-\end{defn}
-
-We then have the following theorem. \TODO{Add an appendix entry for the proof.}
-
-\begin{thm}
-The following data form a monoidal double category:
-\begin{enumerate}[(i)]
-\setlength{\itemsep}{0pt}
-\item Object Category: $\EG_{1, d}$
-\item Morphism Category: $\EG_{\CCob_{d + 1}}^{\text{iso}}$
-\item Source Functors, $S$: the expression graph $G$ with
-geometric realization $\gamma$ in a cobordism $M : X \to Y$ is sent to the pair
-$(S(G), X)$; an expression isomorphism
-$(h, f) : (G, M, \gamma^G) \to (H, N, \gamma^H)$
-is sent to $(h|_{S(G)}, f|_{X})$
-\item Target Functor, $T$: defined similarly
-\item Unit Functor, $U$: the pair $(X, G)$ is mapped to $X \times I, G$
-\item Horizontal Composition Associators: inherited from the double category
-$\CCob_{d + 1}$ of cobordisms and that of expression graphs $\DEG$
-\item Horizontal Composition Unitors: inherited just like associators
-\item Monoidal Product: disjoint union
-\item Monoidal Unit: empty manifold equipped with empty graph
-\end{enumerate}
-\end{thm}
-
-\begin{defn}[Double Category of Geometric Expression Graphs]
-We call the double category of the above theorem the double category of
-geometric expression graphs and denote it $\DEG_{\CCob_{d + 1}}$.
-\end{defn}
-
-We are now in a position to describe our desired TQFTs. In particular, we will
-combine our notion of geometric expression graphs with connections to obtain
-linear maps from arbitrary manifolds. We will see that there are multiple ways
-that this idea can be formalized.
 
 \end{document}
 
