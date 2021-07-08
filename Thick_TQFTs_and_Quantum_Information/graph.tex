@@ -120,7 +120,7 @@ $V_i = \set{v_{i, 1}, v_{i, 2}, \dots, v_{i, k_i}}$ of each level, we define:
 \item For $j \in \set{1, \dots, k_1}$, the expression associated to $v_{1, j}$
 is:
 \[
-  \Exp{G}_{1, j} := v_{1, 1}\footnote{We take this vertex as a formal symbol.}
+  \Exp{G}_{1, j} := v_{1, j}\footnote{We take this vertex as a formal symbol.}
 \]
 The expression associated to the layer $V_1$ is:
 \[
@@ -152,7 +152,7 @@ If $N = 1$, the expression associated to $G$ is:
 \]
 If $N > 1$, the expression associated to $G$ is:
 \[
-  \Exp{G} := \Exp{G}_N \circ \Exp{G}_{N - 1} \circ \cdots \Exp{G}_{2}
+  \Exp{G} := \Exp{G}_N \circ \Exp{G}_{N - 1} \circ \cdots \circ \Exp{G}_{2}
 \]
 \end{enumerate}
 Then, $\Exp{G}$ is called the expression of $G$ for the given level ordering and
@@ -364,7 +364,7 @@ given by gluing and monoidal product given by disjoint union as defined above.
 We define some basic constructs on expressions obtained from expression graphs.
 
 \begin{defn}[Equality of Expressions]
-If $E_1$ and $E_2$ be expressions such that there exist isomorphic
+If $E_1$ and $E_2$ are expressions such that there exist isomorphic
 expression graphs $G$ and $H$ with $\Exp{G} = E_1$ and
 $\Exp{H} = E_2$, then we say that $E_1$ and $E_2$ are equal.
 \end{defn}
@@ -602,7 +602,7 @@ morphism category as $\TG(M)_1$.
 
 We then consider a double functor defined as follows.
 
-\begin{defn}
+\begin{defn}[Geometric Quantum Information Theory]\label{defn:sing_man_tqft}
 For a finite, totally-ordered set $V = \set{v_1, \dots, v_n}$ in $\TG(M)_0$, we
 set
 \[
@@ -646,7 +646,13 @@ varying family of linear maps, which we write as:
   F(f_0, f_1, h) := \Exp{G}[s_t\gamma]
     : F(S(G)) \to F(T(G)), t \in [0, 1]
 \]
+We call $F$ a geometric quantum information theory.
 \end{defn}
+
+We note that the definition of $F$ does not specify the codomain. We will define
+the codomain double category in the next section along with a notion of TQFTs
+based on transport graphs in cobordisms equipped with connections. For now, we
+observe what we can accomplish with this construction and justify the naming.
 
 \TODO{Verify that this data does indeed form a monoidal double functor}
 
