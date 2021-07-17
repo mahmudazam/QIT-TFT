@@ -21,7 +21,7 @@ algebra $A$, using directed graphs. As a matter of convention, we will take all
 graphs to mean directed acyclic graphs where we do not allow parallel edges or
 self-loops. However, we do allow the underlying undirected graph of any directed
 graph to be a forest. Given a graph $G = (V, E)$, we will write $V = V(G)$ and
-$E = E(G)$.
+$E = E(G)$. We now see a motivating example.
 
 \begin{exm}\label{exm:egraph1}
 Consider a graph consisting of nine vertices $1, \dots, 9$ with
@@ -44,48 +44,264 @@ We visualize this graph as follows:
 \end{tikzcd}
 };
 \end{tikzpicture}\]
-In particular, this diagram gives a topological ordering of vertices. We then
-observe that we can use this graph to generate an algebraic expression of the
-form:
-\[
-  ((5, 8) \tensor ((6, 9) \cdot (7, 9))) \circ
-  ((3, 5) \tensor (3, 6) \tensor (4, 7)) \circ
-  (((1, 3) \cdot (2, 3)) \tensor (1, 4))
-\]
-where the rule is roughly as follows: we infix $(6, 9)$ and $(7, 9)$ with
-`$\cdot$' because they share the same target vertex and we call $9$ the target
-vertex of $(6, 9) \cdot (7, 9)$; we infix the expressions $(6, 9) \cdot (7, 9)$
-and $(5, 8)$ with a `$\tensor$' because they do not share the same target vertex
-and we call the expression $5 \tensor 6 \tensor 7$ the source and the expression
-$8 \tensor 9$ the target of the expression
-$(5, 8) \tensor ((6, 9) \cdot (7, 9))$. For expressions $E_1$ and $E_2$ such
-that the target of $E_1$ is the source of $E_2$, we call these expressions
-composeable and we form the new expression $E_2 \circ E_1$. This yields the
-whole expression above.
+Thinking of individual edges in the above graph as mappings $A \to A$ of some
+monoid and comonoid $A$ in some monoidal category, we can think of multiple
+incoming edges on a vertex -- for example, the incoming edges on $3$ -- as a
+multiplication $\cwedge$ of maps and multiple outgoing edges -- for example, the
+outgoing edges of $1$ -- as a comultiplication $\cvee$ of maps. Parallel edges,
+multiplications or comultiplications with disjoint sources and targets can be
+thought of as a tensor product of maps. We can treat a single vertex as an
+identity mapping.
 
-One sees readily that the edges can be replaced with paths in a manifold $M$
-equipped with an $A$--fibred bundle with connection. These paths can then be
-replaced replaced with linear maps $A \to A$ yielding a linear map corresponding
-to the expression. We can associate this linear map to $M$ in some notion of
-TQFT. This will later motivate us to define an algorithm for obtaining a
-canonical expression from an expression graph.
+We can then modify the graph as follows:
+\[\begin{tikzpicture}[baseline=(a).base]
+\node[scale=\diagscale] (a) at (0, 0){
+\begin{tikzcd}[column sep=huge, row sep=tiny]
+                  & 3 \ar[r]  & 3 \ar[dr] &                   & 5 \ar[rd] &   \\
+1 \ar[ur] \ar[dr] &           &           & 3 \ar[ru] \ar[rd] &           & 8 \\
+                  & 4 \ar[dr] & 3 \ar[ur] &                   & 6 \ar[rd] &   \\
+2 \ar[r]          & 2 \ar[ur] & 4 \ar[r]  & 4 \ar[rd]         &           & 9 \\
+                  &           &           &                   & 7 \ar[ur] &
+\end{tikzcd}
+};
+\end{tikzpicture}\]
+Thinking of edges between copies of the same vertex, which did not originally
+exist, as the identity map and crossing edges as a twist operation -- denoted
+$\boxtimes$ -- of maps, we can capture the graph into an algebraic expression of
+the following form:
+\begin{align*}
+        & ((5, 8) \tensor ((6, 9) \cwedge (7, 9))) \\
+  \circ & ((3, 5) \tensor (3, 6) \tensor (4, 7)) \\
+  \circ & (((3, 3) \cvee (3, 3)) \tensor (4, 4)) \\
+  \circ & ((3, 3) \tensor ((4, 4) \boxtimes (2, 3))) \\
+  \circ & (((1, 3) \cvee (1, 4)) \tensor (2, 2))
+\end{align*}
+
+Observe that we have taken a directed acyclic graph and converted it to a
+diagram in $\Cob_{2}$ -- the symmetric monoidal category of cobordisms of
+dimension $2$. This, in turn, yields an expression involving operations on
+endomorphisms of a Frobenius monoid in some monoidal category. However, we
+should note that this is just one possible interpretation of the graph above.
 \end{exm}
 
-This motivates the following definitions, some of which are standard but we
-include for convenience.
+This motivates us to define an algorithm for extracting expressions from a
+directed acyclic graph such as the above. Let $G = (V, E)$ be any graph. We make
+the following modifications to $G$:
+\begin{enumerate}
+\setlength{\itemsep}{0pt}
+\item For each vertex $v$, choose an ordering of the incoming edges of $v$, say
+$(u_1, v), \dots, (u_k, v)$ and add vertices and edges to make the following
+modification:
+\begin{figure}[H]
+\begin{center}
+\begin{tikzpicture}
+\node at (2, 0)     (v) {$v$};
+\node at (0, 1)     (u1) {$u_1$};
+\node at (0, 0.5)   (u2) {$u_2$};
+\node at (0, 0)     (u3) {$u_3$};
+\node at (0, -1)    (uk) {$u_k$};
+\midarrow{u1}{v}
+\midarrow{u2}{v}
+\midarrow{u3}{v}
+\midarrow{uk}{v}
+\draw[thick, loosely dotted] (u3) -- (uk);
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node at (0, 1)   (TOP)     {};
+\node at (0, 0)   (TO)      {$\Longrightarrow$};
+\node at (0, -1)  (BOTTOM)  {};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node at (4, -1)     (v) {$v$};
+\node at (0, 1)     (u1) {$u_1$};
+\node at (0, 0.5)   (u2) {$u_2$};
+\node at (0, 0)     (u3) {$u_3$};
+\node at (0, -1)    (uk) {$u_k$};
+\node[circle, fill, inner sep=1pt] at (1, 0.5) (a)  {};
+\node[circle, fill, inner sep=1pt] at (2, 0)   (b)  {};
+\midarrow{u1}{a}
+\midarrow{u2}{a}
+\midarrow{a}{b}
+\midarrow{u3}{b}
+\draw[thick, loosely dotted] (b) -- (v);
+\draw[thick, loosely dotted] (u3)   -- (uk);
+\midarrow{uk}{v};
+\end{tikzpicture}
+\end{center}
+\end{figure}
+where the unlabelled vertices on the right diagram are the ones newly added.
+
+\item For each vertex $v$, choose an ordering of its outgoing edges, say
+$(v, w_1), \dots, (v, w_n)$, and make the following modification similar to the
+previous step:
+\begin{figure}[H]
+\begin{center}
+\begin{tikzpicture}
+\node at (-2, 0)     (v) {$v$};
+\node at (0, 1)     (w1) {$w_1$};
+\node at (0, 0.5)   (w2) {$w_2$};
+\node at (0, 0)     (w3) {$w_3$};
+\node at (0, -1)    (wk) {$w_k$};
+\midarrow{v}{w1}
+\midarrow{v}{w2}
+\midarrow{v}{w3}
+\midarrow{v}{wk}
+\draw[thick, loosely dotted] (u3) -- (uk);
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node at (0, 1)   (TOP)     {};
+\node at (0, 0)   (TO)      {$\Longrightarrow$};
+\node at (0, -1)  (BOTTOM)  {};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node at (-4, -1)   (v)  {$v$};
+\node at (0, 1)     (w1) {$w_1$};
+\node at (0, 0.5)   (w2) {$w_2$};
+\node at (0, 0)     (w3) {$w_3$};
+\node at (0, -1)    (wk) {$w_k$};
+\node[circle, fill, inner sep=1pt] at (-1, 0.5) (a)  {};
+\node[circle, fill, inner sep=1pt] at (-2, 0)   (b)  {};
+\midarrow{a}{w1}
+\midarrow{a}{w2}
+\midarrow{b}{a}
+\midarrow{b}{w3}
+\draw[thick, loosely dotted] (b) -- (v);
+\draw[thick, loosely dotted] (w3)   -- (wk);
+\midarrow{wk}{v};
+\end{tikzpicture}
+\end{center}
+\end{figure}
+
+\item At this point, every vertex has both indegree and outdegree at most $2$.
+Then, for every edge that is shared between a ``multiplication'' and a
+``comultiplication'', retaining the edge orderings chosen before, we make the
+following modifications:
+\begin{figure}[H]
+\begin{center}
+\begin{tikzpicture}
+\node at (0, 2) (u) {$u$};
+\node at (2, 2) (v) {$v$};
+\node at (0, 0) (w) {$w$};
+\node at (2, 0) (x) {$x$};
+\midarrow{u}{v}
+\midarrow{u}{x}
+\midarrow{w}{x}
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node at (0, 1)   (TOP)     {};
+\node at (0, 0)   (TO)      {$\Longrightarrow$};
+\node at (0, -1)  (BOTTOM)  {};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node at (0, 2) (u) {$u$};
+\node[circle, fill, inner sep=1pt] at (2, 2) (a) {};
+\node at (4, 2) (v) {$v$};
+\node[circle, fill, inner sep=1pt] at (2, 1) (b) {};
+\node at (0, 0) (w) {$w$};
+\node[circle, fill, inner sep=1pt] at (2, 0) (c) {};
+\node at (4, 0) (x) {$x$};
+\midarrow{u}{a}
+\midarrow{a}{v}
+\midarrow{u}{b}
+\midarrow{b}{x}
+\midarrow{w}{c}
+\midarrow{c}{x}
+\end{tikzpicture}
+\end{center}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+\begin{tikzpicture}
+\node at (0, 2) (u) {$u$};
+\node at (2, 2) (v) {$v$};
+\node at (0, 0) (w) {$w$};
+\node at (2, 0) (x) {$x$};
+\midarrow{u}{v}
+\midarrow{w}{v}
+\midarrow{w}{x}
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node at (0, 1)   (TOP)     {};
+\node at (0, 0)   (TO)      {$\Longrightarrow$};
+\node at (0, -1)  (BOTTOM)  {};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node at (0, 2) (u) {$u$};
+\node[circle, fill, inner sep=1pt] at (2, 2) (a) {};
+\node at (4, 2) (v) {$v$};
+\node[circle, fill, inner sep=1pt] at (2, 1) (b) {};
+\node at (0, 0) (w) {$w$};
+\node[circle, fill, inner sep=1pt] at (2, 0) (c) {};
+\node at (4, 0) (x) {$x$};
+\midarrow{u}{a}
+\midarrow{a}{v}
+\midarrow{w}{b}
+\midarrow{b}{v}
+\midarrow{w}{c}
+\midarrow{c}{x}
+\end{tikzpicture}
+\end{center}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+\begin{tikzpicture}
+\node at (0, 2) (u) {$u$};
+\node at (2, 2) (v) {$v$};
+\node at (0, 0) (w) {$w$};
+\node at (2, 0) (x) {$x$};
+\midarrow{u}{v}
+\midarrow{w}{v}
+\midarrow{u}{x}
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node at (0, 1)   (TOP)     {};
+\node at (0, 0)   (TO)      {$\Longrightarrow$};
+\node at (0, -1)  (BOTTOM)  {};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node at (0, 2) (u) {$u$};
+\node[circle, fill, inner sep=1pt] at (2, 2) (a) {};
+\node at (4, 2) (v) {$v$};
+\node[circle, fill, inner sep=1pt] at (2, 1) (b) {};
+\node at (0, 0) (w) {$w$};
+\node[circle, fill, inner sep=1pt] at (2, 0) (c) {};
+\node at (4, 0) (x) {$x$};
+\midarrow{u}{a}
+\midarrow{a}{v}
+\midarrow{w}{b}
+\midarrow{b}{v}
+\midarrow{w}{c}
+\midarrow{c}{x}
+\end{tikzpicture}
+\end{center}
+\end{figure}
+\end{enumerate}
 
 \begin{defn}[Level Ordering]
-Given a directed acyclic graph $G = (V, E)$, we let $V_1$ denote the subset of
-$V$ consisting of vertices with no incoming edges. We let $V_{k + 1}$ denote the
-subset of $V$ consisting of vertices that have incoming edges only from vertices
-in $V_{1} \cup V_{2} \cup \cdots \cup V_{k}$. We note that the $V_i$'s are
-disjoint for distinct $i$ such that there exist finitely many $V_i$
-such that $V = \coprod_{i = 1}^{N} V_i$ for some $N \in \N$. Then, the $V_i$'s
-are called the levels of $G$ and the set $\mathcal{V} = \set{V_1, \dots, V_N}$,
-a level ordering of $G$. In this case, we call $G$ level-ordered.
+Given a directed acyclic graph $G = (V, E)$, we let $U$ denote the subset of
+$V$ with vertices that have no edges, incoming or outgoing.
+Let $V_1$ be the subset of $V \setminus U$ consisting of vertices with no
+incoming edges but at least one ougoing edge.
+We let $V_{k + 1}$ denote the subset of $V$ consisting of vertices that have
+incoming edges only from vertices in $V_{1} \cup V_{2} \cup \cdots \cup V_{k}$.
+We note that the $V_i$'s are disjoint for distinct $i$ such that there exist
+finitely many $V_i$ such that $V = U \amalg \coprod_{i = 1}^{N} V_i$ for some
+$N \in \N$. Then, the $V_i$'s are called the levels of $G$ and the set
+$\mathcal{V} = \set{U, V_1, \dots, V_N}$, a level ordering of $G$. In this case,
+we call $G$ level-ordered.
 
-Given a level ordering as this, we can define a level
-function $l_{\mathcal{V}} : V \to \set{1, \dots, k}$, given by
+Given a level ordering as this, we can define a level function
+$l_{\mathcal{V}} : V \setminus U \to \set{1, \dots, k}$, given by
 $l_{\mathcal{V}}(v) = i$ if and only if $v \in V_i$.
 \end{defn}
 
@@ -96,12 +312,13 @@ unique -- consider the disjoint union of two directed acyclic graphs.
 \end{rmk}
 
 \begin{rmk}\label{rmk:lgraph_edge}
-We also note that if a vertex has no incoming nor outgoing edges, then it is
-placed at the lowest level. Vertices at any level cannot have outgoing edges to
-a lower level, for if they do, then the graph has a cycle. Finally, we note that
-if a vertex at some level has no edge from the immediate preceding level, we can
-move it to that level. Hence, we may assume that each vertex not at the first
-level has at least one edge from the immediate preceding level.
+We note that if a vertex has no incoming nor outgoing edges, then it is can be
+placed at any level and hence we avoid a choice at this point. Vertices at any
+level cannot have outgoing edges to a lower level, for if they do, then the
+graph has a cycle. Finally, we note that if a vertex at some level has no edge
+from the immediate preceding level, we can move it to that level. Hence, we may
+assume that each vertex not at the first level has at least one edge from the
+immediate preceding level.
 \end{rmk}
 
 \begin{exm}
@@ -112,9 +329,10 @@ A level-ordering of the graph in example \ref{exm:egraph1} is:
 \end{exm}
 
 \begin{defn}[Expression of a Graph]
-Given a graph $G$ with a chosen level ordering $\set[V_i]{i = 1, \dots, N}$
-along with a chosen total ordering
-$V_i = \set{v_{i, 1}, v_{i, 2}, \dots, v_{i, k_i}}$ of each level, we define:
+Given a graph $G$ with a chosen level ordering
+$\set{U, V_1, \dots, V_N}$ along with a chosen total ordering
+of each $V_i \cup U = \set{v_{i, 1}, v_{i, 2}, \dots, v_{i, k_i}}$ of each
+level, we define:
 \begin{enumerate}[(i)]
 \setlength{\itemsep}{0pt}
 \item For $j \in \set{1, \dots, k_1}$, the expression associated to $v_{1, j}$
@@ -127,19 +345,35 @@ The expression associated to the layer $V_1$ is:
   \Exp{G}_1 := v_{1, 1} \tensor \cdots \tensor v_{1, k_1}
 \]
 
-\item For
-$i \in \set{2, \dots, N}$,
-$j \in \set{1, \dots, k_i}$,
-let $\set{e_1, e_2, \dots, e_q}$ be the set of incoming edges on $v_{i, j}$,
-ordered by the source vertices. Then, the expression associated to $v_{i, j}$
-is:
+\item For each
+$i \in \set{2, \dots, N}$ and each $j \in \set{1, \dots, k_i}$,
+let $X = \set{e_1, e_2, \dots, e_p}$ be the set of incoming edges on $v_{i, j}$,
+ordered by their source vertices. Then, the in-expression associated to
+$v_{i, j}$ is:
 \[
-  \Exp{G}_{i, j} := e_1 \cdot e_2 \cdot \cdots \cdot e_q
+  \Exp{G}_{i, j, \text{in}} := \begin{cases}
+    e_1 \cwedge e_2 \cwedge \cdots \cwedge e_p, & X \neq \varnothing \\
+    (v_{i, j}, v_{i, j}), & X = \varnothing \iff v_{i, j} \in U
+  \end{cases}
 \]
+We note that in the second case of the definition we have no edge
+$(v_{i, j}, v_{i, j})$ but we use this as a symbol in our expression that will
+function as an identity map.
+
+For each
+$j' \in \set{1, \dots, k_{i - 1}}$,
+let $Y = \set{f_1, f_2, \dots f_q}$ be the set of outgoing edges of
+$v_{i - 1, j'}$, ordered by their target vertices. Then, the out-expression
+associated to $v_{i - 1, j'}$ is:
+\[
+  \Exp{G}_{i - 1, j', \text{out}} := f_1 \cvee f_2 \cvee \cdots \cvee f_q
+\]
+
 The expression associated to the layer $V_{i}$ is:
 \[
-  \Exp{G}_{i} := \Exp{G}_{i, 1} \tensor \Exp{G}_{i, 2} \tensor \cdots
-                 \tensor \Exp{G}_{i, k_{i}}
+  \Exp{G}_{i}
+    := \br{\bigotimes_{j' = 1}^{k_{i - 1}} \Exp{G}_{i - 1, j', \text{out}}}
+    \tensor \br{\bigotimes_{j = 1}^{k_i} \Exp{G}_{i, j, \text{in}}}
 \]
 
 \item If $N = 0$, the expression associated to $G$ is:
@@ -159,8 +393,18 @@ Then, $\Exp{G}$ is called the expression of $G$ for the given level ordering and
 the given total orderings of the levels.
 \end{defn}
 
-From this definition it is clear that level-ordered sets encode algebraic
-expressions of the form we saw in example \ref{exm:egraph1}.
+Using this definition of expressions, we observe that the expression associated
+to the graph in example \ref{exm:egraph1} is:
+\[
+  ((5, 8) \tensor ((6, 9) \cwedge (7, 9)))
+  \circ (((3, 5) \cvee (3, 6)) \tensor (4, 7))
+  \circ (((1, 3) \cvee (1, 4)) \tensor ((1, 3) \cwedge (2, 3)))
+\]
+Of course, this is just one possible interpretation of expressions encoded by
+expression graphs. However, this interpretation will be of use in developing
+notions of TQFTs based on parallel transport, as we will see. Different
+interpretations will yield different ways of associating linear maps to
+manifolds but we will not explore all these possibilities.
 
 \subsection{Disjoint Unions and Gluings}
 
@@ -205,8 +449,8 @@ ordering. We define this next.
 \end{exm}
 
 \begin{cor}
-Let $(G, \mathcal{V} = \set{V_i}_{i = 1}^{N})$ and
-$(H, \mathcal{W} = \set{W_i}_{i = 1}^{M})$ be level-ordered
+Let $\br{G, \mathcal{V} = \set{V_i}_{i = 1}^{N}}$ and
+$\br{H, \mathcal{W} = \set{W_i}_{i = 1}^{M}}$ be level-ordered
 graphs. If $M \leq N$, the following set is a level ordering of $G \amalg H$:
 \[
   \mathcal{V} \tensor \mathcal{W} :=
@@ -237,13 +481,13 @@ We notice that if we choose total orderings of levels, then this disjoint union
 again gives total orderings of levels.
 \end{rmk}
 
-To see the associativity and unitality of this operation up to ``coherent
-isomorphism'', we require a notion of morphism of level-ordered graphs. We
+To see the associativity and unitality of this operation up to coherent
+isomorphism, we require a notion of morphism of level-ordered graphs. We
 define this now.
 
 \begin{defn}[Level Homomorphism]
-Let $(G, \mathcal{V} = \set{V_i}_{i = 1}^{N})$ and
-$(H, \mathcal{W} = \set{W_i}_{i = 1}^{M})$ be level-ordered
+Let $\br{G, \mathcal{V} = \set{V_i}_{i = 1}^{N}}$ and
+$\br{H, \mathcal{W} = \set{W_i}_{i = 1}^{M}}$ be level-ordered
 graphs. Then, a graph homomorphism $h : G \to H$ satisfying:
 \[
   l_{\mathcal{V}}(u) = l_{\mathcal{V}}(v)
@@ -258,18 +502,20 @@ associative and unital, as we saw in \S\ref{subsec:connctg}. We then proceed to
 define a gluing of level-ordered graphs.
 
 \begin{defn}[Source and Target]
-Let $(G, \mathcal{V} = \set{V_i}_{i = 1}^{N})$ be a level-ordered graph. Then,
-we define $V_1$ to be the source graph $S(G)$ of $G$ and $V_N$ to be the target
-graph $T(G)$ of $G$.
+Let $\br{G, \mathcal{V} = \set{V_i}_{i = 1}^{N}}$ be a level-ordered graph.
+Then, we define $V_1$ to be the source graph $S(G)$ of $G$. Let $S$ be the
+vertices in $V_1$ with no outgoing edges -- these vertices should be considered
+as target vertices as well. We define $V_N \cup S$ to be the target graph $T(G)$
+of $G$.
 \end{defn}
 
-It is obvious that $S(G)$ and $T(G)$ are single-level level-ordered graphs with
-obvious inclusion homomorphisms that are also level homomorphisms. However,
-gluing at source target-ends is not well-defined, unless we have a unique
-isomorphism between the source of one graph to the target of another. This is
-another reason we should consider total orderings of the levels. Recall that we
-required total orderings of levels to define expressions of level-ordered
-graphs. Hence, we define the following subclass of level-ordered graphs.
+There are obvious inclusions $S(G) \hto G \hot T(G)$ but we notice that gluing
+at source target-ends using such inclusions is not well-defined, unless we have
+a unique isomorphism between the source of one graph to the target of another.
+This is another reason we should consider total orderings of the levels. Recall
+that we required total orderings of levels to define expressions of
+level-ordered graphs. Hence, we define the following subclass of level-ordered
+graphs.
 
 \begin{defn}[Expression Graph]
 A level-ordered graph $(G, \mathcal{V})$ equipped with a total ordering of its

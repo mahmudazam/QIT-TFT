@@ -192,5 +192,71 @@ the spaces $\K^n$ for all $n \in \N$.
 
 \subsection{Cobordims with Transport Graphs}
 
+Having established a codomain double category, we look towards extending our
+notion of TQFTs based on transport graphs in a single manifold to transport
+graphs in cobordisms equipped with connections. For simplicity, we only consider
+thick tangles equipped with connections, at the moment. Recall that a thick
+tangle $X \to Y$ is a smooth surfaces $M$ with boundary $W_0 \amalg W_1$ with
+equipped with smooth maps $a_M : X \to M, b_M : Y \to M$ such that $a_M$ and
+$b_M$ are diffeomorphisms onto $W_0$ and $W_1$ respectively, and an embedding
+$d_M : M \to \R \times [0, 1]$ (satisfying some additional properties, which we
+will not need at the moment).
+
+We consider the generating thick tangles equipped with transport graphs. We
+first consider the following transport graphs in the pair-of-pants and its dual,
+where each edge is sent to a constant path (shown as a blue dots on the
+tangles):
+\begin{figure}[H]
+\begin{center}
+\begin{tikzpicture}[scale=0.33]
+\pants{(0, 0)}
+\node at (0, -5) {\footnotesize Pair-of-pants};
+\copants{(12, 0)}
+\node at (12, -5) {\footnotesize Co-pair-of-pants};
+% Graph for pants:
+\filldraw[blue] (-2, 6) circle (4pt);
+\filldraw[blue] (-2, 4) circle (4pt);
+\filldraw[blue] (2, 5) circle (4pt);
+\draw[->] (-2, 6) -- (0, 5.5);
+\draw (0, 5.5) -- (2, 5);
+\draw[->] (-2, 4) -- (0, 4.5);
+\draw (0, 4.5) -- (2, 5);
+% Paths for pants:
+\filldraw[blue] (0, 0) circle (4pt);
+% Graph for copants:
+\filldraw[blue] (10, 5) circle (4pt);
+\filldraw[blue] (14, 4) circle (4pt);
+\filldraw[blue] (14, 6) circle (4pt);
+\draw[->] (10, 5) -- (12, 5.5);
+\draw (12, 5.5) -- (14, 6);
+\draw[->] (10, 5) -- (12, 4.5);
+\draw (12, 4.5) -- (14, 4);
+% Path for cylinder:
+\filldraw[blue] (12, 0) circle (4pt);
+\end{tikzpicture}
+\caption{Transport Graphs in Thick Tangles}
+\end{center}
+\end{figure}
+
+We can then choose a bundle with connection on the pair-of-pants with fibres
+isomorphic to some algebra $A$. This allows us to define linear maps as follows.
+Let the connection on the pair of pants be $\nabla_M$ and that on its dual be
+$\nabla_W$. We call the graph in the pair-of-pants $G_{2b, 1b}$ -- two edges
+from $2$ blue vertices to a single blue vertex -- and then consider
+$\Exp{G_{2b, 1b}}[(u, v)/\nabla_M^{\gamma_p}]$, where $\gamma_p$ is the constant
+path on the chosen point $p$ and $\nabla_M^{\gamma_p}$ is the parallel transport
+map obtained from $\gamma_p$. Noticing that $\nabla_M^{\gamma_p}$ must be the
+identity map since $\gamma_p$ is the constant path, we see that this expression
+is actually:
+\[
+  \nabla_M^{\gamma_p} \cdot \nabla_M^{\gamma_p} := \id \cdot \id
+\]
+which is the multiplication of the algebra $A$. Similarly, the expression
+associated to the co-pair-of-pants is:
+
+Notice that we choose the transport graph with the single blue vertex (and no
+edges and hence no paths) for the cylinder. We do this to ensure that the
+transport graph acts as a gluing unit.
+
 \end{document}
 
