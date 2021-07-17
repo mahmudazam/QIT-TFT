@@ -43,11 +43,11 @@
 \draw (lu) arc(90:-90:1) -- cycle;
 }
 
-\newcommand{\midarrow}[2]{
-\coordinate (s) at (#1);
-\coordinate (t) at (#2);
-\coordinate (midarrowmid) at ($0.5*(s) + 0.5*(t)$);
-\draw[->] (#1)          -- (midarrowmid);
-\draw     (midarrowmid) -- (#2);
+\newcommand{\midarrow}[3][0.5]{
+\coordinate (s) at (#2);
+\coordinate (t) at (#3);
+\coordinate (midarrowmid) at ($(s) + #1*(t) - #1*(s)$);
+\draw[->] (#2)          -- (midarrowmid);
+\draw     (midarrowmid) -- (#3);
 }
 

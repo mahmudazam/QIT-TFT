@@ -85,8 +85,8 @@ should note that this is just one possible interpretation of the graph above.
 \end{exm}
 
 This motivates us to define an algorithm for extracting expressions from a
-directed acyclic graph such as the above. Let $G = (V, E)$ be any graph. We make
-the following modifications to $G$:
+directed acyclic graph such as the one above. Let $G = (V, E)$ be any graph. We
+make the following modifications to $G$:
 \begin{enumerate}
 \setlength{\itemsep}{0pt}
 \item For each vertex $v$, choose an ordering of the incoming edges of $v$, say
@@ -119,8 +119,8 @@ modification:
 \node at (0, 0.5)   (u2) {$u_2$};
 \node at (0, 0)     (u3) {$u_3$};
 \node at (0, -1)    (uk) {$u_k$};
-\node[circle, fill, inner sep=1pt] at (1, 0.5) (a)  {};
-\node[circle, fill, inner sep=1pt] at (2, 0)   (b)  {};
+\node at (1, 0.5) (a)  {$v$};
+\node at (2, 0)   (b)  {$v$};
 \midarrow{u1}{a}
 \midarrow{u2}{a}
 \midarrow{a}{b}
@@ -131,7 +131,6 @@ modification:
 \end{tikzpicture}
 \end{center}
 \end{figure}
-where the unlabelled vertices on the right diagram are the ones newly added.
 
 \item For each vertex $v$, choose an ordering of its outgoing edges, say
 $(v, w_1), \dots, (v, w_n)$, and make the following modification similar to the
@@ -163,24 +162,49 @@ previous step:
 \node at (0, 0.5)   (w2) {$w_2$};
 \node at (0, 0)     (w3) {$w_3$};
 \node at (0, -1)    (wk) {$w_k$};
-\node[circle, fill, inner sep=1pt] at (-1, 0.5) (a)  {};
-\node[circle, fill, inner sep=1pt] at (-2, 0)   (b)  {};
+\node at (-1, 0.5) (a)  {$v$};
+\node at (-2, 0)   (b)  {$v$};
 \midarrow{a}{w1}
 \midarrow{a}{w2}
 \midarrow{b}{a}
 \midarrow{b}{w3}
 \draw[thick, loosely dotted] (b) -- (v);
 \draw[thick, loosely dotted] (w3)   -- (wk);
-\midarrow{wk}{v};
+\midarrow{v}{wk};
 \end{tikzpicture}
 \end{center}
 \end{figure}
 
 \item At this point, every vertex has both indegree and outdegree at most $2$.
-Then, for every edge that is shared between a ``multiplication'' and a
-``comultiplication'', retaining the edge orderings chosen before, we make the
-following modifications:
+The chosen edge orderings induces a local geometric orientation -- in an
+informal sense -- on the graph. By this we mean, that this allows us to
+distinguish the following diagrams in a precise sense:
 \begin{figure}[H]
+\begin{center}
+\begin{tikzpicture}
+\node at (0, 0) (u) {$u$};
+\node at (2, 0.5) (v) {$v$};
+\node at (2, -0.5) (w) {$w$};
+\midarrow{u}{v}
+\midarrow{u}{w}
+\end{tikzpicture}
+\qquad
+\qquad
+\begin{tikzpicture}
+\node at (0, 0) (u) {$u$};
+\node at (2, -0.5) (v) {$v$};
+\node at (2, 0.5) (w) {$w$};
+\midarrow{u}{v}
+\midarrow{u}{w}
+\end{tikzpicture}
+\end{center}
+\end{figure}
+The distinction is that if we take $(u, v) < (u, w)$ in the left picture, say,
+then we can take $(u, v) > (u, w)$ in the right picture.
+Then, for every edge that is shared between a ``multiplication'' and a
+``comultiplication'', considering the edge orderings chosen before, we have the
+following possibilities for common edges and we make the modifications shown:
+\begin{figure}[H] % Share 1
 \begin{center}
 \begin{tikzpicture}
 \node at (0, 2) (u) {$u$};
@@ -200,11 +224,11 @@ following modifications:
 \qquad
 \begin{tikzpicture}
 \node at (0, 2) (u) {$u$};
-\node[circle, fill, inner sep=1pt] at (2, 2) (a) {};
+\node at (2, 2) (a) {$v$};
 \node at (4, 2) (v) {$v$};
-\node[circle, fill, inner sep=1pt] at (2, 1) (b) {};
+\node at (2, 1) (b) {$x$};
 \node at (0, 0) (w) {$w$};
-\node[circle, fill, inner sep=1pt] at (2, 0) (c) {};
+\node at (2, 0) (c) {$w$};
 \node at (4, 0) (x) {$x$};
 \midarrow{u}{a}
 \midarrow{a}{v}
@@ -215,6 +239,37 @@ following modifications:
 \end{tikzpicture}
 \end{center}
 \end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\begin{tikzpicture}
+\node at (0, 0) (u) {$u$};
+\node at (1, 2) (v) {$v$};
+\node at (2, 0) (w) {$w$};
+\midarrow{u}{v}
+\midarrow{v}{w}
+\midarrow{u}{w}
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node at (0, 1)   (TOP)     {};
+\node at (0, 0)   (TO)      {$\Longrightarrow$};
+\node at (0, -1)  (BOTTOM)  {};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node at (0, 1) (u) {$u$};
+\node at (2, 2) (v) {$v$};
+\node at (2, 0) (a) {$w$};
+\node at (4, 1) (w) {$w$};
+\midarrow{u}{v}
+\midarrow{u}{a}
+\midarrow{v}{w}
+\midarrow{a}{w}
+\end{tikzpicture}
+\end{center}
+\end{figure}
+
 \begin{figure}[H]
 \begin{center}
 \begin{tikzpicture}
@@ -223,8 +278,8 @@ following modifications:
 \node at (0, 0) (w) {$w$};
 \node at (2, 0) (x) {$x$};
 \midarrow{u}{v}
-\midarrow{w}{v}
-\midarrow{w}{x}
+\midarrow[0.33]{w}{v}
+\midarrow[0.33]{u}{x}
 \end{tikzpicture}
 \qquad
 \begin{tikzpicture}
@@ -235,176 +290,128 @@ following modifications:
 \qquad
 \begin{tikzpicture}
 \node at (0, 2) (u) {$u$};
-\node[circle, fill, inner sep=1pt] at (2, 2) (a) {};
-\node at (4, 2) (v) {$v$};
-\node[circle, fill, inner sep=1pt] at (2, 1) (b) {};
+\node at (2, 2) (a) {$v$};
+\node at (4, 2) (aa) {$v$};
+\node at (6, 2) (v) {$v$};
+\node at (2, 1) (b) {$x$};
+\node at (4, 1) (bb) {$w$};
 \node at (0, 0) (w) {$w$};
-\node[circle, fill, inner sep=1pt] at (2, 0) (c) {};
-\node at (4, 0) (x) {$x$};
+\node at (2, 0) (c) {$w$};
+\node at (4, 0) (cc) {$x$};
+\node at (6, 0) (x) {$x$};
 \midarrow{u}{a}
-\midarrow{a}{v}
-\midarrow{w}{b}
-\midarrow{b}{v}
+\midarrow{u}{b}
 \midarrow{w}{c}
-\midarrow{c}{x}
+\midarrow{a}{aa}
+\midarrow[0.33]{b}{cc}
+\midarrow[0.33]{c}{bb}
+\midarrow{aa}{v}
+\midarrow{bb}{v}
+\midarrow{cc}{x}
 \end{tikzpicture}
 \end{center}
 \end{figure}
+We also make the modifications obtained from the rotations of the above diagrams
+about a horizontal edge. After these modifications have been applied, there are
+no edges shared between ``multiplications'' and ``comultiplications''.
+
+\item We now consdier the sets $S(G)$ consisting of vertices with no incoming
+edges -- called the source of $G$ -- and $T(G)$ consisting of vertices with no
+outgoing edges -- called the target of $G$. We then choose orderings of $S(G)$.
+Note that $S(G) \cap T(G)$ might be non-empty because of vertices
+with no edges, incoming or outgoing. We then consider a level ordering of $G$ in
+its current state as follows:
+\begin{enmrt}
+\li Let $V_1$ be the set of vertices with no incoming edges -- i.e.,
+$V_1 := S(G)$
+\li Let $V_{k + 1}$ be the set of vertices with incoming edges only from
+$V_1, \dots, V_k$, or with no incoming edges.
+\end{enmrt}
+We note that the ordering on $S(G) = V_1$ induces an ordering of $V_2$:
+$u \leq v \iff \exists u' \in V_1$ with edges $(u', u) \leq (u', v)$ or
+$\exists u', v' \in V_1$ with $u' \leq v'$ and edges $(u', u)$ and $(v', v)$.
+
+\item Notice that the vertices with no edges are in $V_k$ for every $k$ and they
+are part of the induced orderings. We add copies of these vertices so that the
+vertex set is now the disjoint union of the $V_k$. Then, for each vertex
+$u \in V_k$ with no edges, we add the edge $(u, u')$ where $u'$ is the copy of
+$u$ in $V_{k + 1}$.
+
+\item For each edge $(u, v)$ with $u \in V_k$ and $v \in V_{k'}$ with
+$k' > k + 1$, we insert a copy of $u$ in $V_{i}$ for each $k < i < k'$ after the
+last vertex $V_{i}$ with an edge from $u$ and we add an edge from $u$ to this
+copy -- call it $u'$. We then delete the edge $(u, v)$ and add an edge
+$(u', v)$. After this process completes, there is no edge that skips levels.
+
+\item Observe that we can now identify the graph $G$ with a cobordism in
+$\Cob_2$ from $|S(G)|$ copies of $S^1$ to $|T(G)|$ copies of $S^1$! The
+identifications of the generating structures are the obvious ones:
 \begin{figure}[H]
 \begin{center}
 \begin{tikzpicture}
-\node at (0, 2) (u) {$u$};
-\node at (2, 2) (v) {$v$};
-\node at (0, 0) (w) {$w$};
-\node at (2, 0) (x) {$x$};
+\node[circle, fill, inner sep=1pt] at (0, 0) (u) {};
+\node[circle, fill, inner sep=1pt] at (-2, 0.5) (v) {};
+\node[circle, fill, inner sep=1pt] at (-2, -0.5) (w) {};
+\midarrow{v}{u}
+\midarrow{w}{u}
+\node at (-1, -1) (lbl) {pair-of-pants};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node[circle, fill, inner sep=1pt] at (0, 0) (u) {};
+\node[circle, fill, inner sep=1pt] at (2, -0.5) (v) {};
+\node[circle, fill, inner sep=1pt] at (2, 0.5) (w) {};
 \midarrow{u}{v}
-\midarrow{w}{v}
+\midarrow{u}{w}
+\node at (1, -1) (lbl) {co-pair-of-pants};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node[circle, fill, inner sep=1pt] at (0, 0) (u) {};
+\node at (2, -0.5) (v) {};
+\node at (2, 0.5) (w) {};
+\node[circle, fill, inner sep=1pt] at (2, 0) (x) {};
 \midarrow{u}{x}
-\end{tikzpicture}
-\qquad
-\begin{tikzpicture}
-\node at (0, 1)   (TOP)     {};
-\node at (0, 0)   (TO)      {$\Longrightarrow$};
-\node at (0, -1)  (BOTTOM)  {};
-\end{tikzpicture}
-\qquad
-\begin{tikzpicture}
-\node at (0, 2) (u) {$u$};
-\node[circle, fill, inner sep=1pt] at (2, 2) (a) {};
-\node at (4, 2) (v) {$v$};
-\node[circle, fill, inner sep=1pt] at (2, 1) (b) {};
-\node at (0, 0) (w) {$w$};
-\node[circle, fill, inner sep=1pt] at (2, 0) (c) {};
-\node at (4, 0) (x) {$x$};
-\midarrow{u}{a}
-\midarrow{a}{v}
-\midarrow{w}{b}
-\midarrow{b}{v}
-\midarrow{w}{c}
-\midarrow{c}{x}
+\node at (1, -1) (lbl) {cylinder};
 \end{tikzpicture}
 \end{center}
 \end{figure}
+Note that the cap or cup were not used. This, then, directly yields an
+expression of the original graph $G$ similar to the example.
+
 \end{enumerate}
 
-\begin{defn}[Level Ordering]
-Given a directed acyclic graph $G = (V, E)$, we let $U$ denote the subset of
-$V$ with vertices that have no edges, incoming or outgoing.
-Let $V_1$ be the subset of $V \setminus U$ consisting of vertices with no
-incoming edges but at least one ougoing edge.
-We let $V_{k + 1}$ denote the subset of $V$ consisting of vertices that have
-incoming edges only from vertices in $V_{1} \cup V_{2} \cup \cdots \cup V_{k}$.
-We note that the $V_i$'s are disjoint for distinct $i$ such that there exist
-finitely many $V_i$ such that $V = U \amalg \coprod_{i = 1}^{N} V_i$ for some
-$N \in \N$. Then, the $V_i$'s are called the levels of $G$ and the set
-$\mathcal{V} = \set{U, V_1, \dots, V_N}$, a level ordering of $G$. In this case,
-we call $G$ level-ordered.
-
-Given a level ordering as this, we can define a level function
-$l_{\mathcal{V}} : V \setminus U \to \set{1, \dots, k}$, given by
-$l_{\mathcal{V}}(v) = i$ if and only if $v \in V_i$.
+\begin{defn}[Expression of a Graph]
+Given a graph $G$, the expression resulting from the algorithm above is called
+an expression of $G$ and denoted $\Exp{G}$.
 \end{defn}
 
 \begin{rmk}
-The existence of a level ordering of a directed acyclic graph is well-known --
-consider any topological sorting algorithm -- but these orderings need not be
-unique -- consider the disjoint union of two directed acyclic graphs.
+Note that an expression of a graph is by no means unique -- we made a large
+number of arbitrary choices in our process.
 \end{rmk}
 
-\begin{rmk}\label{rmk:lgraph_edge}
-We note that if a vertex has no incoming nor outgoing edges, then it is can be
-placed at any level and hence we avoid a choice at this point. Vertices at any
-level cannot have outgoing edges to a lower level, for if they do, then the
-graph has a cycle. Finally, we note that if a vertex at some level has no edge
-from the immediate preceding level, we can move it to that level. Hence, we may
-assume that each vertex not at the first level has at least one edge from the
-immediate preceding level.
+\begin{rmk} We also note that we did not specify how to handle ``crossings'' of
+edges but it is not difficult to see that ``crossing'' makes precise sense when
+we specify the edge orderings and the ordering of the source of a graph. Once we
+execute the algorithm above, we can handle crossings in the same way as when
+drawing cobordisms in $\Cob_2$.
 \end{rmk}
 
-\begin{exm}
-A level-ordering of the graph in example \ref{exm:egraph1} is:
-\[
-  V_1 = \set{1, 2}, V_2 = \set{3, 4}, V_3 = \set{5, 6, 7}, V_4 = \set{8, 9}
-\]
-\end{exm}
+Even though we made many choices in the above algorithm, the only
+choices that cannot be thought of as canonical in any way are the chosen edge
+orderings and the ordering of the source vertices. We are thus motivated to make
+the following definition.
 
-\begin{defn}[Expression of a Graph]
-Given a graph $G$ with a chosen level ordering
-$\set{U, V_1, \dots, V_N}$ along with a chosen total ordering
-of each $V_i \cup U = \set{v_{i, 1}, v_{i, 2}, \dots, v_{i, k_i}}$ of each
-level, we define:
-\begin{enumerate}[(i)]
-\setlength{\itemsep}{0pt}
-\item For $j \in \set{1, \dots, k_1}$, the expression associated to $v_{1, j}$
-is:
-\[
-  \Exp{G}_{1, j} := v_{1, j}\footnote{We take this vertex as a formal symbol.}
-\]
-The expression associated to the layer $V_1$ is:
-\[
-  \Exp{G}_1 := v_{1, 1} \tensor \cdots \tensor v_{1, k_1}
-\]
-
-\item For each
-$i \in \set{2, \dots, N}$ and each $j \in \set{1, \dots, k_i}$,
-let $X = \set{e_1, e_2, \dots, e_p}$ be the set of incoming edges on $v_{i, j}$,
-ordered by their source vertices. Then, the in-expression associated to
-$v_{i, j}$ is:
-\[
-  \Exp{G}_{i, j, \text{in}} := \begin{cases}
-    e_1 \cwedge e_2 \cwedge \cdots \cwedge e_p, & X \neq \varnothing \\
-    (v_{i, j}, v_{i, j}), & X = \varnothing \iff v_{i, j} \in U
-  \end{cases}
-\]
-We note that in the second case of the definition we have no edge
-$(v_{i, j}, v_{i, j})$ but we use this as a symbol in our expression that will
-function as an identity map.
-
-For each
-$j' \in \set{1, \dots, k_{i - 1}}$,
-let $Y = \set{f_1, f_2, \dots f_q}$ be the set of outgoing edges of
-$v_{i - 1, j'}$, ordered by their target vertices. Then, the out-expression
-associated to $v_{i - 1, j'}$ is:
-\[
-  \Exp{G}_{i - 1, j', \text{out}} := f_1 \cvee f_2 \cvee \cdots \cvee f_q
-\]
-
-The expression associated to the layer $V_{i}$ is:
-\[
-  \Exp{G}_{i}
-    := \br{\bigotimes_{j' = 1}^{k_{i - 1}} \Exp{G}_{i - 1, j', \text{out}}}
-    \tensor \br{\bigotimes_{j = 1}^{k_i} \Exp{G}_{i, j, \text{in}}}
-\]
-
-\item If $N = 0$, the expression associated to $G$ is:
-\[
-  \Exp{G} := \varnothing
-\]
-If $N = 1$, the expression associated to $G$ is:
-\[
-  \Exp{G} := \Exp{G}_1
-\]
-If $N > 1$, the expression associated to $G$ is:
-\[
-  \Exp{G} := \Exp{G}_N \circ \Exp{G}_{N - 1} \circ \cdots \circ \Exp{G}_{2}
-\]
-\end{enumerate}
-Then, $\Exp{G}$ is called the expression of $G$ for the given level ordering and
-the given total orderings of the levels.
+\begin{defn}[Expression Graph]
+A graph with a chosen edge ordering and a chosen ordering of its source vertices
+is called an expression graph.
 \end{defn}
 
-Using this definition of expressions, we observe that the expression associated
-to the graph in example \ref{exm:egraph1} is:
-\[
-  ((5, 8) \tensor ((6, 9) \cwedge (7, 9)))
-  \circ (((3, 5) \cvee (3, 6)) \tensor (4, 7))
-  \circ (((1, 3) \cvee (1, 4)) \tensor ((1, 3) \cwedge (2, 3)))
-\]
-Of course, this is just one possible interpretation of expressions encoded by
-expression graphs. However, this interpretation will be of use in developing
-notions of TQFTs based on parallel transport, as we will see. Different
-interpretations will yield different ways of associating linear maps to
-manifolds but we will not explore all these possibilities.
+Thus, given an expression graph, we have an algorithm to extract its expression
+consistently as long as we keep the other choices in the above algorithm fixed.
+We will later see that $\Exp{G}$ is functorial in a suitable sense. We proceed
+to construct the domain of the functor $\Exp{-}$.
 
 \subsection{Disjoint Unions and Gluings}
 
