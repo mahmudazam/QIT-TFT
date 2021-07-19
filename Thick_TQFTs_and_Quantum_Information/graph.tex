@@ -13,7 +13,7 @@ categories. We will require a notion of graphs on manifolds whose vertices are
 points, possibly repeated, on the manifold and whose edges are paths on the
 manifold.
 
-\subsection{Graphs Encoding Algebraic Expressions}
+\subsection{Graphs Encoding Algebraic Expressions}\label{subsec:grphalgexp}
 
 We will now describe a method of encoding expressions involving tensor products,
 point-wise algebra products and composition of linear maps $A \to A$ for some
@@ -89,9 +89,20 @@ directed acyclic graph such as the one above. Let $G = (V, E)$ be any graph. We
 make the following modifications to $G$:
 \begin{enumerate}
 \setlength{\itemsep}{0pt}
+
 \item For each vertex $v$, choose an ordering of the incoming edges of $v$, say
-$(u_1, v), \dots, (u_k, v)$ and add vertices and edges to make the following
-modification:
+$(u_1, v), \dots, (u_k, v)$ and and ordering of its outgoing edges, say
+$(v, w_1), \dots, (v, w_n)$.
+
+\item Let $S(G)$ be the set consisting of vertices with no incoming
+edges -- called the source vertices of $G$ -- and $T(G)$, the set consisting of
+vertices with no outgoing edges -- called the target vertices of $G$. We then
+choose orderings of $S(G)$. Note that $S(G) \cap T(G)$ might be non-empty
+because of vertices with no edges, incoming or outgoing.
+
+\item Copy vertices and add edges to make the following modification, where the
+incoming edges are in order from the lowest at the top to the highest at the
+bottom:
 \begin{figure}[H]
 \begin{center}
 \begin{tikzpicture}
@@ -132,8 +143,7 @@ modification:
 \end{center}
 \end{figure}
 
-\item For each vertex $v$, choose an ordering of its outgoing edges, say
-$(v, w_1), \dots, (v, w_n)$, and make the following modification similar to the
+\item Copy vertices and edges to make the following modification similar to the
 previous step:
 \begin{figure}[H]
 \begin{center}
@@ -315,27 +325,44 @@ We also make the modifications obtained from the rotations of the above diagrams
 about a horizontal edge. After these modifications have been applied, there are
 no edges shared between ``multiplications'' and ``comultiplications''.
 
-\item We now consdier the sets $S(G)$ consisting of vertices with no incoming
-edges -- called the source of $G$ -- and $T(G)$ consisting of vertices with no
-outgoing edges -- called the target of $G$. We then choose orderings of $S(G)$.
-Note that $S(G) \cap T(G)$ might be non-empty because of vertices
-with no edges, incoming or outgoing. We then consider a level ordering of $G$ in
-its current state as follows:
+\item Noting that $G$ is acyclic even after the modifications, we construct a
+level ordering of $G$ inductively as follows:
 \begin{enmrt}
 \li Let $V_1$ be the set of vertices with no incoming edges -- i.e.,
 $V_1 := S(G)$
-\li Let $V_{k + 1}$ be the set of vertices with incoming edges only from
+\li Let $V_{k + 1}$ be the set of vertices in
+$G \setminus (V_1 \cup \cdots \cup V_k)$ with incoming edges only from
 $V_1, \dots, V_k$, or with no incoming edges.
 \end{enmrt}
-We note that the ordering on $S(G) = V_1$ induces an ordering of $V_2$:
-$u \leq v \iff \exists u' \in V_1$ with edges $(u', u) \leq (u', v)$ or
-$\exists u', v' \in V_1$ with $u' \leq v'$ and edges $(u', u)$ and $(v', v)$.
+We note that the ordering on $S(G) = V_1$ induces an ordering of $V_2$ as
+follows. Let $S(G)$ be ordered as $u_1, \dots, u_n$. Let the ordering of the
+outgoing edges of $u_i$ be $(u_i, v_{i, 1}), \dots, (u_i, v_{i, k_i})$. We let
+$v_i := v_{1, i}$ for $1 \leq i \leq k_1$. For $1 \leq j < n$,
+$k_j < i \leq k_{j + 1}$, we let $v_i := v_{j + 1, i}$. Then, the $v_i$ are an
+ordering of $V_2$. We can repeat this process with $V_2$ in place of $S(G)$ and
+so on to obtain an ordering for each level. By construction, we have the
+following corollary:
 
-\item Notice that the vertices with no edges are in $V_k$ for every $k$ and they
-are part of the induced orderings. We add copies of these vertices so that the
-vertex set is now the disjoint union of the $V_k$. Then, for each vertex
-$u \in V_k$ with no edges, we add the edge $(u, u')$ where $u'$ is the copy of
-$u$ in $V_{k + 1}$.
+\begin{cor}\label{cor:lvltolvl}
+Let $G$ be an expression graph with induced level ordering
+$V_1, V_2, \dots, V_k$. Then for each $i \in \set{2, \dots, k}$ and each
+$v \in V_i$ that is not edgeless, there is an edge $(u, v)$ with
+$u \in V_{i - 1}$.
+\end{cor}
+
+\begin{rmk}
+This level ordering algorithm works on any graph -- in particular, on $G$
+before the modifications. We will need this construction on arbitrary graphs
+later on.
+\end{rmk}
+
+\item Consider the vertices with no edges. We will call these edgeless vertices.
+Notice that the edgeless vertices are all in $V_1$. For each edgless vertex $u$
+in $V_1$, we add a copy of it, say $u'$, to $V_2$ -- it is inserted in the
+position after the last vertex in $V_2$ with an edge from a vertex above $u$ in
+$V_1$. We then add in the edge $(u, u')$. We continue this process with $V_2$ in
+place of $V_1$ and $V_3$ in place of $V_2$ until, there is a copy of each
+edgeless vertex in each level with edges connecting them.
 
 \item For each edge $(u, v)$ with $u \in V_k$ and $v \in V_{k'}$ with
 $k' > k + 1$, we insert a copy of $u$ in $V_{i}$ for each $k < i < k'$ after the
@@ -413,155 +440,114 @@ consistently as long as we keep the other choices in the above algorithm fixed.
 We will later see that $\Exp{G}$ is functorial in a suitable sense. We proceed
 to construct the domain of the functor $\Exp{-}$.
 
-\subsection{Disjoint Unions and Gluings}
+\subsection{Morphisms of Expression Graphs}
 
-For defining a disjoint union of level-ordered graphs, we require an operation
-of level orders that yields a level ordering of the disjoint union of the
-graphs. We see an example first.
-
-\begin{exm}\label{exm:lgraph_disjunion}
-Consider the graph in example \ref{exm:egraph1} -- call it $G$ -- along with the
-following graph $H$:
-\[\begin{tikzpicture}[baseline=(a).base]
-\node[scale=\diagscale] (a) at (0, 0){
-\begin{tikzcd}[column sep=huge, row sep=tiny]
-                                &                    & 5' \\
-1' \ar[rru, bend left] \ar[rdd] & 3' \ar[ru] \ar[rd] &    \\
-                                &                    & 6' \\
-2' \ar[ruu]                     & 4' \ar[rd] \ar[ru] &    \\
-                                &                    & 7'
-\end{tikzcd}
-};
-\end{tikzpicture}\]
-We then observe the following diagram of $G \amalg H$:
-\[\begin{tikzpicture}[baseline=(a).base]
-\node[scale=\diagscale] (a) at (0, 0){
-\begin{tikzcd}[column sep=huge, row sep=tiny]
-                                    &                      & 5 \ar[rd] &    \\
-1 \ar[r] \ar[rdd]                   & 3 \ar[ru] \ar[rd]    &           & 8  \\
-                                    &                      & 6 \ar[rd] &    \\
-2 \ar[ruu]                          & 4 \ar[rd]            &           & 9  \\
-                                    &                      & 7 \ar[ur] &    \\
-                                    &                      &           &    \\
-                                    &                      &           & 5' \\
-1' \ar[rrru, bend left=20] \ar[rdd] & 3' \ar[rru] \ar[rrd] &           &    \\
-                                    &                      &           & 6' \\
-2' \ar[ruu]                         & 4' \ar[rrd] \ar[rru] &           &    \\
-                                    &                      &           & 7'
-\end{tikzcd}
-};
-\end{tikzpicture}\]
-This suggests one possible operation on level sets which yields a level
-ordering. We define this next.
-\end{exm}
-
-\begin{cor}
-Let $\br{G, \mathcal{V} = \set{V_i}_{i = 1}^{N}}$ and
-$\br{H, \mathcal{W} = \set{W_i}_{i = 1}^{M}}$ be level-ordered
-graphs. If $M \leq N$, the following set is a level ordering of $G \amalg H$:
-\[
-  \mathcal{V} \tensor \mathcal{W} :=
-  \set{V_1 \amalg W_1, V_2 \amalg W_2, \dots, V_{M - 1} \amalg W_{M - 1},
-  V_M, \dots, V_{N - 1}, V_N \amalg W_M}
-\]
-If $N \leq M$, the following set is a level ordering of $G \amalg H$:
-\[
-  \mathcal{V} \tensor \mathcal{W} :=
-  \set{V_1 \amalg W_1, V_2 \amalg W_2, \dots, V_{N - 1} \amalg W_{N - 1},
-  W_N, \dots, W_{M - 1}, V_N \amalg W_M}
-\]
-If $N = M$, these two descriptions coincide.
-\end{cor}
-
-This allows us to define a disjoint union of level-ordered graphs.
-\begin{defn}
-For level-ordered graphs $(G, \mathcal{V})$ and $(H, \mathcal{W})$, we define
-\[
-  (G, \mathcal{V}) \tensor (H, \mathcal{W}) :=
-    (G \amalg H, \mathcal{V} \tensor \mathcal{W})
-\]
-to be the disjoint union.
-\end{defn}
-
-\begin{rmk}
-We notice that if we choose total orderings of levels, then this disjoint union
-again gives total orderings of levels.
-\end{rmk}
-
-To see the associativity and unitality of this operation up to coherent
-isomorphism, we require a notion of morphism of level-ordered graphs. We
-define this now.
-
-\begin{defn}[Level Homomorphism]
-Let $\br{G, \mathcal{V} = \set{V_i}_{i = 1}^{N}}$ and
-$\br{H, \mathcal{W} = \set{W_i}_{i = 1}^{M}}$ be level-ordered
-graphs. Then, a graph homomorphism $h : G \to H$ satisfying:
-\[
-  l_{\mathcal{V}}(u) = l_{\mathcal{V}}(v)
-  \implies l_{\mathcal{W}}(h(u)) = l_{\mathcal{W}}(h(v))
-\]
-\end{defn}
-
-It is then straightforward to verify that the associator and unitor isomorphisms
-for the disjoint union of vertex sets are level homomorphisms of graphs -- this
-is an exercise similar to verifying that disjoint unions of connections are
-associative and unital, as we saw in \S\ref{subsec:connctg}. We then proceed to
-define a gluing of level-ordered graphs.
-
-\begin{defn}[Source and Target]
-Let $\br{G, \mathcal{V} = \set{V_i}_{i = 1}^{N}}$ be a level-ordered graph.
-Then, we define $V_1$ to be the source graph $S(G)$ of $G$. Let $S$ be the
-vertices in $V_1$ with no outgoing edges -- these vertices should be considered
-as target vertices as well. We define $V_N \cup S$ to be the target graph $T(G)$
-of $G$.
-\end{defn}
-
-There are obvious inclusions $S(G) \hto G \hot T(G)$ but we notice that gluing
-at source target-ends using such inclusions is not well-defined, unless we have
-a unique isomorphism between the source of one graph to the target of another.
-This is another reason we should consider total orderings of the levels. Recall
-that we required total orderings of levels to define expressions of
-level-ordered graphs. Hence, we define the following subclass of level-ordered
-graphs.
-
-\begin{defn}[Expression Graph]
-A level-ordered graph $(G, \mathcal{V})$ equipped with a total ordering of its
-levels is called an expression graphs.
-\end{defn}
+It is of interest to define morphisms of expression graphs. They will be
+necessary to define interesting constructions on expression graphs later on.
 
 \begin{defn}[Expression Homomorphism]
-A level homomorphism that is order-preserving on levels is called an expression
-homomorphism.
+An expression graph homomorphism or expression homomorphism is a graph
+homomorphism $f : G \to H$ between expression graphs such that $f(S(G))$ is
+contained in some level set $L$ in $H$, $f$ preserves the ordering of $S(G)$ in
+$L$ and $f$ preserves the edge orderings for each vertex.
 \end{defn}
 
-We then observe that $S(G)$ and $T(G)$ are totally ordered for any expression
-graph $G$. Then we have the following theorem.
+We then note some useful facts concerning level orderings and expression
+isomorphisms. First, every expression graph $G$ has a level ordering as
+described in the algorithm in \S\ref{subsec:grphalgexp} so that the vertex set
+is a disjoint union of the levels. Then, we have a level function $l_G$ for $G$
+which assigns to each vertex $v$ the integer $n$ for which $v$ is in the
+$n$--th level set.
 
-\begin{thm}\label{thm:expiso_unique}
-Expression isomorphisms are unique.
-\end{thm}
+\begin{lem}\label{thm:expiso_unique}
+Expression isomorphisms $f : G \to H$ are level preserving, i.e.
+\[
+  l_G(v) = l_H(f(v))
+\]
+\end{lem}
 \begin{proof}
-Let $f : (G, \mathcal{V}) \to (H, \mathcal{W})$ be an expression isomorphism,
-where $\mathcal{V} = \set{V_i}_{i = 1}^{N}$ and
-$\mathcal{W} = \set{W_j}_{i = 1}^{M}$. By remark \ref{rmk:lgraph_edge}, we have
-a path $v_1, v_2, \dots, v_N$ in $G$ with $v_i \in V_i$. Then,
-$f(v_1), f(v_2), \dots, f(v_N)$ is a path in $H$ with $f(v_i) \in W_{j(i)}$
-for some strictly increasing finite sequence
-$j : \set{1, \dots, N} \to \set{1, \dots, M}$, since edges always go forward in
-levels. This shows that $N \leq M$. Using $f^{-1}$ and a path in $H$, we can
-show that $M \leq N$ so that $N = M$. This also shows that $f(v_1) \in W_1$ and
-hence $f(v_i) \in W_i$ for each $i$, by counting.
-
-Now, if there is another vertex $v'_i \in V_i$ for any $i$, we have
-$l_{\mathcal{V}}(v'_i) = l_{\mathcal{V}}(v_i) \implies
-l_{\mathcal{V}}(f(v'_i)) = l_{\mathcal{V}}(f(v_i))$. Thus, $f(V_i) \subset W_i$.
-Using the same argument with $f^{-1}$, we have $f^{-1}(W_i) \subset V_i$. Hence,
-we must have $f(V_i) = W_i$ for all $i$. For any other isomorphism $f'$ with the
-same domain and codomain, we can similarly show that $f'(V_i) = W_i$ for all
-$i$. Finally, since order-preserving bijections between finite, totally ordered
-sets -- the levels -- are unique, we must have $f = f'$ on all $V_i$. Thus,
-$f = f'$ on all of $G$.
+Let
+$\set{V_i}_{i = 1}^{N}$ and
+$\set{W_j}_{i = 1}^{M}$ be the level orderings of $G$ and $H$
+respectively. By definition, $l_G(v) = 1$ implies
+$l_H(f(v)) = 1$. Let $v \in V_k$ for some $1 \leq k \leq N$.
+By corollary \ref{cor:lvltolvl}, there is a path $v_1, \dots, v_k = v$ with each
+$v_i \in V_i$. Then, $f(v_1) \in W_1$ by definition and there is a path
+$f(v_1), \dots, f(v_k) = f(v)$ in $H$. Hence, we have that
+$l_H(f(v)) \geq l_G(v)$. On the other hand, let $f(v) \in W_m$ so that there is
+a path $w_1, \dots, w_m$ in $H$ with each $w_i \in W_i$. Using $f^{-1}$ on this
+path and a similar argument as the one before, we can show that
+$l_H(f(v)) \leq l_G(v)$.
 \end{proof}
+
+\begin{cor}
+For any expression homomorphism $f : G \to H$, if $V_i$ is the $i$--th level set
+in $G$, then $f(V_i)$ is the $i$--th level set in $H$.
+\end{cor}
+\begin{proof}
+Let $W_i$ be the $i$--th level set of $H$. Then, by the previous lemma
+$f(V_i) \subset W_i$. Again,
+$f^{-1}(W_i) \subset V_i \implies W_i \subset f(V_i)$. Hence, $f(V_i) = W_i$.
+\end{proof}
+
+\begin{lem}
+Expression isomorphisms $f : G \to H$ are order-preserving on levels, i.e.
+\[
+  u \leq v \iff f(u) \leq f(g)
+\]
+\end{lem}
+\begin{proof}
+Let $u, v$ be in the same level set in $G$ and $u \leq v$. We proceed by
+induction on $l_G(u) = l_G(v)$. When $l_G(u) = l_G(v) = 1$, then
+$f(u) \leq f(v)$, by definition. The other direction is obtained similarly with
+$f^{-1}$ in place of $f$.
+
+Let $l_G(u) = l_G(v) = k + 1$. There exist $u', v' \in V(G)$ with
+$l_G(u') = l_G(v') = k, u' \leq v'$, edges $(u', u), (v' v)$ no edges $(u'', u)$
+or $(v'', v)$ for any $u'' < u'$ or $v'' < u'$, and, if
+$u' = v'$, $(u', u) \leq (v', v)$. By the previous corollary,
+$l_H(f(u')) = l_H(f(v')) = k$.
+If there is a $u'' < f(u')$ or a $v'' < f(v')$ in $V(H)$ with edges
+$(u'', f(u'))$ or $(v'', f(v'))$, then by induction, $f^{-1}(u'') < u'$ or
+$f^{-1}(v'') < v'$ with some edge $(f^{-1}(u''), u)$ or $(f^{-1}(v''), v)$,
+contradicting the conditions on $u'$. Thus, the edges $(f(u'), f(u))$ and
+$(f(v'), f(v))$ ensure that $f(u) \leq f(v)$. The other direction is again
+obtained similarly by replacing $f$ with $f^{-1}$.
+\end{proof}
+
+\begin{cor}
+Expression isomorphisms $f : G \to H$ are unique.
+\end{cor}
+\begin{proof}
+Let $g : G \to H$ be another expression isomorphism. Then both $f$ and $g$
+restrict to order-preserving bijections on the finite level sets and hence must
+agree on the level sets. Thus, $f$ and $g$ agree on $G$.
+\end{proof}
+
+In light of the last corollary, it is reasonable to consider expression graphs
+up to expression isomorphisms from this point onwards. We will define some
+useful constructs on expression graphs that will facilitate our desired notion
+of TQFTs.
+
+\subsection{Constructs on Expression Graphs}
+
+Consider expression graphs $G$ and $H$. We can take the disjoint unions of their
+vertices and edges sets. It is clear that the edge orderings of the vertices of
+$G$ and $H$ collectively provide an edge ordering for every vertex of
+$G \amalg H$. We observe that $S(G \amalg H) = S(G) \amalg S(H)$ so that the
+orderings of $S(G)$ and $S(H)$ provide an ordering of $S(G \amalg H)$, where the
+vertices of $G$ come before those of $H$. The empty graph is an expression and
+hence acts as a unit for the disjoint operation. It is easy to see that the
+associators and unitors for the coproduct in the category of sets are graph
+homomorphisms. In fact, these homomorphisms also preserve the edge orderings and
+the ordering of the source vertices -- this is an exercise similar to verifying
+that disjoint unions of connections are associative and unital, as we saw in
+\S\ref{subsec:connctg}. Thus the associators and unitors are expression
+isomorphisms.
+
+We then proceed to define a gluing of expression graphs. For an expression
+graph $G$, $S(G)$ and $T(G)$ without any edges are themselves expression graphs.
+There are obvious order-preserving inclusions $S(G) \hto G \hot T(G)$.
 
 \begin{defn}[Gluing of Expression Graphs]
 Let $(G, \mathcal{V} = \set{V_i}_{i = 1}^{N})$ and
@@ -611,8 +597,6 @@ and $2$--morphisms are expression isomorphisms, with horizontal composition
 given by gluing and monoidal product given by disjoint union as defined above.
 
 \TODO{Maybe, we should have an appendix entry for the proof.}
-
-\subsection{Some Constructs on Expressions}
 
 We define some basic constructs on expressions obtained from expression graphs.
 
