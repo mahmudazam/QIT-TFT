@@ -13,7 +13,7 @@ categories. We will require a notion of graphs on manifolds whose vertices are
 points, possibly repeated, on the manifold and whose edges are paths on the
 manifold.
 
-\subsection{Graphs Encoding Algebraic Expressions}\label{subsec:grphalgexp}
+\subsection{Graphs Encoding Algebraic Expressions}\label{subsec:alg_graph_exp}
 
 We will now describe a method of encoding expressions involving tensor products,
 point-wise algebra products and composition of linear maps $A \to A$ for some
@@ -33,16 +33,25 @@ $V_4 = \set{8, 9}$, along with edges:
   (5, 8) &,& (6, 9) &,& (7, 9)
 \end{array}\]
 We visualize this graph as follows:
-\[\begin{tikzpicture}[baseline=(a).base]
-\node[scale=\diagscale] (a) at (0, 0){
-\begin{tikzcd}[column sep=huge, row sep=tiny]
-                  &                   & 5 \ar[rd] &   \\
-1 \ar[r] \ar[rdd] & 3 \ar[ru] \ar[rd] &           & 8 \\
-                  &                   & 6 \ar[rd] &   \\
-2 \ar[ruu]        & 4 \ar[rd]         &           & 9 \\
-                  &                   & 7 \ar[ur] &
-\end{tikzcd}
-};
+\[\begin{tikzpicture}[xscale=2,yscale=0.5]
+\node at (0, 3) (v1) {1};
+\node at (0, 1) (v2) {2};
+\node at (1, 3) (v3) {3};
+\node at (1, 1) (v4) {4};
+\node at (2, 4) (v5) {5};
+\node at (2, 2) (v6) {6};
+\node at (2, 0) (v7) {7};
+\node at (3, 3) (v8) {8};
+\node at (3, 1) (v9) {9};
+\midarrow{v1}{v3}
+\midarrow[0.33]{v1}{v4}
+\midarrow[0.33]{v2}{v3}
+\midarrow{v3}{v5}
+\midarrow{v3}{v6}
+\midarrow{v4}{v7}
+\midarrow{v5}{v8}
+\midarrow{v6}{v9}
+\midarrow{v7}{v9}
 \end{tikzpicture}\]
 Thinking of individual edges in the above graph as mappings $A \to A$ of some
 monoid and comonoid $A$ in some monoidal category, we can think of multiple
@@ -54,16 +63,37 @@ thought of as a tensor product of maps. We can treat a single vertex as an
 identity mapping.
 
 We can then modify the graph as follows:
-\[\begin{tikzpicture}[baseline=(a).base]
-\node[scale=\diagscale] (a) at (0, 0){
-\begin{tikzcd}[column sep=huge, row sep=tiny]
-                  & 3 \ar[r]  & 3 \ar[dr] &                   & 5 \ar[rd] &   \\
-1 \ar[ur] \ar[dr] &           &           & 3 \ar[ru] \ar[rd] &           & 8 \\
-                  & 4 \ar[dr] & 3 \ar[ur] &                   & 6 \ar[rd] &   \\
-2 \ar[r]          & 2 \ar[ur] & 4 \ar[r]  & 4 \ar[rd]         &           & 9 \\
-                  &           &           &                   & 7 \ar[ur] &
-\end{tikzcd}
-};
+\[\begin{tikzpicture}[xscale=2,yscale=0.75]
+\node at (-2, 3) (v1) {1};
+\node at (-2, 1) (v2) {2};
+\node at (-1, 4) (v33) {3};
+\node at (-1, 2) (v44) {4};
+\node at (-1, 1) (v22) {2};
+\node at (0, 4) (v333) {3};
+\node at (0, 2) (v3333) {3};
+\node at (0, 1) (v444) {4};
+\node at (1, 3) (v3) {3};
+\node at (1, 1) (v4) {4};
+\node at (2, 4) (v5) {5};
+\node at (2, 2) (v6) {6};
+\node at (2, 0) (v7) {7};
+\node at (3, 3) (v8) {8};
+\node at (3, 1) (v9) {9};
+\midarrow{v1}{v33}
+\midarrow{v1}{v44}
+\midarrow{v2}{v22}
+\midarrow{v33}{v333}
+\midarrow[0.33]{v22}{v3333}
+\midarrow[0.33]{v44}{v444}
+\midarrow{v333}{v3}
+\midarrow{v3333}{v3}
+\midarrow{v444}{v4}
+\midarrow{v3}{v5}
+\midarrow{v3}{v6}
+\midarrow{v4}{v7}
+\midarrow{v5}{v8}
+\midarrow{v6}{v9}
+\midarrow{v7}{v9}
 \end{tikzpicture}\]
 Thinking of edges between copies of the same vertex, which did not originally
 exist, as the identity map and crossing edges as a twist operation -- denoted
@@ -356,19 +386,32 @@ before the modifications. We will need this construction on arbitrary graphs
 later on.
 \end{rmk}
 
-\item Consider the vertices with no edges. We will call these edgeless vertices.
-Notice that the edgeless vertices are all in $V_1$. For each edgless vertex $u$
-in $V_1$, we add a copy of it, say $u'$, to $V_2$ -- it is inserted in the
-position after the last vertex in $V_2$ with an edge from a vertex above $u$ in
-$V_1$. We then add in the edge $(u, u')$. We continue this process with $V_2$ in
-place of $V_1$ and $V_3$ in place of $V_2$ until, there is a copy of each
-edgeless vertex in each level with edges connecting them.
+\begin{rmk}
+The vertices with no edges, incoming or outgoing, are always in the first level.
+We will call these vertices edgeless vertices. However, vertices with no
+outgoing edges need not always be in the last level.
+\end{rmk}
 
-\item For each edge $(u, v)$ with $u \in V_k$ and $v \in V_{k'}$ with
-$k' > k + 1$, we insert a copy of $u$ in $V_{i}$ for each $k < i < k'$ after the
-last vertex $V_{i}$ with an edge from $u$ and we add an edge from $u$ to this
-copy -- call it $u'$. We then delete the edge $(u, v)$ and add an edge
-$(u', v)$. After this process completes, there is no edge that skips levels.
+\item\label{alg:edgeless}
+Consider the vertices with no outgoing edges but not at the last level. For each
+such vertex $u$ in $V_i$, we add a copy $u'$, to $V_{i + 1}$ -- it is inserted
+in the position after the last vertex in $V_{i + 1}$ with an edge from a vertex
+above $u$ in $V_i$. We then add in the edge $(u, u')$. We continue this process
+with $V_{i + 1}$ in place of $V_i$ and so on until, there is a copy
+of $u$ in each level after $V_i$ with a path connecting them.
+
+\begin{rmk}
+Each vertex without any edges, incoming or outgoing, are also copied in this
+way, noting that these vertices are placed in the first level during the level
+ordering. We will call these vertices edgeless vertices.
+\end{rmk}
+
+\item For each level skipping edge $(u, v)$ -- that is, with $u \in V_k$ and
+$v \in V_{k'}$ for some $k' > k + 1$ -- we insert a copy of $u$ in $V_{i}$ for
+each $k < i < k'$ after the last vertex $V_{i}$ with an edge from $u$ and we add
+an edge from $u$ to this copy -- call it $u'$. We then delete the edge $(u, v)$
+and add an edge $(u', v)$. After this process completes, there is no edge that
+skips levels.
 
 \item Observe that we can now identify the graph $G$ with a cobordism in
 $\Cob_2$ from $|S(G)|$ copies of $S^1$ to $|T(G)|$ copies of $S^1$! The
@@ -410,7 +453,8 @@ expression of the original graph $G$ similar to the example.
 
 \begin{defn}[Expression of a Graph]
 Given a graph $G$, the expression resulting from the algorithm above is called
-an expression of $G$ and denoted $\Exp{G}$.
+an expression of $G$ and denoted $\Exp{G}$. We call the above algorithm an
+expression construction on directed acyclic graphs.
 \end{defn}
 
 \begin{rmk}
@@ -454,12 +498,12 @@ $L$ and $f$ preserves the edge orderings for each vertex.
 
 We then note some useful facts concerning level orderings and expression
 isomorphisms. First, every expression graph $G$ has a level ordering as
-described in the algorithm in \S\ref{subsec:grphalgexp} so that the vertex set
+described in the algorithm in \S\ref{subsec:alg_graph_exp} so that the vertex set
 is a disjoint union of the levels. Then, we have a level function $l_G$ for $G$
 which assigns to each vertex $v$ the integer $n$ for which $v$ is in the
 $n$--th level set.
 
-\begin{lem}\label{thm:expiso_unique}
+\begin{lem}\label{thm:expiso_lvlpres}
 Expression isomorphisms $f : G \to H$ are level preserving, i.e.
 \[
   l_G(v) = l_H(f(v))
@@ -515,7 +559,7 @@ $(f(v'), f(v))$ ensure that $f(u) \leq f(v)$. The other direction is again
 obtained similarly by replacing $f$ with $f^{-1}$.
 \end{proof}
 
-\begin{cor}
+\begin{cor}\label{cor:expiso_unique}
 Expression isomorphisms $f : G \to H$ are unique.
 \end{cor}
 \begin{proof}
@@ -525,76 +569,129 @@ agree on the level sets. Thus, $f$ and $g$ agree on $G$.
 \end{proof}
 
 In light of the last corollary, it is reasonable to consider expression graphs
-up to expression isomorphisms from this point onwards. We will define some
+up to expression isomorphisms from this point onwards. We will next define some
 useful constructs on expression graphs that will facilitate our desired notion
 of TQFTs.
 
 \subsection{Constructs on Expression Graphs}
 
 Consider expression graphs $G$ and $H$. We can take the disjoint unions of their
-vertices and edges sets. It is clear that the edge orderings of the vertices of
+vertex and edges sets. It is clear that the edge orderings of the vertices of
 $G$ and $H$ collectively provide an edge ordering for every vertex of
 $G \amalg H$. We observe that $S(G \amalg H) = S(G) \amalg S(H)$ so that the
 orderings of $S(G)$ and $S(H)$ provide an ordering of $S(G \amalg H)$, where the
 vertices of $G$ come before those of $H$. The empty graph is an expression and
-hence acts as a unit for the disjoint operation. It is easy to see that the
-associators and unitors for the coproduct in the category of sets are graph
-homomorphisms. In fact, these homomorphisms also preserve the edge orderings and
-the ordering of the source vertices -- this is an exercise similar to verifying
-that disjoint unions of connections are associative and unital, as we saw in
-\S\ref{subsec:connctg}. Thus the associators and unitors are expression
-isomorphisms.
+hence acts as a unit for the disjoint union operation. It is easy to see that
+the associators and unitors for the coproduct in the category of sets are
+expression isomorphisms.
 
 We then proceed to define a gluing of expression graphs. For an expression
-graph $G$, $S(G)$ and $T(G)$ without any edges are themselves expression graphs.
-There are obvious order-preserving inclusions $S(G) \hto G \hot T(G)$.
+graph $G$, $S(G)$ without any edges is itself an expression graph.
+The edgeless vertices are in both $S(G)$ and $T(G)$. Since $S(G)$ is also the
+first level of $G$, $S(G)$ is ordered, by definition. We then observe that
+$T(G)$ is the union of the last level and the set of edgeless vertices. Thus,
+using a method similar to point \ref{alg:edgeless} in the algorithm given in
+\S\ref{subsec:alg_graph_exp}, we have an induced ordering of $T(G)$, so that
+$T(G)$ is also an expression graph without any edges.
+There are obvious order-preserving expression homomorphisms
+$S(G) \hto G \hot T(G)$ that are isomorphisms onto their images. We note
+that if there is a an expression isomorphism $\psi : S(H) \to T(G)$ for
+expression graphs $G$ and $H$, then $\psi$ is unique by \ref{cor:expiso_unique}.
+This allows us to define the following notion of gluing.
 
 \begin{defn}[Gluing of Expression Graphs]
-Let $(G, \mathcal{V} = \set{V_i}_{i = 1}^{N})$ and
-$(H, \mathcal{W} = \set{W_i}_{i = 1}^{M})$ be level-ordered
-graphs such that there is a unique expression isomorphism
+Let $G$ and $H$ be expression graphs such that there is a unique expression
+isomorphism
 \[
-  \psi_{G, H} : W_1 = S(H) \to T(G) = V_N
+  \psi_{G, H} : S(H) \to T(G)
 \]
 Then, we say that $G$ and $H$ are gluable at $S(H) \cong T(G)$. We define the
 pushout of the following span in $\Set$ to be the gluing $H * G$ of graphs.
 \[
   H \hot S(H) \to[\phi] T(G) \hto G
 \]
-$H * G$ has the obvious level-ordering:
-\[
-  \mathcal{W} * \mathcal{V} :=
-  \set{V_1, \dots, V_N \cong W_1, W_2, \dots, W_M}
-\]
-We call $(H * G, \mathcal{W} * \mathcal{V})$ the gluing or composite of the
-given level-ordered graphs.
 \end{defn}
 
+\begin{thm}
+Gluings $H * G$ of expression graphs $G$ and $H$ at $S(H) \cong T(G)$ are
+expression graphs.
+\end{thm}
+\begin{proof}
+First we show that $S(H * G) = S(G)$. If $v \in S(H * G) \setminus S(G)$, then
+$v$ has an incoming edge in $G$ and since gluing does not delete edges, $v$ has
+an incoming edge in $H * G$, so that $v \not\in S(H * G)$. Thus,
+$S(H * G) \subseteq S(G)$. If $v \in S(G)$, then $v$ has no incoming edges in
+$G$. It is clear that gluing cannot introduce incoming edges to the source
+vertices of $G$ so that $S(G) \subset S(H * G)$. Thus, $H * G$ also inherits the
+ordering of its source vertices from $G$.
+
+We observe that only the vertices in $T(G)$ receive new edges and these are all
+outgoing while the vertices in $T(G)$ have no outgoing edges in $G$. Thus,
+$H * G$ inherits edge orderings unambiguously from $G$ and $H$ collectively.
+Therefore, $H * G$ is an expression graph.
+\end{proof}
+
 \begin{exm}
-Consider $G$ and $H$ as in example \ref{exm:lgraph_disjunion}. We have the
-following diagram of $H * G$:
-\[\begin{tikzpicture}[baseline=(a).base]
-\node[scale=\diagscale] (a) at (0, 0){
-\begin{tikzcd}[column sep=huge, row sep=tiny]
-                  &                   & 5 \ar[rd] &                                     &                    & 5' \\
-1 \ar[r] \ar[rdd] & 3 \ar[ru] \ar[rd] &           & 8 \cong 1' \ar[rru, bend left] \ar[rdd] & 3' \ar[ru] \ar[rd] &    \\
-                  &                   & 6 \ar[rd] &                                     &                    & 6' \\
-2 \ar[ruu]        & 4 \ar[rd]         &           & 9 \cong 2' \ar[ruu]                     & 4' \ar[rd] \ar[ru] &    \\
-                  &                   & 7 \ar[ur] &                                     &                    & 7'
-\end{tikzcd}
-};
+Consider $G$ from example \ref{exm:egraph1} and $H$ as follows:
+\[\begin{tikzpicture}[xscale=2,yscale=0.75]
+\node at (3, 3) (v10) {$10$};
+\node at (3, 1) (v11) {$11$};
+\node at (4, 3) (v12) {$12$};
+\node at (4, 1) (v13) {$13$};
+\node at (5, 4) (v14) {$14$};
+\node at (5, 2) (v15) {$15$};
+\node at (5, 0) (v16) {$16$};
+\midarrow[0.33]{v8}{v13}
+\midarrow[0.33]{v9}{v12}
+\midarrow{v8}{v14}
+\midarrow{v12}{v14}
+\midarrow{v12}{v15}
+\midarrow{v13}{v15}
+\midarrow{v13}{v16}
+\end{tikzpicture}\]
+We have the following diagram of $H * G$:
+\[\begin{tikzpicture}[xscale=2,yscale=0.75]
+\node at (0, 3) (v1) {$1$};
+\node at (0, 1) (v2) {$2$};
+\node at (1, 3) (v3) {$3$};
+\node at (1, 1) (v4) {$4$};
+\node at (2, 4) (v5) {$5$};
+\node at (2, 2) (v6) {$6$};
+\node at (2, 0) (v7) {$7$};
+\node at (3, 3) (v8) {$8 \cong 10$};
+\node at (3, 1) (v9) {$9 \cong 11$};
+\node at (4, 3) (v12) {$12$};
+\node at (4, 1) (v13) {$13$};
+\node at (5, 4) (v14) {$14$};
+\node at (5, 2) (v15) {$15$};
+\node at (5, 0) (v16) {$16$};
+\midarrow{v1}{v3}
+\midarrow[0.33]{v1}{v4}
+\midarrow[0.33]{v2}{v3}
+\midarrow{v3}{v5}
+\midarrow{v3}{v6}
+\midarrow{v4}{v7}
+\midarrow{v5}{v8}
+\midarrow{v6}{v9}
+\midarrow{v7}{v9}
+\midarrow[0.33]{v8}{v13}
+\midarrow[0.33]{v9}{v12}
+\midarrow{v8}{v14}
+\midarrow{v12}{v14}
+\midarrow{v12}{v15}
+\midarrow{v13}{v15}
+\midarrow{v13}{v16}
 \end{tikzpicture}\]
 \end{exm}
 
-It is then easy to verify that this gluing is associative and unital up to
-coherent isomorphism much like the disjoint union. In fact, associators and
-unitors of the disjoint union of level-ordered graphs also expression
-isomorphisms. We can further verify that the data of expression graphs defined
-so far form a monoidal double category whose objects are finite, ordered sets,
-vertical $1$--morphisms are unique order isomorphisms, horizontal $1$--morphisms
-$G : U \to V$ are expression graphs $G$ with $S(G) \cong U$ and $T(G) \cong V$,
-and $2$--morphisms are expression isomorphisms, with horizontal composition
-given by gluing and monoidal product given by disjoint union as defined above.
+It is then easy to verify that gluing of expression graphs is associative and
+unital up to expression isomorphism much like the disjoint union. We can further
+verify that the data of expression graphs defined so far form a monoidal double
+category whose objects are finite, ordered sets, vertical $1$--morphisms are
+unique order isomorphisms, horizontal $1$--morphisms $G : U \to V$ are
+expression graphs $G$ with $S(G) \cong U$ and $T(G) \cong V$, and $2$--morphisms
+are expression isomorphisms, with horizontal composition given by gluing and
+monoidal product given by disjoint union.
 
 \TODO{Maybe, we should have an appendix entry for the proof.}
 
@@ -606,13 +703,104 @@ expression graphs $G$ and $H$ with $\Exp{G} = E_1$ and
 $\Exp{H} = E_2$, then we say that $E_1$ and $E_2$ are equal.
 \end{defn}
 
-\begin{defn}[Expression Composition]
-Let $G$ and $H$ be expression graphs gluable at $S(H) \cong T(G)$. Then, we
-define:
+\begin{exm}
+We observe that, in general, the expression construction does not result in the
+same graph when we apply it before gluing as opposed to after gluing. Let
+$G$ and $H$ be as follows:
 \[
-  \Exp{H} \circ \Exp{G} := \Exp{H * G}
+\begin{tikzpicture}[yscale=0.5]
+\node at (0, 3) (v1) {$1$};
+\node at (0, 1) (v2) {$2$};
+\node at (2, 3) (v3) {$3$};
+\midarrow{v1}{v3}
+\node at (1, -1) (G) {$G$};
+\end{tikzpicture}
+\qquad
+\qquad
+\begin{tikzpicture}[yscale=0.5]
+\node at (0, 3) (v4) {$4$};
+\node at (0, 1) (v5) {$5$};
+\node at (2, 3) (v6) {$6$};
+\node at (2, 2) (v7) {$7$};
+\node at (2, 0) (v8) {$8$};
+\midarrow{v4}{v6}
+\midarrow{v5}{v7}
+\midarrow{v5}{v8}
+\node at (1, -1) (H) {$H$};
+\end{tikzpicture}
 \]
-\end{defn}
+Applying the expression construction on $G$ and $H$ separately and then gluing
+the results yields:
+\[
+\begin{tikzpicture}[yscale=0.5]
+\node at (0, 3) (v1) {$1$};
+\node at (0, 1) (v2) {$2$};
+\node at (2, 3) (v4) {$3 \cong 4$};
+\node at (2, 1) (v5) {$2 \cong 5$};
+\node at (4, 3) (v6) {$6$};
+\node at (4, 2) (v7) {$7$};
+\node at (4, 0) (v8) {$8$};
+\midarrow{v1}{v4}
+\midarrow{v2}{v5}
+\midarrow{v4}{v6}
+\midarrow{v5}{v7}
+\midarrow{v5}{v8}
+\end{tikzpicture}
+\]
+Applying the expression construction on $H * G$ results in:
+\[
+\begin{tikzpicture}[yscale=0.5]
+\node at (0, 3) (v1) {$1$};
+\node at (2, 3) (v4) {$3 \cong 4$};
+\node at (0, 1) (v5) {$2 \cong 5$};
+\node at (4, 3) (v6) {$6$};
+\node at (2, 2) (v7) {$7$};
+\node at (2, 0) (v8) {$8$};
+\node at (4, 2) (v77) {$7$};
+\node at (4, 0) (v88) {$8$};
+\midarrow{v1}{v4}
+\midarrow{v4}{v6}
+\midarrow{v5}{v7}
+\midarrow{v5}{v8}
+\midarrow{v7}{v77}
+\midarrow{v8}{v88}
+\end{tikzpicture}
+\]
+However, in this case, we observe that $\Exp{H * G} = \Exp{H} \circ \Exp{G}$
+because the corresponding expressions in $\Cob_2$ are equal!
+\end{exm}
+
+In fact, we have the following theorem which shows that all differences that can
+arise between expression constructions before and after gluing can be reduced to
+simple cases similar to the one above.
+
+\begin{thm}
+Let $G$ and $H$ be expression graphs gluable at $S(H) \cong T(G)$. Then,
+\[
+  \Exp{H} \circ \Exp{G} = \Exp{H * G}
+\]
+\end{thm}
+\begin{proof}[Proof sketch]
+Applying the first five steps of the expression construction $\Exp{-}$ on
+$H * G$ is the same as applying them on $G$ and $H$ separately and gluing the
+results. For the sixth step, let the level sets of $G$ be $V_1, \dots, V_n$ and
+those of $H$, be $W_1, \dots, W_m$. We observe that $S(H * G) = S(G)$ so that
+the level sets of $G$ are also the first level sets of $H * G$ -- i.e., $V_1,
+\dots, V_n$ are the first $n$ levels of $H * G$. The next levels must be formed
+from vertices of $H$.
+
+We then notice that if $w \in W_1 = S(H) \cong T(G)$ glues
+to some edgeless vertex in $G$, then $w$ moves to $V_1$ in $H * G$, regardless
+of whether we construct level sets before or after gluing. If $w$ does not glue
+to some edgeless vertex, there is an edge $(w', w)$ with $w' \in V_{n - 1}$ and
+hence $w$ cannot move to any $V_i$ for $i < n$. In this case, $w$ also cannot
+move to some level set $W_j$ for $j > 1$, because there are no edges $(w'', w)$
+with $w'' \in W_i$ for any $1 \leq i < j$ -- i.e., from any level before
+``before'' $W_j$. These again hold regardless of if we construct level sets
+before or after gluing.
+
+\TODO{Continue this}
+\end{proof}
 
 \begin{defn}[Expression Tensor Product]
 Let $G$ and $H$ be expression graphs. We define:
