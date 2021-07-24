@@ -19,9 +19,10 @@ We will now describe a method of encoding expressions involving tensor products,
 point-wise algebra products and composition of linear maps $A \to A$ for some
 algebra $A$, using directed graphs. As a matter of convention, we will take all
 graphs to mean directed acyclic graphs where we do not allow parallel edges or
-self-loops. However, we do allow the underlying undirected graph of any directed
-graph to be a forest. Given a graph $G = (V, E)$, we will write $V = V(G)$ and
-$E = E(G)$. We now see a motivating example.
+self-loops, unless stated otherwise. However, we do allow the underlying
+undirected graph of any directed graph to be a forest. Given a graph
+$G = (V, E)$, we will write $V = V(G)$ and $E = E(G)$. We now see a motivating
+example.
 
 \begin{exm}\label{exm:egraph1}
 Consider a graph consisting of nine vertices $1, \dots, 9$ with
@@ -115,8 +116,9 @@ should note that this is just one possible interpretation of the graph above.
 \end{exm}
 
 This motivates us to define an algorithm for extracting expressions from a
-directed acyclic graph such as the one above. Let $G = (V, E)$ be any graph. We
-make the following modifications to $G$:
+directed acyclic graph such as the one above.
+\begin{alg}[Expression Construction]
+Let $G = (V, E)$ be any graph. We make the following modifications to $G$:
 \begin{enumerate}
 \setlength{\itemsep}{0pt}
 
@@ -133,9 +135,7 @@ because of vertices with no edges, incoming or outgoing.
 \item Copy vertices and add edges to make the following modification, where the
 incoming edges are in order from the lowest at the top to the highest at the
 bottom:
-\begin{figure}[H]
-\begin{center}
-\begin{tikzpicture}
+\[\begin{tikzpicture}
 \node at (2, 0)     (v) {$v$};
 \node at (0, 1)     (u1) {$u_1$};
 \node at (0, 0.5)   (u2) {$u_2$};
@@ -170,13 +170,11 @@ bottom:
 \draw[thick, loosely dotted] (u3)   -- (uk);
 \midarrow{uk}{v};
 \end{tikzpicture}
-\end{center}
-\end{figure}
+\]
 
 \item Copy vertices and edges to make the following modification similar to the
 previous step:
-\begin{figure}[H]
-\begin{center}
+\[
 \begin{tikzpicture}
 \node at (-2, 0)     (v) {$v$};
 \node at (0, 1)     (w1) {$w_1$};
@@ -212,15 +210,13 @@ previous step:
 \draw[thick, loosely dotted] (w3)   -- (wk);
 \midarrow{v}{wk};
 \end{tikzpicture}
-\end{center}
-\end{figure}
+\]
 
 \item At this point, every vertex has both indegree and outdegree at most $2$.
 The chosen edge orderings induces a local geometric orientation -- in an
 informal sense -- on the graph. By this we mean, that this allows us to
 distinguish the following diagrams in a precise sense:
-\begin{figure}[H]
-\begin{center}
+\[
 \begin{tikzpicture}
 \node at (0, 0) (u) {$u$};
 \node at (2, 0.5) (v) {$v$};
@@ -237,15 +233,14 @@ distinguish the following diagrams in a precise sense:
 \midarrow{u}{v}
 \midarrow{u}{w}
 \end{tikzpicture}
-\end{center}
-\end{figure}
+\]
+
 The distinction is that if we take $(u, v) < (u, w)$ in the left picture, say,
 then we can take $(u, v) > (u, w)$ in the right picture.
 Then, for every edge that is shared between a ``multiplication'' and a
 ``comultiplication'', considering the edge orderings chosen before, we have the
 following possibilities for common edges and we make the modifications shown:
-\begin{figure}[H] % Share 1
-\begin{center}
+\[
 \begin{tikzpicture}
 \node at (0, 2) (u) {$u$};
 \node at (2, 2) (v) {$v$};
@@ -277,11 +272,8 @@ following possibilities for common edges and we make the modifications shown:
 \midarrow{w}{c}
 \midarrow{c}{x}
 \end{tikzpicture}
-\end{center}
-\end{figure}
-
-\begin{figure}[H]
-\begin{center}
+\]
+\[
 \begin{tikzpicture}
 \node at (0, 0) (u) {$u$};
 \node at (1, 2) (v) {$v$};
@@ -307,11 +299,9 @@ following possibilities for common edges and we make the modifications shown:
 \midarrow{v}{w}
 \midarrow{a}{w}
 \end{tikzpicture}
-\end{center}
-\end{figure}
+\]
 
-\begin{figure}[H]
-\begin{center}
+\[
 \begin{tikzpicture}
 \node at (0, 2) (u) {$u$};
 \node at (2, 2) (v) {$v$};
@@ -349,8 +339,8 @@ following possibilities for common edges and we make the modifications shown:
 \midarrow{bb}{v}
 \midarrow{cc}{x}
 \end{tikzpicture}
-\end{center}
-\end{figure}
+\]
+
 We also make the modifications obtained from the rotations of the above diagrams
 about a horizontal edge. After these modifications have been applied, there are
 no edges shared between ``multiplications'' and ``comultiplications''.
@@ -394,9 +384,14 @@ outgoing edges need not always be in the last level.
 
 \item\label{alg:edgeless}
 Consider the vertices with no outgoing edges but not at the last level. For each
-such vertex $u$ in $V_i$, we add a copy $u'$, to $V_{i + 1}$ -- it is inserted
-in the position after the last vertex in $V_{i + 1}$ with an edge from a vertex
-above $u$ in $V_i$. We then add in the edge $(u, u')$. We continue this process
+such vertex $u$ in $V_i$, we add a copy $u'$, to $V_{i + 1}$. Its insertion
+order needs to be made precise. Call the vertices in $V_{i + 1}$ with an
+incoming edge from some vertex above $u \in V_{i}$, the vertices above $u$ in
+$V_{i + 1}$. Similarly, call the vertices in $V_{i + 1}$ with no incomoing edges
+from $u$ or a vertex above $u \in V_i$, the vertices below $u$ in $V_{i + 1}$.
+A copy of $u$, say $u'$, is inserted
+in the position right after the vertices above $u$ and before the vertices below
+$u$ in $V_{i + 1}$. We then add in the edge $(u, u')$. We continue this process
 with $V_{i + 1}$ in place of $V_i$ and so on until, there is a copy
 of $u$ in each level after $V_i$ with a path connecting them.
 
@@ -408,53 +403,54 @@ ordering. We will call these vertices edgeless vertices.
 
 \item For each level skipping edge $(u, v)$ -- that is, with $u \in V_k$ and
 $v \in V_{k'}$ for some $k' > k + 1$ -- we insert a copy of $u$ in $V_{i}$ for
-each $k < i < k'$ after the last vertex $V_{i}$ with an edge from $u$ and we add
-an edge from $u$ to this copy -- call it $u'$. We then delete the edge $(u, v)$
-and add an edge $(u', v)$. After this process completes, there is no edge that
-skips levels.
+each $k < i < k'$ in positions similar to the insertions in the last step. We
+call this copy $u'$. We then and add an edge $(u, u')$. We repeat this with
+$V_{i + 1}$ in place of $V_{i}$ and $u'$ in place of $u$. After this process
+completes, we delete the edge $(u, v)$. After we complete this process for every
+level-skipping edge, level skipping edges are replaced by paths connecting the
+source vertex to the target vertex of these edges.
 
 \item Observe that we can now identify the graph $G$ with a cobordism in
 $\Cob_2$ from $|S(G)|$ copies of $S^1$ to $|T(G)|$ copies of $S^1$! The
 identifications of the generating structures are the obvious ones:
-\begin{figure}[H]
-\begin{center}
+\[
 \begin{tikzpicture}
-\node[circle, fill, inner sep=1pt] at (0, 0) (u) {};
-\node[circle, fill, inner sep=1pt] at (-2, 0.5) (v) {};
-\node[circle, fill, inner sep=1pt] at (-2, -0.5) (w) {};
+\node[circle, fill, inner sep=1.5pt] at (0, 0) (u) {};
+\node[circle, fill, inner sep=1.5pt] at (-2, 0.5) (v) {};
+\node[circle, fill, inner sep=1.5pt] at (-2, -0.5) (w) {};
 \midarrow{v}{u}
 \midarrow{w}{u}
 \node at (-1, -1) (lbl) {pair-of-pants};
 \end{tikzpicture}
 \qquad
 \begin{tikzpicture}
-\node[circle, fill, inner sep=1pt] at (0, 0) (u) {};
-\node[circle, fill, inner sep=1pt] at (2, -0.5) (v) {};
-\node[circle, fill, inner sep=1pt] at (2, 0.5) (w) {};
+\node[circle, fill, inner sep=1.5pt] at (0, 0) (u) {};
+\node[circle, fill, inner sep=1.5pt] at (2, -0.5) (v) {};
+\node[circle, fill, inner sep=1.5pt] at (2, 0.5) (w) {};
 \midarrow{u}{v}
 \midarrow{u}{w}
 \node at (1, -1) (lbl) {co-pair-of-pants};
 \end{tikzpicture}
 \qquad
 \begin{tikzpicture}
-\node[circle, fill, inner sep=1pt] at (0, 0) (u) {};
+\node[circle, fill, inner sep=1.5pt] at (0, 0) (u) {};
 \node at (2, -0.5) (v) {};
 \node at (2, 0.5) (w) {};
-\node[circle, fill, inner sep=1pt] at (2, 0) (x) {};
+\node[circle, fill, inner sep=1.5pt] at (2, 0) (x) {};
 \midarrow{u}{x}
 \node at (1, -1) (lbl) {cylinder};
 \end{tikzpicture}
-\end{center}
-\end{figure}
+\]
+
 Note that the cap or cup were not used. This, then, directly yields an
 expression of the original graph $G$ similar to the example.
 
 \end{enumerate}
+\end{alg}
 
 \begin{defn}[Expression of a Graph]
 Given a graph $G$, the expression resulting from the algorithm above is called
-an expression of $G$ and denoted $\Exp{G}$. We call the above algorithm an
-expression construction on directed acyclic graphs.
+an expression of $G$ and denoted $\Exp{G}$.
 \end{defn}
 
 \begin{rmk}
@@ -465,8 +461,8 @@ number of arbitrary choices in our process.
 \begin{rmk} We also note that we did not specify how to handle ``crossings'' of
 edges but it is not difficult to see that ``crossing'' makes precise sense when
 we specify the edge orderings and the ordering of the source of a graph. Once we
-execute the algorithm above, we can handle crossings in the same way as when
-drawing cobordisms in $\Cob_2$.
+execute the algorithm above, we can handle crossings in the same way we handle
+then when drawing cobordisms in $\Cob_2$.
 \end{rmk}
 
 Even though we made many choices in the above algorithm, the only
@@ -481,8 +477,7 @@ is called an expression graph.
 
 Thus, given an expression graph, we have an algorithm to extract its expression
 consistently as long as we keep the other choices in the above algorithm fixed.
-We will later see that $\Exp{G}$ is functorial in a suitable sense. We proceed
-to construct the domain of the functor $\Exp{-}$.
+We will later see that $\Exp{G}$ is functorial in a suitable sense.
 
 \subsection{Morphisms of Expression Graphs}
 
@@ -498,9 +493,9 @@ $L$ and $f$ preserves the edge orderings for each vertex.
 
 We then note some useful facts concerning level orderings and expression
 isomorphisms. First, every expression graph $G$ has a level ordering as
-described in the algorithm in \S\ref{subsec:alg_graph_exp} so that the vertex set
-is a disjoint union of the levels. Then, we have a level function $l_G$ for $G$
-which assigns to each vertex $v$ the integer $n$ for which $v$ is in the
+described in the algorithm in \S\ref{subsec:alg_graph_exp} so that the vertex
+set is a disjoint union of the levels. Then, we have a level function $l_G$ for
+$G$ which assigns to each vertex $v$ the integer $n$ for which $v$ is in the
 $n$--th level set.
 
 \begin{lem}\label{thm:expiso_lvlpres}
@@ -530,7 +525,8 @@ in $G$, then $f(V_i)$ is the $i$--th level set in $H$.
 \end{cor}
 \begin{proof}
 Let $W_i$ be the $i$--th level set of $H$. Then, by the previous lemma
-$f(V_i) \subset W_i$. Again,
+$f(V_i) \subset W_i$. Again, using $f^{-1}$ in place of $f$ and $W_i$ in place
+of $V_i$, we have
 $f^{-1}(W_i) \subset V_i \implies W_i \subset f(V_i)$. Hence, $f(V_i) = W_i$.
 \end{proof}
 
@@ -546,16 +542,22 @@ induction on $l_G(u) = l_G(v)$. When $l_G(u) = l_G(v) = 1$, then
 $f(u) \leq f(v)$, by definition. The other direction is obtained similarly with
 $f^{-1}$ in place of $f$.
 
-Let $l_G(u) = l_G(v) = k + 1$. There exist $u', v' \in V(G)$ with
-$l_G(u') = l_G(v') = k, u' \leq v'$, edges $(u', u), (v' v)$ no edges $(u'', u)$
-or $(v'', v)$ for any $u'' < u'$ or $v'' < u'$, and, if
-$u' = v'$, $(u', u) \leq (v', v)$. By the previous corollary,
-$l_H(f(u')) = l_H(f(v')) = k$.
-If there is a $u'' < f(u')$ or a $v'' < f(v')$ in $V(H)$ with edges
-$(u'', f(u'))$ or $(v'', f(v'))$, then by induction, $f^{-1}(u'') < u'$ or
-$f^{-1}(v'') < v'$ with some edge $(f^{-1}(u''), u)$ or $(f^{-1}(v''), v)$,
-contradicting the conditions on $u'$. Thus, the edges $(f(u'), f(u))$ and
-$(f(v'), f(v))$ ensure that $f(u) \leq f(v)$. The other direction is again
+Let $l_G(u) = l_G(v) = k + 1$. By the construction of level sets and their
+ordering given in the expression construction algorithm, there exist
+$u', v' \in V(G)$ such that the following hold:
+\begin{enmrt}
+\li $l_G(u') = l_G(v') = k$
+\li $u' \leq v'$
+\li there are edges $(u', u)$ and $(v' v)$
+\li there are no edges $(u'', u)$ or $(v'', v)$ with $u'' < u'$ or $v'' < u'$
+\li if $u' = v'$, $(u', u) \leq (v', v)$
+\end{enmrt}
+By the previous corollary, $l_H(f(u')) = l_H(f(v')) = k$.
+If there is an $x < f(u')$ or a $y < f(v')$ in $V(H)$ with edges
+$(x, f(u'))$ or $(y, f(v'))$, then by induction, $f^{-1}(x) < u'$ or
+$f^{-1}(y) < v'$ with some edge $(f^{-1}(x), u)$ or $(f^{-1}(y), v)$,
+contradicting the conditions on $u'$ and $v'$. Thus, the edges $(f(u'), f(u))$
+and $(f(v'), f(v))$ ensure that $f(u) \leq f(v)$. The other direction is again
 obtained similarly by replacing $f$ with $f^{-1}$.
 \end{proof}
 
@@ -576,7 +578,7 @@ of TQFTs.
 \subsection{Constructs on Expression Graphs}
 
 Consider expression graphs $G$ and $H$. We can take the disjoint unions of their
-vertex and edges sets. It is clear that the edge orderings of the vertices of
+vertex and edge sets. It is clear that the edge orderings of the vertices of
 $G$ and $H$ collectively provide an edge ordering for every vertex of
 $G \amalg H$. We observe that $S(G \amalg H) = S(G) \amalg S(H)$ so that the
 orderings of $S(G)$ and $S(H)$ provide an ordering of $S(G \amalg H)$, where the
@@ -631,7 +633,7 @@ $H * G$ inherits edge orderings unambiguously from $G$ and $H$ collectively.
 Therefore, $H * G$ is an expression graph.
 \end{proof}
 
-\begin{exm}
+\begin{exm}\label{exm:expression_gluing}
 Consider $G$ from example \ref{exm:egraph1} and $H$ as follows:
 \[\begin{tikzpicture}[xscale=2,yscale=0.75]
 \node at (3, 3) (v10) {$10$};
@@ -695,13 +697,8 @@ monoidal product given by disjoint union.
 
 \TODO{Maybe, we should have an appendix entry for the proof.}
 
-We define some basic constructs on expressions obtained from expression graphs.
-
-\begin{defn}[Equality of Expressions]
-If $E_1$ and $E_2$ are expressions such that there exist isomorphic
-expression graphs $G$ and $H$ with $\Exp{G} = E_1$ and
-$\Exp{H} = E_2$, then we say that $E_1$ and $E_2$ are equal.
-\end{defn}
+We now observe some properties of the expression construction algorithm of
+\S\ref{subsec:alg_graph_exp}.
 
 \begin{exm}
 We observe that, in general, the expression construction does not result in the
@@ -770,42 +767,117 @@ However, in this case, we observe that $\Exp{H * G} = \Exp{H} \circ \Exp{G}$
 because the corresponding expressions in $\Cob_2$ are equal!
 \end{exm}
 
-In fact, we have the following theorem which shows that all differences that can
+In fact, we have the following results which show that all differences that can
 arise between expression constructions before and after gluing can be reduced to
 simple cases similar to the one above.
 
-\begin{thm}
-Let $G$ and $H$ be expression graphs gluable at $S(H) \cong T(G)$. Then,
-\[
-  \Exp{H} \circ \Exp{G} = \Exp{H * G}
-\]
-\end{thm}
-\begin{proof}[Proof sketch]
-Applying the first five steps of the expression construction $\Exp{-}$ on
-$H * G$ is the same as applying them on $G$ and $H$ separately and gluing the
-results. For the sixth step, let the level sets of $G$ be $V_1, \dots, V_n$ and
-those of $H$, be $W_1, \dots, W_m$. We observe that $S(H * G) = S(G)$ so that
-the level sets of $G$ are also the first level sets of $H * G$ -- i.e., $V_1,
-\dots, V_n$ are the first $n$ levels of $H * G$. The next levels must be formed
-from vertices of $H$.
+\begin{lem}
+For expression graphs $G$ and $H$ with $n$ and $m$ levels respectively and
+gluable at $S(H) \cong T(G)$, the number of levels in $H * G$ is $n + m - 1$.
+\end{lem}
+\begin{proof}
+Let the level sets of $G$ be $V_1, \dots, V_n$ and
+those of $H$, be $W_1, \dots, W_m$. By \ref{cor:lvltolvl}, there exists a path
+$w_1, \dots, w_m$ with $w_i \in W_i$ in $H$, and also a path
+$v_1, \dots, v_n = w_1$ with $v_i \in V_i$ in $G$. The concatenation of these
+paths shows that $H * G$ has at least $n + m - 1$ levels.
 
-We then notice that if $w \in W_1 = S(H) \cong T(G)$ glues
-to some edgeless vertex in $G$, then $w$ moves to $V_1$ in $H * G$, regardless
-of whether we construct level sets before or after gluing. If $w$ does not glue
-to some edgeless vertex, there is an edge $(w', w)$ with $w' \in V_{n - 1}$ and
-hence $w$ cannot move to any $V_i$ for $i < n$. In this case, $w$ also cannot
-move to some level set $W_j$ for $j > 1$, because there are no edges $(w'', w)$
-with $w'' \in W_i$ for any $1 \leq i < j$ -- i.e., from any level before
-``before'' $W_j$. These again hold regardless of if we construct level sets
-before or after gluing.
-
-\TODO{Continue this}
+Let $X_1, \dots, X_k$ be the level sets of $H * G$. For any vertex
+$x \in X_k$, by \ref{cor:lvltolvl}, there must be a path $x_1, \dots, x_k = x$
+in $H * G$ with $x_i \in X_i$. However, since the edges of $H * G$ are the edges
+of $G$ or $H$, we must have that all $x_1, \dots, x_{j}$ are in
+$G \setminus H$, $x_{j + 1} \in G \cap H = S(H) \cong T(G)$ and all
+$x_{j + 2}, \dots, x_k$ are in $H \setminus G$, for some $j$. If this is
+not the case, then we must have an edge from some vertex in $H$ to some vertex
+in $G$, which is impossible. Therefore, $H * G$ has at most $n + m - 1$ levels.
 \end{proof}
+
+We observe that the first five steps of the algorithm from
+\S\ref{subsec:alg_graph_exp} commute with gluing. One might think that the sixth
+step onwards does not. However, we will see that it does. For this, we note the
+following result about changes in level sets after gluing.
+
+\begin{thm}
+For expression graphs $G$ and $H$ gluable at $S(H) \cong T(G)$,
+the level sets of $H * G$ are formed by taking the level sets of $G$ and those
+of $H$, identifying the first level of $H$ with the last level of $G$ and moving
+vertices between levels in the following pattern:
+\begin{enmrt}
+\li Move vertices in $S(H)$ which glue to edgeless vertices to the first level.
+\li For each such vertex $v$ in $S(H)$ and each edge $(v, v')$ where $(v, v')$
+is the first incoming edge of $v$, move $v'$ to the second level.
+\li Repeat the previous step with $v'$ in place of $v$.
+\end{enmrt}
+\end{thm}
+\begin{proof}
+By the previous lemma, it makes sense to say that the levels of $H * G$ are
+formed by taking the levels of
+$G$ and $H$ and moving vertices between them. Let the levels of $G$ be $V_1,
+\dots, V_n$ and those of $H$ be $W_1, \dots, W_m$. We will informally say that
+$V_n = W_1$ and that the levels of $H * G$ are
+$V_1, \dots, V_n $ (or $W_1$)$, \dots, W_m$ for the sake of simplifying the
+language, although the movement of vertices makes the equality false. The cases
+for movement of vertices in the gluing $H * G$ are as follows:
+\begin{enmrt}
+\li If $v \in V_i$ for $1 \leq i \leq n$ before gluing, then $v$ cannot move to
+another $V_j$ or $W_k$.
+We proceed by induction. For $i = 1$, we observe that $S(H * G) = S(G) = V_1$
+and hence no $v \in V_1$ can move forward since it has no incoming edges. For
+$i = r + 1$, if $v \in V_i$, then there exists an edge $(v', v) \in G$ with
+$v' \in V_{r}$ and $v'$ does not move by induction. Hence, $v'$ cannot move to
+$V_j$ for $j < i$ since $(v', v)$ would be an edge that does not go forward in
+levels. Since all the incoming edges of $v \in V_i$ are from
+$V_1, \dots, V_{i - 1}$, $v'$ cannot move to $V_j$ for some $j > i$ or $W_k$ for
+some $k$, because this would result in $v$ not having edges from the immediate
+previous level.
+
+\li If $v \in S(H)$ before gluing, then $v$ can only move when $v$ glues to some
+vertex $v_G \in G$ that has no incoming edges in $G$ and, in this case,
+$v_G \in V_1$ in $H * G$ and $v$ moves to $V_1$ by gluing to $v_G$. This is true
+because if $v_G$ has some incoming edges in $G$, then $v_G \in V_n$ and we are
+in the previous case so that $v_G$ stays in its level and $v$ merely to glues to
+$v_G$.
+
+\li If $v \in W_k$ for some $1 < k \leq m$ before gluing, then there exists a
+path $w_1, \dots, w_k = v$ with $w_i \in W_i$ in $H$. We can additionally assume
+that for each $i$, $(w_i, w_{i + 1})$ is the first incoming edge of $w_{i + 1}$.
+After gluing, if $v$ moves to some $W_{k'}$, then the first incoming edge
+$v = w_k$ is from $w_{k - 1}$ so that $w_{k - 1}$ must have also moved to
+$W_{k' - 1}$, by our definition of level ordering. Repeating this argument, we
+see that $w_1$ must move forward in levels which is impossible by the previous
+case. If, on the other hand, $v$ moves backwards, we must have each $w_i$ move
+backwards as well because otherwise, we will have at least one edge not going
+forward in levels. In particular, $w_1$ must move backwards and hence to $V_1$.
+In this case, $w_2$ moves to $V_2$, $w_3$ to $V_3$ and so on until $w_k$ moves
+to $V_k$ if $k \leq n$. If $k > n$, then $w_1, \dots, w_n$ move to
+$V_1, \dots, V_n$ and $w_{n + 1}, \dots, w_{n + k - n} = w_k$ move to
+$W_1, \dots, W_{k - n}$ respectively.
+\end{enmrt}
+\end{proof}
+
+Whether we construct level sets before or after gluing, such movements must take
+place and hence the sixth step where we construct the levels commutes with
+gluing. We then observe that applying the seventh step before gluing results in
+no edgeless vertices in both graphs so that there are no movement of vertices
+between levels by the above theorem. Applying the seventh step after gluing
+results in movement of vertices and then ``extending'' some vertices to the last
+level. In either case, even though we do not obtain the same graph, the parts
+that differ, do so only by prefixes and suffixes of edges between copies of the
+same vertex. Similar reasoning establishes the same about the eigth step, so
+that the resulting cobordisms differ by identity cobordisms at some places and
+hence not at all, yielding the following theorem.
+
+\begin{thm}
+For expression graphs $G$ and $H$, gluable at $S(H) \cong T(G)$,
+$\Exp{H * G} = \Exp{H} \circ \Exp{G}$.
+\end{thm}
+
+We can also define the following constructs unambiguously.
 
 \begin{defn}[Expression Tensor Product]
 Let $G$ and $H$ be expression graphs. We define:
 \[
-  \Exp{G} \tensor \Exp{H} := \Exp{G \tensor H}
+  \Exp{G} \tensor \Exp{H} := \Exp{G \amalg H}
 \]
 \end{defn}
 
@@ -853,14 +925,16 @@ instance, $\gamma_{2, 3}$ and $\gamma_{3, 5}$ do not share any end-points.
 \begin{center}
 \input{path_graph_diag_1}
 \end{center}
-\caption{An elementary transport graph}
+\caption{A geometric graph}
 \end{figure}
 We notice that the same algebraic expression carries over:
-\[
-  (\gamma_{5, 8} \tensor (\gamma_{6, 9} \cdot \gamma_{7, 9})) \circ
-  (\gamma_{3, 5} \tensor \gamma_{3, 6} \tensor \gamma_{4, 7}) \circ
-  ((\gamma_{1, 3} \cdot \gamma_{2, 3}) \tensor \gamma_{1, 4})
-\]
+\begin{align*}
+        & (\gamma_{5, 8} \tensor (\gamma_{6, 9} \cwedge \gamma_{7, 9})) \\
+  \circ & (\gamma_{3, 5} \tensor \gamma_{3, 6} \tensor \gamma_{4, 7}) \\
+  \circ & ((\gamma_{3, 3} \cvee \gamma_{3, 3}) \tensor \gamma_{4, 4}) \\
+  \circ & (\gamma_{3, 3} \tensor (\gamma_{4, 4} \boxtimes \gamma_{2, 3})) \\
+  \circ & ((\gamma_{1, 3} \cvee \gamma_{1, 4}) \tensor \gamma_{2, 2})
+\end{align*}
 \end{exm}
 
 At this point, we make a necessary observation. Consider geometric expression
@@ -870,42 +944,273 @@ substitute the edges in the expression of the graph with the parallel transport
 maps along the paths associated to the edges, we obtain a linear map from a
 non-zero tensor power of $A$ to another such tensor power, given the graph has
 at least one edge. However, there is no immediate way to obtain a map of the
-form $\R \to A$ or $A \to \R$. For this, we may consider expression graphs with
-a $2$--colouring of its vertices but without any adjacency constraints. That is,
-adjacent vertices may or may not have the same colour. In this case, we will
-still get linear maps from positive tensor powers to positive tensor powers of
-$A$ but we can use the colouring to generate maps of the form $\R \to A$ or
-$A \to \R$ using linear maps $A \to A$, by composing some fixed maps
-$\R \to A$ or $A \to \R$ on either side. Hence, we define the following.
+form $\R \to A$ or $A \to \R$ in this method.
+
+We recall that cobordisms $\varnothing \to S^1$ or
+$S^1 \to \varnothing$ in $\Cob_2$ are given by composing cobordisms
+$S^1 \to S^1$ with the following structures:
+\[\begin{tikzpicture}[scale=0.5]
+\cupcob{(0, 2)}
+\node at (1.5, 0) (cuplbl) {cup};
+\end{tikzpicture}
+\qquad \qquad \qquad
+\begin{tikzpicture}[scale=0.5]
+\capcob{(3, 2)}
+\node at (1.5, 0) (caplbl) {cap};
+\end{tikzpicture}\]
+We would like analogous structures for expression graphs. We can use vertex
+colouring to distinguish between copies of the empty manifold and copies of
+$S^1$ in the result of the expression construction. So, we consider vertex
+coloured expression graphs.
+%Visually, loops
+%attached to the source or target of an edge seem like possible candidates for
+%these structures:
+%\[\begin{tikzpicture}
+%\node[circle, fill, inner sep=1.5pt] at (0, 0) (a) {};
+%\node[circle, fill, inner sep=1.5pt] at (1, 0) (b) {};
+%\draw[->] (a) [out=130, in=230, looseness=25] to (a);
+%\midarrow{a}{b}
+%\end{tikzpicture}
+%\qquad \qquad \qquad
+%\begin{tikzpicture}
+%\node[circle, fill, inner sep=1.5pt] at (0, 0) (a) {};
+%\node[circle, fill, inner sep=1.5pt] at (1, 0) (b) {};
+%\draw[->] (b) [out=50, in=-50, looseness=25] to (b);
+%\midarrow{a}{b}
+%\end{tikzpicture}\]
+%We will show that if we allow loops on vertices except for the ones which do not
+%have any incoming or outgoing edges to begin with, then we can adapt the
+%theory to this new setting.
+
+%As a start, the expression construction algorithm is extended as follows:
+%\begin{alg}
+%Let $G$ be a graph where vertices, except for those without any edges from or to
+%other vertices, can have loops. We then make the following modifications to $G$:
+%\begin{enumerate}[(1)]
+%\setlength{\itemsep}{0pt}
+%
+%\item Colour every vertex with a single colour -- say blue.
+%
+%\item If $u$ has no incoming edges except for a loop $(u, u)$ but has outgoing
+%edges, then we add another copy $u'$ of $u$, color it green, add the edge
+%$(u', u)$ and delete the loop $(u, u)$.
+%\[\begin{tikzpicture}
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (0, 0) (a) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (1, 0.5) (b1) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (1, -0.5) (bn) {};
+%\midarrow{a}{b1}
+%\midarrow{a}{bn}
+%\draw[->] (a) [out=130, in=230, looseness=15] to (a);
+%\draw[loosely dotted, thick] (b1) -- (bn);
+%\end{tikzpicture}
+%\qquad
+%\begin{tikzpicture}
+%\node at (0, 0.5)   (TOP)     {};
+%\node at (0, 0)   (TO)      {$\Longrightarrow$};
+%\node at (0, -0.5)  (BOTTOM)  {};
+%\end{tikzpicture}
+%\qquad
+%\begin{tikzpicture}
+%\node[circle, fill, inner sep=1.5pt, color=green!55!black] at (0, 0) (a1) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (1, 0) (a2) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (2, 0.5) (b1) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (2, -0.5) (bn) {};
+%\midarrow{a1}{a2}
+%\midarrow{a2}{b1}
+%\midarrow{a2}{bn}
+%\draw[loosely dotted, thick] (b1) -- (bn);
+%\end{tikzpicture}\]
+%
+%\item If $u$ has incoming edges but no outgoing edges except for a loop
+%$(u, u)$, then we add a green copy $u'$ of $u$ as before, add the edge $(u, u')$
+%and delete the loop $(u, u)$.
+%\[\begin{tikzpicture}
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (0, 0) (a) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (-1, 0.5) (b1) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (-1, -0.5) (bn) {};
+%\midarrow{b1}{a}
+%\midarrow{bn}{a}
+%\draw[->] (a) [out=50, in=-50, looseness=15] to (a);
+%\draw[loosely dotted, thick] (b1) -- (bn);
+%\end{tikzpicture}
+%\qquad
+%\begin{tikzpicture}
+%\node at (0, 0.5)   (TOP)     {};
+%\node at (0, 0)   (TO)      {$\Longrightarrow$};
+%\node at (0, -0.5)  (BOTTOM)  {};
+%\end{tikzpicture}
+%\qquad
+%\begin{tikzpicture}
+%\node[circle, fill, inner sep=1.5pt, color=green!55!black] at (0, 0) (a1) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (-1, 0) (a2) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (-2, 0.5) (b1) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (-2, -0.5) (bn) {};
+%\midarrow{a2}{a1}
+%\midarrow{b1}{a2}
+%\midarrow{bn}{a2}
+%\draw[loosely dotted, thick] (b1) -- (bn);
+%\end{tikzpicture}\]
+%
+%\item If $u$ has both incoming and outgoing edges along with a loop $(u, u)$,
+%we replace the loop with a path $u, u', u''$, where $u'$ is a green copy of $u$
+%and $u''$ is another blue copy of $u$.
+%\[\begin{tikzpicture}
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (0, 0) (a) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (1, 0.35) (b1) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (1, -0.35) (bn) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (-1, 0.35) (c1) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (-1, -0.35) (cn) {};
+%\midarrow{a}{b1}
+%\midarrow{a}{bn}
+%\draw[->] (a) [out=60, in=120, looseness=15] to (a);
+%\midarrow{c1}{a}
+%\midarrow{cn}{a}
+%\draw[loosely dotted, thick] (b1) -- (bn);
+%\draw[loosely dotted, thick] (c1) -- (cn);
+%\end{tikzpicture}
+%\qquad
+%\begin{tikzpicture}
+%\node at (0, 0.35)   (TOP)     {};
+%\node at (0, 0)   (TO)      {$\Longrightarrow$};
+%\node at (0, -0.35)  (BOTTOM)  {};
+%\end{tikzpicture}
+%\qquad
+%\begin{tikzpicture}
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (-1, 0) (a1) {};
+%\node[circle, fill, inner sep=1.5pt, color=green!55!black] at (0, 0) (a2) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (1, 0) (a3) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (2, 0.35) (b1) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (2, -0.35) (bn) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (-2, 0.35) (c1) {};
+%\node[circle, fill, inner sep=1.5pt, color=blue] at (-2, -0.35) (cn) {};
+%\midarrow{a3}{b1}
+%\midarrow{a3}{bn}
+%\midarrow{c1}{a1}
+%\midarrow{cn}{a1}
+%\midarrow{a1}{a2}
+%\midarrow{a2}{a3}
+%\draw[loosely dotted, thick] (b1) -- (bn);
+%\draw[loosely dotted, thick] (c1) -- (cn);
+%\end{tikzpicture}\]
+%
+%\item If $G$ is a disjoint union $\coprod_i G_i$ and some $G_i = \varnothing$,
+%we replace $G_i$ with an edge $(u_{G_i}, v_{G_i})$, where both the vertices are
+%green:
+%\[\begin{tikzpicture}
+%\node at (0, 0) (a) {$\varnothing$};
+%\end{tikzpicture}
+%\qquad
+%\begin{tikzpicture}
+%\node at (0, 0)   (TO)      {$\Longrightarrow$};
+%\end{tikzpicture}
+%\qquad
+%\begin{tikzpicture}
+%\node[circle, fill, inner sep=1.5pt, color=green!55!black] at (0, 0) (a1) {};
+%\node[circle, fill, inner sep=1.5pt, color=green!55!black] at (2, 0) (a3) {};
+%\midarrow{a1}{a3}
+%\end{tikzpicture}\]
+%\begin{rmk}
+%This is a case we ignored in the first expression construction aglorithm -- we
+%did so for simplicity. We handle this now because we now have a way to deal with
+%empty sources and targets.
+%\end{rmk}
+%
+%\item We apply the steps of the first expression construction algorithm with
+%copied vertices having the same colour as the original.
+%
+%\item We then identify green vertices with the empty manifold and obtain our
+%expression from the identification of the graph in its final state with some
+%cobordism in $\Cob_2$.
+%
+%\end{enumerate}
+%\end{alg}
+
+%Disjoint unions are easily adapted as well. However, we will change our
+%definitions of source and target expression graphs since we will now interpret
+%looped vertices as cobordisms of the empty manifold. We first adapt expression
+%graphs to include loops.
 
 \begin{defn}[Pretransport Graph]
-A pretransport graph is an expression graph with an arbitrary $2$--colouring of
-its vertices without adjcency constraints.
+A pretransport graph is an expression graph $G$ with a colour function
+$V(G) \to \set{{\color{green!55!black}\text{green}},
+{\color{blue!55!black}\text{blue}}}$ (with no constraints on adjacency of
+vertices).
 \end{defn}
 
 \begin{defn}[Pretransport Homomorphism]
-A vertex colour preserving expression homomorphism is called a pretransport
-homomorphism.
+A pretransport homomorphism is a colour-preserving expression homomorphism.
 \end{defn}
 
-From \ref{thm:expiso_unique}, it is immediate that:
+%\begin{rmk}
+%We note that pretransport homomorphisms, being graph homomorphisms must preserve
+%loops.
+%\end{rmk}
+
+From \ref{cor:expiso_unique}, it is immediate that:
 
 \begin{cor}
 Pretransport isomorphisms are unique.
 \end{cor}
 
-\begin{cor}
-Gluing of expression graphs extends to gluing of pretransport graphs if we
-consider pretransport isomorphisms instead of expression isomorphisms.
-\end{cor}
+We now redefine the source and target of a pretransport graph so that
+constructions like expressions and gluing can be adapted to this new setting
+where we allow empty graphs to be sources and targets.
 
-We then consider our main class of graphs that will yield our desired linear
-maps.
+\begin{defn}
+Let $G$ be a pretransport graph with $s_1, \dots, s_n$ the ordering of the
+source vertices of its underlying expression graph and $t_1, \dots, t_m$ the
+ordering of the target vertices thereof. Let $s_{i_1}, \dots, s_{i_p}$ be the
+green source vertices and $t_{j_1}, \dots t_{j_q}$ be the green target vertices
+in $G$. Then, the source of $G$ is defined to be the expression graph
+\[
+  S(G) := \set{s_1, \dots, s_{i_1 - 1}}
+       \amalg \varnothing
+       \amalg \set{s_{i_1 + 1}, \dots, s_{i_2}}
+       \amalg \varnothing
+       \amalg \cdots
+       \amalg \varnothing
+       \amalg \set{s_{i_p + 1}, \dots, s_{n}}
+\]
+The target of $G$ is defined to be the expression graph
+\[
+  T(G) := \set{t_{1}, \dots, t_{j_1 - 1}}
+       \amalg \varnothing
+       \amalg \set{t_{j_1 + 1}, \dots, t_{j_2}}
+       \amalg \varnothing
+       \amalg \cdots
+       \amalg \varnothing
+       \amalg \set{t_{j_q + 1}, \dots, t_{m}}
+\]
+\end{defn}
+
+\begin{defn}
+Gluing of expression graphs extends to gluing of pretransport graphs if we
+consider pretransport isomorphisms instead of expression isomorphisms. More
+precisely, for pretransport graphs $G$ and $H$, if $S(H) \cong T(G)$, then the
+gluing is exactly the same as for expression graphs except for positions where
+we have instances of $\varnothing$. For this, we have the following cases:
+\begin{enmrt}
+\li $H$ and $G$ both have green vertices at that position: we glue them
+as usual.
+\li $H$ has a green vertex but $G$ has $\varnothing$: we simply forget
+that $G$ has $\varnothing$.
+\li $H$ has $\varnothing$ but $G$ has a green vertex: we forget the copy
+of $\varnothing$
+\li $H$ and $G$ both have copies of $\varnothing$: we keep a single copy
+of $\varnothing$
+\end{enmrt}
+\end{defn}
+
+\begin{defn}[Expression Construction]
+The expression of a pretransport graph $G$ is obtained by running the expression
+construction on $G$ by forgetting colours and then identifying green vertices
+with the empty manifold in the resulting cobordism in $\Cob_2$.
+\end{defn}
+
+We then consider the class of graphs that will yield our desired linear maps.
 
 \begin{defn}[Transport Graph]
-We call a geometric expression graph with an arbitrary vertex $2$--colouring --
-that is, we do not require adjacent vertices to have different colours --
-a transport graph.
+We call a geometric pretransport graph a transport graph.
 \end{defn}
 
 \begin{defn}[Geometric Homomorphism]
@@ -913,8 +1218,7 @@ Let $G$ and $H$ be graphs in manifolds $M$ and $N$ with geometric realizations
 $\gamma^G$ and $\gamma^H$ respectively, then a homomorphism $h : G \to H$
 equipped with a smooth map $f : M \to N$ making the following diagram commute is
 called a geometric homomorphism:
-\[
-\begin{tikzpicture}[baseline=(a).base]
+\[\begin{tikzpicture}[baseline=(a).base]
 \node[scale=\diagscale] (a) at (0, 0){
 \begin{tikzcd}
 E(G) \ar[d, "\gamma^G" left] \ar[r, "h" above] &
@@ -923,8 +1227,7 @@ C^0(I, M) \ar[r, "f_*" below] &
 C^0(I, N)
 \end{tikzcd}
 };
-\end{tikzpicture}
-\]
+\end{tikzpicture}\]
 where $f_*$ is the post-composition map $g \mapsto f \circ g$, and the
 homomorphism $h$ is viewed as the function it induces on edge sets.
 \end{defn}
@@ -942,7 +1245,7 @@ underlying expression graphs and manifolds. For their gluing, we require a
 notion of gluing geometric realizations.
 
 We first observe that if $G$ and $H$ are transport graphs with a transport
-isomorphism $S(H) \to T(G)$, it is unique by \ref{thm:expiso_unique}, since
+isomorphism $S(H) \to T(G)$, it is unique by \ref{cor:expiso_unique}, since
 there is only one map of path sets -- the empty map which always makes the
 rquired diagram commute. We then have the following basic fact.
 
@@ -971,25 +1274,35 @@ with a transport homomorphism, we define their gluing in the obvious way:
 \end{defn}
 
 This is enough structure to develop a simple system for doing algebra using
-paths on a manifold. We develop this primitive notion of TQFTs next. \TODO{I am
-not sure if it is appropriate call this a notion of TQFTs.}
+paths on a manifold. In particular, it yields at least two monoidal double
+categories of transport graphs realized in manifolds. We develop one of these
+notions of TQFTs next.
+\TODO{I am not sure if it is appropriate call this a notion of TQFTs.}
 
 \subsection{Single Manifold TQFT}
 
-Consider the following data for a simple monoidal double category:
+Notice that the theory we developed so far transfers verbatim from the smooth
+setting to the holomorphic setting in that we can replace all instances of $\R$
+with $\C$, smooth manifolds, smooth bundles and connections with complex
+manifolds, holomorphic bundles and connections on holomorphic bundles
+respectively. From this point onwards, when we say manifold, bundle, connection,
+etc., we will mean these in either of the two settings. We will write $\K$ to
+mean either of $\R$ or $\C$. With this convention, we consider the following
+data for a monoidal double category:
+
 \begin{enmrt}
 \li Object category: objects are totally ordered, $2$--coloured, finite sets;
 morphisms are order-preserving, colour-preserving (unique) bijections
 $V \stackrel{!}{\longleftrightarrow} V'$
 
-\li Morphism category: objects (horizontal $1$--morphisms) are tuples
+\li Morphism category: objects (horizontal $1$--morphisms) are transport graphs
 $(G, \gamma)$, where for a fixed manifold $M$, a fixed bundle $\pi : E \to M$,
-and a fixed connection $\nabla$ on $\pi$, $G$ is a transport graph and $\gamma$
-is a geometric realization of $G$ in $M$; morphisms are tuples
+and a fixed connection $\nabla$ on $\pi$, $G$ is a pretransport graph with
+$\gamma$ a geometric realization of $G$ in $M$; morphisms are tuples
 \[
   (f_0, f_1, h) : (G_1, \gamma^1) \to (G_2, \gamma^2)
 \]
-where $(f_0, f_1)$ is a morphism of connections $\nabla \to \nabla$ and
+where $(f_0, f_1)$ is an automorphism of the connection $\nabla$ and
 $(f_0, h)$ is a transport isomorphism $(G_1, \gamma^1) \to (G_2, \gamma^2)$
 \footnote{It is possible that this condition forces $(f_0, f_1) = (\id, \id)$.}
 
@@ -999,9 +1312,10 @@ $S(\dom h) \to S(\codom h)$
 
 \li Target functor: $T : G \mapsto T(G)$, defined similarly as $S$
 
-\li Unit functor: $U : V \mapsto V$; $U : f \to f$ -- each finite,
-totally-ordered set is a transport graph with no edges and order- and colour-
-preserving bijections between finite sets are unique transport isomorphisms
+\li Unit functor: $U : V \mapsto V$; $U : f \mapsto f$ -- each finite,
+totally-ordered, $2$--coloured set is a transport graph with no edges and
+order- and colour- preserving bijections between finite sets are unique
+transport isomorphisms
 
 \li Horizontal composition:
 $(G_2, \gamma^2) * (G_1, \gamma^1) = (G_2 * G_1, \gamma^2 * \gamma^1)$
@@ -1018,6 +1332,7 @@ category
 
 It is straightforward to verify that the above data does form a monoidal double
 category.
+\TODO{Verify that this data does indeed form a monoidal double functor}
 
 \begin{defn}[Double Category of Transport Graphs in a Manifold]
 The above data defines the double category of transport graphs in $M$ and we
@@ -1028,37 +1343,39 @@ morphism category as $\TG(M)_1$.
 We then consider a double functor defined as follows.
 
 \begin{defn}[Geometric Quantum Information Theory]\label{defn:sing_man_tqft}
-For a finite, totally-ordered set $V = \set{v_1, \dots, v_n}$ in $\TG(M)_0$, we
-set
+For a finite, totally-ordered, $2$--coloured set
+$V = \set{v_1, \dots, v_n}$ in $\TG(M)_0$, we set
 \[
   F(V) := \bigotimes_{i = 1}^{n} c(v_i)
 \]
-where $c(v) = A$ if $v$ is blue and $c(v) = \C$ if $v$ is red,
-for some algebra $A$.
+where $c(v) = A$ if $v$ is blue and $c(v) = \K$ if $v$ is green,
+for some $\K$--algebra $A$.
 
 For every unique order- and colour-preserving bijection $f : V \to V'$ in
 $\TG(M)_0$, we set $F(f) := \id_{F(V)} = \id_{F(V')}$.
 
 For a transport graph $(G, \gamma)$ in $M$ -- an object in $\TG(M)_1$ -- and an
-edge $(u, v) \in G$, we denote $\nabla^{\gamma_{u, v}}$ to be the parallel
-transport map $A \to A$ obtained from $\gamma_{u, v}$. Fixing some element
-$a_{u, v} \in A$, we then define:
+edge $(u, v) \in G$, we denote $\nabla^{\gamma_{u, v}}$ to be the linear map
+$A \to A$ obtained by parallel transport along $\gamma_{u, v}$. Fixing some
+element $a_{u, v} \in A$, we then define:
 \[
-  F\br{\nabla^{\gamma_{u, v}}} := \begin{cases}
+  F(u, v) := \begin{cases}
+    \id_A
+      & u = v \text{ is blue} \\
+    \id_{\K} % 1 \mapsto \text{trace}\br{\nabla^{\gamma_{u, v}}(a_{u, v})}
+      & u \text{ is green and } v \text{ is green} \\
     \nabla^{\gamma_{u, v}}
       & u \text{ is blue and } v \text{ is blue} \\
-    1 \mapsto \text{trace}\br{\nabla^{\gamma_{u, v}}(a_{u, v})}
-      & u \text{ is red and } v \text{ is red} \\
     1 \mapsto \nabla^{\gamma_{u, v}}(a_{u, v})
-      & u \text{ is red and } v \text{ is blue} \\
+      & u \text{ is green and } v \text{ is blue} \\
     \text{trace} \circ \nabla^{\gamma_{u, v}}
-      & u \text{ is blue and } v \text{ is red}
+      & u \text{ is blue and } v \text{ is green}
   \end{cases}
 \]
 We then obtain a linear map:
 \[
-  F(G, \gamma) := \Exp{G}[F\br{\nabla^{\gamma_{u, v}}}]
-    : F(S(G)) \to F(T(G))
+  F(G, \gamma) := \Exp{G}[F(u, v)]
+               :  F(S(G)) \to F(T(G))
 \]
 For a $2$--morphism
 $(f_0, f_1, h) : (G_1, \gamma_1) \to (G_2, \gamma_2)$ in $\TG(M)_1$, we consider
@@ -1077,11 +1394,19 @@ We call $F$ a geometric quantum information theory.
 We note that the definition of $F$ does not specify the codomain. We will define
 the codomain double category in the next section along with a notion of TQFTs
 based on transport graphs in cobordisms equipped with connections. For now, we
-observe what we can accomplish with this construction and justify the naming.
+observe some properties of this construction and justify the naming.
 
-\TODO{Verify that this data does indeed form a monoidal double functor}
+We first note that there is some redundancy in this setup. The empty graph, the
+single vertex and paths with only green vertices are not the same horizontal
+$1$--morphism but they are all morphisms $\varnothing \to \varnothing$ and map
+to the identity morphism of $\K$ under $F$. This differs from $\Cob_2$ and
+$2\Thick$ in that there is a unique morphism $\varnothing \to \varnothing$ in
+these categories as well as their corresponding double categories and this maps
+to the identity morphism of $\K$ under a usual TQFT.
 
-\TODO{Define the codomain double category}
+\TODO{State inverse parallel transport problem}
+
+\TODO{Connect with hyperbolic band theory paper, perhaps}
 
 \end{document}
 
