@@ -28,12 +28,12 @@ ${PROJECT}.pdf:\
     ${TEX_DEPS}\
     ${PROJECT}.tex
 
-scaled_mat_prod.pdf:\
+introduction.pdf:\
     build\
     ${BIB_DEPS}\
     ${STY_DEPS}\
     ${PROJECT}.tex\
-    scaled_mat_prod.tex
+    introduction.tex
 
 mat_prod_int_mat.pdf:\
     build\
