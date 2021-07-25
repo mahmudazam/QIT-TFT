@@ -202,61 +202,114 @@ $b_M$ are diffeomorphisms onto $W_0$ and $W_1$ respectively, and an embedding
 $d_M : M \to \R \times [0, 1]$ (satisfying some additional properties, which we
 will not need at the moment).
 
-We consider the generating thick tangles equipped with transport graphs. We
-first consider the following transport graphs in the pair-of-pants and its dual,
-where each edge is sent to a constant path (shown as a blue dots on the
-tangles):
-\begin{figure}[H]
-\begin{center}
-\begin{tikzpicture}[scale=0.33]
-\pants{(0, 0)}
-\node at (0, -5) {\footnotesize Pair-of-pants};
-\copants{(12, 0)}
-\node at (12, -5) {\footnotesize Co-pair-of-pants};
-% Graph for pants:
-\filldraw[blue] (-2, 6) circle (4pt);
-\filldraw[blue] (-2, 4) circle (4pt);
-\filldraw[blue] (2, 5) circle (4pt);
-\draw[->] (-2, 6) -- (0, 5.5);
-\draw (0, 5.5) -- (2, 5);
-\draw[->] (-2, 4) -- (0, 4.5);
-\draw (0, 4.5) -- (2, 5);
-% Paths for pants:
-\filldraw[blue] (0, 0) circle (4pt);
-% Graph for copants:
-\filldraw[blue] (10, 5) circle (4pt);
-\filldraw[blue] (14, 4) circle (4pt);
-\filldraw[blue] (14, 6) circle (4pt);
-\draw[->] (10, 5) -- (12, 5.5);
-\draw (12, 5.5) -- (14, 6);
-\draw[->] (10, 5) -- (12, 4.5);
-\draw (12, 4.5) -- (14, 4);
-% Path for cylinder:
-\filldraw[blue] (12, 0) circle (4pt);
-\end{tikzpicture}
-\caption{Transport Graphs in Thick Tangles}
-\end{center}
-\end{figure}
-
-We can then choose a bundle with connection on the pair-of-pants with fibres
-isomorphic to some algebra $A$. This allows us to define linear maps as follows.
-Let the connection on the pair of pants be $\nabla_M$ and that on its dual be
-$\nabla_W$. We call the graph in the pair-of-pants $G_{2b, 1b}$ -- two edges
-from $2$ blue vertices to a single blue vertex -- and then consider
-$\Exp{G_{2b, 1b}}[(u, v)/\nabla_M^{\gamma_p}]$, where $\gamma_p$ is the constant
-path on the chosen point $p$ and $\nabla_M^{\gamma_p}$ is the parallel transport
-map obtained from $\gamma_p$. Noticing that $\nabla_M^{\gamma_p}$ must be the
-identity map since $\gamma_p$ is the constant path, we see that this expression
-is actually:
+We consider the generating thick tangles equipped with transport graphs.
+The following examples of transport graphs in the pair-of-pants, cap and their
+duals gives us an idea of the structures we are dealing with:
 \[
-  \nabla_M^{\gamma_p} \cdot \nabla_M^{\gamma_p} := \id \cdot \id
+% Pants:
+\begin{tikzpicture}[scale=0.55]
+\pants{0, 0}
+\lblvert{0, -4}{pants}{\footnotesize pair-of-pants}
+\colvert{blue}{-2, 6}{a1}
+\lblvert{-2.85, 6}{a1l}{\footnotesize $a_1$}
+\colvert{blue}{-2, 4}{a2}
+\lblvert{-2.85, 4}{a2l}{\footnotesize $a_2$}
+\colvert{blue}{2, 5}{a3}
+\lblvert{2.85, 5}{a3l}{\footnotesize $a_3$}
+\midarrow{a1}{a3}
+\midarrow{a2}{a3}
+% Path 1 --> 3
+\colvert{blue}{-1.55, 1.65}{a1p}
+\lblvert{-1.55, 2.1}{a1pl}{\footnotesize $a_1$}
+\colvert{blue}{1.5, -0.75}{a3p1}
+\lblvert{1.5, -0.3}{a3p1l}{\footnotesize $a_3$}
+\midarrowc{a1p}{0, 1}{0, -1}{a3p1};
+% Path 2 --> 3
+\colvert{blue}{-1.25, -1.95}{a2p}
+\lblvert{-1.25, -1.45}{a2pl}{\footnotesize $a_2$}
+\colvert{blue}{1.25, 0.35}{a3p2}
+\lblvert{1.25, 0.75}{a3p2l}{\footnotesize $a_3$}
+\midarrowc[0.35]{a2p}{0, -2}{1, 0.25}{a3p2}
+\end{tikzpicture}
+\qquad
+% Cap:
+\begin{tikzpicture}[scale=0.55]
+\capcob{0, 0}
+\lblvert{-1.5, -4}{caplbl}{\footnotesize cap}
+\colvert{blue}{-2, 5}{a1}
+\colvert{green!55!black}{-1, 5}{a2}
+\midarrow{a1}{a2}
+% Path 1 --> 2
+\colvert{blue}{-1.75, 0.75}{a1p}
+\colvert{green!55!black}{-1.35, -0.45}{a2p}
+\midarrowc{a1p}{-1.75, -0.05}{-1, 0}{a2p}
+\end{tikzpicture}
+\qquad
+% Cup:
+\begin{tikzpicture}[scale=0.55]
+\cupcob{0, 0}
+\lblvert{1.5, -4}{caplbl}{\footnotesize cup}
+\colvert{green!55!black}{1, 5}{a1}
+\colvert{blue}{2, 5}{a2}
+\midarrow{a1}{a2}
+% Path 1 --> 2
+\colvert{green!55!black}{1.75, 0.75}{a1p}
+\colvert{blue}{1.75, -0.75}{a2p}
+\midarrowc{a1p}{1.1, 0}{1.1, 0}{a2p}
+\end{tikzpicture}
+\qquad
+% Copants
+\begin{tikzpicture}[scale=0.55]
+\copants{0, 0}
+\lblvert{0, -4}{copants}{\footnotesize co-pair-of-pants}
+\colvert{blue}{2, 6}{a1}
+\lblvert{2.85, 6}{a1l}{\footnotesize $a_1$}
+\colvert{blue}{2, 4}{a2}
+\lblvert{2.85, 4}{a2l}{\footnotesize $a_2$}
+\colvert{blue}{-2, 5}{a3}
+\lblvert{-2.85, 5}{a3l}{\footnotesize $a_3$}
+\midarrow{a3}{a1}
+\midarrow{a3}{a2}
+% Path 3 --> 1
+\colvert{blue}{-1.25, 0}{a3p}
+\lblvert{-1.25, 0.45}{a3pl}{\footnotesize $a_3$}
+\colvert{blue}{1.5, 1.75}{a1p}
+\lblvert{1.5, 2.25}{a1pl}{\footnotesize $a_1$}
+\midarrowc{a3p}{0, 0}{-0.5, 1}{a1p}
+% Path 3 --> 2
+\colvert{blue}{1.5, -1.75}{a2p}
+\lblvert{1.5, -2.25}{a2pl}{\footnotesize $a_2$}
+\midarrowc{a3p}{0, 0}{-0.5, -1}{a2p}
+\end{tikzpicture}
 \]
-which is the multiplication of the algebra $A$. Similarly, the expression
-associated to the co-pair-of-pants is:
-
-Notice that we choose the transport graph with the single blue vertex (and no
-edges and hence no paths) for the cylinder. We do this to ensure that the
-transport graph acts as a gluing unit.
+We recall that edges that share an end-point need not map to paths that share an
+end-point, as we see in the left diagram. At the same time, paths are allowed to
+intersect. We also note that we have chosen the pretransport graphs so as to
+match their sources and targes with the sources and targets of their realizing
+cobordisms. We now turn our attention to the cylinder. We observe that the
+cylinder is a cobordism $I \to I$. On the transport graph side, morphisms from a
+single blue vertex to another can be any path with blue vertices including the
+path consisting of a single blue vertex. However, the gluing unit for the single
+blue vertex, on either side, is the single blue vertex itself. Hence we will
+consider the following transport graphs in the cylinder:
+\[
+\begin{tikzpicture}[scale=0.55]
+\idcob{0, 0}
+\colvert{blue}{0, 2}{a}
+\lblvert{0, -2}{lbl}{\footnotesize cylinder without paths}
+\end{tikzpicture}
+\qquad \qquad
+\begin{tikzpicture}[scale=0.55]
+\idcob{0, 0}
+\lblvert{0, -2}{lbl}{\footnotesize cylinder with paths}
+\colvert{blue}{-2, 2}{a1}
+\colvert{blue}{2, 2}{a2}
+\midarrow{a1}{a2}
+\colvert{blue}{-1.5, -0.15}{a1p}
+\colvert{blue}{1.5, 0.15}{a2p}
+\midarrowc{a1p}{0, 0.45}{0, -0.45}{a2p}
+\end{tikzpicture}
+\]
 
 \end{document}
 
