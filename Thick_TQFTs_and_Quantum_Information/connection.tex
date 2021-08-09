@@ -3,7 +3,7 @@
 
 \begin{document}
 
-\section{Category of Connections}
+\section{Connections on Cobordisms}
 
 For a vector bundle $\pi_E : E \to M$, we write $\Gamma(E)$ to denote the set of
 smooth sections of the bundle -- we will not be using the sheaf structure unless
@@ -13,29 +13,41 @@ fibres, or $\K = \C$ when $E$ is a complex bundle, we recall that a connection
 \[
   \nabla : \Gamma(E) \to \Gamma(E \tensor T^*M)
 \]
-such that for all $s \in \Gamma(E)$ and $r \in \Cinf(M, \R)$, the following
+such that for all $s \in \Gamma(E)$ and $r \in \Cinf(M, \K)$, the following
 Leibniz property is satisfied:
 \[
   \nabla(r \cdot s) = r \cdot \nabla(s) + s \tensor dr
 \]
-\begin{rmk}
-If $r : M \to \R$ is a smooth function, then the derivative of $r$ is a map
-$dr : TM \to T\R$ such that $(r, dr)$ is a bundle morphism making the following
-a pushout diagram in the category of manifolds:
+
+The right summand requires some clarification.
+First, if $r : M \to \R$ is a smooth function, then the derivative of $r$ is a
+map $dr : TM \to T\R$ such that $(r, dr)$ is a bundle morphism making the
+following a pushout diagram in the category of manifolds:
 \[\begin{tikzcd}
 TM \ar[d, "\pi_{TM}" left] \ar[r, "dr" above] & T\R \ar[d, "\pi_{T\R}" right]\\
 M \ar[r, "r" below] & \R
 \end{tikzcd}\]
 By the definition of bundle morphism, $dr$ is linear on fibres so that for each
 $x \in M$, $dr$ restricts to a linear map $T_xM \to \R$ and these maps vary
-smoothly with $x$, so that $dr$ is a section of $T^*M$.
-\end{rmk}
+smoothly with $x$, so that $dr$ is a section of $T^*M$. Hence, by an abuse of
+notation, we can view $dr$ as the following map:
+\[
+  dr : M \to T^*M : x \mapsto dr|_{T_xM}
+\]
+
+Next, we are taking $s \tensor dr$ as a map $M \to E \tensor T^*M$ which is not
+strictly a tensor product two maps because its domain is not a tensor product.
+By $s \tensor dr$, what we really mean is the map:
+\begin{equation}\label{eqn:conn_tensor}
+  x \mapsto s(x) \tensor dr|_{T_xM}
+\end{equation}
+
 We will now see that isomorphisms of vector bundles have an action on the
 connections on these bundles, leading to a notion of morphism for connections --
 a first step in developing a double category of
 ``parallel transport machinery''.
 
-\subsection{Bundle Isomorphisms Transform Connections}
+\subsection{Gauge Transformations}
 
 Suppose we have $\pi_E : E \to M$ and $\nabla$ as before as well as another
 bundle $\pi_{E'} : E \to M$ with a bundle isomorphism $f = (u, v) : E \to E'$ --
@@ -52,9 +64,14 @@ $\wh{f}(s) \in \Gamma(E)$ defined by
   \wh{f}(s) = v^{-1} \circ s \circ u
 \]
 Noting that $u : M \to M'$ is a diffeomorphism, it is easy to verify that $du$
-is also a bundle isomorphism, using the pushout property. By duality, there is
-a bundle isomorphism $d^*u : T^*M' \to T^*M$ corresponding to $du$. Denoting
-$\tilde{f} := v \tensor (d^*u)^{-1}$, we then define:
+is also a bundle isomorphism, using the pushout property. Furthermore, there is
+a bundle isomorphism $d^*u : T^*M \to T^*M'$ corresponding to $du$, defined, for
+each $g : T_xM \to \R \in T^*_xM$, by the composite
+\[
+  (d^*u)(g) := T_{u(x)}M' \to[(du)^{-1}] T_xM \to[g] \R \in T^*_{u(x)}M'
+\]
+
+Denoting $\tilde{f}(x \tensor g) := v(x) \tensor (d^*u)(g)$, we then define:
 \[\begin{array}{ccccc}
 f \diamond \nabla
 &:& \Gamma(E') &\to    & \Gamma(E' \tensor T^*M') \\
@@ -63,18 +80,17 @@ f \diamond \nabla
   \tilde{f} \circ \nabla(v^{-1} \circ s \circ u) \circ u^{-1}
 \end{array}\]
 We wish to show that $f \diamond \nabla$ is a connection.
-
 Let $c \in \K$. Then, for a section $s \in \Gamma(E')$, have:
 \begin{align*}
-  (f \diamond \nabla)(c \cdot s)
-    &= \tilde{f}\nabla(v^{-1}(c \cdot s)u)u^{-1} \\
-    &= \tilde{f}\nabla(c \cdot v^{-1}su)u{-1}
+   & (f \diamond \nabla)(c \cdot s) \\
+  =& \tilde{f}\nabla(v^{-1}(c \cdot s)u)u^{-1} \\
+  =& \tilde{f}\nabla(c \cdot v^{-1}su)u{-1}
       && \text{fibre-wise linearity of } v^{-1} \\
-    &= \tilde{f} (c \cdot  \nabla(v^{-1}su)u{-1})
+  =& \tilde{f} (c \cdot  \nabla(v^{-1}su)u{-1})
       && \text{linearity of } \nabla \\
-    &= c \cdot \tilde{f}\nabla(v^{-1}su)u^{-1}
+  =& c \cdot \tilde{f}\nabla(v^{-1}su)u^{-1}
       && \text{fibre-wise linearity of } \tilde{f} \\
-    &= c \cdot (f \diamond \nabla)(s)
+  =& c \cdot (f \diamond \nabla)(s)
 \end{align*}
 We also observe that, for sections $s_1, s_2 \in \Gamma(E')$, we have
 \begin{align*}
@@ -95,7 +111,7 @@ We also observe that, for sections $s_1, s_2 \in \Gamma(E')$, we have
     && \text{by the fibre-wise linearity of } \tilde{f} \\
   =& (f \diamond \nabla)(s_1) + (f \diamond \nabla)(s_2)
 \end{align*}
-Thus, $f \diamond \nabla$ is $K$--linear. Now, for $r \in \Cinf(M', \R)$, we
+Thus, $f \diamond \nabla$ is $K$--linear. Now, for $r \in \Cinf(M', \K)$, we
 again obersve:
 \begin{align*}
    & (f \diamond \nabla)(r \cdot s) \\
@@ -117,114 +133,47 @@ again obersve:
   =& r \cdot (f \diamond \nabla)(s)
       + \tilde{f}((v^{-1}su) \tensor d(ru))u^{-1} \\
   =& r \cdot (f \diamond \nabla)(s)
-      + (v \tensor (d^*u)^{-1})(v^{-1}su \tensor d(ru))u^{-1} \\
+      + (v \tensor (d^*u))(v^{-1}su \tensor d(ru))u^{-1} \\
   =& r \cdot (f \diamond \nabla)(s)
-      + s \tensor (d^*u)^{-1}d(ru)u^{-1}
+      + (v \tensor (d^*u))(v^{-1}suu^{-1} \tensor d(ru)u^{-1})
+    && \text{by definition \eqref{eqn:conn_tensor}} \\
+  =& r \cdot (f \diamond \nabla)(s)
+      + (v \tensor (d^*u))(v^{-1}s \tensor d(ru)u^{-1}) \\
+  =& r \cdot (f \diamond \nabla)(s)
+      + s \tensor (d^*u)d(ru)u^{-1}
+    && \text{$\tensor$ for sections}
 \end{align*}
 
-It now suffices to show that $(d^*u)^{-1}d(ru)u^{-1} = dr$ -- this is a
-straightforward diagram chase. \TODO{Actually, check it!}
-
-
-Now, let $X, Y \in \Gamma(TM')$, $s \in \Gamma(E')$, $r \in \Cinf(M', \R)$.
-We recall some basic identities that will be of use in showing that
-$f \diamond \nabla$ is a connection:
-\begin{align*}
-(X + Y)u &= Xu + Yu && \text{by definition of pointwise addition} \\
-(r \cdot X)u &= (ru) \cdot Xu && \text{by definition of pointwise scaling} \\
-v(X + Y) &= vX + vY && \text{fibre-wise linearity of $v$} \\
-v(r \cdot X) &= r \cdot vX && \text{fibre-wise linearity of $v$}
-\end{align*}
-We note that these identities hold for arbitrary bundle morphisms $(u, v)$,
-smooth real-valued maps $r$ and sections $X, Y$, as long as the operations are
-well-defined.
-
-We now proceed to check that $f \diamond \nabla$ is a connection. To this end,
-we first check additivity in the $\Gamma(TM')$ coordinate.
-\begin{align*}
-(f \diamond \nabla)((X + Y) \tensor s)
-=& v\nabla(du^{-1}(X + Y)u \tensor v^{-1}su)u^{-1} \\
-=& v\nabla((du^{-1}Xu + du^{-1}Yu) \tensor v^{-1}su)u^{-1} \\
-=& v(\nabla(du^{-1}Xu \tensor v^{-1}su)
- + \nabla(du^{-1}Yu \tensor v^{-1}su))u^{-1} \\
-=& v\nabla(du^{-1}Xu \tensor v^{-1}su)u^{-1}
- + v\nabla(du^{-1}Yu \tensor v^{-1}su))u^{-1} \\
-=& (f \diamond \nabla)(X \tensor s) + (f \diamond \nabla)(Y \tensor s)
-\end{align*}
-Additivity in the $\Gamma(E')$ coordinate is similar. So, we check scalar
-multiplicativity in the $\Gamma(TM')$ coordinate:
-\begin{align*}
-(f \diamond \nabla)(r \cdot X \tensor s)
-=& v\nabla(du^{-1}(r \cdot X)u \tensor v^{-1}su)u^{-1} \\
-=& v\nabla(du^{-1}(ru \cdot Xu) \tensor v^{-1}su)u^{-1} \\
-=& v\nabla((ru \cdot (du^{-1}Xu)) \tensor v^{-1}su)u^{-1} \\
-=& v (ru \cdot \nabla(du^{-1}Xu \tensor v^{-1}su))u^{-1} \\
-=& v (ruu^{-1} \cdot \nabla(du^{-1}Xu \tensor v^{-1}su)u^{-1}) \\
-=& r \cdot (v\nabla(du^{-1}Xu \tensor v^{-1}su)u^{-1}) \\
-=& r \cdot ((f \diamond \nabla)(X \tensor s))
-\end{align*}
-
-We finally check the Liebnitz rule.
-\begin{align*}
-(f \diamond \nabla)(X \tensor (r \cdot s))
-=& v\nabla(du^{-1}Xu \tensor v^{-1}(r \cdot s)u)u^{-1} \\
-=& v(\nabla(du^{-1}Xu \tensor v^{-1}(ru \cdot su))u^{-1} \\
-=& v\nabla(du^{-1}Xu \tensor ru \cdot (v^{-1}su))u^{-1} \\
-=& v(
-      d(ru)(du^{-1}Xu) \cdot v^{-1}su
-      + ru \cdot \nabla(du^{-1}Xu \tensor v^{-1}su)
-    )u^{-1} \\
-=& v(d(ru)(du^{-1}Xu) \cdot v^{-1}su)u^{-1}
- + v(ru \cdot \nabla(du^{-1}Xu \tensor v^{-1}su))u^{-1}
-\end{align*}
-It now suffices to show that the left summand is
+It now suffices to show that $(d^*u)d(ru)u^{-1} = dr$. Pointwise, we have:
 \[
-  dr(X) \cdot s
+  ((d^*u) \circ d(ru) \circ u^{-1})(x) = d(ru)|_{T_{u^{-1}(x)}M} \circ (du)^{-1}
 \]
-and the right summand is
-\[
-  r \cdot (f \diamond \nabla)(X \tensor s)
-\]
-For the right summand, we observe:
-\begin{align*}
- & v(ru \cdot \nabla(du^{-1}Xu \tensor v^{-1}su))u^{-1} \\
-=& v(ruu^{-1} \cdot \nabla(du^{-1}Xu \tensor v^{-1}su)u^{-1}) \\
-=& v(r \cdot \nabla(du^{-1}Xu \tensor v^{-1}su)u^{-1}) \\
-=&r \cdot (v\nabla(du^{-1}Xu \tensor v^{-1}su)u^{-1}) \\
-=& r \cdot (f \diamond \nabla)(X \tensor s)
-\end{align*}
-For the left summand, we first observe a useful property of the derivative
-operator $d-$. If $g : L \to M$ and $h : M \to N$ are smooth maps, then by the
+We then observe a useful property of the derivative
+operator $d-$. If $a : L \to M$ and $b : M \to N$ are smooth maps, then by the
 pasting of pushout diagrams to give pushout diagrams, we have
 \[
-  d(h \circ g) = dh \circ dg
+  d(b \circ a) = db \circ da
 \]
-Then, we have:
-\begin{align*}
-v(d(ru)(du^{-1}Xu) \cdot v^{-1}su)u^{-1}
-=& v(\pi_{T\R}d(ru)(du^{-1}Xu) \cdot v^{-1}su)u^{-1}\\
-=& v(\pi_{T\R}d(ruu^{-1})Xu \cdot v^{-1}su)u^{-1}\\
-=& v(\pi_{T\R}drXu \cdot v^{-1}su)u^{-1}\\
-=& v((\pi_{T\R}drX \cdot v^{-1}s)u)u^{-1}\\
-=& v(v^{-1}(\pi_{T\R}drX \cdot s)u)u^{-1}\\
-=& dr(X) \cdot s
-\end{align*}
+Then, we observe that
+\[
+  d(ru)|_{T_{u^{-1}(x)}M} \circ (du)^{-1}
+  = dr|_{T_xM'} \circ du|_{T_{u^-1(x)}M} \circ (du)^{-1}
+  = dr|_{T_xM'}
+  = dr(x)
+\]
 as required. This completes the proof of the following theorem.
+
 \begin{thm}
 Let $\pi : E \to M$, $\pi' : E' \to M'$ be bundles with a bundle isomorphism
 $f = (u, v) : E \to E'$. If $\nabla$ is a connection on $\pi$, then
 $f \diamond \nabla$ is a connection on $\pi'$.
 \end{thm}
-\begin{defn}
-We call $f \diamond \nabla$ the shift of $\nabla$ along $f$ and say that $f$
-takes $\nabla$ to $f \diamond \nabla$. From this point, we write $f\nabla$ as
-opposed to $f \diamond \nabla$, whenever there is no confusion.
-\end{defn}
 
-\subsection{Category of Connections}\label{subsec:connctg}
-
-Let $\pi_i : E_i \to M_i$ be a bundles equipped with a connections $\nabla_i$
-for $i \in \set{1, 2, 3, 4}$. Let $f_{i, i + 1} = (u_{i, i + 1}, v_{i, i + 1})$
+From this point, we will write $f\nabla$ as opposed to $f \diamond \nabla$,
+as long as the action is clear from context. Now, Let $\pi_i : E_i \to M_i$ be
+bundles equipped with a connections
+$\nabla_i$ for $i \in \set{1, 2, 3, 4}$. Let
+$f_{i, i + 1} = (u_{i, i + 1}, v_{i, i + 1})$
 be bundle isomorphisms for $i \in \set{1, 2, 3}$. Then, the composite
 $f_{1, 3} := f_{2, 3}f_{1, 2} = (u_{2, 3}u_{1, 2}, v_{2, 3}v_{1, 2})
 =: (u_{1, 3}, v_{1, 3})$ is clearly a bundle isomorphism. We similarly define
@@ -242,23 +191,21 @@ for each $i < j < k$ in $\set{1, 2, 3, 4}$. In particular,
 
 We then observe the action of identity bundle morphisms. The identity bundle
 morphism on $\pi_1$ is the pair $\id_{\pi_1} = (\id_{E_1}, \id_{M_1})$. Then,
-\begin{align*}
-   \id_{\pi_1}\nabla_1(X \tensor s)
-&= \id_{E_1}\nabla_1(d(\id_{M_1})^{-1}X\id_{M_1}
-                     \tensor \id_{E_1}^{-1}s\id_{M_1})\id_{M_1}^{-1} \\
-&= \nabla_1(\id_{TM_1}^{-1}X \tensor s) \\
-&= \nabla_1(X \tensor s)
-\end{align*}
+\[
+  \id_{\pi_1}\nabla_1(s)
+    = (\id \tensor \id) \nabla_1(\id \circ s \circ \id) \id
+    = \nabla_1(s)
+\]
 so that $\id_{\pi_1}\nabla = \nabla$. We finally observe that
 $ff^{-1}\nabla = \id\nabla = \nabla$ for any connection $\nabla$ and any
-compatible diffeomorphism $f$.
+compatible bundle morphism $f$.
 
 These observations motivate the following definition.
-\begin{defn}
+\begin{defn}[Gauge Transformation]
 Let $\pi_1$ and $\pi_2$ be bundles equipped with connections $\nabla_1$ and
 $\nabla_2$ respectively. Then, a bundle isomorphism
 $f = (u, v) : \pi_1 \to \pi_2$ satisfying $f\nabla_1 = \nabla_2$ is called an
-isomorphism, or simply morphism, of connections.
+isomorphism, or simply morphism, of connections or a gauge transformation.
 \end{defn}
 
 From the work above, we have established the following results.
@@ -271,9 +218,16 @@ We will call the category of the above function the category or groupoid of
 connections. We will denote this category $\Conn$.
 \end{defn}
 
-We now try to establish a monoidal structure for a subcategory of the category
-of connections. Let $\nabla_1$ and $\nabla_2$ be two connections with underlying
-bundles $\pi_1 : E_1 \to M_1$ and $\pi_2 : E_2 \to M_2$ respectively. We will
+We will see that connections on bundles on compact manifolds with boundary, when
+generalized slightly, assemble into a double categorical structure compatible
+with that of the cobordism double category formed by the underlying manifolds
+over which we take the bundles. Before we proceed to this result, we will
+require a notion of cobordism double category for bundles, which we develop
+next.
+
+\subsection{Bundle Cobordisms}\label{subsec:bund_cob}
+
+Consdier smooth bundles $\pi_1 : E_1 \to M_1$ and $\pi_2 : E_2 \to M_2$. We will
 consider the coproduct or disjoint union of these bundles in the category of
 manifolds. There exists a smooth map
 $\pi_1 \amalg \pi_2 : E_1 \amalg E_2 \to M_1 \amalg M_2$ which we will give the
@@ -357,128 +311,10 @@ category of $V$--fibred bundles on $d$--dimensional manifolds or of
 $(V, d)$--bundles and is denoted $\Bun^V_d$.
 \end{defn}
 
-We now define a function
-\[
-  \nabla_1 \amalg \nabla_2
-    : \Gamma(T(M_1 \amalg M_2) \tensor E_1 \amalg E_2)
-    \to \Gamma(E_1 \amalg E_2)
-\]
-as follows, for $i \in \set{0, 1}$:
-\[
-  (\nabla_1 \amalg \nabla_2)((X_1 \amalg X_2) \tensor (s_1 \amalg s_2))(x, i)
-    = \nabla_{i + 1}(X_{i + 1} \tensor s_{i + 1})(x)
-\]
-It is easy to see that this function satisfies the connection identities
-piecewise so that it satisfies these identities on its entire domain. Thus,
-$\nabla_1 \amalg \nabla_2$ is a connection. We then consider a connection
-$\nabla_3$ on $\pi_3$. Letting
-$f = (u, v) = (\alpha_{M_1, M_2, M_3}, \alpha_{E_1, E_2, E_3})$, we now wish to
-verify that
-\[
-  f(\nabla_1 \amalg (\nabla_2 \amalg \nabla_2))
-    = (\nabla_1 \amalg \nabla_2) \amalg \nabla_3
-\]
-For this, we will need to inspect the expression:
-\begin{align*}
-  & f(\nabla_1 \amalg (\nabla_2 \amalg \nabla_2))(
-      (X_1 \amalg X_2) \amalg X_3
-      \tensor (s_1 \amalg s_2) \amalg s_3
-      ) \\
-  =& v(\nabla_1 \amalg (\nabla_2 \amalg \nabla_3))\br{
-    du^{-1}((X_1 \amalg X_2) \amalg X_3)u
-    \tensor v^{-1}((s_1 \amalg s_2) \amalg s_3)u
-  }u^{-1} \\
-  =& v(\nabla_1 \amalg (\nabla_2 \amalg \nabla_3))\br{
-    du^{-1}((X_1 \amalg X_2) \amalg X_3)u
-    \tensor (s_1 \amalg (s_2 \amalg s_3))
-  }u^{-1}
-\end{align*}
-We then observe the following basic fact.
-\begin{lem}
-For tangent bundles $\pi : TM_i \to M_i$, $i \in \set{1, 2, 3}$, we have
-$d\alpha_{M_1, M_2, M_3} = \alpha_{TM_1, TM_2, TM_3}$.
-\end{lem}
-\begin{proof}
-We denote $\alpha_{TM} := \alpha_{TM_1, TM_2, TM_3}$,
-$\alpha_{M} := \alpha_{M_1, M_2, M_3}$.
-Let $R$ be a manifold, and $x$ and $y$, smooth maps making the following
-diagram commute:
-\[\begin{tikzpicture}[baseline=(a).base]
-\node[scale=\diagscale] (a) at (0, 0){
-\begin{tikzcd}[column sep=large, row sep=huge]
-&
-(TM_1 \amalg TM_2) \amalg TM_3
-  \ar[d, "\pi_{(12)3}" description]
-  \ar[rrd, "x" above right] & \\
-TM_1 \amalg (TM_2 \amalg TM_3)
-  \ar[ur, "\alpha_{TM}" above left]
-  \ar[dr, "\pi_{1(23)}" below left] &
-(M_1 \amalg M_2) \amalg M_3
-  \ar[rr, "y\alpha_{M}^{-1}" description, dashed] & &
-R \\ &
-M_1 \amalg (M_2 \amalg M_3)
-  \ar[u, "\alpha_{M}" description]
-  \ar[urr, "y" below right] &
-\end{tikzcd}
-};
-\end{tikzpicture}\]
-The map $y\alpha_M^{-1}$ satisfies $(y\alpha_M^{-1})\alpha_M = y$ and
-$(y\alpha_M^{-1})\pi_{(12)3} = y\pi_{1(23)}\alpha_{TM} = x$. Suppose another map
-$r$ satisfies $r\alpha_M = y$. Then, $r = y\alpha_M^{-1}$ showing that
-$y\alpha_M^{-1}$ is unique.
-
-Therefore, $\alpha_{TM}$ makes the part of the diagram excluding $R$ a pushout
-and hence must be $d\alpha_M$, by the uniqueness of the derivative.
-\end{proof}
-
-The above theorem yields:
-\begin{align*}
-  & f(\nabla_1 \amalg (\nabla_2 \amalg \nabla_2))(
-      (X_1 \amalg X_2) \amalg X_3
-      \tensor (s_1 \amalg s_2) \amalg s_3
-      ) \\
-  =& v(\nabla_1 \amalg (\nabla_2 \amalg \nabla_3))\br{
-    du^{-1}((X_1 \amalg X_2) \amalg X_3)u
-    \tensor (s_1 \amalg (s_2 \amalg s_3))
-  }u^{-1}\\
-  =& v(\nabla_1 \amalg (\nabla_2 \amalg \nabla_3))\br{
-    (X_1 \amalg (X_2 \amalg X_3))
-    \tensor (s_1 \amalg (s_2 \amalg s_3))
-  }u^{-1} \\
-  =& \alpha_{TM_1, TM_2, TM_3}(\nabla_1 \amalg (\nabla_2 \amalg \nabla_3))\br{
-    (X_1 \amalg (X_2 \amalg X_3))
-    \tensor (s_1 \amalg (s_2 \amalg s_3))
-  }\alpha_{M_1, M_2, M_3}^{-1}
-\end{align*}
-where the last expression is easily seen to be
-\[
-  ((\nabla_1 \amalg \nabla_2) \amalg \nabla_3)(
-    (X_1 \amalg X_2) \amalg X_3 \tensor (s_1 \amalg s_2) \amalg s_3
-  )
-\]
-We can similarly show that the unitors in $\Man$ yield unitors for disjoint
-unions of connections of bundles with equal fibres and equidimensional base
-spaces. We have thus proved the following theorem.
-\begin{thm}\label{thm:bundle_gluing}
-For a vector space $V$ and a non-negative integer $d$, the subcategory of the
-category of connections consisting of all connections on objects in
-$\Bun_d^{V}$ and all morphisms of connections between them is a monoidal
-category under disjoint union.
-\end{thm}
-\begin{defn}[Category of {$(V, d)$}--Connections]
-We call the subcategory of the category of connections in the above theorem the
-category of connections on $V$--fibred bundles on $d$--dimensional manifolds or
-of $(V, d)$--connections. We denote this category $\Conn^V_d$.
-\end{defn}
-
-\TODO{We need a notion of gluing connections.}
-
-\subsection{Gluing Complex Bundles}
-
 We will now develop a notion of gluing complex bundles on compact manifolds with
 boundary along with connections on these bundles. To accomplish this, we will
 first show the following:
-\begin{thm}\label{thm:gluing}
+\begin{thm}\label{thm:bundle_gluing}
 Given any smooth compact manifold $M$ with boundary and a complex bundle
 $\pi : E \to M$ with fibre $V \cong \C^n$, there exists a complex bundle
 $\wh{\pi} : \wh{E} \to M$ which restricts to the trivial bundle on a collar $C$
@@ -572,86 +408,240 @@ We also notice that the above constructions apply to smooth (real) bundles as
 long as the transition functions at the points in some collar of the boundary
 can be connected to the identity function by paths in the automorphism group of
 the fibre. This is possible if these transition functions all have positive
-determinant. \TODO{Justify this, if needed.}
+determinant. \TODO{Justify this, if needed.} One might guess that the
+structure on the category of bundles developed here transfers over to the
+category of connections on the bundles involved. We next show that this is
+indeed the case.
 
-\subsection{Gluing Connections on Complex Bundles}
+\subsection{Monoidal Double Category of Connections}
 
-As we now have a notion of gluing for (a subset of) complex bundles with a fixed
-fibre, we will now use a similar idea to glue connections defined on these
-bundles. Let $\pi : E \to M$ be a (smooth, complex or holomorphic) bundle. It is
-well known that sheaves of global sections of smooth, complex or holomorphic
-bundles over $M$ are $\Cinf(M, \R)$--modules and that the category of
-modules over any ring is closed. Hence, it is immediate that the collection of
-all $\Cinf(M, \R)$--linear maps $\Gamma(TM \tensor E) \to \Gamma(E)$ is
-itself a $\Cinf(M, \R)$--module -- we will call it $\s{M}(E)$. We
-know that a connection $\Gamma(TM \tensor E) \to \Gamma(E)$ is an $\R$--bilinear
-map but it is not $\Cinf(M, \R)$--bilinear. However, we can show that it is
-$\Cinf(M, \R)$--linear.
-
+For $i \in \set{1, 2, 3}$ and connections $\nabla_i$ on smooth bundles
+$\pi_i : E_i \to M_i$, we define a function
+\[
+  \nabla_1 \amalg \nabla_2
+    : \Gamma(E_1 \amalg E_2)
+    \to \Gamma((E_1 \tensor T^*M_1) \amalg (E_2 \tensor T^*M_2))
+\]
+as follows, for $j \in \set{0, 1}$:
+\[\begin{array}{crcl}
+       & (\nabla_1 \amalg \nabla_2)(s_1 \amalg s_2)(x, j)
+       & = & \nabla_{j + 1}(s_{j + 1})(x) \\
+  \iff & (\nabla_1 \amalg \nabla_2)(s_1 \amalg s_2)
+       & = & \nabla_1(s_1) \amalg \nabla_2(s_2)
+\end{array}\]
+It is easy to see that this function satisfies the connection identities
+piecewise so that it satisfies these identities on its entire domain. Thus,
+$\nabla_1 \amalg \nabla_2$ is a connection. Letting
+$f = (u, v) = (\alpha_{M_1, M_2, M_3}, \alpha_{E_1, E_2, E_3})$, we now wish to
+verify that
+\begin{equation}\label{eqn:conn_assoc}
+  f \diamond (\nabla_1 \amalg (\nabla_2 \amalg \nabla_3))
+    = (\nabla_1 \amalg \nabla_2) \amalg \nabla_3
+\end{equation}
+For this, we will need to inspect the expression:
+\begin{align*}
+   & f \diamond (\nabla_1 \amalg (\nabla_2 \amalg \nabla_2))(
+        (s_1 \amalg s_2) \amalg s_3
+     ) \\
+  =& \tilde{f}(\nabla_1 \amalg (\nabla_2 \amalg \nabla_2))(
+      v^{-1}((s_1 \amalg s_2) \amalg s_3)u
+     )u^{-1} \\
+  =& \tilde{f}(\nabla_1 \amalg (\nabla_2 \amalg \nabla_2))(
+      s_1 \amalg (s_2 \amalg s_3)
+     )u^{-1} \\
+  =& (v \tensor d^*u)(\nabla_1 \amalg (\nabla_2 \amalg \nabla_2))(
+      s_1 \amalg (s_2 \amalg s_3)
+     )u^{-1} \\
+  =& (v \tensor d^*u)(
+      \nabla_1(s_1) \amalg (\nabla_2(s_2) \amalg \nabla_3(s_3))
+     )u^{-1}
+\end{align*}
+To reach our goal \eqref{eqn:conn_assoc}, we observe the following basic fact.
 \begin{lem}
-Let $\nabla : \Gamma(TM \tensor E) \to \Gamma(E)$ be a connection on
-a smooth, complex or holomorphic bundle $E \to M$. Let $X, Y \in \Gamma(TM),
-s, t \in \Gamma(E), r \in \Cinf(M, \R)$. Then the following hold:
-\begin{align}
-  \nabla((X \tensor s) + (Y \tensor t))
-    &= \nabla(X \tensor s) + \nabla(Y \tensor t) \\
-  \nabla(r \cdot (X \tensor s)) &= r \cdot \nabla(X \tensor s) \\
-  \nabla(0) &= 0
-\end{align}
-so that $\nabla$ is $\Cinf(M, \R)$--linear.
+For tangent bundles $\pi_i : TM_i \to M_i$, $i \in \set{1, 2, 3}$, we have
+$d\alpha_{M_1, M_2, M_3} = \alpha_{TM_1, TM_2, TM_3}$.
 \end{lem}
 \begin{proof}
-By definition, $\nabla$ is an $\R$-- or $\C$--bilinear map
-$\Gamma(E) \times \Gamma(TM) \to \Gamma(E)$, or equivalently, an $\R$-- or
-$\C$--linear map $\Gamma(TM \tensor E) \to \Gamma(E)$. From this, equations
-1 and 3 are immediate. For equation 2, we recall the definition of the action
-$r \cdot (X \tensor s)$:
-\[
-  (r \cdot (X \tensor s))(x)
-    = r(x) \cdot (X(x) \tensor s(x))
-    = (r(x) \cdot X(x)) \tensor s(x)
-\]
-where the last equality follows from the $\R$--bilinearity of $\tensor$. We can
-rewrite the right side as:
-\[
-  (r(x) \cdot X(x)) \tensor s(x)
-    = (r \cdot X)(x) \tensor s(x)
-    = ((r \cdot X) \tensor s)(x)
-\]
-so that
-\[
-  r \cdot (X \tensor s) = (r \cdot X) \tensor s
-\]
-Equation 3 now follows from the definition of a connection.
+We denote $\alpha_{TM} := \alpha_{TM_1, TM_2, TM_3}$,
+$\alpha_{M} := \alpha_{M_1, M_2, M_3}$.
+Let $R$ be a manifold, and $x$ and $y$, smooth maps making the following
+diagram commute:
+\[\begin{tikzpicture}[baseline=(a).base]
+\node[scale=\diagscale] (a) at (0, 0){
+\begin{tikzcd}[column sep=large, row sep=huge]
+&
+(TM_1 \amalg TM_2) \amalg TM_3
+  \ar[d, "\pi_{(12)3}" description]
+  \ar[rrd, "x" above right] & \\
+TM_1 \amalg (TM_2 \amalg TM_3)
+  \ar[ur, "\alpha_{TM}" above left]
+  \ar[dr, "\pi_{1(23)}" below left] &
+(M_1 \amalg M_2) \amalg M_3
+  \ar[rr, "y\alpha_{M}^{-1}" description, dashed] & &
+R \\ &
+M_1 \amalg (M_2 \amalg M_3)
+  \ar[u, "\alpha_{M}" description]
+  \ar[urr, "y" below right] &
+\end{tikzcd}
+};
+\end{tikzpicture}\]
+The map $y\alpha_M^{-1}$ satisfies $(y\alpha_M^{-1})\alpha_M = y$ and
+$(y\alpha_M^{-1})\pi_{(12)3} = y\pi_{1(23)}\alpha_{TM} = x$. Suppose another map
+$r$ satisfies $r\alpha_M = y$. Then, $r = y\alpha_M^{-1}$ showing that
+$y\alpha_M^{-1}$ is unique.
+
+Therefore, $\alpha_{TM}$ makes the part of the diagram excluding $R$ a pushout
+and hence must be $d\alpha_M$, by the uniqueness of the derivative.
 \end{proof}
 
-It is well known that the set of differences of connections on a bundle from a
-submodule of the $\R$-- or $\C$--module of linear maps
-$\Gamma(TM \tensor E) \to \Gamma(E)$. We will show that the ground ring here
-can again be replaced with $\Cinf(M, \R)$ so that connections form an
-affine sumodule of $\s{M}(E)$.
-
-\begin{lem}
-Let $\nabla_i, i \in \set{1, 2, 3, 4}$ be connections
-$\Gamma(TM \tensor E) \to \Gamma(E)$. Then, the following hold:
-\begin{enmrt}
-\li $(\nabla_1 - \nabla_2) + (\nabla_3 - \nabla_4)$ is a difference of
-connections.
-\li For all $f \in \Cinf(M, \R)$, $f \cdot (\nabla_1 - \nabla_2)$ is a
-difference of connections.
-\li The linear map sending all inputs to zero is a difference of connections.
-\end{enmrt}
-In particular, the set
+\begin{cor}
+For tangent bundles $\pi_i$ as in the previous lemma, we have
 \[
-  V = \set[\nabla_{\alpha} - \nabla_{\beta}]
-          {\nabla_{\alpha}, \nabla_{\beta} \text{ are connections on } E}
+  (d^*\alpha_{M_1, M_2, M_3})(g) = g \circ \alpha_{TM_1, TM_2, TM_3}^{-1}
+    = \br{\alpha^{-1}_{TM_1, TM_2, TM_3}}^*(g)
 \]
-is a submodule of $\s{M}(E)$.
-\end{lem}
+\end{cor}
+
+\begin{rmk}
+In general, we denote precomposition by any map $\alpha$ as
+$\alpha^*(g) = g \circ \alpha$.
+\end{rmk}
+
+The above corollary yields:
+\begin{align*}
+   & f \diamond (\nabla_1 \amalg (\nabla_2 \amalg \nabla_2))(
+        (s_1 \amalg s_2) \amalg s_3
+     ) \\
+  =& (v \tensor d^*u)(
+      \nabla_1(s_1) \amalg (\nabla_2(s_2) \amalg \nabla_3(s_3))
+     )u^{-1} \\
+  =& \br{\alpha_{M_1, M_2, M_3} \tensor \br{\alpha^{-1}_{TM_1, TM_2, TM_3}}^*}(
+      \nabla_1(s_1) \amalg (\nabla_2(s_2) \amalg \nabla_3(s_3))
+     )\alpha_{M_1, M_2, M_3}^{-1}
+\end{align*}
+where the last expression is easily seen to be
+\[
+  (\nabla_1(s) \amalg \nabla_2(s_2)) \amalg \nabla_3(s_3)
+  = ((\nabla_1 \amalg \nabla_2) \amalg \nabla_3)((s_1 \amalg s_2) \amalg s_3)
+\]
+We can similarly show that the unitors in $\Man$ yield unitors for disjoint
+unions of connections of bundles with equal fibres and equidimensional base
+spaces. We have thus proved the following theorem.
+\begin{thm}\label{thm:bundle_gluing}
+For a vector space $V$ and a non-negative integer $d$, the subcategory of the
+category of connections consisting of all connections on objects in
+$\Bun_d^{V}$ and all morphisms of connections between them is a monoidal
+category under disjoint union.
+\end{thm}
+\begin{defn}[Category of {$(V, d)$}--Connections]
+We call the subcategory of the category of connections in the above theorem the
+category of connections on $V$--fibred bundles on $d$--dimensional manifolds or
+of $(V, d)$--connections. We denote this category $\Conn^V_d$.
+\end{defn}
+
+As we have a notion of gluing for (a subset of) complex bundles with a fixed
+fibre, we will develop a notion of gluing for connections defined on these
+bundles. It is well known that, for connections $\nabla$ and $\nabla'$ on a
+smooth bundle $E \to M$, $\nabla - \nabla'$ is a smooth section of the bundle
+$\Hom(E) \tensor T^*M \to M$, where $\Hom(E)$ is the internal $\Hom$-object in
+the closed monoidal category of smooth bundles over $M$ that is isomorphic to
+the bundle $E^* \tensor E$ \cite[Lemma 2.2]{Conn}. As a result, the set of all
+connections on $E$ is an affine subspace of the $\Cinf(\R)$--module on $E$ is an
+affine subspace of the $\Cinf(\R)$--module write each connection $\nabla$ on $E$
+as a sum:
+\[
+  \nabla = \varphi + A_{\nabla}
+\]
+where $\varphi$ is a fixed element of $\Omega^1(\Hom(E))$ and $A_{\nabla}$
+is an element of some subspace of $\Omega^1(\Hom(E))$ varying with $\nabla$. In
+fact, every expression of this form is a connection. It is well known that
+$\varphi$ can be taken as the exterior derivative operator $d$. In particular,
+this allows us to define an action of $\Cinf(\R)$ on the set of connections as
+follows:
+\[
+  r \cdot \nabla = d + r \cdot A_{\nabla} = d + A_{r \cdot \nabla}
+\]
+From this, a gluing operation for (a class of) connections is immediate. This
+is made precise in the following theorem.
+
+\begin{thm}
+Let $E \to M$ and $E' \to M'$ be a horizontal $1$--morphism
+(or bundle cobordism) in $\BBun^V_{\s{C}}$ for some cobordism category $\s{C}$,
+such that the gluing $E' * E \to M' * M$. exists. Then, for any two connections
+$\nabla$ and $\nabla'$ on $E$ and $E'$ respectively, there exists a connection
+$\nabla' * \nabla$ that has the same output as $\nabla$ on local sections of $E$
+defined away from its trivialized boundary collar and to $\nabla'$ for local
+sections of $E'$ defined away from its trivialized boundary collar.
+\end{thm}
 \begin{proof}
-Since $V$ is a linear subspace of the vector space of all $\R$--linear
-maps $\Gamma(TM \tensor E) \to \Gamma(E)$, (i) and (iii) are immediate.
+Let the bump functions on $M$ and $M'$ used to trivialize $E$ and $E'$
+respectively near boundaries, as defined in the proof of theorem
+\ref{thm:bundle_gluing}, be $f$ and $f'$ respectively. Let
+\[
+  \nabla = d + A_{\nabla} \text{ and } \nabla' = d + A_{\nabla'}.
+\]
+We define:
+\[
+  \wh{\nabla} := f \cdot \nabla = d + f \cdot A_{\nabla}
+  \text{ and } \wh{\nabla'} := f' \cdot \nabla' = d + f' \cdot A_{\nabla'}
+\]
+We can then extend the domain of $f$ to $M' * M$ by defining it to be zero on
+$M'$. Similarly, we define $f'$ to be zero on $M$. This allows us to extend the
+domain of $f \cdot A_{\nabla}$ and $f' \cdot A_{\nabla'}$ to $M' * M$ in the
+same way. We can thus define:
+\[
+  \nabla' * \nabla := \wh{\nabla'} * \wh{\nabla}
+    := d + f \cdot A_{\nabla} + f' \cdot A_{\nabla'}
+\]
+It is immediate that $\nabla' * \nabla$ satisfies the conditions of being a
+connection pointwise. Hence, $\nabla' * \nabla$ is a connection on $E' * E$. We
+also observe that where $f$ is $1$, $\nabla' * \nabla$ is equal to $\nabla$ and
+likewise with $f', \nabla'$.
 \end{proof}
+
+\begin{defn}[Gluable Connection]
+Connections of the form $\wh{\nabla}$ as in the previous theorem are called
+gluable. The set of gluable connections on bundle cobordisms in
+$\BBun^V_{\s{C}}$ is denoted $\Conn^V_{\s{C}}$.
+\end{defn}
+
+\begin{cor}
+Gluing of connections in double category of bundle cobordisms is associative and
+unital upto gauge isomorphisms.
+\end{cor}
+\begin{proof}
+For associativity, it suffices to observe that extending domains of bump
+functions by zeros is associative and that associators from $\BBun^V_{\s{C}}$
+are associator gauge transformations -- the proof of the latter claim is similar
+to that of the associativity of the disjoint union of connections.
+
+For unitality, we first observe that on boundary collars $f \cdot \nabla$ is
+equal to $d$ for all connections $\nabla = d + A_{\nabla}$. The exterior
+derivative operators, that are themselves connections, on the gluing
+units of $\BBun^V_{\s{C}}$ -- that is, the cylinders on boundaries -- suffices
+as the gluing units for connections. The unitors carry over like associators.
+\end{proof}
+
+Finally, one verifies the following fundamental fact.
+
+\begin{thm}
+For any cobordism double category $\s{C}$, $\BBun^V_{\s{C}}$ can be promoted to
+a monoidal double category of connections by taking pairs $(E, \nabla)$ for each
+bundle cobordism $E$ in $\BBun^V_{\s{C}}$ and a gluable connection $\nabla$ on
+$E$ as the horizontal $1$--morphisms. Vertical $1$--morphisms and $2$--morphisms
+are taken to be gauge transformations. The rest of the structure is modified in
+the obvious ways.
+\end{thm}
+
+\TODO{Verify this, if necessary.}
+
+At this point, one might think that we can immediately define a notion of TQFT
+by choosing suitable paths for a representative for each cobordism class,
+taking the linear maps obtained by parallel transport along these paths and
+combine in a suitable way. However, the problem remains that two gauge
+transformations need not take a collection of paths in the domain to the same
+collection of paths in the codomain. We will build the machinery to handle this
+matter in the next section.
 
 \end{document}
 
