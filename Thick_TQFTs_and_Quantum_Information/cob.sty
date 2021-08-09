@@ -31,6 +31,20 @@
 \draw (lu) -- (ru) -- (rd) -- (ld) -- cycle;
 }
 
+\newcommand{\idcobup}[1]{
+\coordinate (center) at (#1);
+\coordinate (ld) at ($(center) + (-2, -3)$);
+\coordinate (ldu) at ($(ld) + (0, 2)$);
+\draw (ld) -- (ldu);
+\draw ($(ld) + (4, 2)$) -- ($(ld) + (4, 4)$);
+\draw (ld)
+   .. controls ($(ld) + (2, 0)$) and ($(ld) + (2, 2)$)
+   .. ($(ld) + (4, 2)$);
+\draw (ldu)
+   .. controls ($(ldu) + (2, 0)$) and ($(ldu) + (2, 2)$)
+   .. ($(ldu) + (4, 2)$);
+}
+
 \newcommand{\cupcob}[1]{
 \coordinate (center) at (#1);
 \coordinate (ru) at ($(center) + (2, 1)$);
@@ -69,5 +83,50 @@
 
 \newcommand{\lblvert}[3]{
 \node at (#1) (#2) {#3};
+}
+
+\newcommand{\ppants}[1]{
+\coordinate (center) at (#1);
+\coordinate (ld) at ($(center) + (-2, -3)$);
+\coordinate (lu) at ($(ld) + (0, 6)$);
+\draw (ld) -- ($(ld) + (0, 2)$);
+\draw (lu) -- ($(lu) + (0, -2)$);
+\draw ($(ld) + (4, 2)$) -- ($(ld) + (4, 4)$);
+\draw (ld)
+   .. controls ($(ld) + (2, 0)$) and ($(ld) + (2, 2)$)
+   .. ($(ld) + (4, 2)$);
+\draw (lu)
+   .. controls ($(lu) + (2, 0)$) and ($(lu) + (2, -2)$)
+   .. ($(lu) + (4, -2)$);
+\draw ($(ld) + (0, 4)$) arc(90:-90:1);
+\colvert{black}{$(lu) + (0, -1)$}{s1}
+\colvert{black}{$(ld) + (0, 1)$}{s2}
+\colvert{black}{$(lu) + (4, -3)$}{t}
+\midarrowc{s2}{$(s2) + (2, 0)$}{$(s2) + (2, 2)$}{t}
+\midarrowc{s1}{$(s1) + (2, 0)$}{$(s1) + (2, -2)$}{t}
+}
+
+\newcommand{\pcopants}[1]{
+\coordinate (copantscenter) at (#1);
+\begin{scope}[rotate around={180:(copantscenter)}]
+\ppants{copantscenter}
+\end{scope}
+}
+
+\newcommand{\pidcobup}[1]{
+\coordinate (center) at (#1);
+\coordinate (ld) at ($(center) + (-2, -3)$);
+\coordinate (ldu) at ($(ld) + (0, 2)$);
+\draw (ld) -- (ldu);
+\draw ($(ld) + (4, 2)$) -- ($(ld) + (4, 4)$);
+\draw (ld)
+   .. controls ($(ld) + (2, 0)$) and ($(ld) + (2, 2)$)
+   .. ($(ld) + (4, 2)$);
+\draw (ldu)
+   .. controls ($(ldu) + (2, 0)$) and ($(ldu) + (2, 2)$)
+   .. ($(ldu) + (4, 2)$);
+\colvert{black}{$(ld) + (0, 1)$}{s}
+\colvert{black}{$(ld) + (4, 3)$}{t}
+\midarrowc{s}{$(s) + (2, 0)$}{$(s) + (2, 2)$}{t}
 }
 

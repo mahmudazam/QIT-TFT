@@ -18,9 +18,9 @@ $\mathcal{H}$ takes any fibrant monoidal double category to a bicategory.
 On the other hand, the monoidal category of thick tangles $2\Thick$ as defined
 in \cite{NonCommTQFT} is a decategorification of a monoidal bicategory of thick
 tangles $\PTT$ defined in \cite{NonSemiSimp}. Taking inspiration from this
-situation, we pretend that there is a fibrant monoidal double category $\DThick$
-which, under $\mathcal{H}$, yields $\PTT$. The structures defining $\DThick$ are
-the ones analogous to $\Cob_{2}$:
+situation, we can verify that there is a fibrant monoidal double category
+$\DThick$ which, under $\mathcal{H}$, yields $\PTT$. The structures defining
+$\DThick$ are the ones analogous to $\Cob_{2}$:
 \begin{itemize}
 \setlength{\itemsep}{0pt}
 \item objects are diffeomorphism classes of disjoint unions of the interval
@@ -58,7 +58,19 @@ genus $k$ cobordism $Z : I \to I$ where the holes are circles with centers along
 a straight line from one boundary interval to another. This cobordism then
 decomposes into a $k$--fold composition of $M * W : I \to I$ with itself, where
 $M$ is the ``canonical'' pair-of-pants and $W$ is the ``canonical''
-co-pair-of-pants. In associating a linear map ``functorially'' to $Z$, it
+co-pair-of-pants. An example is shown below:
+
+\[\begin{tikzpicture}[scale=0.25]
+\idcobup{1, 0}
+\pants{1, 4}
+\pants{5, 2}
+\copants{9, 2}
+\pants{13, 2}
+\copants{17, 2}
+\pants{21, 2}
+\copants{25, 2}
+\end{tikzpicture}\]
+In associating a linear map ``functorially'' to $Z$, it
 suffices to associate linear maps to $M$ -- we can then associate a linear map
 to $W$ by duality and get a linear map for $Z$ by composition.
 
@@ -108,7 +120,18 @@ in $Z''$ on the mid-point of its only boundary interval and obtain an element
 $a \in A$, or equivalently a linear map $a : \C \to A$ by parallel transport of
 some fixed element $a_0 \in A$. We set $F_1(Z'') = a$ and get $F_1(Z')$ by
 parallel transport of $a_0$ along $f\gamma$. $F_1(Y)$ is then obtained by
-composition.
+composition. Continuing the example, we have:
+
+\[\begin{tikzpicture}[scale=0.25]
+\pidcobup{1, 0}
+\ppants{1, 4}
+\ppants{5, 2}
+\pcopants{9, 2}
+\ppants{13, 2}
+\pcopants{17, 2}
+\ppants{21, 2}
+\pcopants{25, 2}
+\end{tikzpicture}\]
 
 This completes the definition of an object function $F_1$ for the morphism
 category of $\DThick$. Now, we turn our attention to $2$--morphisms -- boundary
