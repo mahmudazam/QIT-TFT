@@ -1,0 +1,97 @@
+
+\subsection{Morphisms of Expression Graphs}
+
+It is of interest to define morphisms of expression graphs. They will be
+necessary to define interesting constructions on expression graphs later on.
+
+\begin{defn}[Expression Homomorphism]
+An expression graph homomorphism or expression homomorphism is a graph
+homomorphism $f : G \to H$ between expression graphs such that $f(S(G))$ is
+contained in some level set $L$ in $H$, $f$ preserves the ordering of $S(G)$ in
+$L$ and $f$ preserves the edge orderings for each vertex.
+\end{defn}
+
+We then note some useful facts concerning level orderings and expression
+isomorphisms. First, every expression graph $G$ has a level ordering as
+described in the algorithm in \S\ref{subsec:alg_graph_exp} so that the vertex
+set is a disjoint union of the levels. Then, we have a level function $l_G$ for
+$G$ which assigns to each vertex $v$ the integer $n$ for which $v$ is in the
+$n$--th level set.
+
+\begin{lem}\label{thm:expiso_lvlpres}
+Expression isomorphisms $f : G \to H$ are level preserving, i.e.
+\[
+  l_G(v) = l_H(f(v))
+\]
+\end{lem}
+\begin{proof}
+Let
+$\set{V_i}_{i = 1}^{N}$ and
+$\set{W_j}_{i = 1}^{M}$ be the level orderings of $G$ and $H$
+respectively. By definition, $l_G(v) = 1$ implies
+$l_H(f(v)) = 1$. Let $v \in V_k$ for some $1 \leq k \leq N$.
+By corollary \ref{cor:lvltolvl}, there is a path $v_1, \dots, v_k = v$ with each
+$v_i \in V_i$. Then, $f(v_1) \in W_1$ by definition and there is a path
+$f(v_1), \dots, f(v_k) = f(v)$ in $H$. Hence, we have that
+$l_H(f(v)) \geq l_G(v)$. On the other hand, let $f(v) \in W_m$ so that there is
+a path $w_1, \dots, w_m$ in $H$ with each $w_i \in W_i$. Using $f^{-1}$ on this
+path and a similar argument as the one before, we can show that
+$l_H(f(v)) \leq l_G(v)$.
+\end{proof}
+
+\begin{cor}
+For any expression homomorphism $f : G \to H$, if $V_i$ is the $i$--th level set
+in $G$, then $f(V_i)$ is the $i$--th level set in $H$.
+\end{cor}
+\begin{proof}
+Let $W_i$ be the $i$--th level set of $H$. Then, by the previous lemma
+$f(V_i) \subset W_i$. Again, using $f^{-1}$ in place of $f$ and $W_i$ in place
+of $V_i$, we have
+$f^{-1}(W_i) \subset V_i \implies W_i \subset f(V_i)$. Hence, $f(V_i) = W_i$.
+\end{proof}
+
+\begin{lem}
+Expression isomorphisms $f : G \to H$ are order-preserving on levels, i.e.
+\[
+  u \leq v \iff f(u) \leq f(g)
+\]
+\end{lem}
+\begin{proof}
+Let $u, v$ be in the same level set in $G$ and $u \leq v$. We proceed by
+induction on $l_G(u) = l_G(v)$. When $l_G(u) = l_G(v) = 1$, then
+$f(u) \leq f(v)$, by definition. The other direction is obtained similarly with
+$f^{-1}$ in place of $f$.
+
+Let $l_G(u) = l_G(v) = k + 1$. By the construction of level sets and their
+ordering given in the expression construction algorithm, there exist
+$u', v' \in V(G)$ such that the following hold:
+\begin{enmrt}
+\li $l_G(u') = l_G(v') = k$
+\li $u' \leq v'$
+\li there are edges $(u', u)$ and $(v' v)$
+\li there are no edges $(u'', u)$ or $(v'', v)$ with $u'' < u'$ or $v'' < u'$
+\li if $u' = v'$, $(u', u) \leq (v', v)$
+\end{enmrt}
+By the previous corollary, $l_H(f(u')) = l_H(f(v')) = k$.
+If there is an $x < f(u')$ or a $y < f(v')$ in $V(H)$ with edges
+$(x, f(u'))$ or $(y, f(v'))$, then by induction, $f^{-1}(x) < u'$ or
+$f^{-1}(y) < v'$ with some edge $(f^{-1}(x), u)$ or $(f^{-1}(y), v)$,
+contradicting the conditions on $u'$ and $v'$. Thus, the edges $(f(u'), f(u))$
+and $(f(v'), f(v))$ ensure that $f(u) \leq f(v)$. The other direction is again
+obtained similarly by replacing $f$ with $f^{-1}$.
+\end{proof}
+
+\begin{cor}\label{cor:expiso_unique}
+Expression isomorphisms $f : G \to H$ are unique.
+\end{cor}
+\begin{proof}
+Let $g : G \to H$ be another expression isomorphism. Then both $f$ and $g$
+restrict to order-preserving bijections on the finite level sets and hence must
+agree on the level sets. Thus, $f$ and $g$ agree on $G$.
+\end{proof}
+
+In light of the last corollary, it is reasonable to consider expression graphs
+up to expression isomorphisms from this point onwards. We will next define some
+useful constructs on expression graphs that will facilitate our desired notion
+of TQFTs.
+

@@ -1,0 +1,127 @@
+
+\subsection{Single Manifold TQFT}\label{subsec:one_man_tqft}
+
+Notice that the theory we developed so far transfers verbatim from the smooth
+setting to the holomorphic setting in that we can replace all instances of $\R$
+with $\C$, smooth manifolds, smooth bundles and connections with complex
+manifolds, holomorphic bundles and connections on holomorphic bundles
+respectively. From this point onwards, when we say manifold, bundle, connection,
+etc., we will mean these in either of the two settings. We will write $\K$ to
+mean either of $\R$ or $\C$. With this convention, we consider the following
+data for a monoidal double category:
+
+\begin{enmrt}
+\li Object category: objects are totally ordered, $2$--coloured, finite sets;
+morphisms are order-preserving, colour-preserving (unique) bijections
+$V \stackrel{!}{\longleftrightarrow} V'$
+
+\li Morphism category: objects (horizontal $1$--morphisms) are transport graphs
+$(G, \gamma)$, where for a fixed manifold $M$, a fixed bundle $\pi : E \to M$,
+and a fixed connection $\nabla$ on $\pi$, $G$ is a pretransport graph with
+$\gamma$ a geometric realization of $G$ in $M$; morphisms are tuples
+\[
+  (f_0, f_1, h) : (G_1, \gamma^1) \to (G_2, \gamma^2)
+\]
+where $(f_0, f_1)$ is an automorphism of the connection $\nabla$ and
+$(f_0, h)$ is a transport isomorphism $(G_1, \gamma^1) \to (G_2, \gamma^2)$
+\footnote{It is possible that this condition forces $(f_0, f_1) = (\id, \id)$.}
+
+\li Source functor: $S : G \mapsto S(G)$; for a $2$--morphism $(f_0, f_1, h)$,
+$S(f_0, f_1, h)$ is the unique order-preserving bijection
+$S(\dom h) \to S(\codom h)$
+
+\li Target functor: $T : G \mapsto T(G)$, defined similarly as $S$
+
+\li Unit functor: $U : V \mapsto V$; $U : f \mapsto f$ -- each finite,
+totally-ordered, $2$--coloured set is a transport graph with no edges and
+order- and colour- preserving bijections between finite sets are unique
+transport isomorphisms
+
+\li Horizontal composition:
+$(G_2, \gamma^2) * (G_1, \gamma^1) = (G_2 * G_1, \gamma^2 * \gamma^1)$
+
+\li Horizontal associators: inherited from the categories of sets and manifolds
+
+\li Horizontal unitors: inherited like associators
+
+\li Monoidal product: disjoint union
+
+\li Monoidal unit: empty set for object category, empty graph for morphism
+category
+\end{enmrt}
+
+It is straightforward to verify that the above data does form a monoidal double
+category.
+\TODO{Verify that this data does indeed form a monoidal double functor}
+
+\begin{defn}[Double Category of Transport Graphs in a Manifold]
+The above data defines the double category of transport graphs in $M$ and we
+denote it as $\TG(M)$. We denote the object category as $\TG(M)_0$ and the
+morphism category as $\TG(M)_1$.
+\end{defn}
+
+We then consider a double functor defined as follows.
+
+\begin{defn}[Parallel Field Theory over a Manifold]\label{defn:sing_man_tqft}
+For a finite, totally-ordered, $2$--coloured set
+$V = \set{v_1, \dots, v_n}$ in $\TG(M)_0$, we set
+\[
+  F(V) := \bigotimes_{i = 1}^{n} c(v_i)
+\]
+where $c(v) = A$ if $v$ is blue and $c(v) = \K$ if $v$ is green,
+for some $\K$--algebra $A$.
+
+For every unique order- and colour-preserving bijection $f : V \to V'$ in
+$\TG(M)_0$, we set $F(f) := \id_{F(V)} = \id_{F(V')}$.
+
+For a transport graph $(G, \gamma)$ in $M$ -- an object in $\TG(M)_1$ -- and an
+edge $(u, v) \in G$, we denote $\nabla^{\gamma_{u, v}}$ to be the linear map
+$A \to A$ obtained by parallel transport along $\gamma_{u, v}$. Fixing some
+element $a_{u, v} \in A$, we then define:
+\[
+  F(u, v) := \begin{cases}
+    \id_A
+      & u = v \text{ is blue} \\
+    \id_{\K} % 1 \mapsto \text{trace}\br{\nabla^{\gamma_{u, v}}(a_{u, v})}
+      & u \text{ is green and } v \text{ is green} \\
+    \nabla^{\gamma_{u, v}}
+      & u \text{ is blue and } v \text{ is blue} \\
+    1 \mapsto \nabla^{\gamma_{u, v}}(a_{u, v})
+      & u \text{ is green and } v \text{ is blue} \\
+    \text{trace} \circ \nabla^{\gamma_{u, v}}
+      & u \text{ is blue and } v \text{ is green}
+  \end{cases}
+\]
+We then obtain a linear map:
+\[
+  F(G, \gamma) := \Exp{G}[F(u, v)]
+               :  F(S(G)) \to F(T(G))
+\]
+For a $2$--morphism
+$(f_0, f_1, h) : (G_1, \gamma_1) \to (G_2, \gamma_2)$ in $\TG(M)_1$, we consider
+the path $(r_t, s_t)$ in the isomorphism group of the connection $\nabla$ such
+that $(r_0, s_0) = (\id_M, \id_E)$ and $(r_1, s_1) = (f_0, f_1)$. We then have a
+smoothly varying family of functions $s_t\gamma : E(G) \to C^0(I, M)$
+where $(s_t\gamma)_{u, v} = s_t \circ \gamma_{u, v}$. This yields a smoothly
+varying family of linear maps, which we write as:
+\[
+  F(f_0, f_1, h) := \Exp{G}[s_t\gamma]
+    : F(S(G)) \to F(T(G)), t \in [0, 1]
+\]
+We call $F$ a parallel field theory over $M$.
+\end{defn}
+
+\TODO{Verify that this data does define a monoidal double functor.}
+
+We note that the definition of $F$ does not specify the codomain. We will define
+the codomain double category in the next section along with a notion of TQFTs
+based on transport graphs in cobordisms equipped with connections.
+
+We also note that there is some redundancy in this setup. The empty graph, the
+single vertex and paths with only green vertices are not the same horizontal
+$1$--morphism but they are all morphisms $\varnothing \to \varnothing$ and map
+to the identity morphism of $\K$ under $F$. This differs from $\Cob_2$ and
+$2\Thick$ in that there is a unique morphism $\varnothing \to \varnothing$ in
+these categories as well as their corresponding double categories and this maps
+to the identity morphism of $\K$ under a usual TQFT.
+
