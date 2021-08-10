@@ -1,43 +1,36 @@
 
 PROJECT=Thick_TQFTs_and_Quantum_Information
-CODE_DEPS=$(shell ls -1 *.sage | sed 's:\(.*\):build/\1.out:g')
-BIB_DEPS=$(shell ls -1 *.bib)
-STY_DEPS=$(shell ls -1 */*.sty)
-TEX_DEPS=$(shell ls -1 *.tex */*.tex)
-CWD=$(shell pwd)
+SECTIONS=\
+  introduction\
+  first_approach\
+  connections\
+  graphs\
+  field_theory
 
-all: ${PROJECT}.pdf
+PRJWD=$(shell pwd)
 
-build:
-	if [ ! -d build ]; then mkdir build; fi
+include ${PRJWD}/pre.mk
 
-build/%.out: %
-	cp $< build/$<
-	cd build; sage $< 1> $<.out; cd ..
+${PROJECT}.pdf: build ${BIB_DEPS} ${STY_DEPS} ${TEX_DEPS}
 
-%.pdf: %.tex
-	pdflatex -interaction nonstopmode\
-           -output-directory build\
-           "\def\CWD{${CWD}} \input{$<}"
-	biber --output-directory build $*
-	pdflatex -interaction nonstopmode\
-           -output-directory build\
-           "\def\CWD{${CWD}} \input{$<}"
-	pdflatex -interaction nonstopmode\
-           -output-directory build\
-           "\def\CWD{${CWD}} \input{$<}"
-	cp build/$@ .
+.PHONY: clean Clean ${SECTIONS}
+include ${PRJWD}/post.mk
 
-${PROJECT}.pdf:\
-    build\
-    ${BIB_DEPS}\
-    ${STY_DEPS}\
-    ${TEX_DEPS}\
-    ${PROJECT}.tex
+All: ${PROJECT}.pdf ${SECTIONS}
 
-clean:
-	rm -rf build
+introduction: ${BIB_DEPS} ${STY_DEPS} ${TEX_DEPS}
+	$(MAKE) -C $@
 
-Clean: clean
-	rm -f *.pdf
+first_approach: ${BIB_DEPS} ${STY_DEPS} ${TEX_DEPS}
+	$(MAKE) -C $@
+
+connections: ${BIB_DEPS} ${STY_DEPS} ${TEX_DEPS}
+	$(MAKE) -C $@
+
+graphs: ${BIB_DEPS} ${STY_DEPS} ${TEX_DEPS}
+	$(MAKE) -C $@
+
+field_theory: ${BIB_DEPS} ${STY_DEPS} ${TEX_DEPS}
+	$(MAKE) -C $@
+
 

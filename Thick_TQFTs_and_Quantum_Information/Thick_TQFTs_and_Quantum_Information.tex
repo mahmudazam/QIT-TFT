@@ -1,38 +1,36 @@
 
 \documentclass{article}
 
-\usepackage{\CWD/preamble/preamble}
+\usepackage{\PRJWD/preamble/preamble}
 \usepackage{subfiles}
 
 \AtBeginDocument{
-\input{\CWD/frontmatter/title}
-\input{\CWD/frontmatter/abstract}
-\input{\CWD/frontmatter/frontmatter}
+\input{\PRJWD/frontmatter/frontmatter}
 }
 
 \AtEndDocument{
-\input{\CWD/ending/references}
+\input{\PRJWD/ending/ending}
 }
 
 \begin{document}
 
-\subfile{\CWD/introduction/introduction}
+\subfile{introduction/introduction}
 
 \pagebreak
 
-\subfile{\CWD/first_approach/first_approach}
+\subfile{first_approach/first_approach}
 
 \pagebreak
 
-\subfile{\CWD/connections/connections}
+\subfile{connections/connections}
 
 \pagebreak
 
-\subfile{\CWD/graphs/graphs}
+\subfile{graphs/graphs}
 
 \pagebreak
 
-\subfile{\CWD/field_theory/field_theory}
+\subfile{field_theory/field_theory}
 
 %\section{Future Work}
 %
