@@ -1279,7 +1279,7 @@ categories of transport graphs realized in manifolds. We develop one of these
 notions of TQFTs next.
 \TODO{I am not sure if it is appropriate call this a notion of TQFTs.}
 
-\subsection{Single Manifold TQFT}
+\subsection{Single Manifold TQFT}\label{subsec:one_man_tqft}
 
 Notice that the theory we developed so far transfers verbatim from the smooth
 setting to the holomorphic setting in that we can replace all instances of $\R$
@@ -1342,7 +1342,7 @@ morphism category as $\TG(M)_1$.
 
 We then consider a double functor defined as follows.
 
-\begin{defn}[Geometric Quantum Information Theory]\label{defn:sing_man_tqft}
+\begin{defn}[Parallel Field Theory over a Manifold]\label{defn:sing_man_tqft}
 For a finite, totally-ordered, $2$--coloured set
 $V = \set{v_1, \dots, v_n}$ in $\TG(M)_0$, we set
 \[
@@ -1388,25 +1388,20 @@ varying family of linear maps, which we write as:
   F(f_0, f_1, h) := \Exp{G}[s_t\gamma]
     : F(S(G)) \to F(T(G)), t \in [0, 1]
 \]
-We call $F$ a geometric quantum information theory.
+We call $F$ a parallel field theory over $M$.
 \end{defn}
 
 We note that the definition of $F$ does not specify the codomain. We will define
 the codomain double category in the next section along with a notion of TQFTs
-based on transport graphs in cobordisms equipped with connections. For now, we
-observe some properties of this construction and justify the naming.
+based on transport graphs in cobordisms equipped with connections.
 
-We first note that there is some redundancy in this setup. The empty graph, the
+We also note that there is some redundancy in this setup. The empty graph, the
 single vertex and paths with only green vertices are not the same horizontal
 $1$--morphism but they are all morphisms $\varnothing \to \varnothing$ and map
 to the identity morphism of $\K$ under $F$. This differs from $\Cob_2$ and
 $2\Thick$ in that there is a unique morphism $\varnothing \to \varnothing$ in
 these categories as well as their corresponding double categories and this maps
 to the identity morphism of $\K$ under a usual TQFT.
-
-\TODO{State inverse parallel transport problem}
-
-\TODO{Connect with hyperbolic band theory paper, perhaps}
 
 \end{document}
 

@@ -190,7 +190,7 @@ the spaces $\K^n$ for all $n \in \N$.
 %\]
 %\end{enmrt}
 
-\subsection{Cobordims with Transport Graphs}
+\subsection{Thick Tangles and Transport Graphs}
 
 Having established a codomain double category, we look towards extending our
 notion of TQFTs based on transport graphs in a single manifold to transport
@@ -285,12 +285,12 @@ duals gives us an idea of the structures we are dealing with:
 We recall that edges that share an end-point need not map to paths that share an
 end-point, as we see in the left diagram. At the same time, paths are allowed to
 intersect. We also note that we have chosen the pretransport graphs so as to
-match their sources and targes with the sources and targets of their realizing
+match their sources and targets with the sources and targets of their realizing
 cobordisms. We now turn our attention to the cylinder. We observe that the
 cylinder is a cobordism $I \to I$. On the transport graph side, morphisms from a
-single blue vertex to another can be any path with blue vertices including the
+single blue vertex to another can be any path with blue end-points including the
 path consisting of a single blue vertex. However, the gluing unit for the single
-blue vertex, on either side, is the single blue vertex itself. Hence we will
+blue vertex, on either side, is the single blue vertex itself. Hence, we will
 consider the following transport graphs in the cylinder:
 \[
 \begin{tikzpicture}[scale=0.55]
@@ -310,6 +310,258 @@ consider the following transport graphs in the cylinder:
 \midarrowc{a1p}{0, 0.45}{0, -0.45}{a2p}
 \end{tikzpicture}
 \]
+
+\begin{exm}
+We take the example from our first description of the double categorical
+approach and adapt it to this setting. The following is one possible diagram:
+\[\begin{tikzpicture}[scale=0.33]
+
+\idcobup{1, 0}
+\colvert{blue}{-0.5, -1.85}{s}
+\colvert{blue}{2, 0.25}{t}
+\midarrowc{s}{0, -2}{2, -1}{t}
+
+\coordinate (cntr) at (1, 4);
+\pants{cntr}
+\colvert{blue}{$(cntr) + (-1.5, 2)$}{s1}
+\colvert{blue}{$(cntr) + (-1.5, -2)$}{s2}
+\colvert{blue}{$(cntr) + (1.25, 0)$}{t}
+\midarrowc{s1}{$(cntr) + (0, 2)$}{$(cntr) + (0, 0)$}{t}
+\midarrowc{s2}{$(cntr) + (0, 1)$}{$(cntr) + (0, -1)$}{t}
+
+\coordinate (cntr) at (5, 2);
+\pants{cntr}
+\colvert{blue}{$(cntr) + (-1.5, 2)$}{s1}
+\colvert{blue}{$(cntr) + (-1.5, -2)$}{s2}
+\colvert{blue}{$(cntr) + (1.25, 0)$}{t}
+\midarrowc{s1}{$(cntr) + (0, 2)$}{$(cntr) + (0, 0)$}{t}
+\midarrowc{s2}{$(cntr) + (0, 1)$}{$(cntr) + (0, -1)$}{t}
+
+\coordinate (cntr) at (9, 2);
+\begin{scope}[rotate around={180:(cntr)}]
+\pants{cntr}
+\colvert{blue}{$(cntr) + (-1.5, 2)$}{s1}
+\colvert{blue}{$(cntr) + (-1.5, -2)$}{s2}
+\colvert{blue}{$(cntr) + (1.25, 0)$}{t}
+\midarrowc{s1}{$(cntr) + (0, 2)$}{$(cntr) + (0, 0)$}{t}
+\midarrowc{s2}{$(cntr) + (0, 1)$}{$(cntr) + (0, -1)$}{t}
+\end{scope}
+
+\coordinate (cntr) at (13, 2);
+\pants{cntr}
+\colvert{blue}{$(cntr) + (-1.5, 2)$}{s1}
+\colvert{blue}{$(cntr) + (-1.5, -2)$}{s2}
+\colvert{blue}{$(cntr) + (1.25, 0)$}{t}
+\midarrowc{s1}{$(cntr) + (0, 2)$}{$(cntr) + (0, 0)$}{t}
+\midarrowc{s2}{$(cntr) + (0, 1)$}{$(cntr) + (0, -1)$}{t}
+
+\coordinate (cntr) at (17, 2);
+\begin{scope}[rotate around={180:(cntr)}]
+\pants{cntr}
+\colvert{blue}{$(cntr) + (-1.5, 2)$}{s1}
+\colvert{blue}{$(cntr) + (-1.5, -2)$}{s2}
+\colvert{blue}{$(cntr) + (1.25, 0)$}{t}
+\midarrowc{s1}{$(cntr) + (0, 2)$}{$(cntr) + (0, 0)$}{t}
+\midarrowc{s2}{$(cntr) + (0, 1)$}{$(cntr) + (0, -1)$}{t}
+\end{scope}
+
+\coordinate (cntr) at (21, 2);
+\pants{cntr}
+\colvert{blue}{$(cntr) + (-1.5, 2)$}{s1}
+\colvert{blue}{$(cntr) + (-1.5, -2)$}{s2}
+\colvert{blue}{$(cntr) + (1.25, 0)$}{t}
+\midarrowc{s1}{$(cntr) + (0, 2)$}{$(cntr) + (0, 0)$}{t}
+\midarrowc{s2}{$(cntr) + (0, 1)$}{$(cntr) + (0, -1)$}{t}
+
+\coordinate (cntr) at (25, 2);
+\begin{scope}[rotate around={180:(cntr)}]
+\pants{cntr}
+\colvert{blue}{$(cntr) + (-1.5, 2)$}{s1}
+\colvert{blue}{$(cntr) + (-1.5, -2)$}{s2}
+\colvert{blue}{$(cntr) + (1.25, 0)$}{t}
+\midarrowc{s1}{$(cntr) + (0, 2)$}{$(cntr) + (0, 0)$}{t}
+\midarrowc{s2}{$(cntr) + (0, 1)$}{$(cntr) + (0, -1)$}{t}
+\end{scope}
+
+\end{tikzpicture}\]
+\end{exm}
+
+\begin{exm}
+We need not consider transport graphs that match the pair-of-pants or the
+cylinder (or their duals) exactly. For instance, we could consider the following
+graph:
+\[\begin{tikzpicture}[scale=0.5]
+\coordinate (cntr) at (1, 4);
+\pants{cntr}
+\colvert{blue}{$(cntr) + (-1.5, 2)$}{s1}
+\colvert{blue}{$(cntr) + (-1.5, -2)$}{s2}
+\colvert{green!55!black}{$(cntr) + (0, 1)$}{t1}
+\colvert{blue}{$(cntr) + (0, -1)$}{t2}
+\colvert{blue}{$(cntr) + (1.5, -0.5)$}{t3}
+\midarrowc{s1}{$(cntr) + (0, 2)$}{$(cntr) + (-1, 1)$}{t1}
+\midarrowc[0.33]{s2}{$(cntr) + (-0.25, -1)$}{$(cntr) + (0, 1)$}{t1}
+\midarrowc{s1}{$(cntr) + (-0.5, 0)$}{$(cntr) + (-0.5, 2)$}{t2}
+\midarrowc{s2}{$(cntr) + (-0.5, -2)$}{$(cntr) + (-0.5, -1)$}{t2}
+\midarrowc{t1}{$(cntr) + (0.5, 0)$}{$(cntr) + (1, 0.5)$}{t3}
+\midarrowc{t2}{$(cntr) + (0.5, 0.5)$}{$(cntr) + (1, -0.5)$}{t3}
+\end{tikzpicture}\]
+Notice that the source and target of the graph matches the source and target of
+the pair-of-pants event though the graph is not a pair-of-pants graph. Also
+notice that this graph has an internal green vertex.
+\end{exm}
+
+From these examples, we are motiviated to note the following definition.
+\begin{defn}
+Given a $2$--dimensional thick tangle, consider a transport graph in
+the tangle such that the source of the graph has the same number of vertices
+as the number of boundary components of the source of the tangle and the
+colouring and ordering of the source of the graph is such that a blue vertex
+corresponds to an interval boundary component and a green vertex corresponds to
+an empty boundary component. Furthermore, that the analogous statement holds for
+the targets of the graph and the tangle. We then call the given transport graph
+admissible for the given tangle.
+\end{defn}
+
+An immediate corollary of this definition is:
+\begin{cor}
+Admissible transport graphs in gluable thick tangles are gluable.
+\end{cor}
+
+The examples we have seen so far are all admissible. We also show graphs that
+are not admissible in the following example.
+
+\begin{exm}
+The following are not admissible transport graphs:
+\[\begin{tikzpicture}[scale=0.33]
+
+\coordinate (cntr) at (1, 4);
+\pants{cntr}
+\colvert{blue}{$(cntr) + (-1.5, 2)$}{s}
+\colvert{blue}{$(cntr) + (1.5, 0)$}{t}
+\midarrow{s}{t}
+\lblvert{$(cntr) + (0, -5)$}{lbl}{\small not enough}
+\lblvert{$(cntr) + (0, -6)$}{lbl}{\small source vertices}
+
+\coordinate (cntr) at (11, 4);
+\idcob{cntr}
+\colvert{green!55!black}{$(cntr) + (-1.5, 0)$}{s}
+\colvert{blue}{$(cntr) + (1.5, 0)$}{t}
+\midarrow{s}{t}
+\lblvert{$(cntr) + (0, -5)$}{lbl}{\small source should}
+\lblvert{$(cntr) + (0, -6)$}{lbl}{\small be blue}
+
+\coordinate (cntr) at (21, 4);
+\copants{cntr}
+\capcob{$(cntr) + (4, 2)$}
+\colvert{blue}{$(cntr) + (-1.5, 0)$}{s}
+\colvert{blue}{$(cntr) + (2.5, 2)$}{t1}
+\colvert{blue}{$(cntr) + (1.5, -2)$}{t2}
+\midarrow{s}{t1}
+\midarrow{s}{t2}
+\lblvert{$(cntr) + (0, -5)$}{lbl}{\small top traget}
+\lblvert{$(cntr) + (0, -6)$}{lbl}{\small should be}
+\lblvert{$(cntr) + (0, -7.25)$}{lbl}{\small green}
+
+\end{tikzpicture}\]
+\end{exm}
+
+So far, we have only shown the diagrams of surfaces with paths in these examples
+but what we need to work with are surfaces equipped with bundles, connections
+and transport graphs. We will now construct a monoidal double category
+consisting of these structures.
+
+Consider the monoidal double category $\CConn^V_{\DThick}$ of gluable
+connections on gluable $V$--fibred (smooth or complex) bundles on
+$2$--dimensional thick tangles.
+For each horizontal $1$--morphism (bundle with connection) in this category, we
+take all admissible transport graphs in the base of the bundle such that all
+paths consist only of points internal to the base space and away from the
+boundary collar over which the bundle has been made trivial.
+
+For each gluable bundle equipped with a gluable connection and an admissible
+transport graph in this manner, we take its source to be the source of the
+bundle in $\CConn^V_{\DThick}$ along with the source of the transport graph.
+Targets are defined similarly. The gluing units are the disjoint unions of
+cylinders of the following form shown before:
+\[\begin{tikzpicture}[scale=0.55]
+\idcob{0, 0}
+\colvert{blue}{0, 2}{a}
+\lblvert{0, -2}{lbl}{\footnotesize cylinder without paths}
+\end{tikzpicture}\]
+
+Naturally, the object category consists of the sources and targets of the
+horizontal $1$--morphisms and transport isomorphisms between them that are also
+connection isomorphisms -- similar to the monoidal double category $\TG(M)$ of
+transport graphs in a manifold $M$ defined in subsection
+\ref{subsec:one_man_tqft}. The morphism category consists of the horizontal
+$1$--morphisms along with transport isomorphisms that are also connection
+isomorphisms. Finally, monoidal structure is given by disjoint union, as
+expected.
+
+Having the developed the basic idea of such a monoidal double category, we avoid
+going into further detail because it does not provide any additional insight. We
+simply note that the structure outlined here is a monoidal double category that
+can serve as the domain for a notion of (double) functorial quantum field
+theory. Hence, we end this subsection with the following definition.
+
+\begin{defn}
+The monoidal double category outlined above is called the double category of
+transport graphs in $2$--dimensional thick tangles over $V$ and is
+denoted $\TG\br{\CConn^V_{\DThick}}$.
+\end{defn}
+
+\subsection{Parallel Field Theory}
+
+We are now equipped with all the machinery to define our desired notion of
+quantum field theory.
+
+\begin{defn}[Parallel Field Theory]
+Let $A$ be a $\K$--algebra for $\K = \R$ or $\C$. Then, we define the data of a
+monoidal double functor
+\[
+  F : \TG\br{\CConn^V_{\DThick}} \to \FFVect_{\K}
+\]
+The object and morphism functions are defined identically as in definition
+\ref{defn:sing_man_tqft} -- there is no ambiguity with boundary components
+because they match the sources and targets of the transport graphs. Such a
+monoidal double functor is called a parallel field theory (over thick tangles).
+\end{defn}
+
+\begin{rmk}
+The ending parenthetical remark in the previous definition suggests that we can
+easily consider such field theories over other cobordism categories but we will
+not pursue this idea for now.
+\end{rmk}
+
+We have not yet discussed if enough useful elements of the algebra $A$ can be
+accessed with a field theory of this form. After all, this was the original
+issue with $1$--categorical TQFTs. We will not treat this issue in full in this
+paper but we will note that the machinery we have developed so far puts no
+serious restrictions on the bundles or connections we can choose over our
+manifolds. What we mean by this is that given an arbitray bundle with a
+connection, we can make it gluable by only modifying it in a small collar of the
+boundary. The bundle and connection behave as usual over rest of the base
+manifold. We hope that this will provide enough structure to ensure that enough
+useful algebra elements become accessible with a parallel field theory.
+Nevertheless, we will make this problem precise for future work.
+The main question to be answered here is this:
+\begin{displayquote}
+Given a manifold $M$, a $V$--fibred
+complex bundle $E \to M$, a complex linear connection $\nabla$ on $E$, and an
+element $v \in V$, \textit{is there a path $\gamma$ in $M$ and a fixed
+$s_v \in V$, depending on $v$, such that $v$ is obtained by parallel transport
+of $s_v$ along $\gamma$}?
+\end{displayquote}
+
+\TODO{Improve this statement.}
+
+\TODO{Connect with hyperbolic band theory paper, perhaps}
+
+\subsection{Quantum Information}
+
+\subsection{Hyperbolic Band Theory}
+
+\subsection{Categorification in Representation Theory}
 
 \end{document}
 
