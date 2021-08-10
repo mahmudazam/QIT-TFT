@@ -1,42 +1,38 @@
 
 \documentclass{article}
 
-\usepackage{preamble}
+\usepackage{\CWD/preamble/preamble}
 \usepackage{subfiles}
 
 \AtBeginDocument{
-\input{title}
-\input{abstract}
-\input{frontmatter}
+\input{\CWD/frontmatter/title}
+\input{\CWD/frontmatter/abstract}
+\input{\CWD/frontmatter/frontmatter}
 }
 
 \AtEndDocument{
-\input{references}
+\input{\CWD/ending/references}
 }
 
 \begin{document}
 
-\subfile{introduction}
-
-%\subsection{Matrix product with intervening matrix}
-
-%\subfile{mat_prod_int_mat}
+\subfile{\CWD/introduction/introduction}
 
 \pagebreak
 
-\subfile{functor}
+\subfile{\CWD/first_approach/first_approach}
 
 \pagebreak
 
-\subfile{connection}
+\subfile{\CWD/connections/connections}
 
 \pagebreak
 
-\subfile{graph}
+\subfile{\CWD/graphs/graphs}
 
 \pagebreak
 
-\subfile{vect}
+\subfile{\CWD/field_theory/field_theory}
 
 %\section{Future Work}
 %
