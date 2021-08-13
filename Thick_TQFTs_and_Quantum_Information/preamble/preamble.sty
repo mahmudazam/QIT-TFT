@@ -39,7 +39,8 @@
 
 % Theorem Environments:
 \newtheorem{thm}{Theorem}
-\counterwithin*{thm}{section}
+\numberwithin{thm}{section}
+%\counterwithin*{thm}{section}
 \newtheorem{lem}[thm]{Lemma}
 \newtheorem{cor}[thm]{Corollary}
 \newtheorem{numexc}[thm]{Exercise}
@@ -49,6 +50,7 @@
 \newtheorem{rmk}[thm]{Remark}
 \newtheorem{alg}[thm]{Algorithm}
 \newtheorem{exm}[thm]{Example}
+\newtheorem{qstn}[thm]{Question}
 
 % Code Block Settings:
 \definecolor{codegreen}{rgb}{0,0.6,0}

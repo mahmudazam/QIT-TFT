@@ -10,11 +10,25 @@ monoidal double functor
 \[
   F : \TG\br{\CConn^V_{\DThick}} \to \FFVect_{\K}
 \]
-The object and morphism functions are defined identically as in definition
-\ref{defn:sing_man_tqft} -- there is no ambiguity with boundary components
-because they match the sources and targets of the transport graphs. Such a
-monoidal double functor is called a parallel field theory (over thick tangles).
+Each horizontal $1$--morphism in the domain is identical to one in the
+double category of transport graphs in a manifold. $F$ is thus defined on
+horizontal $1$--morphisms identically to the functor in definition
+\ref{defn:sing_man_tqft}.
+
+We observe that each object can be reduced to a source or target of a
+pretransport graph since, by definition the copies of $I$ and $\varnothing$ are
+matched up with blue and green vertices respectively. This allows us to define
+$F$ on objects identically to \ref{defn:sing_man_tqft} again. It is then easy to
+see that the action of $F$ on vertical $1$--morphisms and $2$--morphisms can be
+adapted similarly.
+
+A monoidal double functor $F$ defined in this way is called a parallel field
+theory (on $2$--dimensional thick tangles or $\DThick$).
 \end{defn}
+
+It is straightforward to verify the axioms of a monoidal double functor for $F$
+as defined above.
+\TODO{Check monoidal double functoriality.}
 
 \begin{rmk}
 The ending parenthetical remark in the previous definition suggests that we can
@@ -33,16 +47,63 @@ boundary. The bundle and connection behave as usual over rest of the base
 manifold. We hope that this will provide enough structure to ensure that enough
 useful algebra elements become accessible with a parallel field theory.
 Nevertheless, we will make this problem precise for future work.
-The main question to be answered here is this:
-\begin{displayquote}
-Given a manifold $M$, a $V$--fibred
-complex bundle $E \to M$, a complex linear connection $\nabla$ on $E$, and an
-element $v \in V$, \textit{is there a path $\gamma$ in $M$ and a fixed
-$s_v \in V$, depending on $v$, such that $v$ is obtained by parallel transport
-of $s_v$ along $\gamma$}?
-\end{displayquote}
+One of the main questions to be answered here the following:
+
+\begin{qstn}\label{qstn:elem_from_pt}
+Given a manifold $M$ and some fixed element $a$ of a complex algebra
+$A^{\tensor n}$, are there
+\begin{enmrt}
+\li an $A$--fibred complex bundle $E \to M$,
+\li a complex linear connection $\nabla$ on $E$,
+\li a transport graph $G$ in $M$ with $S(G)$ consisting of only green vertices,
+$T(G)$ having $n$ blue vertices and with the paths in the geometric realization
+of $G$ away from some small neighbourhood of $\partial M$,
+\end{enmrt}
+such that $a$ is obtained as a linear map $\C \to A^{\tensor n}$ in
+the process described in definition \ref{defn:sing_man_tqft} for horizontal
+$1$--morphisms?
+\end{qstn}
+
+\begin{qstn}\label{qstn:map_from_pt}
+Given a manifold $M$ and some linear map $f : V \to V$, are ther
+\begin{enmrt}
+\li a $V$--fibred complex bundle $E \to M$
+\li a complex linear connection $\nabla$ on $E$,
+\li a transport graph $G$ in $M$ with $S(G)$ and $T(G)$ both consisting of only
+blue vertices, with its paths away from some neighbourhood of $\partial M$, as
+before,
+\end{enmrt}
+such that $f$ is obtained in the process described in definition
+\ref{defn:sing_man_tqft} for horizontal $1$--morphisms?
+\end{qstn}
 
 \TODO{Improve this statement.}
 
-\TODO{Connect with hyperbolic band theory paper, perhaps}
+If we can answer this question in the affirmative for a considerable
+collection of elements $a \in A$, then a parallel field theory gives us a
+concrete way to perform computations involving the multiplication of $A$ and
+automorphisms of $A$ and tensor products of these maps, using the geometry of
+manifolds. Hence, we make the following definition:
+
+
+\begin{defn}
+If the answers to question \ref{qstn:elem_from_pt} (or \ref{qstn:map_from_pt})
+is yes for some manifold $M$, then we say that $a$ (or $f$) is accessible from
+$M$.
+\end{defn}
+
+If an element $a$ is accessible from a manifold $M$, it is in the image of a
+parallel field theory on $M$.
+If an element $a$ is accessible from a thick tangle
+$M : \varnothing \to I^{\amalg n}$ where the chosen transport graph is
+admissible, then $a$ is in the image of a parallel field theory on $\DThick$.
+
+\begin{defn}
+In the latter case, we say that $a$ is accessible from $\DThick$.
+\end{defn}
+
+After this, it is easy to see
+that we can compute with accessible elements using the machinery of a parallel
+field theory. This picture will become clearer as we treat quantum information
+and computing in the next subsection.
 

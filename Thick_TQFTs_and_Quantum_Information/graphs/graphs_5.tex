@@ -52,7 +52,7 @@ category
 
 It is straightforward to verify that the above data does form a monoidal double
 category.
-\TODO{Verify that this data does indeed form a monoidal double functor}
+\TODO{Verify that this data does indeed form a monoidal double category.}
 
 \begin{defn}[Double Category of Transport Graphs in a Manifold]
 The above data defines the double category of transport graphs in $M$ and we
@@ -108,8 +108,17 @@ varying family of linear maps, which we write as:
   F(f_0, f_1, h) := \Exp{G}[s_t\gamma]
     : F(S(G)) \to F(T(G)), t \in [0, 1]
 \]
-We call $F$ a parallel field theory over $M$.
+We call $F$ a parallel field theory on $M$.
 \end{defn}
+
+\begin{rmk}
+We note that so far we have considered $\cwedge$ and $\cvee$ to mean the product
+and its dual for some algebra $A$. This is not strictly necessary. We could, in
+principle, choose, for each instance of $\cwedge$ in an expression of a
+transport graph, a distinct map $A \tensor A \to A$ when defining a parallel
+field theory as above, as long as it does not disturb the monoidal double
+functoriality of $F$.
+\end{rmk}
 
 \TODO{Verify that this data does define a monoidal double functor.}
 
