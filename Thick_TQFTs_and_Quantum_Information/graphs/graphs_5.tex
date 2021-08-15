@@ -1,5 +1,5 @@
 
-\subsection{Single Manifold TQFT}\label{subsec:one_man_tqft}
+\subsection{Single Manifold TQFT}\label{subsec:sing_man_tqft}
 
 Notice that the theory we developed so far transfers verbatim from the smooth
 setting to the holomorphic setting in that we can replace all instances of $\R$
@@ -111,13 +111,16 @@ varying family of linear maps, which we write as:
 We call $F$ a parallel field theory on $M$.
 \end{defn}
 
-\begin{rmk}
+\begin{rmk}\label{rmk:any_vect_space}
 We note that so far we have considered $\cwedge$ and $\cvee$ to mean the product
 and its dual for some algebra $A$. This is not strictly necessary. We could, in
 principle, choose, for each instance of $\cwedge$ in an expression of a
 transport graph, a distinct map $A \tensor A \to A$ when defining a parallel
 field theory as above, as long as it does not disturb the monoidal double
-functoriality of $F$.
+functoriality of $F$. In face, we could replace $A$ with an arbitrary vector
+space $V$ and work with arbitrary linear maps $V \tensor V \to V$ and
+$V \to V \tensor V$ in replacing $\cwedge$ and $\cvee$ in expressions arising
+from transport graphs.
 \end{rmk}
 
 \TODO{Verify that this data does define a monoidal double functor.}
