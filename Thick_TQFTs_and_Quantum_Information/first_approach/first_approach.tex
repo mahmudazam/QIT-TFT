@@ -18,7 +18,7 @@ $\mathcal{H}$ takes any fibrant monoidal double category to a bicategory.
 On the other hand, the monoidal category of thick tangles $2\Thick$ as defined
 in \cite{NonCommTQFT} is a decategorification of a monoidal bicategory of thick
 tangles $\PTT$ defined in \cite{NonSemiSimp}. Taking inspiration from this
-situation, we can verify that there is a fibrant monoidal double category
+situation, we assume that there is a fibrant monoidal double category
 $\DThick$ which, under $\mathcal{H}$, yields $\PTT$. The structures defining
 $\DThick$ are the ones analogous to $\Cob_{2}$:
 \begin{itemize}
@@ -40,8 +40,8 @@ $1$--morphisms
 \end{itemize}
 We then attempt to use this notion to concretely define the data of a monoidal
 double functor from $\DThick$ to a suitable monoidal double category of complex
-vector spaces that yields enough unitary linear transformations in the imgage to
-do quantum information.
+vector spaces that yields enough unitary linear transformations in the image to
+facilitate quantum computing.
 
 We define the object function $F_0$ of such a functor by assigning to each
 disjoint union $X = I^{\amalg n}$ the $n$--th tensor power $F_0(X) = A^{\tensor
@@ -74,10 +74,10 @@ In associating a linear map ``functorially'' to $Z$, it
 suffices to associate linear maps to $M$ -- we can then associate a linear map
 to $W$ by duality and get a linear map for $Z$ by composition.
 
-For associating a linear map to $M$, we take the trivial bundle
-$\mathcal{O} : M \times A \to M$ with a connection $\nabla$. Then, we choose two
-paths: one from the mid-point of each in-boundary interval to the mid-point of
-the out-boudnary interval. By parallel transport along each curve, we get two
+For associating a linear map to $M$, we take a complex bundle
+$\pi : E \to M$ with fibre $A$ along with a connection $\nabla$. Then, we choose
+two paths: one from the mid-point of each in-boundary interval to the mid-point
+of the out-boudnary interval. By parallel transport along each curve, we get two
 linear maps $l_1, l_2 : A \to A$. We then have a linear map
 $l : A \tensor A \to A$ given by $l(x \tensor y) = l_1(x)l_2(y)$ where the
 product in the right is the algebra product in $A$. Then, the linear map

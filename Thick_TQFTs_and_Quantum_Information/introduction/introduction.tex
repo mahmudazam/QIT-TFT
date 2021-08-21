@@ -24,27 +24,27 @@ $F : 2\Thick \to \Vect_{\C}$ as defined in \cite{NonCommTQFT}. $F$ is
 determined by the images of the above generating structures under $F$. One
 possible to way to connect quantum information to topological quantum
 field theories is to assume that the image of the interval $I$ under $F$
-is some finite dimensional $C^*$ algebra of operators on some Hilbert space of
+is some finite dimensional $C^*$--algebra of operators on some Hilbert space of
 states. Coecke, Heunen and Kissinger \cite{CatQChan} have shown that every such
 algebra is, in fact, a dagger Frobenius algebra, with some additional structure,
-so that this assumption on $F$ is valid. In fact, every finite dimensional $C^*$
-arises as the image of the interval under such a planar open string field
-theory.
+so that this assumption on $F$ is valid. In fact, every finite dimensional
+$C^*$--algebra arises as the image of the interval under such a planar open
+string field theory.
 
-It is well-known that finite dimensional $C^*$ algebras, up to $*$--isomorphism,
-are finite direct sums of square matrix algebrs $\bigoplus_i \M_{n_i}$ where
-$\M_n$ is the set of $n \times n$ matrices with complex entries equipped with
-the usual multiplication. For simplicity, we first assume that $F(I)$ is the
-$C^*$ algebra $\M_n$. Then, we can consider quantum gates to be elements of
-$\M_n$ and circuits to be composition or multiplication of these elements. While
-$\M_n$ has all gates necessary for quantum computing for some fixed number of
-cubits, there is a major constraint on the elements of $\M_n$ that are in the
-image of $F$, as we describe below.
+It is well-known that finite dimensional $C^*$--algebras, up to
+$*$--isomorphism, are finite direct sums of square matrix algebras $\bigoplus_i
+\M_{n_i}$ where $\M_n$ is the set of $n \times n$ matrices with complex entries
+equipped with the usual multiplication. For simplicity, we first assume that
+$F(I)$ is the $C^*$--algebra $\M_n$. Then, we can consider quantum gates to be
+elements of $\M_n$ and circuits to be composites (products) of these
+elements. While $\M_n$ has all gates necessary for quantum computing for some
+fixed number of cubits, there is a major constraint on the elements of $\M_n$
+that are in the image of $F$, as we describe below.
 
 Elements $a \in \M_n$ can be seen maps $\C \to \M_n : z \mapsto za$. The
 elements that are accounted for by $F$ are images of thick tangles
 $\varnothing \to I$. However, these ``element'' thick tangles are determined by
-their genus, since in $2\Thick$ we identity morphisms up to diffeomorphism, so
+their genus, since in $2\Thick$ we identify morphisms up to diffeomorphism, so
 that all element thick tangles must decompose as follows:
 \[\begin{tikzpicture}[scale=0.25]
 \cupcob{0, 0}
@@ -86,6 +86,21 @@ where gluing is associative and unital up to higher isomorphisms. We will
 see that it suffices to consider double categories for obtaining a reasonable
 method for formulating quantum information in terms of topological field
 theories.
+
+Recall that a monoidal double category consists of a $1$--category of objects
+and a $1$--category of morphisms with source, target and unit functors, a notion
+of horizontal composition of morphisms, and a monoidal structure on the object
+and morphism categories. In addition, horizontal composition and monoidal
+products need to be associative and unital up to isomorphism with several
+coherence and compatibility properties \cite{SymMonBicat}. In this work,
+however, by ``monoidal double category'' we will mean only the data of such a
+structure. Nevertheless, wherever possible, we have commented on how the data of
+our constructions inherit most of the necessary properties from the usual
+categories of sets, manifolds, vector spaces, etc. Thus, we will construct
+several monoidal double categories in this work but they should be seen as
+monoidal double categories in a somewhat relaxed sense -- they consist of all
+the required data but satisfy the required axioms with a few possible
+exceptions. We will treat monoidal double functors in the same loose sense.
 
 \end{document}
 
