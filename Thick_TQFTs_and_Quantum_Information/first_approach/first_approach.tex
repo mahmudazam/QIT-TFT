@@ -30,13 +30,13 @@ $\PTT$ (and $2\Thick$) is strict given that the objects are taken to be the
 integers $n$ as opposed to $n$--fold disjoint unions $I^{\amalg n}$ with
 different bracketings.}
 \item vertical $1$--morphisms are only the identity morphisms
-\item horizontal $1$--morphisms $I^{\amalg m} \to I^{\amalg n}$ are surfaces
-with boundary $I^{\amalg m} \amalg I^{\amalg n}$ along with an embedding $d$
+\item horizontal $1$--morphisms $I^{\amalg n} \to I^{\amalg m}$ are surfaces
+with boundary $I^{\amalg n} \amalg I^{\amalg m}$ along with an embedding $d$
 into $\R \times I$ such that $d^{-1}(\R \times \set{0}) = I^{\amalg n}$ and
-$d^{-1}(\R \times \set{1}) = I^{\amalg m}$\footnote{There is more detail here
-that we will skip for now.}
-\item $2$--morphisms are boundary-preserving diffeomorphisms between horizontal
-$1$--morphisms
+$d^{-1}(\R \times \set{1}) = I^{\amalg m}$\footnote{There are finer details here
+which will unimportant for our purposes.}
+\item $2$--morphisms are diffeomorphisms between cobordisms
+(horizontal $1$--morphisms) that preserve the boundary
 \end{itemize}
 We then attempt to use this notion to concretely define the data of a monoidal
 double functor from $\DThick$ to a suitable monoidal double category of complex
@@ -103,9 +103,22 @@ defined as above. Then we pick a boundary preserving diffeomorphism $f \in
 topological space for each manifold in a diffeomorphism class to be the same.}.
 Let $\set{\gamma_i}$ be the family of curves which along which parallel
 transport gave us the linear maps $F_1(Y)$. Then, $\set{f \circ \gamma_i}$ is a
-family of curves in $Y'$ which yields linear maps by parallel transport under a
-connection $f\nabla$, to be made precise later, using the same ``pattern'' of
-algebra multiplications, tensor products and compositions as we did for $Y$.
+family of curves in $Y'$ which yield linear maps by parallel transport under a
+connection $f\nabla$, to be made precise later. Combining these using the same
+``pattern'' or ``expression'' of algebra multiplications, tensor products and
+compositions as we had for $Y$, we can obtain a linear map $F_1(Y')$. Continuing
+the example, we have:
+
+\[\begin{tikzpicture}[scale=0.25]
+\pidcobup{1, 0}
+\ppants{1, 4}
+\ppants{5, 2}
+\pcopants{9, 2}
+\ppants{13, 2}
+\pcopants{17, 2}
+\ppants{21, 2}
+\pcopants{25, 2}
+\end{tikzpicture}\]
 
 We now turn our attention to the case when $m$ or $n$ is zero. We can treat the
 case $n = 0$ and obtain the other case by duality. Let
@@ -120,18 +133,7 @@ in $Z''$ on the mid-point of its only boundary interval and obtain an element
 $a \in A$, or equivalently a linear map $a : \C \to A$ by parallel transport of
 some fixed element $a_0 \in A$. We set $F_1(Z'') = a$ and get $F_1(Z')$ by
 parallel transport of $a_0$ along $f\gamma$. $F_1(Y)$ is then obtained by
-composition. Continuing the example, we have:
-
-\[\begin{tikzpicture}[scale=0.25]
-\pidcobup{1, 0}
-\ppants{1, 4}
-\ppants{5, 2}
-\pcopants{9, 2}
-\ppants{13, 2}
-\pcopants{17, 2}
-\ppants{21, 2}
-\pcopants{25, 2}
-\end{tikzpicture}\]
+composition.
 
 This completes the definition of an object function $F_1$ for the morphism
 category of $\DThick$. Now, we turn our attention to $2$--morphisms -- boundary
@@ -139,7 +141,7 @@ preserving diffeomorphisms between cobordisms. Let $f : Y \to Y'$ be one such
 diffeomorphism. We must assign to $f$ some object that functions as roughly a
 ``morphism of morphisms of vector spaces''. One natural choice is homotopy
 classes of paths between linear functions in spaces of linear functions under
-some suitable norm. In this case, we can take the following approach.  There
+some suitable norm. In this case, we can take the following approach. There
 exists a path $\psi$ in the diffeomorphism group $\Diff(Y)$ of $Y$ from $\id_Y$
 to $f$ such that we can ``move'' the parallel transport machinery ``along''
 $\psi$ -- that is, taking connections $\psi(t)\nabla$ and paths
@@ -147,7 +149,7 @@ $\set{\psi(t)\gamma_i}$, for $t \in [0, 1]$ -- to get linear maps for each
 $\psi(t)(Y)$, which constitute a path in the space $\Hom(\dom F_1(Y), \codom
 F_1(Y))$. Note that, implicit in this is the assumption that
 $\psi(1)\nabla = f\nabla$ and $\set{\psi(1)\gamma_i} = \set{f\gamma_i}$ yield
-$F_1(Y')$ by parallel transport, which need not hold in general.
+the linear map $F_1(Y')$ by parallel transport, which need not hold in general.
 
 The issue is that the $2$--morphisms are not guaranteed to ``preserve parallel
 transport''. In order for this picture to make sense, we need to consider

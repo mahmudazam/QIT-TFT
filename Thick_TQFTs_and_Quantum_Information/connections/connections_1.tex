@@ -3,7 +3,7 @@
 
 Suppose we have $\pi_E : E \to M$ and $\nabla$ as before as well as another
 bundle $\pi_{E'} : E \to M$ with a bundle isomorphism $f = (u, v) : E \to E'$ --
-a pair of maps $u : M \to M'$ and $v : E \to E'$ with $v$ linear on each fibres
+a pair of maps $u : M \to M'$ and $v : E \to E'$ with $v$ linear on each fibre
 of $E$, making the following diagram commute:
 \[\begin{tikzcd}
 E \ar[d, "\pi_E" left] \ar[r, "v" above] & E' \ar[d, "\pi_{E'}" right]\\
@@ -49,21 +49,21 @@ We also observe that, for sections $s_1, s_2 \in \Gamma(E')$, we have
    & (f \diamond \nabla)(s_1 + s_2)\\
   =& \tilde{f}\nabla(v^{-1}(s_1 + s_2)u)u^{-1} \\
   =& \tilde{f}\nabla(v^{-1}(s_1u + s_2u))u^{-1}
-    && \text{by the definition of pointwise addition} \\
+    && \text{definition of pointwise addition} \\
   =& \tilde{f}\nabla(v^{-1}s_1u + v^{-1}s_2u))u^{-1}
-    && \text{by the fibre-wise linearity of } v^{-1} \\
+    && \text{fibre-wise linearity of } v^{-1} \\
   =& \tilde{f}(\nabla(v^{-1}s_1u)
     + \nabla(v^{-1}s_2u))u^{-1}
-    && \text{by the linearity of } \nabla \\
+    && \text{linearity of } \nabla \\
   =& \tilde{f}(\nabla(v^{-1}s_1u)u^{-1}
     + \nabla(v^{-1}s_2u)u^{-1})
-    && \text{by the definition of pointwise addition} \\
+    && \text{definition of pointwise addition} \\
   =& \tilde{f}\nabla(v^{-1}s_1u)u^{-1}
     + \tilde{f}\nabla(v^{-1}s_2u)u^{-1}
-    && \text{by the fibre-wise linearity of } \tilde{f} \\
+    && \text{fibre-wise linearity of } \tilde{f} \\
   =& (f \diamond \nabla)(s_1) + (f \diamond \nabla)(s_2)
 \end{align*}
-Thus, $f \diamond \nabla$ is $K$--linear. Now, for $r \in \Cinf(M', \K)$, we
+Thus, $f \diamond \nabla$ is $\K$--linear. Now, for $r \in \Cinf(M', \K)$, we
 again obersve:
 \begin{align*}
    & (f \diamond \nabla)(r \cdot s) \\
@@ -71,8 +71,9 @@ again obersve:
   =& \tilde{f}\nabla(v^{-1}(ru \cdot su))u^{-1}
     && \text{pointwise multiplication} \\
   =& \tilde{f}\nabla(ru \cdot v^{-1}su)u^{-1}
-    && \text{$K$--linearity of } v^{-1} \\
-  =& \tilde{f}(ru \cdot \nabla(v^{-1}su) + (v^{-1}su) \tensor d(ru))u^{-1} \\
+    && \text{fibre-wise linearity of } v^{-1} \\
+  =& \tilde{f}(ru \cdot \nabla(v^{-1}su) + (v^{-1}su) \tensor d(ru))u^{-1}
+    && \text{Leibniz property} \\
   =& \tilde{f}(ru \cdot \nabla(v^{-1}su))u^{-1}
       + \tilde{f}((v^{-1}su) \tensor d(ru))u^{-1}
     && \text{distribute over $+$ as before} \\
@@ -109,7 +110,7 @@ pasting of pushout diagrams to give pushout diagrams, we have
 Then, we observe that
 \[
   d(ru)|_{T_{u^{-1}(x)}M} \circ (du)^{-1}
-  = dr|_{T_xM'} \circ du|_{T_{u^-1(x)}M} \circ (du)^{-1}
+  = dr|_{T_xM'} \circ du|_{T_{u^{-1}(x)}M} \circ (du)^{-1}
   = dr|_{T_xM'}
   = dr(x)
 \]
@@ -123,7 +124,7 @@ $f \diamond \nabla$ is a connection on $\pi'$.
 
 From this point, we will write $f\nabla$ as opposed to $f \diamond \nabla$,
 as long as the action is clear from context. Now, Let $\pi_i : E_i \to M_i$ be
-bundles equipped with a connections
+bundles equipped with a connection
 $\nabla_i$ for $i \in \set{1, 2, 3, 4}$. Let
 $f_{i, i + 1} = (u_{i, i + 1}, v_{i, i + 1})$
 be bundle isomorphisms for $i \in \set{1, 2, 3}$. Then, the composite
@@ -166,16 +167,14 @@ There exists a groupoid, denoted $\Conn$, whose objects are connections and
 whose morphisms are isomorphisms of connections.
 \end{thm}
 \begin{defn}[Category of Connections]
-We will call the category of the above function the category or groupoid of
+We will call the category of the above theorem the category or groupoid of
 connections. We will denote this category $\Conn$.
 \end{defn}
 
 We will see that connections on bundles on compact manifolds with boundary, when
-generalized slightly, assemble into a double categorical structure compatible
+specialized slightly, assemble into a double categorical structure compatible
 with that of the cobordism double category formed by the underlying manifolds
 over which we take the bundles. Before we proceed to this result, we will
 require a notion of cobordism double category for bundles, which we develop
 next.
-
-
 

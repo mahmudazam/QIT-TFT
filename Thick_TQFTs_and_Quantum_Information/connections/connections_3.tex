@@ -132,9 +132,10 @@ smooth bundle $E \to M$, $\nabla - \nabla'$ is a smooth section of the bundle
 $\Hom(E) \tensor T^*M \to M$, where $\Hom(E)$ is the internal $\Hom$-object in
 the closed monoidal category of smooth bundles over $M$ that is isomorphic to
 the bundle $E^* \tensor E$ \cite[Lemma 2.2]{Conn}. As a result, the set of all
-connections on $E$ is an affine subspace of the $\Cinf(\R)$--module on $E$ is an
-affine subspace of the $\Cinf(\R)$--module write each connection $\nabla$ on $E$
-as a sum:
+connections on $E$ is an affine subspace of the $\Cinf(\R)$--module
+$\Omega^1(\Hom(E)) = \Gamma(\Hom(E) \tensor T^*M)$. This allows us to write each
+connection $\nabla$ on $E$ as a sum:
+\TODO{Check this reasoning.}
 \[
   \nabla = \varphi + A_{\nabla}
 \]
@@ -145,19 +146,19 @@ $\varphi$ can be taken as the exterior derivative operator $d$. In particular,
 this allows us to define an action of $\Cinf(\R)$ on the set of connections as
 follows:
 \[
-  r \cdot \nabla = d + r \cdot A_{\nabla} = d + A_{r \cdot \nabla}
+  r \cdot \nabla := d + r \cdot A_{\nabla} =: d + A_{r \cdot \nabla}
 \]
 From this, a gluing operation for (a class of) connections is immediate. This
 is made precise in the following theorem.
 
 \begin{thm}
-Let $E \to M$ and $E' \to M'$ be a horizontal $1$--morphism
-(or bundle cobordism) in $\BBun^V_{\s{C}}$ for some cobordism category $\s{C}$,
-such that the gluing $E' * E \to M' * M$. exists. Then, for any two connections
+Let $E \to M$ and $E' \to M'$ be horizontal $1$--morphisms
+(or bundle cobordisms) in $\BBun^V_{\s{C}}$ for some cobordism category $\s{C}$,
+such that the gluing $E' * E \to M' * M$ exists. Then, for any two connections
 $\nabla$ and $\nabla'$ on $E$ and $E'$ respectively, there exists a connection
 $\nabla' * \nabla$ that has the same output as $\nabla$ on local sections of $E$
-defined away from its trivialized boundary collar and to $\nabla'$ for local
-sections of $E'$ defined away from its trivialized boundary collar.
+defined away from $E$'s trivialized boundary collar and to $\nabla'$ for local
+sections of $E'$ defined away from $E'$'s trivialized boundary collar.
 \end{thm}
 \begin{proof}
 Let the bump functions on $M$ and $M'$ used to trivialize $E$ and $E'$
@@ -192,8 +193,8 @@ $\BBun^V_{\s{C}}$ is denoted $\Conn^V_{\s{C}}$.
 \end{defn}
 
 \begin{cor}
-Gluing of connections in double category of bundle cobordisms is associative and
-unital upto gauge isomorphisms.
+Gluing of connections on bundle cobordisms is associative and unital upto gauge
+isomorphisms.
 \end{cor}
 \begin{proof}
 For associativity, it suffices to observe that extending domains of bump
@@ -204,11 +205,11 @@ to that of the associativity of the disjoint union of connections.
 For unitality, we first observe that on boundary collars $f \cdot \nabla$ is
 equal to $d$ for all connections $\nabla = d + A_{\nabla}$. The exterior
 derivative operators, that are themselves connections, on the gluing
-units of $\BBun^V_{\s{C}}$ -- that is, the cylinders on boundaries -- suffices
+units of $\BBun^V_{\s{C}}$ -- that is, the cylinders on boundaries -- suffice
 as the gluing units for connections. The unitors carry over like associators.
 \end{proof}
 
-Finally, one verifies the following fundamental fact.
+Finally, one has the following fundamental fact.
 
 \begin{thm}
 For any cobordism double category $\s{C}$, $\BBun^V_{\s{C}}$ can be promoted to
@@ -227,7 +228,7 @@ $\CConn^V_{\s{C}}$.
 At this point, one might think that we can immediately define a notion of TQFT
 by choosing suitable paths for a representative for each cobordism class,
 taking the linear maps obtained by parallel transport along these paths and
-combine in a suitable way. However, the problem remains that two gauge
+combining them in a suitable way. However, the problem remains that two gauge
 transformations need not take a collection of paths in the domain to the same
 collection of paths in the codomain. We will build the machinery to handle this
 matter in the next section.

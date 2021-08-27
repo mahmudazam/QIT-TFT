@@ -31,8 +31,8 @@ $E_1 \amalg E_2$ is a smooth map
   s : M_1 \amalg M_2 \to E_1 \amalg E_2
 \]
 satisfying $(\pi_1 \amalg \pi_2)s = \id_{M_1 \amalg M_2}$. We note that this
-guarantees that the $s = s_1 \amalg s_2$ where $s_i$ is a section of
-$E_i$, $i \in \set{1, 2}$.
+guarantees that the $s$ must be of the form $s_1 \amalg s_2$ where $s_i$ is a
+section of $E_i$, $i \in \set{1, 2}$.
 
 Similarly, $TM_1 \amalg TM_2 \to M_1 \amalg M_2$ is a vector bundle when $M_1$
 and $M_2$ have the same dimension, and we can take this to be the definition of
@@ -114,7 +114,8 @@ We can then cut $C_0$ into pieces
 $C' \cong \partial M \times \sbr{0, \frac{1}{2}}$ and
 $C \cong \partial M \times \sbr{\frac{1}{2}, 1}$ that are each diffeomorphic to
 $\partial M \times I$. There exists a bump function $f : M \to \R$ such that
-$f$ is $1$ on $M \setminus C_0$, decreasing on $C'$ and vanishes on $C$:
+$f$ is $1$ on $M \setminus C_0$, decreases to $0$ on $C'$ as we move towards
+$\partial M \times \set{\frac{1}{2}}$ and vanishes on $C$:
 \[
   f(x) = \begin{cases}
     1 & x \in M \setminus C_0 \\
@@ -132,7 +133,8 @@ smoothness of transition function assignments to base-points and such.}
 \end{proof}
 
 It is straightforward to verify that for any cospan $M \ot[f] X \to[g] N$ and
-any object $V$ in $\Man$, the following holds:
+any finite dimensional vector space $V$ seen as an object in $\Man$, the
+following holds:
 \[
   V \times (M \amalg_X N) \cong (V \times M) \amalg_{X \times V} (V \times N)
 \]
@@ -164,7 +166,7 @@ and morphisms are bundle isomorphisms
 the morphism category of $\s{C}$ and complex bundles $E \to M$; morphisms are
 bundle isomorphisms
 \li Source functor: each bundle $\wh{E} \to M$ is sent to the trivial bundle on
-the source of $M$; action of morphisms is by restriction to appropriate boundary
+the source of $M$; action on morphisms is by restriction to appropriate boundary
 components
 \li Target functor: defined analogously as the source functor
 \li Unit functors: each bundle $\wh{E} \to M$ is sent to the trivial bundle on

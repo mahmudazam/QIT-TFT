@@ -27,20 +27,21 @@ Expression isomorphisms $f : G \to H$ are level preserving, i.e.
 \begin{proof}
 Let
 $\set{V_i}_{i = 1}^{N}$ and
-$\set{W_j}_{i = 1}^{M}$ be the level orderings of $G$ and $H$
-respectively. By definition, $l_G(v) = 1$ implies
-$l_H(f(v)) = 1$. Let $v \in V_k$ for some $1 \leq k \leq N$.
+$\set{W_j}_{i = 1}^{M}$ be the level sets of $G$ and $H$
+respectively. Let $v \in V_k$ for some $1 \leq k \leq N$.
 By corollary \ref{cor:lvltolvl}, there is a path $v_1, \dots, v_k = v$ with each
-$v_i \in V_i$. Then, $f(v_1) \in W_1$ by definition and there is a path
-$f(v_1), \dots, f(v_k) = f(v)$ in $H$. Hence, we have that
-$l_H(f(v)) \geq l_G(v)$. On the other hand, let $f(v) \in W_m$ so that there is
+$v_i \in V_i$. Then, there is a path $f(v_1), \dots, f(v_k) = f(v)$ in $H$ with
+$l_H(f(v_{i})) < l_H(f(v_{i + 1}))$ (since edges only go forward in levels) and
+$l_H(f(v_1)) \geq 1$. Hence, by extending this path in $H$ backwards to $W_1$,
+we have that $l_H(f(v)) \geq l_G(v)$.
+On the other hand, let $f(v) \in W_m$ so that there is
 a path $w_1, \dots, w_m$ in $H$ with each $w_i \in W_i$. Using $f^{-1}$ on this
 path and a similar argument as the one before, we can show that
 $l_H(f(v)) \leq l_G(v)$.
 \end{proof}
 
 \begin{cor}
-For any expression homomorphism $f : G \to H$, if $V_i$ is the $i$--th level set
+For any expression isomorphism $f : G \to H$, if $V_i$ is the $i$--th level set
 in $G$, then $f(V_i)$ is the $i$--th level set in $H$.
 \end{cor}
 \begin{proof}

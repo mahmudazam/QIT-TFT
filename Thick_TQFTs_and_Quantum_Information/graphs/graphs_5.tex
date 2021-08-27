@@ -2,9 +2,9 @@
 \subsection{Single Manifold TQFT}\label{subsec:sing_man_tqft}
 
 Notice that the theory we developed so far transfers verbatim from the smooth
-setting to the holomorphic setting in that we can replace all instances of $\R$
-with $\C$, smooth manifolds, smooth bundles and connections with complex
-manifolds, holomorphic bundles and connections on holomorphic bundles
+setting to the setting of complex bundles in that we can replace all instances
+of $\R$ with $\C$, smooth bundles and $\R$--linear connections with smooth
+manifolds, complex bundles and $\C$--linear connections on complex bundles
 respectively. From this point onwards, when we say manifold, bundle, connection,
 etc., we will mean these in either of the two settings. We will write $\K$ to
 mean either of $\R$ or $\C$. With this convention, we consider the following
@@ -50,9 +50,6 @@ $(G_2, \gamma^2) * (G_1, \gamma^1) = (G_2 * G_1, \gamma^2 * \gamma^1)$
 category
 \end{enmrt}
 
-It is straightforward to verify that the above data does form a monoidal double
-category.
-
 \begin{defn}[Double Category of Transport Graphs in a Manifold]
 The above data defines the double category of transport graphs in $M$ and we
 denote it as $\TG(M)$. We denote the object category as $\TG(M)_0$ and the
@@ -75,8 +72,8 @@ $\TG(M)_0$, we set $F(f) := \id_{F(V)} = \id_{F(V')}$.
 
 For a transport graph $(G, \gamma)$ in $M$ -- an object in $\TG(M)_1$ -- and an
 edge $(u, v) \in G$, we denote $\nabla^{\gamma_{u, v}}$ to be the linear map
-$A \to A$ obtained by parallel transport along $\gamma_{u, v}$. Fixing some
-element $a_{u, v} \in A$, we then define:
+$A \to A$ obtained by parallel transport along $\gamma_{u, v}$, with respect to
+$\nabla$. Fixing some element $a_{u, v} \in A$, we then define:
 \[
   F(u, v) := \begin{cases}
     \id_A
@@ -116,7 +113,7 @@ and its dual for some algebra $A$. This is not strictly necessary. We could, in
 principle, choose, for each instance of $\cwedge$ in an expression of a
 transport graph, a distinct map $A \tensor A \to A$ when defining a parallel
 field theory as above, as long as it does not disturb the monoidal double
-functoriality of $F$. In face, we could replace $A$ with an arbitrary vector
+functoriality of $F$. In fact, we could replace $A$ with an arbitrary vector
 space $V$ and work with arbitrary linear maps $V \tensor V \to V$ and
 $V \to V \tensor V$ in replacing $\cwedge$ and $\cvee$ in expressions arising
 from transport graphs.
@@ -127,10 +124,11 @@ the codomain double category in the next section along with a notion of TQFTs
 based on transport graphs in cobordisms equipped with connections.
 
 We also note that there is some redundancy in this setup. The empty graph, the
-single vertex and paths with only green vertices are not the same horizontal
-$1$--morphism but they are all morphisms $\varnothing \to \varnothing$ and map
-to the identity morphism of $\K$ under $F$. This differs from $\Cob_2$ and
-$2\Thick$ in that there is a unique morphism $\varnothing \to \varnothing$ in
-these categories as well as their corresponding double categories and this maps
-to the identity morphism of $\K$ under a usual TQFT.
+single green vertex and paths with only green vertices are not the same
+horizontal $1$--morphism but they are all morphisms
+$\varnothing \to \varnothing$ and map to the identity morphism of $\K$ under
+$F$. This differs from $\Cob_2$ and $2\Thick$ in that there are unique
+morphisms $\varnothing \to \varnothing$ in these categories as well as their
+corresponding double categories that map to the identity morphism of $\K$ under
+a usual TQFT.
 

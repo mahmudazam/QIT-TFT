@@ -11,9 +11,7 @@ $G = (V, E)$, we will write $V = V(G)$ and $E = E(G)$. We now see a motivating
 example.
 
 \begin{exm}\label{exm:egraph1}
-Consider a graph consisting of nine vertices $1, \dots, 9$ with
-$V_1 = \set{1, 2}$, $V_2 = \set{3, 4}$, $V_4 = \set{5, 6, 7}$ and
-$V_4 = \set{8, 9}$, along with edges:
+Consider a graph consisting of nine vertices $1, \dots, 9$ with edges:
 \[\begin{array}{ccccc}
   (1, 3) &,& (1, 4) &,& (2, 3),\\
   (3, 5) &,& (3, 6) &,& (4, 7),\\
@@ -88,8 +86,8 @@ $\boxtimes$ -- of maps, we can capture the graph into an algebraic expression of
 the following form:
 \begin{align*}
         & ((5, 8) \tensor ((6, 9) \cwedge (7, 9))) \\
-  \circ & ((3, 5) \tensor (3, 6) \tensor (4, 7)) \\
-  \circ & (((3, 3) \cvee (3, 3)) \tensor (4, 4)) \\
+  \circ & (((3, 5) \cvee (3, 6)) \tensor (4, 7)) \\
+  \circ & (((3, 3) \cwedge (3, 3)) \tensor (4, 4)) \\
   \circ & ((3, 3) \tensor ((4, 4) \boxtimes (2, 3))) \\
   \circ & (((1, 3) \cvee (1, 4)) \tensor (2, 2))
 \end{align*}
@@ -97,8 +95,8 @@ the following form:
 Observe that we have taken a directed acyclic graph and converted it to a
 diagram in $\Cob_{2}$ -- the symmetric monoidal category of cobordisms of
 dimension $2$. This, in turn, yields an expression involving operations on
-endomorphisms of a Frobenius monoid in some monoidal category. However, we
-should note that this is just one possible interpretation of the graph above.
+endomorphisms of a monoid in some monoidal category. However, we should note
+that this is just one possible interpretation of the graph above.
 \end{exm}
 
 This motivates us to define an algorithm for extracting expressions from a
@@ -109,14 +107,15 @@ Let $G = (V, E)$ be any graph. We make the following modifications to $G$:
 \setlength{\itemsep}{0pt}
 
 \item For each vertex $v$, choose an ordering of the incoming edges of $v$, say
-$(u_1, v), \dots, (u_k, v)$ and and ordering of its outgoing edges, say
+$(u_1, v), \dots, (u_k, v)$ and an ordering of its outgoing edges, say
 $(v, w_1), \dots, (v, w_n)$.
 
 \item Let $S(G)$ be the set consisting of vertices with no incoming
 edges -- called the source vertices of $G$ -- and $T(G)$, the set consisting of
 vertices with no outgoing edges -- called the target vertices of $G$. We then
-choose orderings of $S(G)$. Note that $S(G) \cap T(G)$ might be non-empty
-because of vertices with no edges, incoming or outgoing.
+choose an ordering of $S(G)$. Note that $S(G) \cap T(G)$ might be non-empty
+because of vertices with no edges, incoming or outgoing -- these will be called
+the edgeless vertices.
 
 \item Copy vertices and add edges to make the following modification, where the
 incoming edges are in order from the lowest at the top to the highest at the
@@ -338,7 +337,7 @@ level ordering of $G$ inductively as follows:
 $V_1 := S(G)$
 \li Let $V_{k + 1}$ be the set of vertices in
 $G \setminus (V_1 \cup \cdots \cup V_k)$ with incoming edges only from
-$V_1, \dots, V_k$, or with no incoming edges.
+$V_1, \dots, V_k$.
 \end{enmrt}
 We note that the ordering on $S(G) = V_1$ induces an ordering of $V_2$ as
 follows. Let $S(G)$ be ordered as $u_1, \dots, u_n$. Let the ordering of the
@@ -364,8 +363,7 @@ later on.
 
 \begin{rmk}
 The vertices with no edges, incoming or outgoing, are always in the first level.
-We will call these vertices edgeless vertices. However, vertices with no
-outgoing edges need not always be in the last level.
+However, vertices with no outgoing edges need not always be in the last level.
 \end{rmk}
 
 \item\label{alg:edgeless}
@@ -373,26 +371,27 @@ Consider the vertices with no outgoing edges but not at the last level. For each
 such vertex $u$ in $V_i$, we add a copy $u'$, to $V_{i + 1}$. Its insertion
 order needs to be made precise. Call the vertices in $V_{i + 1}$ with an
 incoming edge from some vertex above $u \in V_{i}$, the vertices above $u$ in
-$V_{i + 1}$. Similarly, call the vertices in $V_{i + 1}$ with no incomoing edges
+$V_{i + 1}$. Similarly, call the vertices in $V_{i + 1}$ with no incoming edges
 from $u$ or a vertex above $u \in V_i$, the vertices below $u$ in $V_{i + 1}$.
 A copy of $u$, say $u'$, is inserted
 in the position right after the vertices above $u$ and before the vertices below
 $u$ in $V_{i + 1}$. We then add in the edge $(u, u')$. We continue this process
-with $V_{i + 1}$ in place of $V_i$ and so on until, there is a copy
+with $V_{i + 1}$ in place of $V_i$ and so on, until there is a copy
 of $u$ in each level after $V_i$ with a path connecting them.
 
 \begin{rmk}
 Each vertex without any edges, incoming or outgoing, are also copied in this
 way, noting that these vertices are placed in the first level during the level
-ordering. We will call these vertices edgeless vertices.
+ordering.
 \end{rmk}
 
 \item For each level skipping edge $(u, v)$ -- that is, with $u \in V_k$ and
 $v \in V_{k'}$ for some $k' > k + 1$ -- we insert a copy of $u$ in $V_{i}$ for
 each $k < i < k'$ in positions similar to the insertions in the last step. We
-call this copy $u'$. We then and add an edge $(u, u')$. We repeat this with
+call this copy $u'$. We then add an edge $(u, u')$. We repeat this with
 $V_{i + 1}$ in place of $V_{i}$ and $u'$ in place of $u$. After this process
-completes, we delete the edge $(u, v)$. After we complete this process for every
+completes, we delete the edge $(u, v)$ and add an edge from the copy of $u$
+in $V_{k' - 1}$ to $v$. After we complete this process for every
 level-skipping edge, level skipping edges are replaced by paths connecting the
 source vertex to the target vertex of these edges.
 
@@ -427,7 +426,6 @@ identifications of the generating structures are the obvious ones:
 \node at (1, -1) (lbl) {cylinder};
 \end{tikzpicture}
 \]
-
 Note that the cap or cup were not used. This, then, directly yields an
 expression of the original graph $G$ similar to the example.
 
@@ -448,7 +446,7 @@ number of arbitrary choices in our process.
 edges but it is not difficult to see that ``crossing'' makes precise sense when
 we specify the edge orderings and the ordering of the source of a graph. Once we
 execute the algorithm above, we can handle crossings in the same way we handle
-then when drawing cobordisms in $\Cob_2$.
+them when drawing cobordisms in $\Cob_2$.
 \end{rmk}
 
 Even though we made many choices in the above algorithm, the only

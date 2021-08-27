@@ -6,9 +6,9 @@ vertex and edge sets. It is clear that the edge orderings of the vertices of
 $G$ and $H$ collectively provide an edge ordering for every vertex of
 $G \amalg H$. We observe that $S(G \amalg H) = S(G) \amalg S(H)$ so that the
 orderings of $S(G)$ and $S(H)$ provide an ordering of $S(G \amalg H)$, where the
-vertices of $G$ come before those of $H$. The empty graph is an expression and
-hence acts as a unit for the disjoint union operation. It is easy to see that
-the associators and unitors for the coproduct in the category of sets are
+vertices of $G$ come before those of $H$. The empty graph is an expression graph
+and hence acts as a unit for the disjoint union operation. It is easy to see
+that the associators and unitors for the coproduct in the category of sets are
 expression isomorphisms.
 
 We then proceed to define a gluing of expression graphs. For an expression
@@ -34,7 +34,7 @@ isomorphism
 Then, we say that $G$ and $H$ are gluable at $S(H) \cong T(G)$. We define the
 pushout of the following span in $\Set$ to be the gluing $H * G$ of graphs.
 \[
-  H \hot S(H) \to[\phi] T(G) \hto G
+  H \hot S(H) \to[\psi_{G, H}] T(G) \hto G
 \]
 \end{defn}
 
@@ -44,16 +44,21 @@ expression graphs.
 \end{thm}
 \begin{proof}
 First we show that $S(H * G) = S(G)$. If $v \in S(H * G) \setminus S(G)$, then
-$v$ has an incoming edge in $G$ and since gluing does not delete edges, $v$ has
-an incoming edge in $H * G$, so that $v \not\in S(H * G)$. Thus,
-$S(H * G) \subseteq S(G)$. If $v \in S(G)$, then $v$ has no incoming edges in
-$G$. It is clear that gluing cannot introduce incoming edges to the source
-vertices of $G$ so that $S(G) \subset S(H * G)$. Thus, $H * G$ also inherits the
-ordering of its source vertices from $G$.
+we consider the case that $v \in G \subset H * G$. Since $v \not\in S(G)$ and
+gluing does not delete edges, $v$ must have an incoming edge in $G$. We then
+consider the case that $v \in H \subset H * G$. Here, we can assume
+$v \not\in S(H)$ because $S(H) = T(G)$ in $H * G$ so that in this case, $v$ has
+an incoming edge in $H$. In either case, $v \not\in S(H * G)$ -- a contradiction
+showing that $S(H * G) \setminus S(G)$ is empty.
+Thus, $S(H * G) \subseteq S(G)$.
+If $v \in S(G)$, then $v$ has no incoming edges in $G$. It is clear that gluing
+cannot introduce incoming edges to the source vertices of $G$ so that
+$S(G) \subset S(H * G)$. Thus, $H * G$ inherits the ordering of its source
+vertices from $G$.
 
 We observe that only the vertices in $T(G)$ receive new edges and these are all
 outgoing while the vertices in $T(G)$ have no outgoing edges in $G$. Thus,
-$H * G$ inherits edge orderings unambiguously from $G$ and $H$ collectively.
+$H * G$ inherits edge orderings unambiguously from $G$ and $H$, collectively.
 Therefore, $H * G$ is an expression graph.
 \end{proof}
 
@@ -246,10 +251,10 @@ another $V_j$ or $W_k$.
 We proceed by induction. For $i = 1$, we observe that $S(H * G) = S(G) = V_1$
 and hence no $v \in V_1$ can move forward since it has no incoming edges. For
 $i = r + 1$, if $v \in V_i$, then there exists an edge $(v', v) \in G$ with
-$v' \in V_{r}$ and $v'$ does not move by induction. Hence, $v'$ cannot move to
-$V_j$ for $j < i$ since $(v', v)$ would be an edge that does not go forward in
-levels. Since all the incoming edges of $v \in V_i$ are from
-$V_1, \dots, V_{i - 1}$, $v'$ cannot move to $V_j$ for some $j > i$ or $W_k$ for
+$v' \in V_{r}$ and $v'$ does not move by induction. Hence, $v$ cannot move to
+$V_j$ for $j < i$ since $(v', v)$ would then be an edge that does not go forward
+in levels. Since all the incoming edges of $v \in V_i$ are from
+$V_1, \dots, V_{i - 1}$, $v$ cannot move to $V_j$ for some $j > i$ or $W_k$ for
 some $k$, because this would result in $v$ not having edges from the immediate
 previous level.
 
@@ -263,13 +268,14 @@ $v_G$.
 \li If $v \in W_k$ for some $1 < k \leq m$ before gluing, then there exists a
 path $w_1, \dots, w_k = v$ with $w_i \in W_i$ in $H$. We can additionally assume
 that for each $i$, $(w_i, w_{i + 1})$ is the first incoming edge of $w_{i + 1}$.
-After gluing, if $v$ moves to some $W_{k'}$, then the first incoming edge
+After gluing, if $v$ moves to some $W_{k'}$, then the first incoming edge of
 $v = w_k$ is from $w_{k - 1}$ so that $w_{k - 1}$ must have also moved to
 $W_{k' - 1}$, by our definition of level ordering. Repeating this argument, we
 see that $w_1$ must move forward in levels which is impossible by the previous
 case. If, on the other hand, $v$ moves backwards, we must have each $w_i$ move
 backwards as well because otherwise, we will have at least one edge not going
-forward in levels. In particular, $w_1$ must move backwards and hence to $V_1$.
+forward in levels. In particular, $w_1$ must move backwards and hence to $V_1$,
+by the first case, since $w_1 \in W_1 = V_n$ before gluing.
 In this case, $w_2$ moves to $V_2$, $w_3$ to $V_3$ and so on until $w_k$ moves
 to $V_k$ if $k \leq n$. If $k > n$, then $w_1, \dots, w_n$ move to
 $V_1, \dots, V_n$ and $w_{n + 1}, \dots, w_{n + k - n} = w_k$ move to
@@ -290,8 +296,10 @@ that the resulting cobordisms differ by identity cobordisms at some places and
 hence not at all, yielding the following theorem.
 
 \begin{thm}
-For expression graphs $G$ and $H$, gluable at $S(H) \cong T(G)$,
-$\Exp{H * G} = \Exp{H} \circ \Exp{G}$.
+For expression graphs $G$ and $H$, gluable at $S(H) \cong T(G)$, we have
+\[
+  \Exp{H * G} = \Exp{H} \circ \Exp{G}
+\]
 \end{thm}
 
 We can also define the following constructs unambiguously.

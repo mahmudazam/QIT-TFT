@@ -39,8 +39,8 @@ instance, $\gamma_{2, 3}$ and $\gamma_{3, 5}$ do not share any end-points.
 We notice that the same algebraic expression carries over:
 \begin{align*}
         & (\gamma_{5, 8} \tensor (\gamma_{6, 9} \cwedge \gamma_{7, 9})) \\
-  \circ & (\gamma_{3, 5} \tensor \gamma_{3, 6} \tensor \gamma_{4, 7}) \\
-  \circ & ((\gamma_{3, 3} \cvee \gamma_{3, 3}) \tensor \gamma_{4, 4}) \\
+  \circ & ((\gamma_{3, 5} \cvee \gamma_{3, 6}) \tensor \gamma_{4, 7}) \\
+  \circ & ((\gamma_{3, 3} \cwedge \gamma_{3, 3}) \tensor \gamma_{4, 4}) \\
   \circ & (\gamma_{3, 3} \tensor (\gamma_{4, 4} \boxtimes \gamma_{2, 3})) \\
   \circ & ((\gamma_{1, 3} \cvee \gamma_{1, 4}) \tensor \gamma_{2, 2})
 \end{align*}
@@ -313,7 +313,8 @@ of $\varnothing$
 \begin{defn}[Expression Construction]
 The expression of a pretransport graph $G$ is obtained by running the expression
 construction on $G$ by forgetting colours and then identifying green vertices
-with the empty manifold in the resulting cobordism in $\Cob_2$.
+with the empty manifold in the resulting cobordism in $\Cob_2$, adding caps and
+cups where appropriate.
 \end{defn}
 
 We then consider the class of graphs that will yield our desired linear maps.
@@ -370,8 +371,7 @@ part. Then, there exists a geometric realization
 of the pretransport graph $H * G$ in $N * M$.
 \end{cor}
 \begin{proof}
-We can define $\gamma^H * \gamma^G$ piecewise since the gluing site has no
-edges.
+We can define $\gamma^H * \gamma^G$ piecewise.
 \end{proof}
 
 \begin{defn}[Gluing Transport Graphs]
@@ -386,5 +386,4 @@ This is enough structure to develop a simple system for doing algebra using
 paths on a manifold. In particular, it yields at least two monoidal double
 categories of transport graphs realized in manifolds. We develop one of these
 notions of TQFTs next.
-\TODO{I am not sure if it is appropriate call this a notion of TQFTs.}
 
