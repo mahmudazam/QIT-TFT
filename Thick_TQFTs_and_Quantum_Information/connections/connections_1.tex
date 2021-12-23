@@ -15,10 +15,10 @@ $\wh{f}(s) \in \Gamma(E)$ defined by
 \[
   \wh{f}(s) = v^{-1} \circ s \circ u
 \]
-Noting that $u : M \to M'$ is a diffeomorphism, it is easy to verify that $du$
-is also a bundle isomorphism, using the pushout property. Furthermore, there is
-a bundle isomorphism $d^*u : T^*M \to T^*M'$ corresponding to $du$, defined, for
-each $g : T_xM \to \R \in T^*_xM$, by the composite
+Noting that $u : M \to M'$ is a diffeomorphism, it is easy to verify $du$
+is also a bundle isomorphism, from the definition of differentials. Furthermore,
+there is a bundle isomorphism $d^*u : T^*M \to T^*M'$ corresponding to $du$,
+defined, for each $g : T_xM \to \R \in T^*_xM$, by the composite
 \[
   (d^*u)(g) := T_{u(x)}M' \to[(du)^{-1}] T_xM \to[g] \R \in T^*_{u(x)}M'
 \]
@@ -50,7 +50,7 @@ We also observe that, for sections $s_1, s_2 \in \Gamma(E')$, we have
   =& \tilde{f}\nabla(v^{-1}(s_1 + s_2)u)u^{-1} \\
   =& \tilde{f}\nabla(v^{-1}(s_1u + s_2u))u^{-1}
     && \text{definition of pointwise addition} \\
-  =& \tilde{f}\nabla(v^{-1}s_1u + v^{-1}s_2u))u^{-1}
+  =& \tilde{f}\nabla(v^{-1}s_1u + v^{-1}s_2u)u^{-1}
     && \text{fibre-wise linearity of } v^{-1} \\
   =& \tilde{f}(\nabla(v^{-1}s_1u)
     + \nabla(v^{-1}s_2u))u^{-1}
@@ -102,8 +102,8 @@ It now suffices to show that $(d^*u)d(ru)u^{-1} = dr$. Pointwise, we have:
   ((d^*u) \circ d(ru) \circ u^{-1})(x) = d(ru)|_{T_{u^{-1}(x)}M} \circ (du)^{-1}
 \]
 We then observe a useful property of the derivative
-operator $d-$. If $a : L \to M$ and $b : M \to N$ are smooth maps, then by the
-pasting of pushout diagrams to give pushout diagrams, we have
+operator $d-$. If $a : L \to M$ and $b : M \to N$ are smooth maps, then it is
+easy to verify, from the definition of the differential, that
 \[
   d(b \circ a) = db \circ da
 \]
@@ -122,23 +122,71 @@ $f = (u, v) : E \to E'$. If $\nabla$ is a connection on $\pi$, then
 $f \diamond \nabla$ is a connection on $\pi'$.
 \end{thm}
 
+The following theorem shows that the operation $- \diamond -$ commutes with
+composition of diffeomorphisms. This result ultimately provides a notion of
+morphism of connections from bundle isomorphisms.
+\begin{thm}
+Let $\pi_i : E_i \to M_i$ be bundles
+for $i \in \set{1, 2, 3}$ along
+bundle isomorphisms
+$f_{j, j + 1} = (u_{j, j+ 1}, v_{j, j + 1}) : \pi_{j} \to \pi_{j + 1}$
+for $j \in \set{1, 2}$. Then, if $\nabla$ is a connection on $\pi_1$, we have:
+\[
+  (f_{2, 3}f_{1, 2}) \diamond \nabla
+  = f_{2, 3} \diamond (f_{1, 2} \diamond \nabla)
+\]
+\end{thm}
+\begin{proof}
+By expanding expressions, we obtain:
+\begin{align*}
+((f_{2, 3}f_{1, 2}) \diamond \nabla)(s)
+=& (v_{2,3}v_{1,2} \tensor d^*(u_{2,3}u_{1,2}))
+   \nabla((v_{2, 3}v_{1, 2})^{-1}s(u_{2, 3}u_{1,3}))
+   (u_{2,3}u_{1,2})^{-1}
+\end{align*}
+We observe that for any suitable maps $p, q, w$, we have:
+\[
+  d^*(pq)(w) = w \circ (d(pq))^{-1}
+  = w \circ (dq)^{-1} \circ (dp)^{-1}
+  = d^*p(w \circ (dq)^{-1})
+  = d^*p(d^*q(w))
+\]
+so that the first expression becomes:
+\begin{align*}
+((f_{2, 3}f_{1, 2}) \diamond \nabla)(s)
+=& (v_{2,3}v_{1,2} \tensor d^*u_{2,3}d^*u_{1,2})
+   \nabla((v_{2, 3}v_{1, 2})^{-1}s(u_{2, 3}u_{1,3}))
+   (u_{2,3}u_{1,2})^{-1} \\
+=& (v_{2,3} \tensor d^*u_{2,3})\sbr{(v_{1,2} \tensor d^*u_{1,2})
+   \nabla(v_{1, 2}^{-1}(v_{2, 3}^{-1}su_{2, 3})u_{1,2})
+   u_{1,2}^{-1}}u_{2,3}^{-1} \\
+=& (v_{2,3} \tensor d^*u_{2,3})
+   (f_{1,2} \diamond \nabla)(v_{2, 3}^{-1}su_{2, 3})
+   u_{2,3}^{-1} \\
+=& (f_{2,3} \diamond (f_{1,2} \diamond \nabla))(s)
+\end{align*}
+as required.
+\end{proof}
+
 From this point, we will write $f\nabla$ as opposed to $f \diamond \nabla$,
 as long as the action is clear from context. Now, Let $\pi_i : E_i \to M_i$ be
-bundles equipped with a connection
+bundles equipped with connections
 $\nabla_i$ for $i \in \set{1, 2, 3, 4}$. Let
-$f_{i, i + 1} = (u_{i, i + 1}, v_{i, i + 1})$
+$f_{i, i + 1} = (u_{i, i + 1}, v_{i, i + 1}) : \pi_{i} \to \pi_{i + 1}$
 be bundle isomorphisms for $i \in \set{1, 2, 3}$. Then, the composite
 $f_{1, 3} := f_{2, 3}f_{1, 2} = (u_{2, 3}u_{1, 2}, v_{2, 3}v_{1, 2})
 =: (u_{1, 3}, v_{1, 3})$ is clearly a bundle isomorphism. We similarly define
 composites $f_{i, j}$ for each $i < j \in \set{1, 2, 3, 4}$. Now, suppose
 $\nabla_{i + 1} = f_{i, i + 1}\nabla_i$ for each $i \in \set{1, 2, 3}$. Then, we
-immediately have
+immediately have, from the previous theorem:
 \[
   f_{i, k}\nabla_i = f_{j, k}f_{i, j}\nabla_i = f_{j, k}\nabla_j = \nabla_k
 \]
 for each $i < j < k$ in $\set{1, 2, 3, 4}$. In particular,
 \[
-  f_{3, 4}(f_{2, 3}f_{1, 2}\nabla_1) = \nabla_4
+  \nabla_4
+    = f_{3, 4}(f_{2, 3}f_{1, 2}\nabla_1)
+    = (f_{3,4}f_{2,3}f_{1,2}) \nabla_1
     = (f_{3, 4}f_{2, 3})f_{1, 2}\nabla_1
 \]
 
@@ -150,8 +198,8 @@ morphism on $\pi_1$ is the pair $\id_{\pi_1} = (\id_{E_1}, \id_{M_1})$. Then,
     = \nabla_1(s)
 \]
 so that $\id_{\pi_1}\nabla = \nabla$. We finally observe that
-$ff^{-1}\nabla = \id\nabla = \nabla$ for any connection $\nabla$ and any
-compatible bundle morphism $f$.
+$f(f^{-1}\nabla) = (ff^{-1})\nabla = \id\nabla = \nabla$ for any connection
+$\nabla$ and any compatible bundle morphism $f$.
 
 These observations motivate the following definition.
 \begin{defn}[Gauge Transformation]
@@ -163,8 +211,8 @@ isomorphism, or simply morphism, of connections or a gauge transformation.
 
 From the work above, we have established the following results.
 \begin{thm}
-There exists a groupoid, denoted $\Conn$, whose objects are connections and
-whose morphisms are isomorphisms of connections.
+There exists a groupoid whose objects are connections and
+whose morphisms are gauge transformations or isomorphisms of connections.
 \end{thm}
 \begin{defn}[Category of Connections]
 We will call the category of the above theorem the category or groupoid of
