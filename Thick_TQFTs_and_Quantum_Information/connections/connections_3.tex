@@ -42,42 +42,15 @@ For this, we will need to inspect the expression:
       \nabla_1(s_1) \amalg (\nabla_2(s_2) \amalg \nabla_3(s_3))
      )u^{-1}
 \end{align*}
-To reach our goal \eqref{eqn:conn_assoc}, we observe the following basic fact.
-\begin{lem}
+To reach our goal \eqref{eqn:conn_assoc}, we observe the following basic facts.
+\begin{cor}
 For tangent bundles $\pi_i : TM_i \to M_i$, $i \in \set{1, 2, 3}$, we have
 $d\alpha_{M_1, M_2, M_3} = \alpha_{TM_1, TM_2, TM_3}$.
-\end{lem}
+\end{cor}
 \begin{proof}
-We denote $\alpha_{TM} := \alpha_{TM_1, TM_2, TM_3}$,
-$\alpha_{M} := \alpha_{M_1, M_2, M_3}$.
-Let $R$ be a manifold, and $x$ and $y$, smooth maps making the following
-diagram commute:
-\[\begin{tikzpicture}[baseline=(a).base]
-\node[scale=\diagscale] (a) at (0, 0){
-\begin{tikzcd}[column sep=large, row sep=huge]
-&
-(TM_1 \amalg TM_2) \amalg TM_3
-  \ar[d, "\pi_{(12)3}" description]
-  \ar[rrd, "x" above right] & \\
-TM_1 \amalg (TM_2 \amalg TM_3)
-  \ar[ur, "\alpha_{TM}" above left]
-  \ar[dr, "\pi_{1(23)}" below left] &
-(M_1 \amalg M_2) \amalg M_3
-  \ar[rr, "y\alpha_{M}^{-1}" description, dashed] & &
-R \\ &
-M_1 \amalg (M_2 \amalg M_3)
-  \ar[u, "\alpha_{M}" description]
-  \ar[urr, "y" below right] &
-\end{tikzcd}
-};
-\end{tikzpicture}\]
-The map $y\alpha_M^{-1}$ satisfies $(y\alpha_M^{-1})\alpha_M = y$ and
-$(y\alpha_M^{-1})\pi_{(12)3} = y\pi_{1(23)}\alpha_{TM} = x$. Suppose another map
-$r$ satisfies $r\alpha_M = y$. Then, $r = y\alpha_M^{-1}$ showing that
-$y\alpha_M^{-1}$ is unique.
-
-Therefore, $\alpha_{TM}$ makes the part of the diagram excluding $R$ a pushout
-and hence must be $d\alpha_M$, by the uniqueness of the derivative.
+$d\alpha_{M_1, M_2, M_3}$ is the essentially the identity on fibres as is
+$\alpha_{TM_1, TM_2, TM_2}$. To see this, pick explicit elements of
+the relevant spaces and expand the definitions.
 \end{proof}
 
 \begin{cor}
@@ -87,12 +60,6 @@ For tangent bundles $\pi_i$ as in the previous lemma, we have
     = \br{\alpha^{-1}_{TM_1, TM_2, TM_3}}^*(g)
 \]
 \end{cor}
-
-\begin{rmk}
-In general, we denote precomposition by any map $\alpha$ as
-$\alpha^*(g) = g \circ \alpha$.
-\end{rmk}
-
 The above corollary yields:
 \begin{align*}
    & f \diamond (\nabla_1 \amalg (\nabla_2 \amalg \nabla_2))(
@@ -110,6 +77,7 @@ where the last expression is easily seen to be
   (\nabla_1(s) \amalg \nabla_2(s_2)) \amalg \nabla_3(s_3)
   = ((\nabla_1 \amalg \nabla_2) \amalg \nabla_3)((s_1 \amalg s_2) \amalg s_3)
 \]
+
 We can similarly show that the unitors in $\Man$ yield unitors for disjoint
 unions of connections of bundles with equal fibres and equidimensional base
 spaces. We have thus proved the following theorem.
@@ -129,9 +97,10 @@ As we have a notion of gluing for (a subset of) complex bundles with a fixed
 fibre, we will develop a notion of gluing for connections defined on these
 bundles. It is well known that, for connections $\nabla$ and $\nabla'$ on a
 smooth bundle $E \to M$, $\nabla - \nabla'$ is a smooth section of the bundle
-$\Hom(E) \tensor T^*M \to M$, where $\Hom(E)$ is the internal $\Hom$-object in
+$\Hom(E) \tensor T^*M \to M$ \cite[Lemma 2.2]{Conn},
+where $\Hom(E)$ is the internal $\Hom$-object in
 the closed monoidal category of smooth bundles over $M$ that is isomorphic to
-the bundle $E^* \tensor E$ \cite[Lemma 2.2]{Conn}. As a result, the set of all
+the bundle $E^* \tensor E$. As a result, the set of all
 connections on $E$ is an affine subspace of the $\Cinf(\R)$--module
 $\Omega^1(\Hom(E)) = \Gamma(\Hom(E) \tensor T^*M)$. This allows us to write each
 connection $\nabla$ on $E$ as a sum:
@@ -215,9 +184,9 @@ Finally, one has the following fundamental fact.
 For any cobordism double category $\s{C}$, $\BBun^V_{\s{C}}$ can be promoted to
 a monoidal double category of connections by taking pairs $(E, \nabla)$ for each
 bundle cobordism $E$ in $\BBun^V_{\s{C}}$ and a gluable connection $\nabla$ on
-$E$ as the horizontal $1$--morphisms. Vertical $1$--morphisms and $2$--morphisms
-are taken to be gauge transformations. The rest of the structure is modified in
-the obvious ways.
+$E$ as the horizontal $1$--morphisms. Vertical $1$--morphisms are taken to be
+bundle isomorphisms and $2$--morphisms are taken to be gauge transformations.
+The rest of the structure is modified in the obvious ways.
 \end{thm}
 
 \begin{defn}

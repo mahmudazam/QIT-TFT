@@ -102,11 +102,14 @@ multibordisms into line diagrams of the following form, for simplicity:
   ;
 \end{tikzpicture}\]
 where we shrink sources and targets to single vertices. Now, suppose that we
-have thick tangles $M, M: X \to Y$ and $N, N' : Y \to Z$. Then, we can define
+have thick tangles $M_i : X \to Y, i \in \set{1, \dots, m}$ and
+$N_j : Y \to Z, j \in \set{1, \dots, n}$. Then, we can define
 \[
-  (N + N') * (M + M') := (N * M) + (M * M')
+  \sum_{j = 1}^n N_j * \sum_{i = 1}^m M_i
+  := \sum_{i = 1}^n \sum_{j = 1}^m N_j * M_i
 \]
-since the relevant composites all exist. In line diagrams, this equation is:
+since the relevant composites all exist. For $m = 3, n =2$, in line diagrams,
+this equation is:
 \[\begin{tikzpicture}
 \colvert{black}{1, 0}{X}
 \colvert{black}{3, 0}{Y}
@@ -114,31 +117,53 @@ since the relevant composites all exist. In line diagrams, this equation is:
 \colvert{black}{4, 0}{YY}
 \colvert{black}{6, 0}{Z}
 \path
-  (X)  edge[bend left]   node[above]{$M$}   (Y)
-  (X)  edge[bend right]  node[below]{$M'$}  (Y)
-  (YY) edge[bend left]   node[above]{$N$}  (Z)
-  (YY) edge[bend right]  node[below]{$N'$} (Z)
+  (X)  edge[bend left=70]   node[above]{$M_1$}   (Y)
+  (X)  edge                 node[above]{$M_2$}   (Y)
+  (X)  edge[bend right=70]  node[below]{$M_3$}   (Y)
+  (YY) edge[bend left]      node[above]{$N_1$}   (Z)
+  (YY) edge[bend right]     node[below]{$N_2$}   (Z)
   ;
 \lblvert{6.5, 0}{equals}{$:=$}
 \colvert{black}{7, 0}{XX}
-\colvert{black}{9, 0.30}{YYY}
-\colvert{black}{9, -0.30}{YYYY}
 \colvert{black}{11, 0}{ZZ}
-\draw (XX) .. controls (7.5, 0.25) and (8.5, 0.30) .. (YYY);
-\draw (YYY) .. controls (9.5, 0.30) and (10.5, 0.25) .. (ZZ);
-\draw (XX) .. controls (7.5, -0.25) and (8.5, -0.30) .. (YYYY);
-\draw (YYYY) .. controls (9.5, -0.30) and (10.5, -0.25) .. (ZZ);
-
-\lblvert{9, 0.55}{NM}{$N * M$}
-\lblvert{9, -0.55}{NNMM}{$N' * M'$}
+\draw
+  (XX) to[bend left=90]
+  node[midway, draw=black, fill=black, shape=circle, inner sep=\vertinnersep]{}
+  node[midway, above]{{\footnotesize $N_1 * M_1$}}
+  (ZZ);
+\draw
+  (XX) to[bend left=35]
+  node[midway, draw=black, fill=black, shape=circle, inner sep=\vertinnersep]{}
+  node[midway, above]{{\footnotesize $N_1 * M_2$}}
+  (ZZ);
+\draw
+  (XX) to[bend left=10]
+  node[midway, draw=black, fill=black, shape=circle, inner sep=\vertinnersep]{}
+  node[midway, above]{{\footnotesize $N_1 * M_3$}}
+  (ZZ);
+\draw
+  (XX) to[bend right=10]
+  node[midway, draw=black, fill=black, shape=circle, inner sep=\vertinnersep]{}
+  node[midway, below]{{\footnotesize $N_2 * M_1$}}
+  (ZZ);
+\draw
+  (XX) to[bend right=35]
+  node[midway, draw=black, fill=black, shape=circle, inner sep=\vertinnersep]{}
+  node[midway, below]{{\footnotesize $N_2 * M_2$}}
+  (ZZ);
+\draw
+  (XX) to[bend right=90]
+  node[midway, draw=black, fill=black, shape=circle, inner sep=\vertinnersep]{}
+  node[midway, below]{{\footnotesize $N_2 * M_3$}}
+  (ZZ);
 \end{tikzpicture}\]
 In other words, during horizontal composition of multitangles, we first undo
-the gluing resulting from addition at the composition site and then perform the
-gluing for horizontal composition.  This new gluing operation is easily seen to
-be associative up to piecewise isomorphisms.
-Furthermore, taking $M'$ to be the zero cobordism, we have
+the gluing resulting from addition at the composition site, duplicate the
+branches as needed and then perform the gluing for horizontal composition. This
+new gluing operation is easily seen to be associative up to piecewise
+isomorphisms. Furthermore, we have
 \[
-  (N + N') * M = (N * M) + (N' * M)
+  (N_1 + N_2) * M_1 = (N_1 * M_1) + (N_2 * M_1)
 \]
 In pictures:
 \[\begin{tikzpicture}
@@ -148,9 +173,9 @@ In pictures:
 \colvert{black}{4, 0}{YY}
 \colvert{black}{6, 0}{Z}
 \path
-  (X)  edge   node[above]{$M$}   (Y)
-  (YY) edge[bend left]   node[above]{$N$}  (Z)
-  (YY) edge[bend right]  node[below]{$N'$} (Z)
+  (X)  edge   node[above]{$M_1$}   (Y)
+  (YY) edge[bend left]   node[above]{$N_1$}  (Z)
+  (YY) edge[bend right]  node[below]{$N_2$} (Z)
   ;
 \lblvert{6.5, 0}{equals}{$:=$}
 \colvert{black}{7, 0}{XX}
@@ -162,16 +187,17 @@ In pictures:
 \draw (XX) .. controls (7.5, -0.25) and (8.5, -0.30) .. (YYYY);
 \draw (YYYY) .. controls (9.5, -0.30) and (10.5, -0.25) .. (ZZ);
 
-\lblvert{9, 0.55}{NM}{$N * M$}
-\lblvert{9, -0.55}{NNMM}{$N' * M$}
+\lblvert{9, 0.55}{NM}{$N_1 * M_1$}
+\lblvert{9, -0.55}{NNMM}{$N_2 * M_1$}
 \end{tikzpicture}\]
-If, in addition, $M = Y \times I$, then we easily see that there is a piecewise
-isomorphism $(N + N') * M \to N + N'$ -- that is, horizontal composition is
-right unital up to isomorphism. Left unitality is similar -- let $M, M', N$ be
-arbitrary and take $N'$ to be be zero. We should note that the addition of
-(multi-)cobordisms does not have immediate objects but it is commutative up to
-piecewise isomorphism. Hence, the morphism category of multitangles is an
-up-to-isomorphism commutative monoid.
+If, in addition, $M_1 = Y \times I$, then we easily see that there is a
+piecewise isomorphism $(N_1 + N_2) * M_1 \to N_1 + N_2$. It also easy to see for
+arbitrarily many $N_1, \dots, N_n$ -- that is, horizontal
+composition is right unital up to isomorphism. Left unitality is similar --
+consider $N_1 * (M_1 + M_2)$ and take $N_1 = Y \times I$. We should note that
+the addition of (multi-)cobordisms does not have immediate inverses but it is
+commutative up to piecewise isomorphism. Hence, the morphism category of
+multitangles is an up-to-isomorphism commutative monoid.
 
 So far, we have defined addition on horizontal $1$--morphisms. We will define
 addition on objects to fit this picture. Given $I^{\amalg m}$ and
