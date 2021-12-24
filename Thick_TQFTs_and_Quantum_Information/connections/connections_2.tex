@@ -88,25 +88,26 @@ $(V, d)$--bundles and is denoted $\Bun^V_d$.
 We will now develop a notion of gluing complex bundles on compact manifolds with
 boundary along with connections on these bundles. To accomplish this, we will
 first show the following:
-\begin{thm}\label{thm:bundle_gluing}
-Given any smooth compact manifold $M$ with contractible boundary and a complex
-bundle $\pi : E \to M$ with fibre $V \cong \C^n$, there exists a complex bundle
-$\wh{\pi} : \wh{E} \to M$ which restricts to the trivial bundle on a collar $C$
-of $\partial M$ and to $E$ on $M \setminus C_0$, for some open set $C_0$
-strictly containing $C$.
-\end{thm}
+\begin{lem}\label{thm:bundle_gluing}
+Let $M$ be a smooth compact manifold such that $\partial M$ has
+a collar $C_0$ whose connected components are each contractible. For any complex
+vector bundle $\pi : E \to M$ with fibre $P$,
+there exists a complex bundle $\wh{\pi} : \wh{E} \to M$ which restricts to
+the trivial bundle on a collar $C \subset C_0$ of $\partial M$ and to $E$
+on $M \setminus C_0$.
+\end{lem}
 \begin{proof}
 Let $U$ and $V$ be any two open sets of $M$ over which $E$ trivializes and
-$G_{U, V} : U \cap V \to \Aut(V)$, the assignment of transition functions to
+$G_{U, V} : U \cap V \to \Aut(P)$, the assignment of transition functions to
 their intersection.
 By the smooth collar theorem, there exists a nieghbourhood $C_0$ of $\partial M$
 diffeomorphic to the cylinder $\partial M \times I$ on $\partial M$,
-with $\partial M$ identified with $\partial M \times \set{1}$. Since
-$\partial M$ is contractible, so is $C_0$, such that $E|_{C_0}$ is isomorphic to
-the trivial bundle. Therefore, $G_{U, V}|_{C_0}$ is smoothly homotopic to
-the constant map $U \cap V \cap C_0 \to \Aut(V) : x \mapsto \id_V$. Let
-$H_{U, V} : I \times U \cap V \cap C_0 \to \Aut(V)$ be this homotopy so that
-$H_{U, V}(1, -) = G_{U, V}|_{C_0}$ and $H_{U, V}(0, x) = \id_V$ for all
+with $\partial M$ identified with $\partial M \times \set{1}$. By hypothesis, we
+can take $C_0$ to have contractible components such that $E|_{C_0}$ is
+isomorphic to the trivial bundle. Therefore, $G_{U, V}|_{C_0}$ is smoothly
+homotopic to the constant map $U \cap V \cap C_0 \to \Aut(P) : x \mapsto \id_P$.
+Let $H_{U, V} : I \times U \cap V \cap C_0 \to \Aut(P)$ be this homotopy so that
+$H_{U, V}(1, -) = G_{U, V}|_{C_0}$ and $H_{U, V}(0, x) = \id_P$ for all
 $x \in U \cap V \cap C_0$.
 
 We can then cut $C_0$ into pieces

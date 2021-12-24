@@ -55,7 +55,7 @@ We note that this operation is distinct from both the disjoint union and the
 gluing of thick tangles end-to-end. In particular, the results of this operation
 can not, in general, be embeded into the infinite strip $\R \times I$. However,
 we observe that we can unambiguously define the sources and targets of these
-shapes as sources $S_1$ and $T_2$ respectively. We also observe that when
+shapes as sources $S_1$ and $T_1$ respectively. We also observe that when
 the domains and codomains of the summands are the same, the picture of a sum is
 simply a diagram in $\DThick$ involving parallel cobordisms. This motivates us
 to name these shapes as follows.
@@ -70,8 +70,9 @@ the empty sum -- a multitangle between any pair of objects in $\DThick$.
 We observe that this definition carries over as is to transport graphs, bundles
 and connections, even though the results of this kind of addition need not be
 transport graphs, bundles or connections. In fact, if we take sums of three
-cobordisms, then the result might even fail to be a manifold.
-\TODO{Is it still a manifold?} Nevertheless, we will carry on with this
+cobordisms, then the result is not a manifold, in the usual sense because not
+point in the source or target ends has a neighbourhood hormeomorphic to a
+Euclidean open set or half-plane. Nevertheless, we will carry on with this
 construction, being aware that we might start to lose some of the double
 categorical structures.
 \end{rmk}
@@ -90,7 +91,7 @@ $\TG\br{\CConn^V_{\DThick}}$, one for each summand
 
 We would like to make our structure resemble an additive category. For this, we
 will modify the definition of end-to-end gluing or horizontal composition so as
-to make it bi-$\Z$--linear as follows. First, we will reduce diagrams involving
+to make it $\Z$--bilinear as follows. First, we will reduce diagrams involving
 multibordisms into line diagrams of the following form, for simplicity:
 \[\begin{tikzpicture}
 \colvert{black}{1, 0}{s}
@@ -160,7 +161,7 @@ this equation is:
 In other words, during horizontal composition of multitangles, we first undo
 the gluing resulting from addition at the composition site, duplicate the
 branches as needed and then perform the gluing for horizontal composition. This
-new gluing operation is easily seen to be associative up to piecewise
+new composition operation is easily seen to be associative up to piecewise
 isomorphisms. Furthermore, we have
 \[
   (N_1 + N_2) * M_1 = (N_1 * M_1) + (N_2 * M_1)

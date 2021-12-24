@@ -7,7 +7,7 @@ $\mathcal{U} = \set{u_1, \dots, u_n}$ be a set
 of single qubit quantum gates -- unitary matrices -- in $\M_2(\C)$ such that
 each $u_k$ is accessible from $\DThick$. Let the thick tangle with a bundle,
 a connection and an admissible transport graph that realizes the accessibility
-of the $u_k$ be $M_k$, for each $i \in \set{k, \dots, n}$.
+of the $u_k$ be $M_k$, for each $k \in \set{1, \dots, n}$.
 
 We recall that, in the simplest terms, a quantum circuit is a sequence of
 composeable complex linear unitary maps
@@ -67,33 +67,43 @@ the circuit to the input.
 One issue with this approach is that there might be gates acting on more
 than one qubit that are not elementary tensor products of single qubit gates.
 For instance, the controlled not gate is one such example. In order to obtain
-non-elementary tensors, we will addition of vectors. To capture this in the
-language of parallel field theories, we need a notion of addition for
+non-elementary tensors, we will require addition of vectors. To capture this
+in the language of parallel field theories, we need a notion of addition for
 cobordisms. We will return to this idea in the next subsection. For now, we
 observe another approach to quantum computing using parallel field theories.
 
 We now take the fibres of our bundles to be $\C^2$ -- the space where a single
 qubit lives (recall \ref{rmk:any_vect_space}).
-We then assume that our previous collection of quantum gates in
-$\C^2 \to \C^2$ are accessible from a collection of $2$--dimensional thick
+We view our previous collection of quantum gates
+$g_{i, j} \in \M_2(\C)$ as a collection of linear maps
+$g_{i, j} : \C^2 \to \C^2$ and assume that the $g_{i, j}$ are accessible from a
+collection of $2$--dimensional thick
 tangles $G'_{i, j} : I \to I$ (not $\varnothing \to I$, this time) such that
-$F(G'_{i, j}) = g_{i, j}$. Then, the quantum circuit can be expressed as:
+$F(G'_{i, j}) = g_{i, j}$. Then, the quantum circuit $U$ can be expressed as:
 \[
   U = F\br{\coprod_{j = 1}^{N} G'_{p, j} * \cdots
            * \coprod_{j = 1}^{N} G'_{1, j}}
 \]
-recalling that $*$ is gluing of thick tangles.
-Notice that single qubit inputs are linear maps $\C \to C^2$. Hence, we now
+recalling that $*$ is gluing of thick tangles. Let $G$ be the input to $F$ in
+the above equation.
+
+Notice that single qubit inputs are linear maps $\C \to \C^2$. Hence, we now
 assume that linear maps
 \[
   \ket{0} = z \mapsto z\bmat{1 \\ 0} \text{ and }
   \ket{1} = z \mapsto z \bmat{0 \\ 1}
 \]
-are accessible. That is, a quantum register is a disjoint union of thick tangles
+are accessible. That is, a quantum register expressed as thick tangles is a
+disjoint union of thick tangles (of course, equipped with transport graphs)
 $\mathbf{0}, \mathbf{1} : \varnothing \to I$ realizing the accessibility of
-$\ket{0}$ and $\ket{1}$ respectively.
+$\ket{0}$ and $\ket{1}$ respectively. In this case, we will have
+$F(\mathbf{0}) = \ket{0}$ and $F(\mathbf{1}) = \ket{1}$.
 
-It is then easy to see that an application of a quantum circuit to quantum
-register is given by composition of thick tangles.
-
+It is then easy to see that an application of a quantum circuit to a quantum
+register is given by composition of thick tangles. That is, let $R$ be a thick
+tangle formed from the disjoint union of a sequence of $\mathbf{0}$ and
+$\mathbf{1}$. This represents the input register. We can then glue $R$ on the
+source end of $G$ to obtain a thick tangle $H$. Then,
+$F(H) = F(G * R) = F(G) \circ F(R)$ is the result of giving the circuit
+$F(G)$ the input from the register $F(R)$.
 
