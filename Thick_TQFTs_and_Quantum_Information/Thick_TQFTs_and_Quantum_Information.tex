@@ -1,28 +1,28 @@
 
 \documentclass{amsart}
 
-\usepackage{\PRJWD/preamble/preamble}
+\usepackage{./preamble}
 \usepackage{subfiles}
 
 \AtBeginDocument{
-\input{\PRJWD/frontmatter/frontmatter}
+\input{./frontmatter}
 }
 
 \AtEndDocument{
-\input{\PRJWD/ending/ending}
+\input{./ending}
 }
 
 \begin{document}
 
-\subfile{introduction/introduction}
+\subfile{./introduction}
 
-\subfile{first_approach/first_approach}
+\subfile{./first_approach}
 
-\subfile{connections/connections}
+\subfile{./connections}
 
-\subfile{graphs/graphs}
+\subfile{./graphs}
 
-\subfile{field_theory/field_theory}
+\subfile{./field_theory}
 
 %\section{Future Work}
 %
