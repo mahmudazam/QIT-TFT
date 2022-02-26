@@ -6,14 +6,11 @@ TEX_DEPS=$(shell ls -1 *.tex)
 
 %.pdf: %.tex
 	pdflatex -interaction nonstopmode\
-           -output-directory build\
            $<
-	biber --output-directory build $*
+	bibtex $*
 	pdflatex -interaction nonstopmode\
-           -output-directory build\
            $<
 	pdflatex -interaction nonstopmode\
-           -output-directory build\
            $<
 	cp build/$@ .
 
