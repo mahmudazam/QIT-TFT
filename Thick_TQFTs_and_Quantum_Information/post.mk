@@ -10,5 +10,5 @@ clean:
 	rm -rf build
 
 Clean: clean
-	rm -f *.pdf
+	rm -f *.pdf *.bbl *.blg *.aux *.out *.log *.toc
 
