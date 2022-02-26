@@ -12,5 +12,4 @@ TEX_DEPS=$(shell ls -1 *.tex)
            $<
 	pdflatex -interaction nonstopmode\
            $<
-	cp build/$@ .
 
