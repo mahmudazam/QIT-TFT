@@ -9,7 +9,7 @@ SECTIONS=\
 
 include pre.mk
 
-${PROJECT}.pdf: build ${BIB_DEPS} ${STY_DEPS} ${TEX_DEPS}
+${PROJECT}.pdf: ${BIB_DEPS} ${STY_DEPS} ${TEX_DEPS}
 
 .PHONY: clean Clean ${SECTIONS}
 
