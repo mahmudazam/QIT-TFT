@@ -2,12 +2,11 @@
 PROJECT=Thick_TQFTs_and_Quantum_Information-Full
 
 BIB_DEPS=$(shell ls -1 *.bib)
-STY_DEPS=$(shell ls -1 *.sty)
 TEX_DEPS=$(shell ls -1 *.tex)
 
 all: ${PROJECT}.pdf
 
-${PROJECT}.pdf: ${PROJECT}.tex ${BIB_DEPS} ${STY_DEPS} ${TEX_DEPS}
+${PROJECT}.pdf: ${PROJECT}.tex ${BIB_DEPS} ${TEX_DEPS}
 
 %.pdf: %.tex
 	pdflatex -interaction nonstopmode\

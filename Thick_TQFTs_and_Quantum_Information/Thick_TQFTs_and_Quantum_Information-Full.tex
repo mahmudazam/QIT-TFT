@@ -649,7 +649,7 @@ For a vector bundle $\pi_E : E \to M$, we write $\Gamma(E)$ to denote the set of
 smooth sections of the bundle -- we will not be using the sheaf structure unless
 necessary. For $\K = \R$ when $E$ is a smooth bundle with a real vector space as
 fibres, or $\K = \C$ when $E$ is a complex bundle, we recall that a connection
-\cite{Conn} on $E$ is a $\K$--linear map
+on $E$ is a $\K$--linear map
 \[
   \nabla : \Gamma(E) \to \Gamma(E \tensor T^*M)
 \]
@@ -1891,8 +1891,8 @@ agree on the level sets. Thus, $f$ and $g$ agree on $G$.
 
 In light of the last corollary, it is reasonable to consider expression graphs
 up to expression isomorphisms from this point onwards. We will next define some
-useful constructs on expression graphs that will facilitate our desired notion
-of TQFTs.
+useful constructs on expression graphs that will facilitate our desired
+modification of TQFTs.
 
 
 %\input{./graphs_3}
@@ -2247,11 +2247,10 @@ provide us with a way to associate linear maps to manifolds.
 
 \begin{exm}\label{exm:geomegraph}
 Consider the graph in example \ref{exm:egraph1}. Then, we consider a mapping of
-the edges to paths on a surface as shown below.\footnote{This diagram was
-generated using \cite{Mathcha}.} Note that here we have
+the edges to paths on a surface as shown below. Note that here we have
 $\gamma_{u, v}(1) = \gamma_{v, w}(0)$ for most points but not all -- for
 instance, $\gamma_{2, 3}$ and $\gamma_{3, 5}$ do not share any end-points.
-\begin{figure}[H]
+\begin{figure}[H]\label{fig:geomegraph}
 \begin{center}
 %\input{./path_graph_diag_1}
 \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-0.95,xscale=0.95]
@@ -2747,7 +2746,7 @@ morphism category as $\TG(M)_1$.
 
 We then consider a double functor defined as follows.
 
-\begin{defn}[Parallel Field Theory over a Manifold]\label{defn:sing_man_tqft}
+\begin{defn}[Parallel Transport Calculus over a Manifold]\label{defn:sing_man_tqft}
 For a finite, totally-ordered, $2$--coloured set
 $V = \set{v_1, \dots, v_n}$ in $\TG(M)_0$, we set
 \[
@@ -2793,7 +2792,7 @@ varying family of linear maps, which we write as:
   F(f_0, f_1, h) := \Exp{G}[s_t\gamma]
     : F(S(G)) \to F(T(G)), t \in [0, 1]
 \]
-We call $F$ a parallel field theory on $M$.
+We call $F$ a parallel transport calculus on $M$.
 \end{defn}
 
 \begin{rmk}\label{rmk:any_vect_space}
@@ -2801,7 +2800,7 @@ We note that so far we have considered $\cwedge$ and $\cvee$ to mean the product
 and its dual for some algebra $A$. This is not strictly necessary. We could, in
 principle, choose, for each instance of $\cwedge$ in an expression of a
 transport graph, a distinct map $A \tensor A \to A$ when defining a parallel
-field theory as above, as long as it does not disturb the monoidal double
+transport calculus as above, as long as it does not disturb the monoidal double
 functoriality of $F$. In fact, we could replace $A$ with an arbitrary vector
 space $V$ and work with arbitrary linear maps $V \tensor V \to V$ and
 $V \to V \tensor V$ in replacing $\cwedge$ and $\cvee$ in expressions arising
@@ -2824,7 +2823,7 @@ a usual TQFT.
 
 %\subfile{./field_theory}
 
-\section{Parallel Field Theory}
+\section{Parallel Transport Calculus}
 
 In definition \ref{defn:sing_man_tqft}, we associated to each object a tensor
 power of some algebra $A$; to each vertical $1$--morphism, the identity on $A$;
@@ -3326,7 +3325,8 @@ Having the developed the basic idea of such a monoidal double category, we avoid
 going into further detail because it does not provide any additional insight. We
 simply note that the structure outlined here is a monoidal double category that
 can serve as the domain for a notion of (double) functorial quantum field
-theory. Hence, we end this subsection with the following definition.
+theory built on parallel tranport calculi over cobordisms.
+Hence, we end this subsection with the following definition.
 
 \begin{defn}
 The monoidal double category outlined above is called the double category of
@@ -3337,12 +3337,12 @@ denoted $\TG\br{\CConn^V_{\DThick}}$.
 
 %\input{./field_theory_3}
 
-\subsection{Parallel Field Theory}
+\subsection{Parallel Transport Calculus}
 
-We are now equipped with all the machinery to define our desired notion of
-topological quantum field theory.
+We are now equipped with all the machinery to define our desired modification
+of topological quantum field theory.
 
-\begin{defn}[Parallel Field Theory]
+\begin{defn}[Parallel Transport Calculus]
 Let $A$ be a $\K$--algebra for $\K = \R$ or $\C$. Then, we define the data of a
 monoidal double functor
 \[
@@ -3360,18 +3360,19 @@ $F$ on objects identically to \ref{defn:sing_man_tqft} again. It is then easy to
 see that the action of $F$ on vertical $1$--morphisms and $2$--morphisms can be
 adapted similarly.
 
-A monoidal double functor $F$ defined in this way is called a parallel field
-theory (on $2$--dimensional thick tangles or $\DThick$).
+A monoidal double functor $F$ defined in this way is called a parallel transport
+calculus (on $2$--dimensional thick tangles or $\DThick$).
 \end{defn}
 
 \begin{rmk}
 The ending parenthetical remark in the previous definition suggests that we can
-easily consider such field theories over other cobordism categories but we will
-not pursue this idea for now.
+easily consider such parallel transport calculi over other cobordism categories
+but we will not pursue this idea for now.
 \end{rmk}
 
 We have not yet discussed if enough useful elements of the algebra $A$ can be
-accessed with a field theory of this form. After all, this was the original
+accessed with a parallel transport calculus of this form.
+After all, this was the original
 issue with $1$--categorical TQFTs. We will not treat this issue in full in this
 paper but we will note that the machinery we have developed so far puts no
 serious restrictions on the bundles or connections we can choose over our
@@ -3379,7 +3380,7 @@ manifolds. What we mean by this is that given an arbitray bundle with a
 connection, we can make it gluable by only modifying it in a small collar of the
 boundary. The bundle and connection behave as usual over rest of the base
 manifold. We hope that this will provide enough structure to ensure that enough
-useful algebra elements become accessible with a parallel field theory.
+useful algebra elements become accessible with a parallel transport calculus.
 Nevertheless, we will make this problem precise for future work.
 One of the main questions to be answered here the following:
 
@@ -3412,7 +3413,7 @@ such that $f$ can be obtained in the process described in definition
 \end{qstn}
 
 If we can answer these questions in the affirmative for an appreciable
-collection of elements $a \in A$, then a parallel field theory gives us a
+collection of elements $a \in A$, then a parallel transport calculus gives us a
 concrete way to perform computations involving the multiplication of $A$ and
 automorphisms of $A$ and tensor products of these maps, using the geometry of
 manifolds. Hence, we make the following definition:
@@ -3424,10 +3425,10 @@ $M$.
 \end{defn}
 
 If an element $a$ is accessible from a manifold $M$, it is in the image of a
-parallel field theory on $M$.
+parallel transport calculus on $M$.
 If an element $a$ is accessible from a thick tangle
 $M : \varnothing \to I^{\amalg n}$ where the chosen transport graph is
-admissible, then $a$ is in the image of a parallel field theory on $\DThick$.
+admissible, then $a$ is in the image of a parallel transport calculus on $\DThick$.
 
 \begin{defn}
 In the latter case, we say that $a$ is accessible from $\DThick$.
@@ -3435,7 +3436,7 @@ In the latter case, we say that $a$ is accessible from $\DThick$.
 
 After this, it is easy to see
 that we can compute with accessible elements using the machinery of a parallel
-field theory. This picture will become clearer as we treat quantum information
+transport calculus. This picture will become clearer as we treat quantum information
 and computing in the next subsection.
 
 %\input{./field_theory_4}
@@ -3457,7 +3458,7 @@ For simplicity, we assume that
 each $U_i$ arises as a tensor product $\bigotimes_{j = 1}^{N} g_{i, j}$ for
 gates $g_{i, j} \in \mathcal{U}$. Since each $g_{i, j}$ is accessible, we have
 a $G_{i, j} \in \set[M_k]{k = 1, \dots, n}$ such that $F(G_{i, j}) = g_{i, j}$
-for a parallel field theory $F$. Then, we have:
+for a parallel transport calculus $F$. Then, we have:
 \[
  U := U_p \circ \cdots \circ U_1
   = \bigotimes_{j = 1}^{N} g_{p, j} \circ \cdots
@@ -3509,9 +3510,9 @@ One issue with this approach is that there might be gates acting on more
 than one qubit that are not elementary tensor products of single qubit gates.
 For instance, the controlled not gate is one such example. In order to obtain
 non-elementary tensors, we will require addition of vectors. To capture this
-in the language of parallel field theories, we need a notion of addition for
+in the language of parallel transport calculi, we need a notion of addition for
 cobordisms. We will return to this idea in the next subsection. For now, we
-observe another approach to quantum computing using parallel field theories.
+observe another approach to quantum computing using parallel transport calculi.
 
 We now take the fibres of our bundles to be $\C^2$ -- the space where a single
 qubit lives (recall \ref{rmk:any_vect_space}).
@@ -3554,7 +3555,7 @@ $F(G)$ the input from the register $F(R)$.
 
 We now make precise the notion of addition for $2$--dimensional thick tangles
 mentioned in the previous subsection, so that non-elementary tensors become
-accessible with parallel field theories.
+accessible with parallel transport calculi.
 
 Consider $2$--dimensional thick tangles $M : I^{\amalg n} \to I^{\amalg m}$ and
 $N : I^{\amalg n'} \to I^{\amalg m'}$. Suppose $S_1 \in \set{S(M), S(N)}$ is the
@@ -3567,10 +3568,9 @@ obtained by gluing $S_0$ to the first $\min\set{m, m'}$ copies of $I$ in
 $S_1$ and $T_0$ to the first $\min\set{n, n'}$ copies of $I$ in $T_1$.
 
 For instance, let $M$ be the pair-of-pants and $N$ the cylinder $I \times I$.
-Then, pictorially, $M + N$ would look like\footnote{generated using
-\cite{Mathcha}}:
+Then, pictorially, $M + N$ would look like:
 
-\[
+\begin{figure}[H]\label{fig:cobaddexm}
 \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
 %Curve Lines [id:da6783491277813168]
 \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ]
@@ -3601,7 +3601,7 @@ Then, pictorially, $M + N$ would look like\footnote{generated using
 \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ]
 (10,40.25) .. controls (10.2,57.6) and (120.6,71.6) .. (120,60) ;
 \end{tikzpicture}
-\]
+\end{figure}
 We note that this operation is distinct from both the disjoint union and the
 gluing of thick tangles end-to-end. In particular, the results of this operation
 can not, in general, be embeded into the infinite strip $\R \times I$. However,
@@ -3764,8 +3764,8 @@ least. We invite the reader to formulate this notion of double category with
 fully defined axioms to make our structure fit the definition.
 
 We then move on to show that with this structure we have a more robust notion of
-field theory capable of handling non-elementary tensors in the context of
-quantum computing. To this end, we define:
+parallel transport calculus capable of handling non-elementary tensors in the
+context of quantum computing. To this end, we define:
 
 \begin{defn}
 We denote the ``additive monoidal double category'' of multitangles constructed
@@ -3776,7 +3776,7 @@ so far as $\TG^+(\CConn^V_{\DThick})$.
 
 \subsection{Quantum Computing Revisited}
 
-Given a parallel field theory as defined so far, we can extend the domain of
+Given a parallel transport calculus as defined so far, we can extend the domain of
 $F$ to the structure $\TG^+\br{\CConn^V_{\DThick}}$ in an obvious way to obtain
 a ``functor'' $F^+$ as follows. $F^+$ is identical to $F$ on the object category
 -- there are no issues here since the object category was not modified in
@@ -3803,22 +3803,22 @@ $M = \varnothing$, then we define:
 \]
 
 \begin{defn}
-An additive parallel field theory is an ``additive monoidal double functor''
+An additive parallel transport calculus is an ``additive monoidal double functor''
 \[
   F : \TG^+(\CConn^V_{\DThick}) \to \FFVect_{\C}
 \]
 defined using the above construction.
-Accessibility is defined similarly for additive parallel field theories.
+Accessibility is defined similarly for additive parallel transport calculi.
 \end{defn}
 
 Given a collection of $1$--qubit gates, we can take sums of tensor products of
 these gates to obtain multi-qubit gates that are not elementary tensors.  Thus,
 if we can solve the accessibility problem for $1$--qubit gates in the first
-sense of parallel field theories, we can express sums of tensor products of
+sense of parallel transport calculi, we can express sums of tensor products of
 these gates using multitangles. Thus, we have a concrete way to express both
 quantum registers and circuits using structures in $\TG^+(\CConn^V_{\DThick})$
 which finally yield usual linear algebraic quantum registers and circuits under
-additive parallel field theories. In fact, both approaches to quantum computing
+additive parallel transport calculi. In fact, both approaches to quantum computing
 discussed before can be adapted to this framework. It is then also easy to adapt
 this notion back to the single manifold case of \ref{subsec:sing_man_tqft}.
 
@@ -3993,7 +3993,7 @@ categories of thick tangles and transport graphs are not equipped with symmetry.
 Next, we comment on a possible connection to modular operads \cite{ModOp}.
 A modular operad is roughly a cyclic operad which allows for the gluing of
 ``inputs'' and ``outputs'' of the same object \cite{Giansiracusa}.
-This formalism is not present in the our setting, but we can try to introduce
+This formalism is not present in our setting, but we can try to introduce
 something similar, although in a non-unique way. Consider the simple example
 below. Here, we wish to glue the first and only output to the first input, say.
 \[\begin{tikzpicture}
@@ -4038,7 +4038,7 @@ Kontsevich's graph complexes \cite{ModOp}. Perhaps, we can find an
 interpretation of these graph complexes or of the graphs defined in
 \cite{ModOp} as parallel transport machinery, leading
 to a solution of the self-gluing problem for transport graphs.
-It if of interest to fully flesh out such connection to
+It if of interest to fully flesh out such connections to
 modular operads for this could lead to the
 application of Chern-Simons theory to the quantum computing framework
 developed in this paper. On the other hand, an approach to cobordism
@@ -4054,6 +4054,15 @@ We note that it is also possible to reformulate $2$-dimensional TQFTs in terms o
 The point of view in our article can be regarded as a particular instance in a much larger program of \emph{categorification} in mathematics.  While we treat this as a general theme and mantra in our setting, we may speculate on concrete ways in which our program interacts with categorification in, say, geometric representation theory.  We observe that our transport graphs are, in fact, quivers and thus give rise to well-defined Nakajima quiver varieties in the sense of \cite{HN1}.  These quiver varieties carry categorical actions of Lie algebras, both at the level of $K$-theory \cite{HN2} and at a geometric level \cite{CKL}.  These actions, especially the fully geometric version, are in turn a potential source of gates.  Again, we leave such speculations for future work.
 
 Finally, one may ask how the constructions in this paper might be realized in a physical system of qubits, or whether there is a particular type of qubit that is better suited to these constructions than others.  One candidate is provided by the synthetic hyperbolic lattices studied experimentally by Koll\'ar, Fitzpatrick, and Houck in \cite{KFH} and theoretically by Maciejko and the second-named author in \cite{MR1}.  The effective quantum electrodynamics of these materials takes place on a Riemann surface of genus $g\geq2$.  Mathematically, the curve arises from the quotient of the hyperbolic plane $\mathbb H$ by the discrete Fuchsian group $\Gamma\subset\mbox{PSL}(2)$ of translations of the lattice.  Physically, one engineers a finite lattice but the Riemann surface still arises by considering a normal subgroup of $\Gamma$.  The experiments of \cite{KFH} realize these lattices artificially by tuning resonators in successive rings of the device so as to mimic the Poincar\'e metric. These negatively-curved materials have a well-defined electronic band theory \cite{MR1} and a complete Bloch wave decomposition \cite{MR2} in terms of the representations (of all ranks) of the fundamental group of the surface, which makes it possible to replace the eigenvalue problem for the Laplace-Beltrami operator and a periodic potential with purely topological data coming from the surface.  One can therefore imagine simulating thick, tangled TQFTs --- and thereby manipulations of quantum information, via our correspondence --- through a physical circuit of hyperbolic lattices, with genus $0$ and $1$ sites given by ordinary topological lattices.  Another recent article \cite{KR} in the theme of hyperbolic lattices presents a web of speculations and correspondences involving hyperbolic band theory and quantum field theories.  Our proposal expands this web, in effect, to include quantum information.
+
+\subsection*{Acknowledgments}
+
+The first-author's work was supported by and Undergraduate Student Research
+Award jointly funded by the Centre for Quantum Topology and its Applications
+(quanTA), the Natural Sciences and Engineering Research Council of Canada, and
+the Pacific Institute for the Mathematical Sciences. The code for figures
+\ref{fig:geomegraph} and \ref{fig:cobaddexm} were generated with the help
+of the Mathcha editor (mathcha.io).
 
 %\input{./references}
 
