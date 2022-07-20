@@ -110,6 +110,7 @@
 \newcommand{\Aut}{\text{Aut}}
 \newcommand{\ket}[1]{\left| #1 \right\rangle}
 \newcommand{\GL}{\text{GL}}
+\newcommand{\Lin}{\textrm{Lin}}
 
 % Category Theory:
 \newcommand{\Set}{\textbf{Set}}
@@ -479,11 +480,15 @@ coherence and compatibility properties \cite{SymMonBicat}. In this work,
 however, by ``monoidal double category'' we will mean only the data of such a
 structure. Nevertheless, wherever possible, we have commented on how the data of
 our constructions inherit most of the necessary properties from the usual
-categories of sets, manifolds, vector spaces, etc. Thus, we will construct
+categories of sets, manifolds, vector spaces, and so on. Thus, we will construct
 several monoidal double categories in this work but they should be seen as
 monoidal double categories in a somewhat relaxed sense -- they consist of all
 the required data but satisfy the required axioms with a few possible
 exceptions. We will treat monoidal double functors in the same loose sense.
+
+\subsection*{Acknowledgements}
+
+The second-named author is partially supported by a Natural Sciences and Engineering Research Council of Canada (NSERC) Discovery Grant, a Canadian Tri-Agency New Frontiers in Research (Exploration Stream) Grant, and a Pacific Institute for the Mathematical Sciences (PIMS) Collaborative Research Group (CRG) Award. The first-named author was supported by an NSERC Undergraduate Student Research (USRA) Award and the funding of the second-named author. The code for figures \ref{fig:geomegraph} and \ref{fig:cobaddexm} were generated with the help of the Mathcha editor (mathcha.io).
 
 %\subfile{./first_approach}
 
@@ -1211,24 +1216,107 @@ of $(V, d)$--connections. We denote this category $\Conn^V_d$.
 
 As we have a notion of gluing for (a subset of) complex bundles with a fixed
 fibre, we will develop a notion of gluing for connections defined on these
-bundles. It is well known that, for connections $\nabla$ and $\nabla'$ on a
-smooth bundle $E \to M$, $\nabla - \nabla'$ is a smooth section of the bundle
-$\Hom(E) \tensor T^*M \to M$ \cite[Lemma 2.2]{Conn},
-where $\Hom(E)$ is the internal $\Hom$-object in
-the closed monoidal category of smooth bundles over $M$ that is isomorphic to
-the bundle $E^* \tensor E$. As a result, the set of all
-connections on $E$ is an affine subspace of the $\Cinf(\R)$--module
-$\Omega^1(\Hom(E)) = \Gamma(\Hom(E) \tensor T^*M)$. This allows us to write each
-connection $\nabla$ on $E$ as a sum
+bundles. We will require some basic algebraic observations to achieve this.
+Recall that for $\K = \R$ or $\C$ and any
+$\K$--vector bundle $B \to M$ -- that is, smooth vector bundle with $\R$
+or $\C$ as fibres -- its set $\Gamma(B)$ of sections is a
+$\Cinf(M, \K)$--module with addition and scaling defined pointwise.
+The set $\Lin\br{\Gamma(B), \Gamma(B')}$ of $\Cinf(M, \K)$--linear maps
+$B \to B'$ for another bundle $B' \to M$ is again a $\Cinf(M, \K)$--module.
+%Now, consider the subset $M$ of $\Lin\br{\Gamma(B), \Gamma(B')}$ consisting of
+%the $\K$--linear maps, where we identify $\K$ with the submodule of constant
+%functions of $\Cinf(M, \K)$.
+Identifying $\K$ with the subset of $\Cinf(M, \K)$ consisting of the constant
+functions, this means that set of connections over the vector bundle $E \to M$
+is contained $\Lin\br{\Gamma(E), \Gamma(E \tensor T^*M)}$.
+We will now show that the set of all connections on $E$ is a coset of
+a submodule of $\Lin\br{\Gamma(E), \Gamma(E \tensor T^*M)}$. It will follow from
+the following elementary fact about modules over a unital ring.
+
+\begin{defn}[Affine Linear Combinations]
+For some unital ring $R$ and (left) $R$--module $V$, we will call
+a $R$--linear combination $\sum_{i = 1}^{n} r_iv_i$ for $r_i \in R, v_i \in V$
+affine if $\sum_{i = 1}^{n} r_i = 1$.
+\end{defn}
+
+\begin{lem}
+For any ring $R$, a non-empty subset of a left $R$--module $V$ that is closed
+under affine $R$--linear combinations is a coset of a submodule of $V$.
+\end{lem}
+\begin{proof}
+Let $S$ be a subset of $V$ closed under affine $R$--linear combinations.
+Since $S$ is non-empty, we may pick some $s \in S$ and define:
+\[
+S - s = V_S = \set[s' - s]{s' \in S}
+\]
+We verify that $V_S$ is a submodule. Let $s' - s, s'' - s \in V_S$ and
+$r \in R$. Observe that $0 = s - s \in V_S$ while
+$-(s' - s) = (-s' + s) - s$ where $-s' + s \in S$ by closure of $S$ under affine
+combinations so that $-(s' - s) \in V_S$. We also have that:
+\[
+(s' - s) + (s'' - s) = (s' + s'' - s) - s \in V_S
+\text{ since } s' + s'' - s \in S
+\]
+by closure of $S$ under affine combinations again. This shows that $V_S$ is a
+subgroup of $V$. Then, we observe that
+\[
+r(s' - s) = (rs' + (1 - r)s) - s \in V_S \text{ since } rs' + (1 - r)s \in S
+\]
+again by the closure of $S$ under affine combination. This shows that
+$V_S$ is a subgroup of $V$ closed under $R$--scaling and thus a submodule.
+\end{proof}
+
+\begin{thm}
+The set of connections on a bundle $E \to M$ is a coset of a submodule of the
+$\Cinf(M, \K)$--module $\Lin\br{\Gamma(E), \Gamma(E \tensor T^*M)}$.
+\end{thm}
+\begin{proof}
+By the previous lemma, it suffices to show that the set of connections
+is closed under affine $\Cinf(M, \K)$--linear combinations.
+It is well known that the set of connections are closed under affine
+$\K$--linear combinations \cite[10.5, p. 73]{LT17} -- although, the argument
+there is for $\K = \R$, the same argument applies for $\K = \C$. We will show
+that the same holds for affine $\Cinf(M, \K)$--linear combinations
+of connections. For any $s \in \Gamma(E)$,
+$r, r_1, \dots, r_n \in \Cinf(M, \K)$
+and connections $\nabla^1, \dots \nabla^n$ on $E$, we consider the following
+expression:
+\begin{align*}
+\br{\sum_{i = 1}^n r_i\nabla^i}(r \cdot s)
+&= \sum_{i = 1}^n (r_i\nabla^i)(r \cdot s) \\
+&= \sum_{i = 1}^n r_i (\nabla^i(r \cdot s))
+  && \text{scaling in $\Hom$ module} \\
+&= \sum_{i = 1}^n r_i \br{r \cdot \nabla^i(s) + s \tensor dr}
+  && \text{Leibniz property of $\nabla^i$} \\
+&= \sum_{i = 1}^n r_i (r \nabla^i(s))
+    + \br{\sum_{i = 1}^{n} r_i}(s \tensor dr) \\
+&= \sum_{i = 1}^n r_i (r \nabla^i(s))
+    + 1(s \tensor dr) \\
+&= \sum_{i = 1}^n (r_i r) \nabla^i(s)
+    + s \tensor dr \\
+&= r \sum_{i = 1}^n r_i \nabla^i(s)
+    + s \tensor dr
+  && \text{commutativity of $\Cinf(M, \K)$} \\
+&= r \br{\sum_{i = 1}^n r_i \nabla^i}(s)
+    + s \tensor dr
+\end{align*}
+This shows that $\sum_{i = 1}^{n} r_i \nabla^i$ satisfies the Leibniz property.
+Since $r_i, \nabla^i$ were arbitrary, we have the desired result.
+\end{proof}
+
+This allows us to write each connection $\nabla$ on
+$E$ as a sum
 \[
   \nabla = \varphi + A_{\nabla}
 \]
-where $\varphi$ is a fixed element of $\Omega^1(\Hom(E))$ and $A_{\nabla}$
-is an element of some subspace of $\Omega^1(\Hom(E))$ varying with $\nabla$. In
-fact, every expression of this form is a connection. It is well known that
-$\varphi$ can be taken as the exterior derivative operator $d$. In particular,
-this allows us to define an action of $\Cinf(\R)$ on the set of connections as
-follows:
+where $\varphi$ is a fixed element of $\Lin(\Gamma(E), \Gamma(E \tensor T^*M))$
+and $A_{\nabla}$ is an element of some fixed submodule of
+$\Lin(\Gamma(E), \Gamma(E \tensor T^*M))$ varying with $\nabla$.
+It is well known that
+$\varphi$ can be taken as the exterior derivative operator $d$ but this will not
+be important for our purposes. In particular,
+this allows us to define for each $r \in \Cinf(\R)$, a mapping
+on the set of connections as follows:
 \[
   r \cdot \nabla := d + r \cdot A_{\nabla} =: d + A_{r \cdot \nabla}
 \]
@@ -4055,14 +4143,7 @@ The point of view in our article can be regarded as a particular instance in a m
 
 Finally, one may ask how the constructions in this paper might be realized in a physical system of qubits, or whether there is a particular type of qubit that is better suited to these constructions than others.  One candidate is provided by the synthetic hyperbolic lattices studied experimentally by Koll\'ar, Fitzpatrick, and Houck in \cite{KFH} and theoretically by Maciejko and the second-named author in \cite{MR1}.  The effective quantum electrodynamics of these materials takes place on a Riemann surface of genus $g\geq2$.  Mathematically, the curve arises from the quotient of the hyperbolic plane $\mathbb H$ by the discrete Fuchsian group $\Gamma\subset\mbox{PSL}(2)$ of translations of the lattice.  Physically, one engineers a finite lattice but the Riemann surface still arises by considering a normal subgroup of $\Gamma$.  The experiments of \cite{KFH} realize these lattices artificially by tuning resonators in successive rings of the device so as to mimic the Poincar\'e metric. These negatively-curved materials have a well-defined electronic band theory \cite{MR1} and a complete Bloch wave decomposition \cite{MR2} in terms of the representations (of all ranks) of the fundamental group of the surface, which makes it possible to replace the eigenvalue problem for the Laplace-Beltrami operator and a periodic potential with purely topological data coming from the surface.  One can therefore imagine simulating thick, tangled TQFTs --- and thereby manipulations of quantum information, via our correspondence --- through a physical circuit of hyperbolic lattices, with genus $0$ and $1$ sites given by ordinary topological lattices.  Another recent article \cite{KR} in the theme of hyperbolic lattices presents a web of speculations and correspondences involving hyperbolic band theory and quantum field theories.  Our proposal expands this web, in effect, to include quantum information.
 
-\subsection*{Acknowledgments}
 
-The first-author's work was supported by and Undergraduate Student Research
-Award jointly funded by the Centre for Quantum Topology and its Applications
-(quanTA), the Natural Sciences and Engineering Research Council of Canada, and
-the Pacific Institute for the Mathematical Sciences. The code for figures
-\ref{fig:geomegraph} and \ref{fig:cobaddexm} were generated with the help
-of the Mathcha editor (mathcha.io).
 
 %\input{./references}
 
