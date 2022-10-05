@@ -361,7 +361,6 @@
 \title[TQFTs and Quantum Computing]{TQFTs and Quantum Computing}
 \author{Mahmud Azam and Steven Rayan}
 \date{\today}
-\maketitle
 
 %\input{./abstract}
 
@@ -381,6 +380,7 @@ encoded in the domain double category.
 %We connect \cite{CatQChan} with \cite{NonCommTQFT}.
 \end{abstract}
 
+\maketitle
 
 \tableofcontents
 
@@ -1222,7 +1222,8 @@ $\K$--vector bundle $B \to M$ -- that is, smooth vector bundle with $\R$
 or $\C$ as fibres -- its set $\Gamma(B)$ of sections is a
 $\Cinf(M, \K)$--module with addition and scaling defined pointwise.
 The set $\Lin\br{\Gamma(B), \Gamma(B')}$ of $\Cinf(M, \K)$--linear maps
-$B \to B'$ for another bundle $B' \to M$ is again a $\Cinf(M, \K)$--module.
+$\Gamma(B) \to \Gamma(B')$ for another bundle $B' \to M$ is again a
+$\Cinf(M, \K)$--module.
 %Now, consider the subset $M$ of $\Lin\br{\Gamma(B), \Gamma(B')}$ consisting of
 %the $\K$--linear maps, where we identify $\K$ with the submodule of constant
 %functions of $\Cinf(M, \K)$.
@@ -1235,7 +1236,7 @@ the following elementary fact about modules over a unital ring.
 
 \begin{defn}[Affine Linear Combinations]
 For some unital ring $R$ and (left) $R$--module $V$, we will call
-a $R$--linear combination $\sum_{i = 1}^{n} r_iv_i$ for $r_i \in R, v_i \in V$
+an $R$--linear combination $\sum_{i = 1}^{n} r_iv_i$ for $r_i \in R, v_i \in V$
 affine if $\sum_{i = 1}^{n} r_i = 1$.
 \end{defn}
 
@@ -1278,7 +1279,7 @@ $\K$--linear combinations \cite[10.5, p. 73]{LT17} -- although, the argument
 there is for $\K = \R$, the same argument applies for $\K = \C$. We will show
 that the same holds for affine $\Cinf(M, \K)$--linear combinations
 of connections. For any $s \in \Gamma(E)$,
-$r, r_1, \dots, r_n \in \Cinf(M, \K)$
+$r, r_1, \dots, r_n \in \Cinf(M, \K)$ with $\sum_{i = 1}^n r_i = 1$,
 and connections $\nabla^1, \dots \nabla^n$ on $E$, we consider the following
 expression:
 \begin{align*}
@@ -1424,8 +1425,9 @@ manifold.
 We will now describe a method of encoding expressions involving tensor products,
 point-wise algebra products and composition of linear maps $A \to A$ for some
 algebra $A$, using directed graphs. As a matter of convention, we will take all
-graphs to mean directed acyclic graphs where we do not allow parallel edges or
-self-loops, unless stated otherwise. However, we do allow the underlying
+graphs to mean directed acyclic graphs where we do not allow more than one edge
+with the same source and target nor self-loops, unless stated otherwise.
+However, we do allow the underlying
 undirected graph of any directed graph to be a forest. Given a graph
 $G = (V, E)$, we will write $V = V(G)$ and $E = E(G)$. We now see a motivating
 example.
@@ -1459,12 +1461,25 @@ We visualize this graph as follows:
 \midarrow{v7}{v9}
 \end{tikzpicture}\]
 Thinking of individual edges in the above graph as mappings $A \to A$ of some
-monoid and comonoid $A$ in some monoidal category, we can think of multiple
+bimonoid $A$ with product $m : A \otimes A \to A$ and $c : A \to A \otimes A$
+in some monoidal category, we can think of multiple
 incoming edges on a vertex -- for example, the incoming edges on $3$ -- as a
 multiplication $\cwedge$ of maps and multiple outgoing edges -- for example, the
-outgoing edges of $1$ -- as a comultiplication $\cvee$ of maps. Parallel edges,
-multiplications or comultiplications with disjoint sources and targets can be
-thought of as a tensor product of maps. We can treat a single vertex as an
+outgoing edges of $1$ -- as a comultiplication $\cvee$ of maps.
+A bit of clarification is in order: for maps
+$f : B \to A, g : C \to A, h : A \to B, k : A \to C$ in the
+ambient monoidal category, by the multiplication $f \cwedge g$, we mean the
+composite:
+\[\begin{tikzcd}
+ B \otimes C \ar[r, "f \otimes g"] & A \otimes A \ar[r, "m"] & A
+\end{tikzcd}\]
+and by the comultiplication $h \cvee k$, we mean the composite
+\[\begin{tikzcd}
+A \ar[r, "c"] & A \otimes A \ar[r, "h \otimes k"] & B \otimes C
+\end{tikzcd}\]
+Parallel edges,
+multiplications or comultiplications with disjoint sources and targets can then
+be thought of as a tensor product of maps. We can treat a single vertex as an
 identity mapping.
 
 We can then modify the graph as follows:
@@ -1511,6 +1526,14 @@ the following form:
   \circ & ((3, 3) \tensor ((4, 4) \boxtimes (2, 3))) \\
   \circ & (((1, 3) \cvee (1, 4)) \tensor (2, 2))
 \end{align*}
+Again, some clarification is needed here: we are now assuming a braiding
+isomorphism $\tau_{B, C} : B \otimes C \to C \otimes B$ in the ambient monoidal
+category, for each pair of objects $B, C$, and given maps $f : W \to X$
+and $g : Y \to Z$, the twist $f \boxtimes g$ is defined to be the composite:
+\[\begin{tikzcd}
+W \otimes Y \ar[r, "f \otimes g"] & X \otimes Z \ar[r, "\tau_{X, Z}"] &
+  Z \otimes X
+\end{tikzcd}\]
 
 Observe that we have taken a directed acyclic graph and converted it to a
 diagram in $\Cob_{2}$ -- the symmetric monoidal category of cobordisms of
@@ -1519,23 +1542,82 @@ endomorphisms of a monoid in some monoidal category. However, we should note
 that this is just one possible interpretation of the graph above.
 \end{exm}
 
-This motivates us to define an algorithm for extracting expressions from a
-directed acyclic graph such as the one above.
+This motivates us to define an algorithm for extracting algebraic expressions
+from a directed acyclic graph such as the one above.
 \begin{alg}[Expression Construction]
 Let $G = (V, E)$ be any graph. We make the following modifications to $G$:
 \begin{enumerate}
 \setlength{\itemsep}{0pt}
 
-\item For each vertex $v$, choose an ordering of the incoming edges of $v$, say
-$(u_1, v), \dots, (u_k, v)$ and an ordering of its outgoing edges, say
-$(v, w_1), \dots, (v, w_n)$.
+\item For each vertex $v$, choose an ordering $(v, w_1), \dots, (v, w_n)$ of its
+outgoing edges.
 
 \item Let $S(G)$ be the set consisting of vertices with no incoming
 edges -- called the source vertices of $G$ -- and $T(G)$, the set consisting of
 vertices with no outgoing edges -- called the target vertices of $G$. We then
 choose an ordering of $S(G)$. Note that $S(G) \cap T(G)$ might be non-empty
 because of vertices with no edges, incoming or outgoing -- these will be called
-the edgeless vertices.
+the edgeless vertices. These choices induce more structure on $G$:
+
+\begin{lem}\label{lem:level-ordering}
+Let $G$ be as above with the chosen ordering of $S(G)$ and, for each vertex,
+the chosen ordering of its outgoing edges. Then, the vertices of $G$ can be
+written as a disjoint union $V_1 \amalg V_2 \amalg \cdots \amalg V_n$ such that:
+\begin{enmrt}
+\li each $V_i$ is non-empty when $V(G)$ is non-empty,
+\li $V_1 = S(G)$,
+\li for each $1 < i \leq n$, the sources of the incoming edges of the vertices in
+$V_i$ are all contained in $\coprod_{j = 1}^{i - 1} V_j$, and
+\li there is an induced ordering of the vertices within $V_i$ for each
+$1 < i \leq n$.
+\end{enmrt}
+\end{lem}
+\begin{proof}
+We construct the sets $V_i$ as follows:
+\begin{enmrt}
+\li Let $V_1$ be the set of vertices with no incoming edges -- i.e.,
+$V_1 := S(G)$
+\li Let $V_{k + 1}$ be the set of vertices in
+$G \setminus (V_1 \cup \cdots \cup V_k)$ with incoming edges only from
+$V_1, \dots, V_k$.
+\end{enmrt}
+The first three properties are easy to check and for the last property,
+we first note that the ordering on $S(G) = V_1$ induces an ordering of $V_2$ as
+follows. Let $S(G)$ be ordered as $u_1, \dots, u_n$. Let the ordering of the
+outgoing edges of $u_i$ be $(u_i, v_{i, 1}), \dots, (u_i, v_{i, k_i})$. We let
+$v_i := v_{1, i}$ for $1 \leq i \leq k_1$. For $1 \leq j < n$,
+$k_j < i \leq k_{j + 1}$, we let $v_i := v_{j + 1, i}$. Then, the $v_i$ are an
+ordering of $V_2$. We can repeat this process with $V_2$ in place of $S(G)$ and
+so on to obtain an ordering for each level.
+\end{proof}
+
+\begin{defn}[Level Ordering]
+We shall call this partition of $V(G)$ a level ordering of $G$ and the subsets
+$V_i$, its levels, with respect to the choices. We will call the process
+described in the above proof as the level ordering algorithm.
+\end{defn}
+
+\begin{cor}\label{cor:inedge-ordering}
+Let $G$ be as above with the chosen ordering of $S(G)$ and the outgoing edges
+of each vertex. For each vertex $v$ of $G$, this induces an ordering $(u_1, v),
+\dots, (u_k, v)$ of the incoming edges of $v$.
+\end{cor}
+\begin{proof}
+$v$ must lie in $V_i$ for some $i$. If $i = 1$, then $v$ has no incoming edges.
+Otherwise, $i > 1$ and the source vertices of the incoming edges of
+$v$ are in $V_{i - 1}$ and inherit an ordering from $V_{i - 1}$, giving an
+ordering of the incoming edges of $v$.
+\end{proof}
+
+\begin{cor}\label{cor:lvltolvl}
+Let $V_1, V_2, \dots, V_k$ be the induced level ordering of a graph
+$G$ as above. Then for each $i \in \set{2, \dots, k}$ and each
+$v \in V_i$ that is not edgeless, there is an edge $(u, v)$ with
+$u \in V_{i - 1}$.
+\end{cor}
+\begin{proof}
+If not, the level-ordering algorithm would place $v$ at a lower level.
+\end{proof}
 
 \item Copy vertices and add edges to make the following modification, where the
 incoming edges are in order from the lowest at the top to the highest at the
@@ -1618,7 +1700,7 @@ previous step:
 \]
 
 \item At this point, every vertex has both indegree and outdegree at most $2$.
-The chosen edge orderings induces a local geometric orientation -- in an
+The chosen edge orderings induces a local orientation -- in an
 informal sense -- on the graph. By this we mean, that this allows us to
 distinguish the following diagrams in a precise sense:
 \[
@@ -1639,9 +1721,9 @@ distinguish the following diagrams in a precise sense:
 \midarrow{u}{w}
 \end{tikzpicture}
 \]
-
 The distinction is that if we take $(u, v) < (u, w)$ in the left picture, say,
 then we can take $(u, v) > (u, w)$ in the right picture.
+
 Then, for every edge that is shared between a ``multiplication'' and a
 ``comultiplication'', considering the edge orderings chosen before, we have the
 following possibilities for common edges and we make the modifications shown:
@@ -1750,36 +1832,11 @@ We also make the modifications obtained from the rotations of the above diagrams
 about a horizontal edge. After these modifications have been applied, there are
 no edges shared between ``multiplications'' and ``comultiplications''.
 
-\item Noting that $G$ is acyclic even after the modifications, we construct a
-level ordering of $G$ inductively as follows:
-\begin{enmrt}
-\li Let $V_1$ be the set of vertices with no incoming edges -- i.e.,
-$V_1 := S(G)$
-\li Let $V_{k + 1}$ be the set of vertices in
-$G \setminus (V_1 \cup \cdots \cup V_k)$ with incoming edges only from
-$V_1, \dots, V_k$.
-\end{enmrt}
-We note that the ordering on $S(G) = V_1$ induces an ordering of $V_2$ as
-follows. Let $S(G)$ be ordered as $u_1, \dots, u_n$. Let the ordering of the
-outgoing edges of $u_i$ be $(u_i, v_{i, 1}), \dots, (u_i, v_{i, k_i})$. We let
-$v_i := v_{1, i}$ for $1 \leq i \leq k_1$. For $1 \leq j < n$,
-$k_j < i \leq k_{j + 1}$, we let $v_i := v_{j + 1, i}$. Then, the $v_i$ are an
-ordering of $V_2$. We can repeat this process with $V_2$ in place of $S(G)$ and
-so on to obtain an ordering for each level. By construction, we have the
-following corollary:
-
-\begin{cor}\label{cor:lvltolvl}
-Let $G$ be an expression graph with induced level ordering
-$V_1, V_2, \dots, V_k$. Then for each $i \in \set{2, \dots, k}$ and each
-$v \in V_i$ that is not edgeless, there is an edge $(u, v)$ with
-$u \in V_{i - 1}$.
-\end{cor}
-
-\begin{rmk}
-This level ordering algorithm works on any graph -- in particular, on $G$
-before the modifications. We will need this construction on arbitrary graphs
-later on.
-\end{rmk}
+\item Note that $G$ remains acyclic even after the modifications, the ordering
+of the vertices with no incoming edges still applies, and that the
+orderings of outgoing edges for each vertex can be modified accordingly, with no
+further choice involved. We then construct a
+level ordering of this modified $G$.
 
 \begin{rmk}
 The vertices with no edges, incoming or outgoing, are always in the first level.
@@ -1875,8 +1932,8 @@ orderings and the ordering of the source vertices. We are thus motivated to make
 the following definition.
 
 \begin{defn}[Expression Graph]
-A graph with a chosen edge ordering and a chosen ordering of its source vertices
-is called an expression graph.
+A graph with chosen orderings of its incoming and outgoing edges, and a chosen
+ordering of its source vertices is called an expression graph.
 \end{defn}
 
 Thus, given an expression graph, we have an algorithm to extract its expression
@@ -2017,11 +2074,13 @@ isomorphism
 \[
   \psi_{G, H} : S(H) \to T(G)
 \]
-Then, we say that $G$ and $H$ are gluable at $S(H) \cong T(G)$. We define the
-pushout of the following span in $\Set$ to be the gluing $H * G$ of graphs.
+Then, we say that $G$ and $H$ are gluable at $S(H) \cong T(G)$. We denote the
+pushout of the following span in $\Set$ as $V(H * G)$:
 \[
   H \hot S(H) \to[\psi_{G, H}] T(G) \hto G
 \]
+The graph with vertex set $V(H * G)$ and edge set $E(G) \amalg E(H)$ is denoted
+$H * G$ and called the gluing of $H$ with $G$ at $S(H) \cong T(G)$.
 \end{defn}
 
 \begin{thm}
@@ -2040,12 +2099,13 @@ Thus, $S(H * G) \subseteq S(G)$.
 If $v \in S(G)$, then $v$ has no incoming edges in $G$. It is clear that gluing
 cannot introduce incoming edges to the source vertices of $G$ so that
 $S(G) \subset S(H * G)$. Thus, $H * G$ inherits the ordering of its source
-vertices from $G$.
+vertices (including edgeless vertices which are also in $S(H) \cong T(G)$) from
+$G$.
 
-We observe that only the vertices in $T(G)$ are the sites of new edges and these are all
-outgoing while the vertices in $T(G)$ have no outgoing edges in $G$. Thus,
-$H * G$ inherits edge orderings unambiguously from $G$ and $H$, collectively.
-Therefore, $H * G$ is an expression graph.
+We observe that only the vertices in $T(G)$ are the sites of new edges and these
+are all outgoing while the vertices in $T(G)$ have no outgoing edges in $G$.
+Thus, $H * G$ inherits edge orderings unambiguously from $G$ and $H$,
+collectively. Therefore, $H * G$ is an expression graph.
 \end{proof}
 
 \begin{exm}\label{exm:expression_gluing}
@@ -2633,7 +2693,8 @@ vertices).
 \end{defn}
 
 \begin{defn}[Pretransport Homomorphism]
-A pretransport homomorphism is a colour-preserving expression homomorphism.
+A pretransport homomorphism is an expression homomorphism that preserves the
+colouring of vertices.
 \end{defn}
 
 %\begin{rmk}
@@ -3641,7 +3702,7 @@ $F(G)$ the input from the register $F(R)$.
 
 \subsection{Addition of Cobordisms}
 
-We now make precise the notion of addition for $2$--dimensional thick tangles
+We will now to make precise an addition operation for $2$--dimensional thick tangles
 mentioned in the previous subsection, so that non-elementary tensors become
 accessible with parallel transport calculi.
 
