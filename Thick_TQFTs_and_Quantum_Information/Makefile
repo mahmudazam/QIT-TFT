@@ -1,27 +1,23 @@
 
-PROJECT=Thick_TQFTs_and_Quantum_Information-Full
-
+SHELL=/bin/zsh
+PROJECT=TQFT_QC
 BIB_DEPS=$(shell ls -1 *.bib)
 TEX_DEPS=$(shell ls -1 *.tex)
 
 all: ${PROJECT}.pdf
 
-${PROJECT}.pdf: ${PROJECT}.tex ${BIB_DEPS} ${TEX_DEPS}
+%.pdf: %.tex build ${BIB_DEPS} ${TEX_DEPS}
+	pdflatex -interaction nonstopmode TQFT_QC.tex
+	bibtex TQFT_QC
+	pdflatex -interaction nonstopmode TQFT_QC.tex
+	pdflatex -interaction nonstopmode TQFT_QC.tex
 
-%.pdf: %.tex
-	pdflatex -interaction nonstopmode\
-           $<
-	bibtex $*
-	pdflatex -interaction nonstopmode\
-           $<
-	pdflatex -interaction nonstopmode\
-           $<
-
-.PHONY: clean Clean
+build:
+	if [ ! -d build ]; then mkdir build; fi
 
 clean:
 	rm -rf build
 
 Clean: clean
-	rm -f *.pdf *.bbl *.blg *.aux *.out *.log *.toc
+	rm -f ${PROJECT}.pdf abstract.pdf
 

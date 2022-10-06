@@ -1,0 +1,26 @@
+#!/bin/zsh
+
+if [ $# = 0 ] || echo $1 | grep '.*\.tex'; then
+  echo "usage: $0 <filename without extension>"
+  exit 1
+fi
+
+pdflatex -file-line-error -interaction nonstopmode -output-directory build\
+  $1.tex | grep -A5 -B2 ".*:[0-9]*:.*\|warning"
+STATUS=${pipestatus[1]}
+#echo PIPESTATUS:$STATUS
+if [ "$STATUS" = 0 ]; then
+  biber --output-directory build $1 1>/dev/null
+  pdflatex -file-line-error -interaction nonstopmode -output-directory build\
+    $1.tex 1>/dev/null
+  pdflatex -file-line-error -interaction nonstopmode -output-directory build\
+    $1.tex 1>/dev/null
+  cp ./build/$1.pdf . &&\
+  cp ./build/$1.pdf ~/Desktop &&\
+  echo "STATUS: OK" &&\
+  exit 0
+else
+  echo "STATUS: ERROR"
+  exit 1
+fi
+

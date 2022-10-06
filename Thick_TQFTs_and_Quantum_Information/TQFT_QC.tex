@@ -6,23 +6,20 @@
 \usepackage{amssymb}
 \usepackage{bbm}
 \usepackage{chngcntr}
-\usepackage{csquotes}
 \usepackage{enumerate}
-\usepackage{fancyvrb}
 \usepackage{float}
+\usepackage[bottom]{footmisc}
+\usepackage[margin=1.5in]{geometry}
 \usepackage{ifthen}
-\usepackage{listings}
-\usepackage[new]{old-arrows}
 \usepackage{mathrsfs}
 \usepackage{mathtools}
+\usepackage[new]{old-arrows}
 \usepackage{rotating}
-\usepackage{xcolor}
+\usepackage{thmtools}
 \usepackage{tikz}
 \usetikzlibrary{calc}
 \usepackage{tikz-cd}
-%\usepackage[belowskip=-15pt,aboveskip=0pt]{caption}
-
-% Bibliography:
+\usepackage{xcolor}
 \usepackage[pdftex,pdfpagelabels,bookmarks,hyperindex,hyperfigures]{hyperref}
 \hypersetup{
   colorlinks,
@@ -30,14 +27,9 @@
   urlcolor={blue!80!black},
   citecolor={green!50!black}
 }
-%\usepackage[style=numeric]{biblatex}
-%\renewcommand{\subtitlepunct}{: }
-%\addbibresource{./Thick_TQFTs_and_Quantum_Information.bib}
-\usepackage{cite}
 
-% Project packages:
-
-% Document Specific Commands:
+\setcounter{MaxMatrixCols}{100}
+\newcommand{\diagscale}{1}
 
 % Special Sets:
 \newcommand{\M}{\mathbb{M}}
@@ -299,7 +291,6 @@
 % Theorem Environments:
 \newtheorem{thm}{Theorem}
 \numberwithin{thm}{section}
-%\counterwithin*{thm}{section}
 \newtheorem{lem}[thm]{Lemma}
 \newtheorem{cor}[thm]{Corollary}
 \newtheorem{numexc}[thm]{Exercise}
@@ -311,48 +302,22 @@
 \newtheorem{exm}[thm]{Example}
 \newtheorem{qstn}[thm]{Question}
 
-% Code Block Settings:
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-
-\lstdefinestyle{mystyle}{
-    xleftmargin={2.5em},
-    %xrightmargin={2.5em},
-    backgroundcolor=\color{backcolour},
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=false,
-    breaklines=true,
-    captionpos=b,
-    keepspaces=true,
-    numbers=left,
-    numbersep=5pt,
-    showspaces=false,
-    showstringspaces=false,
-    showtabs=false,
-    tabsize=2
-}
-
-\lstset{style=mystyle}
-
-% Main Page Settings:
-\usepackage[margin=1.5in]{geometry}
-%\usepackage{fancyhdr}
-%\pagestyle{fancy}
-%\fancyhf{}
-%\fancyhead[L]{\rightmark}
-%\fancyhead[R]{\thepage}
-%\pagestyle{fancy}
-\usepackage[bottom]{footmisc}
-
-\setcounter{MaxMatrixCols}{100}
-\newcommand{\diagscale}{1}
-
+%\declaretheorem[numberwithin=subsection, name=Theorem]{thm}
+%\declaretheorem[sibling=thm, name=Lemma]{lem}
+%\declaretheorem[sibling=thm, name=Corollary]{cor}
+%\declaretheorem[sibling=thm, name=Claim]{claim}
+%\declaretheoremstyle[
+%  spaceabove=\topsep,
+%  spacebelow=\topsep,
+%  qed=$\diamond$
+%]{defnstyle}
+%\declaretheorem[sibling=thm, name=Construction, style=defnstyle]{cns}
+%\declaretheorem[sibling=thm, name=Definition, style=defnstyle]{defn}
+%\declaretheorem[sibling=thm, name=Remark, style=defnstyle]{rmk}
+%\declaretheorem[sibling=thm, name=Algorithm, style=defnstyle]{alg}
+%\declaretheorem[sibling=thm, name=Example, style=defnstyle]{exm}
+%\declaretheorem[sibling=thm, name=Notation, style=defnstyle]{notation}
+%\declaretheorem[sibling=thm, name=Question, style=defnstyle]{qstn}
 
 \begin{document}
 
@@ -486,7 +451,8 @@ monoidal double categories in a somewhat relaxed sense -- they consist of all
 the required data but satisfy the required axioms with a few possible
 exceptions. We will treat monoidal double functors in the same loose sense.
 
-\subsection*{Acknowledgements}
+%\noindent\textbf{Acknowledgements.}
+\subsubsection*{Acknowledgements.}
 
 The second-named author is partially supported by a Natural Sciences and Engineering Research Council of Canada (NSERC) Discovery Grant, a Canadian Tri-Agency New Frontiers in Research (Exploration Stream) Grant, and a Pacific Institute for the Mathematical Sciences (PIMS) Collaborative Research Group (CRG) Award. The first-named author was supported by an NSERC Undergraduate Student Research (USRA) Award and the funding of the second-named author. The code for figures \ref{fig:geomegraph} and \ref{fig:cobaddexm} were generated with the help of the Mathcha editor (mathcha.io).
 
@@ -1425,9 +1391,16 @@ manifold.
 We will now describe a method of encoding expressions involving tensor products,
 point-wise algebra products and composition of linear maps $A \to A$ for some
 algebra $A$, using directed graphs. As a matter of convention, we will take all
-graphs to mean directed acyclic graphs where we do not allow more than one edge
+graphs to mean directed acyclic graphs with possibly multiple copies of the same
+vertex but where we do not allow more than one edge
 with the same source and target nor self-loops, unless stated otherwise.
-However, we do allow the underlying
+We should clarify that by multiple copies of the same vertex, we mean a
+labelling of the vertices where multiple vertices can have the same label and
+vertices with the same label are regarded as ``copies of the same vertex''.
+We should also distinguish the word ``label'' from ``colour'' as we will also
+require graphs to eventually be vertex--$2$--coloured in addition to the
+aforementioned vertex labelling.
+We also allow the underlying
 undirected graph of any directed graph to be a forest. Given a graph
 $G = (V, E)$, we will write $V = V(G)$ and $E = E(G)$. We now see a motivating
 example.
@@ -1544,7 +1517,8 @@ that this is just one possible interpretation of the graph above.
 
 This motivates us to define an algorithm for extracting algebraic expressions
 from a directed acyclic graph such as the one above.
-\begin{alg}[Expression Construction]
+
+\begin{alg}[Graph Reduction Algorithm]\label{alg:expr-construction}
 Let $G = (V, E)$ be any graph. We make the following modifications to $G$:
 \begin{enumerate}
 \setlength{\itemsep}{0pt}
@@ -1566,8 +1540,8 @@ written as a disjoint union $V_1 \amalg V_2 \amalg \cdots \amalg V_n$ such that:
 \begin{enmrt}
 \li each $V_i$ is non-empty when $V(G)$ is non-empty,
 \li $V_1 = S(G)$,
-\li for each $1 < i \leq n$, the sources of the incoming edges of the vertices in
-$V_i$ are all contained in $\coprod_{j = 1}^{i - 1} V_j$, and
+\li for each $1 < i \leq n$, the sources of the incoming edges of the vertices
+in $V_i$ are all contained in $\coprod_{j = 1}^{ i - 1} V_{j}$, and
 \li there is an induced ordering of the vertices within $V_i$ for each
 $1 < i \leq n$.
 \end{enmrt}
@@ -1581,7 +1555,8 @@ $V_1 := S(G)$
 $G \setminus (V_1 \cup \cdots \cup V_k)$ with incoming edges only from
 $V_1, \dots, V_k$.
 \end{enmrt}
-The first three properties are easy to check and for the last property,
+The first three properties are easy to check.
+For the last property,
 we first note that the ordering on $S(G) = V_1$ induces an ordering of $V_2$ as
 follows. Let $S(G)$ be ordered as $u_1, \dots, u_n$. Let the ordering of the
 outgoing edges of $u_i$ be $(u_i, v_{i, 1}), \dots, (u_i, v_{i, k_i})$. We let
@@ -1591,7 +1566,7 @@ ordering of $V_2$. We can repeat this process with $V_2$ in place of $S(G)$ and
 so on to obtain an ordering for each level.
 \end{proof}
 
-\begin{defn}[Level Ordering]
+\begin{defn}[Level Ordering]\label{defn:level-ordering}
 We shall call this partition of $V(G)$ a level ordering of $G$ and the subsets
 $V_i$, its levels, with respect to the choices. We will call the process
 described in the above proof as the level ordering algorithm.
@@ -1832,7 +1807,8 @@ We also make the modifications obtained from the rotations of the above diagrams
 about a horizontal edge. After these modifications have been applied, there are
 no edges shared between ``multiplications'' and ``comultiplications''.
 
-\item Note that $G$ remains acyclic even after the modifications, the ordering
+\item Note that $G$ remains acyclic even after the modifications, the vertices
+with no incoming edges remain so, the ordering
 of the vertices with no incoming edges still applies, and that the
 orderings of outgoing edges for each vertex can be modified accordingly, with no
 further choice involved. We then construct a
@@ -1862,14 +1838,14 @@ way, noting that these vertices are placed in the first level during the level
 ordering.
 \end{rmk}
 
-\item For each level skipping edge $(u, v)$ -- that is, with $u \in V_k$ and
+\item For each level-skipping edge $(u, v)$ -- that is, with $u \in V_k$ and
 $v \in V_{k'}$ for some $k' > k + 1$ -- we insert a copy of $u$ in $V_{i}$ for
 each $k < i < k'$ in positions similar to the insertions in the last step. We
 call this copy $u'$. We then add an edge $(u, u')$. We repeat this with
 $V_{i + 1}$ in place of $V_{i}$ and $u'$ in place of $u$. After this process
 completes, we delete the edge $(u, v)$ and add an edge from the copy of $u$
 in $V_{k' - 1}$ to $v$. After we complete this process for every
-level-skipping edge, level skipping edges are replaced by paths connecting the
+level-skipping edge, level-skipping edges are replaced by paths connecting the
 source vertex to the target vertex of these edges.
 
 \item Observe that we can now identify the graph $G$ with a cobordism in
@@ -1903,27 +1879,70 @@ identifications of the generating structures are the obvious ones:
 \node at (1, -1) (lbl) {cylinder};
 \end{tikzpicture}
 \]
-Note that the cap or cup were not used. This, then, directly yields an
-expression of the original graph $G$ similar to the example.
+Note that the cap or cup were not used. Furthermore, there are also crossings of
+various kinds such as:
+\[
+\begin{tikzpicture}
+\node[circle, fill, inner sep=1.5pt] at (0, 0.5) (y) {};
+\node[circle, fill, inner sep=1.5pt] at (0, -0.5) (z) {};
+\node[circle, fill, inner sep=1.5pt] at (-2, 0.5) (w) {};
+\node[circle, fill, inner sep=1.5pt] at (-2, -0.5) (x) {};
+\midarrow[0.75]{w}{z}
+\midarrow[0.75]{x}{y}
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node[circle, fill, inner sep=1.5pt] at (0, 0.5) (x) {};
+\node[circle, fill, inner sep=1.5pt] at (0, -0.5) (y) {};
+\node[circle, fill, inner sep=1.5pt] at (-2, 1.5) (u) {};
+\node[circle, fill, inner sep=1.5pt] at (-2, 0.5) (v) {};
+\node[circle, fill, inner sep=1.5pt] at (-2, -0.5) (w) {};
+\midarrow[0.75]{u}{y}
+\midarrow[0.75]{v}{y}
+\midarrow[0.25]{w}{x}
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\node[circle, fill, inner sep=1.5pt] at (0, 1.5) (x) {};
+\node[circle, fill, inner sep=1.5pt] at (0, 0.5) (y) {};
+\node[circle, fill, inner sep=1.5pt] at (0, -0.5) (z) {};
+\node[circle, fill, inner sep=1.5pt] at (-2, 1.5) (u) {};
+\node[circle, fill, inner sep=1.5pt] at (-2, 0.5) (v) {};
+\node[circle, fill, inner sep=1.5pt] at (-2, -0.5) (w) {};
+\midarrow[0.75]{u}{z}
+\midarrow[0.75]{v}{z}
+\midarrow[0.25]{w}{x}
+\midarrow[0.25]{w}{y}
+\end{tikzpicture}
+\]
+but these can be identified with manifolds representing crossing morphisms in
+$\Cob_2$.
+The resulting cobordism or, more precisely, the manifold representing said
+cobordism yields an algebraic expression involving the composition and monoidal
+product of $\Cob_2$ and the generating morphisms. This algebraic expression is
+taken to be the expression of the original graph $G$.
 
 \end{enumerate}
 \end{alg}
 
-\begin{defn}[Expression of a Graph]
-Given a graph $G$, the expression resulting from the algorithm above is called
-an expression of $G$ and denoted $\Exp{G}$.
+\begin{defn}[Reduced Graphs]
+Given a graph $G$, the modified graph resulting from the above algorithm will be
+called a reduction of $G$ and will be denoted $G'$.
+Any graph with the properties that were introduced in $G'$ through the
+algorithm -- we will skip listing them again -- is called reduced.
+The expression resulting from the algorithm above is called
+an expression of $G$ and denoted $\Exp{G}$. In particular, given a reduced
+graph $H$, we may apply the last step to directly obtain an expression
+$\Exp{H}$.
 \end{defn}
 
 \begin{rmk}
-Note that an expression of a graph is by no means unique -- we made a large
-number of arbitrary choices in our process.
-\end{rmk}
-
-\begin{rmk} We also note that we did not specify how to handle ``crossings'' of
-edges but it is not difficult to see that ``crossing'' makes precise sense when
-we specify the edge orderings and the ordering of the source of a graph. Once we
-execute the algorithm above, we can handle crossings in the same way we handle
-them when drawing cobordisms in $\Cob_2$.
+Note that the possible expressions of a graph are by no means unique as
+we made a large number of arbitrary choices in our process. Nevertheless, the
+algorithm above is deterministic after the second step.
+That is, if we fix a choice for the ordering of the source vertices and for the
+orderings of the outgoing edges for each vertex, then the algorithm gives a
+fixed expression.
 \end{rmk}
 
 Even though we made many choices in the above algorithm, the only
@@ -1932,8 +1951,9 @@ orderings and the ordering of the source vertices. We are thus motivated to make
 the following definition.
 
 \begin{defn}[Expression Graph]
-A graph with chosen orderings of its incoming and outgoing edges, and a chosen
-ordering of its source vertices is called an expression graph.
+A graph with a chosen ordering of its source vertices and,
+for each vertex, a chosen orderings of the outgoing edges of the vertex 
+is called an expression graph.
 \end{defn}
 
 Thus, given an expression graph, we have an algorithm to extract its expression
@@ -1956,7 +1976,7 @@ $L$ and $f$ preserves the edge orderings for each vertex.
 
 We then note some useful facts concerning level orderings and expression
 isomorphisms. First, every expression graph $G$ has a level ordering as
-described in the algorithm in \S\ref{subsec:alg_graph_exp} so that the vertex
+defined in \ref{defn:level-ordering} so that the vertex
 set is a disjoint union of the levels. Then, we have a level function $l_G$ for
 $G$ which assigns to each vertex $v$ the integer $n$ for which $v$ is in the
 $n$--th level set.
@@ -2007,7 +2027,7 @@ $f(u) \leq f(v)$, by definition. The other direction is obtained similarly with
 $f^{-1}$ in place of $f$.
 
 Let $l_G(u) = l_G(v) = k + 1$. By the construction of level sets and their
-ordering given in the expression construction algorithm, there exist
+ordering given in the graph reduction algorithm, there exist
 $u', v' \in V(G)$ such that the following hold:
 \begin{enmrt}
 \li $l_G(u') = l_G(v') = k$
@@ -2070,7 +2090,8 @@ This allows us to define the following notion of gluing.
 
 \begin{defn}[Gluing of Expression Graphs]
 Let $G$ and $H$ be expression graphs such that there is a unique expression
-isomorphism
+isomorphism\footnote{Note that, in this case, this is simply an order-preserving
+bijection of sets.}
 \[
   \psi_{G, H} : S(H) \to T(G)
 \]
@@ -2170,11 +2191,11 @@ expression graphs $G$ with $S(G) \cong U$ and $T(G) \cong V$, and $2$--morphisms
 are expression isomorphisms, with horizontal composition given by gluing and
 monoidal product given by disjoint union.
 
-We now observe some properties of the expression construction algorithm of
-\S\ref{subsec:alg_graph_exp}.
+We now observe some properties of the graph reduction algorithm
+\ref{alg:expr-construction}.
 
 \begin{exm}
-We observe that, in general, the expression construction does not result in the
+We observe that, in general, the reduction does not result in the
 same graph when we apply it before gluing as opposed to after gluing. Let
 $G$ and $H$ be as follows:
 \[
@@ -2199,7 +2220,7 @@ $G$ and $H$ be as follows:
 \node at (1, -1) (H) {$H$};
 \end{tikzpicture}
 \]
-Applying the expression construction on $G$ and $H$ separately and then gluing
+Applying the reduction on $G$ and $H$ separately and then gluing
 the results yields:
 \[
 \begin{tikzpicture}[yscale=0.5]
@@ -2217,7 +2238,7 @@ the results yields:
 \midarrow{v5}{v8}
 \end{tikzpicture}
 \]
-Applying the expression construction on $H * G$ results in:
+Applying the reduction on $H * G$ results in:
 \[
 \begin{tikzpicture}[yscale=0.5]
 \node at (0, 3) (v1) {$1$};
@@ -2236,13 +2257,53 @@ Applying the expression construction on $H * G$ results in:
 \midarrow{v8}{v88}
 \end{tikzpicture}
 \]
-However, in this case, we observe that $\Exp{H * G} = \Exp{H} \circ \Exp{G}$
-because the corresponding expressions in $\Cob_2$ are equal!
+However, in this case, we observe that the expressions $\Exp{H * G}$ and
+$\Exp{H} \circ \Exp{G}$ differ only by ``identity'' edges and hence, when
+interpreted as a morphism in a monoidal category would give morphisms that are
+equal.
 \end{exm}
 
-In fact, we have the following results which show that all differences that can
-arise between expression constructions before and after gluing can be reduced to
-simple cases similar to the one above.
+In light of the previous example, it seems useful to decide when we should
+consider two expressions to be the same and so we make the following definition.
+
+\begin{defn}[Equivalence of Expressions]
+Given graphs $G$ and $H$, we will consider $\Exp{G}$ and $\Exp{H}$ equivalent
+if their reductions $G'$ and $H'$ differ by insertion or contraction of identity
+edges -- edges whose source and target labels are the same and that are not
+part of a pair-of-pants or a co-pair-of-pants. In this case, we will simply
+write them as equal:
+\[
+\Exp{G} = \Exp{H}
+\]
+Given an expression graph $W$ with no edges (a finite ordered set), the identity
+expression on $W$ is the exprssion $\id_W = (\id_{w_1}, \dots, \id_{w_n})$,
+where $W = \set{w_1 < w_2 < \dots < w_n}$. We will also equate:
+\[
+  \Exp{G} \circ \id_W = \Exp{G} \text{ and } \id_W \circ \Exp{H} = \Exp{H}
+\]
+whenever $S(G) \cong W$ and $T(H) \cong W$.
+\end{defn}
+
+With no work, we have the following from our definition of equivalence of
+expressions:
+
+\begin{thm}[Unitality of Expressions]
+For an expression graph $G$, we have
+\[
+  \Exp{G * S(G)} = \Exp{G} \circ \Exp{S(G)} = \Exp{G}
+  = \Exp{T(G)} \circ \Exp{G} = \Exp{T(G) * G}
+\]
+\end{thm}
+
+\begin{rmk}
+In the above theorem, we could go further and take the cylinders on $S(G)$ and
+$T(G)$ in place of $S(G)$ and $T(G)$ respectively given by expanding each vertex
+into an identity edge.
+\end{rmk}
+
+We then have the following results which show that all differences that can
+arise between reductions of graphs before and after gluing can be accounted for
+by simple cases similar to the last example above.
 
 \begin{lem}
 For expression graphs $G$ and $H$ with $n$ and $m$ levels respectively and
@@ -2265,8 +2326,8 @@ not the case, then we must have an edge from some vertex in $H$ to some vertex
 in $G$, which is impossible. Therefore, $H * G$ has at most $n + m - 1$ levels.
 \end{proof}
 
-We observe that the first five steps of the algorithm from
-\S\ref{subsec:alg_graph_exp} commute with gluing. One might think that the sixth
+We observe that the first five steps of algorithm \ref{alg:expr-construction}
+commute with gluing. One might think that the sixth
 step onwards does not. However, we will see that it does. For this, we note the
 following result about changes in level sets after gluing.
 
@@ -2278,7 +2339,7 @@ vertices between levels in the following pattern:
 \begin{enmrt}
 \li Move vertices in $S(H)$ which glue to edgeless vertices to the first level.
 \li For each such vertex $v$ in $S(H)$ and each edge $(v, v')$ where $(v, v')$
-is the first incoming edge of $v$, move $v'$ to the second level.
+is the first incoming edge of $v'$, move $v'$ to the second level.
 \li Repeat the previous step with $v'$ in place of $v$.
 \end{enmrt}
 \end{thm}
@@ -2332,23 +2393,42 @@ $W_1, \dots, W_{k - n}$ respectively.
 Whether we construct level sets before or after gluing, such movements must take
 place and hence the sixth step where we construct the levels commutes with
 gluing. We then observe that applying the seventh step before gluing results in
-no edgeless vertices in both graphs so that there are no movement of vertices
+no edgeless vertices in both graphs so that there are no movements of vertices
 between levels by the above theorem. Applying the seventh step after gluing
 results in movement of vertices and then ``extending'' some vertices to the last
 level. In either case, even though we do not obtain the same graph, the parts
 that differ, do so only by prefixes and suffixes of edges between copies of the
-same vertex. Similar reasoning establishes the same about the eigth step, so
-that the resulting cobordisms differ by identity cobordisms at some places and
-hence not at all, yielding the following theorem.
+same vertex that are not part of a pair-of-pants or a co-pair-of-pants -- that
+is, identity edges.
 
-\begin{thm}
+For the eighth step, observe that a vertex $v \in S(H)$ after the seventh step
+can have either one outgoing edge or two. Now, suppose it glues to an edgeless
+vertex in $G$ and moves to the first level. Then, if $v$ has one outgoing edge
+$(v, v')$, then either $v'$ gets moved to the second level or the edge is now
+a level-skipping edge. In this case, it gets broken up into identity edges
+that traverese one level at a time, after the eighth step.
+Now, consider the case the $v$ has two outgoing edges $(v, w_1), (v, w_2)$.
+None of $w_1$ and $w_2$ can have another outgoing edge after the seventh step.
+Hence, the given edges are the first and only incoming edges of both $w_1$ and
+$w_2$, and both get moved to the second level, without introducing level
+skipping edges. We can repeat analogous arguments with $v'$, $w_1$ and $w_2$ in
+place of $v$ to show that the resulting graphs after the eighth step, before and
+after gluing differ by identity edges.
+
+Thus, the resulting cobordisms in the ninth step differ by identity cobordisms
+at some places and hence are equivalent, yielding the following theorem.
+
+\begin{thm}[Compositionality of Expressions]
 For expression graphs $G$ and $H$, gluable at $S(H) \cong T(G)$, we have
 \[
   \Exp{H * G} = \Exp{H} \circ \Exp{G}
 \]
 \end{thm}
 
-We can also define the following constructs unambiguously.
+We have thus shown that the reduction of a graph to produce an expression is
+``functorial'' but in a loose sense since we have not specified a codomain for
+$\Exp{}$.
+We can also define the following constructs unambiguously:
 
 \begin{defn}[Expression Tensor Product]
 Let $G$ and $H$ be expression graphs. We define:
@@ -3967,19 +4047,20 @@ sense of parallel transport calculi, we can express sums of tensor products of
 these gates using multitangles. Thus, we have a concrete way to express both
 quantum registers and circuits using structures in $\TG^+(\CConn^V_{\DThick})$
 which finally yield usual linear algebraic quantum registers and circuits under
-additive parallel transport calculi. In fact, both approaches to quantum computing
-discussed before can be adapted to this framework. It is then also easy to adapt
-this notion back to the single manifold case of \ref{subsec:sing_man_tqft}.
+additive parallel transport calculi. In fact, both approaches to quantum
+computing discussed before can be adapted to this framework. It is then also
+easy to adapt this notion back to the single manifold case of
+\ref{subsec:sing_man_tqft}.
 
 %\input{./field_theory_7}
 
-\subsection{Operads}
+\subsection{Connections to Operads and PROPs}
 
 Our goal has been to present a framework for quantum
 computing in the language of TQFTs and of geometric structures supported on them.
 Hence, our constructions are mostly based on combinatorial and geometric data
-that can be associated with cobordisms. Nevertheless, one cannot help but notice the
-similarity of transport graphs and, more visibly, cobordisms themselves with
+that can be associated with cobordisms. Nevertheless, one cannot help but notice
+the similarity of transport graphs and, more visibly, cobordisms themselves with
 operads. As a start, consider the operad of rooted trees whose non-root vertices
 are all leaves and where composition is given by gluing the root of a tree with
 one of the leaves of another tree \cite{WhatOp}. Of course, for each leaf, we
@@ -4026,22 +4107,34 @@ However, we notice that the difference of this situation with transport graphs
 or cobordisms is artificial for we could define composition operations for
 transport graphs and cobordisms parametrized by their inputs and outputs similar
 to the case of operads. Note, however, that we need to handle the gluing of
-multiple outputs to inputs in various combinations. For this, we informally
-introduce a modification of operads.
+multiple outputs to inputs in various combinations. For this, a relevant
+modification of operads is as follows:
 
-\begin{defn}[Multioperad]
+\begin{defn}[PROP]
 Let $\s{C}$ be any (not necessarily symmetric) monoidal category and
 $P = \set{P(n, m)}_{n, m \in \N}$ be a
 collection of objects of $\s{C}$. For any $n \in \N$ and $1 \leq i \leq n$,
 let $I = \set{i, i + 1, \dots, i + m} \subset \set{1, \dots, n}$. For each
 such $n$ and $I$ as well as some $n' \in \N$, suppose there is a morphism in
-$\s{C}$ as follows:
+$\s{C}$ as follows, called composition at $I$:
 \[
   \circ_I : P(n, m) \tensor P(n', n) \to P(n', m)
 \]
-Then, with some coherence conditions we have not explored, we will call
-$P$ a multioperad in $\s{C}$.
+For each $n, m, p, q$, suppose there is a morphism in $\s{C}$ as follows,
+called tensor product:
+\[
+  \square : P(n, m) \otimes P(q, p) \to P(n + q, m + p)
+\]
+Then, with some coherence conditions we will not describe, we will call
+$P$ a PROP in $\s{C}$.
 \end{defn}
+
+\begin{rmk}
+This is an instance of a much more intricate structure called a pasting scheme
+\cite{JY15} along the lines of the first formulations of a PACT given in
+\cite{MacLane65}. We also note that PROP is an abbreviation of ``Products and
+Permuations Category''.
+\end{rmk}
 
 \begin{exm}
 Consider the same diagram above giving an example of operads of trees. This
@@ -4117,10 +4210,10 @@ Notice that the composition glues the output vertices of the right operand
 with the second and third vertices of the left operand, as indicated by
 $\circ_{\set{2, 3}}$.
 In this example, we also considered coloured vertices and hence what we really
-require is a coloured variant of multioperads, in the same spirit of introducing
+require is a coloured variant of PROPs, in the same spirit of introducing
 colours to ordinary operads. Gluing different coloured
 vertices requires some intermediary -- say, an arrow from green to blue -- but
-the the choice of this intermediary is not unique. Hence, it is easier to
+the choice of this intermediary is not unique. Hence, it is easier to
 require gluing of vertices of the same colour only.
 \end{exm}
 
@@ -4130,13 +4223,21 @@ components of one thick tangle, we can choose a matching collection of input
 boundary components of another and glue accordingly.
 \end{exm}
 
+Our theory of transport graphs is neatly captured in the formalism of PROPs.
+That is, transport graphs and transport homomorphisms loosely form a coloured
+PROP arising from a the pasting scheme of wheel-free graphs
+\cite[xxiii]{JY15}.
+
+We end this section by speculating on some possible connections with other
+operad--like structures that feature prominently in geometry, topology and
+physics.
 Note, in particular, the similarity with cyclic operads
 \cite{ModOp}. Recall that a cyclic operad $P$ is roughly an operad with the
 action of the symmetric group $S_n$ on $P(n)$ replaced by an action of
 $S_{n + 1}$. This effectively conflates the ``inputs'' and ``outputs'' of an
-operad ``element''. Here, however, we take a much more elementary approach --
+operad ``element''. Here, however, we take a different approach --
 simply allow multiple inputs and multiple outputs. The other difference is that
-a multioperad should not require symmetry in a monoidal category for our
+a PROP should not require symmetry in a monoidal category for our
 categories of thick tangles and transport graphs are not equipped with symmetry.
 
 Next, we comment on a possible connection to modular operads \cite{ModOp}.
@@ -4212,7 +4313,7 @@ Finally, one may ask how the constructions in this paper might be realized in a 
 
 %\printbibliography
 
-\bibliography{Thick_TQFTs_and_Quantum_Information}{}
+\bibliography{TQFT_QC}{}
 \bibliographystyle{plain}
 
 \end{document}
