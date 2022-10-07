@@ -2593,8 +2593,8 @@ $S^1 \to S^1$ with the following structures:
 \end{tikzpicture}\]
 We would like analogous structures for expression graphs. We can use vertex
 colouring to distinguish between copies of the empty manifold and copies of
-$S^1$ in the result of the expression construction. So, we consider vertex
-coloured expression graphs.
+$S^1$ in the cobordism manifold resulting from the graph reduction.
+So, we consider vertex coloured expression graphs.
 
 \begin{defn}[Pretransport Graph]
 A pretransport graph is an expression graph $G$ with a colour function
@@ -2664,9 +2664,9 @@ of $\varnothing$
 \end{defn}
 
 \begin{defn}[Expression Construction]
-The expression of a pretransport graph $G$ is obtained by running the expression
-construction on $G$, copying colours whenever vertices are copied,
-and then identifying green vertices
+The expression of a pretransport graph $G$ is obtained by running the reduction
+algorithm and expression construction on $G$, copying colours whenever
+vertices are copied, and then identifying green vertices
 with the empty manifold in the resulting cobordism in $\Cob_2$, adding caps and
 cups where appropriate.
 \end{defn}
