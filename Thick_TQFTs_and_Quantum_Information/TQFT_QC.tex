@@ -327,6 +327,10 @@
 \author{Mahmud Azam and Steven Rayan}
 \date{\today}
 
+\address{Centre for Quantum Topology and Its Applications (quanTA) and Department of Mathematics \& Statistics, University of Saskatchewan, McLean Hall, 106 Wiggins Road, Saskatoon, SK, CANADA S7N 5E6}
+\email{mahmud.azam@usask.ca, rayan@math.usask.ca}
+
+
 %\input{./abstract}
 
 \begin{abstract}
@@ -413,7 +417,7 @@ algebra, the comultiplication of $\M_n$ is $m^{\dagger}$. Hence, under $F$, the
 element thick tangle above yields a map $(mm^{\dagger})^k e$, where
 the superscript $k$ denotes a $k$--fold composite for some non-negative integer
 $k$. Now, $mm^{\dagger}$ is the map $a \mapsto na$
-\cite[p. 5189 -- 5190]{CatQChan} so that
+\cite[p. 5189 --- 5190]{CatQChan} so that
 \[
   F(R)(z) = z \cdot F(R)(1) = z \cdot (mm^{\dagger})^ke(1) = zn^{k}I_n
 \]
@@ -429,7 +433,7 @@ so that up to $*$--isomorphism, there are some major constraints on the quantum
 gates that are accessible through planar open string field theories.
 We note that this situation is brought about by the identification of thick
 tangles up to diffeomorphisms. This motivates us to look for methods in a
-setting where we drop this identification -- higher categories of thick tangles
+setting where we drop this identification --- higher categories of thick tangles
 (for instance, $\PTT$ as defined in \cite{NonSemiSimp}) (or cobordisms)
 where gluing is associative and unital up to higher isomorphisms. We will
 see that it suffices to consider double categories for obtaining a reasonable
@@ -447,11 +451,10 @@ structure. Nevertheless, wherever possible, we have commented on how the data of
 our constructions inherit most of the necessary properties from the usual
 categories of sets, manifolds, vector spaces, and so on. Thus, we will construct
 several monoidal double categories in this work but they should be seen as
-monoidal double categories in a somewhat relaxed sense -- they consist of all
+monoidal double categories in a somewhat relaxed sense --- they consist of all
 the required data but satisfy the required axioms with a few possible
 exceptions. We will treat monoidal double functors in the same loose sense.
 
-%\noindent\textbf{Acknowledgements.}
 \subsubsection*{Acknowledgements.}
 
 The second-named author is partially supported by a Natural Sciences and Engineering Research Council of Canada (NSERC) Discovery Grant, a Canadian Tri-Agency New Frontiers in Research (Exploration Stream) Grant, and a Pacific Institute for the Mathematical Sciences (PIMS) Collaborative Research Group (CRG) Award. The first-named author was supported by an NSERC Undergraduate Student Research (USRA) Award and the funding of the second-named author. The code for figures \ref{fig:geomegraph} and \ref{fig:cobaddexm} were generated with the help of the Mathcha editor (mathcha.io).
@@ -467,7 +470,7 @@ boundary preserving diffeomorphisms between cobordisms as $2$--morphisms yields
 a fibrant monoidal double category $\Cob_{d + 1}$ under the disjoint union of
 manifolds \cite{SymMonBicat}. Shulman gives a trifunctor $\mathcal{H}$ from the
 tricategory of fibrant double categories to the tricategory of bicategories that
-takes $\Cob_{d + 1}$ to a monoidal bicategory -- in fact, Shulman proves that
+takes $\Cob_{d + 1}$ to a monoidal bicategory --- in fact, Shulman proves that
 $\mathcal{H}$ takes any fibrant monoidal double category to a bicategory.
 
 On the other hand, the monoidal category of thick tangles $2\Thick$ as defined
@@ -500,7 +503,7 @@ facilitate quantum computing.
 
 We define the object function $F_0$ of such a functor by assigning to each
 disjoint union $X = I^{\amalg n}$ the $n$--th tensor power $F_0(X) = A^{\tensor
-n}$ of some fixed algebra $A$ -- we may be specific enough to pick a consistent
+n}$ of some fixed algebra $A$ --- we may be specific enough to pick a consistent
 bracketing pattern for $A^{\tensor n}$. It is easy to see that this assignment
 is well-defined. Since the vertical $1$--morphisms are only identities, the
 object category of $\DThick$ is discrete and, hence, the vertical $1$--morphism
@@ -526,7 +529,7 @@ co-pair-of-pants. An example is shown below:
 \copants{25, 2}
 \end{tikzpicture}\]
 In associating a linear map ``functorially'' to $Z$, it
-suffices to associate linear maps to $M$ -- we can then associate a linear map
+suffices to associate linear maps to $M$ --- we can then associate a linear map
 to $W$ by duality and get a linear map for $Z$ by composition.
 
 For associating a linear map to $M$, we take a complex bundle
@@ -591,7 +594,7 @@ parallel transport of $a_0$ along $f\gamma$. $F_1(Y)$ is then obtained by
 composition.
 
 This completes the definition of an object function $F_1$ for the morphism
-category of $\DThick$. Now, we turn our attention to $2$--morphisms -- boundary
+category of $\DThick$. Now, we turn our attention to $2$--morphisms --- boundary
 preserving diffeomorphisms between cobordisms. Let $f : Y \to Y'$ be one such
 diffeomorphism. We must assign to $f$ some object that functions as roughly a
 ``morphism of morphisms of vector spaces''. One natural choice is homotopy
@@ -599,8 +602,8 @@ classes of paths between linear functions in spaces of linear functions under
 some suitable norm. In this case, we can take the following approach. There
 exists a path $\psi$ in the diffeomorphism group $\Diff(Y)$ of $Y$ from $\id_Y$
 to $f$ such that we can ``move'' the parallel transport machinery ``along''
-$\psi$ -- that is, taking connections $\psi(t)\nabla$ and paths
-$\set{\psi(t)\gamma_i}$, for $t \in [0, 1]$ -- to get linear maps for each
+$\psi$ --- that is, taking connections $\psi(t)\nabla$ and paths
+$\set{\psi(t)\gamma_i}$, for $t \in [0, 1]$ --- to get linear maps for each
 $\psi(t)(Y)$, which constitute a path in the space $\Hom(\dom F_1(Y), \codom
 F_1(Y))$. Note that, implicit in this is the assumption that
 $\psi(1)\nabla = f\nabla$ and $\set{\psi(1)\gamma_i} = \set{f\gamma_i}$ yield
@@ -617,7 +620,7 @@ should be the objects of our morphism category.
 \section{Connections on Cobordisms}
 
 For a vector bundle $\pi_E : E \to M$, we write $\Gamma(E)$ to denote the set of
-smooth sections of the bundle -- we will not be using the sheaf structure unless
+smooth sections of the bundle --- we will not be using the sheaf structure unless
 necessary. For $\K = \R$ when $E$ is a smooth bundle with a real vector space as
 fibres, or $\K = \C$ when $E$ is a complex bundle, we recall that a connection
 on $E$ is a $\K$--linear map
@@ -725,7 +728,7 @@ We also observe that, for sections $s_1, s_2 \in \Gamma(E')$, we have
   =& (f \diamond \nabla)(s_1) + (f \diamond \nabla)(s_2)
 \end{align*}
 Thus, $f \diamond \nabla$ is $\K$--linear. Now, for $r \in \Cinf(M', \K)$, we
-again obersve:
+again observe:
 \begin{align*}
    & (f \diamond \nabla)(r \cdot s) \\
   =& \tilde{f}\nabla(v^{-1}(r \cdot s)u)u^{-1} \\
@@ -1184,16 +1187,12 @@ As we have a notion of gluing for (a subset of) complex bundles with a fixed
 fibre, we will develop a notion of gluing for connections defined on these
 bundles. We will require some basic algebraic observations to achieve this.
 Recall that for $\K = \R$ or $\C$ and any
-$\K$--vector bundle $B \to M$ -- that is, smooth vector bundle with $\R$
-or $\C$ as fibres -- its set $\Gamma(B)$ of sections is a
+$\K$--vector bundle $B \to M$ --- that is, smooth vector bundle with $\R$
+or $\C$ as fibres --- its set $\Gamma(B)$ of sections is a
 $\Cinf(M, \K)$--module with addition and scaling defined pointwise.
 The set $\Lin\br{\Gamma(B), \Gamma(B')}$ of $\Cinf(M, \K)$--linear maps
 $\Gamma(B) \to \Gamma(B')$ for another bundle $B' \to M$ is again a
-$\Cinf(M, \K)$--module.
-%Now, consider the subset $M$ of $\Lin\br{\Gamma(B), \Gamma(B')}$ consisting of
-%the $\K$--linear maps, where we identify $\K$ with the submodule of constant
-%functions of $\Cinf(M, \K)$.
-Identifying $\K$ with the subset of $\Cinf(M, \K)$ consisting of the constant
+$\Cinf(M, \K)$--module.  Identifying $\K$ with the subset of $\Cinf(M, \K)$ consisting of the constant
 functions, this means that set of connections over the vector bundle $E \to M$
 is contained $\Lin\br{\Gamma(E), \Gamma(E \tensor T^*M)}$.
 We will now show that the set of all connections on $E$ is a coset of
@@ -1241,7 +1240,7 @@ $\Cinf(M, \K)$--module $\Lin\br{\Gamma(E), \Gamma(E \tensor T^*M)}$.
 By the previous lemma, it suffices to show that the set of connections
 is closed under affine $\Cinf(M, \K)$--linear combinations.
 It is well known that the set of connections are closed under affine
-$\K$--linear combinations \cite[10.5, p. 73]{LT17} -- although, the argument
+$\K$--linear combinations \cite[10.5, p. 73]{LT17} --- although, the argument
 there is for $\K = \R$, the same argument applies for $\K = \C$. We will show
 that the same holds for affine $\Cinf(M, \K)$--linear combinations
 of connections. For any $s \in \Gamma(E)$,
@@ -1338,13 +1337,13 @@ isomorphisms.
 \begin{proof}
 For associativity, it suffices to observe that extending domains of bump
 functions by zeros is associative and that associators from $\BBun^V_{\s{C}}$
-are associator gauge transformations -- the proof of the latter claim is similar
+are associator gauge transformations --- the proof of the latter claim is similar
 to that of the associativity of the disjoint union of connections.
 
 For unitality, we first observe that on boundary collars $f \cdot \nabla$ is
 equal to $d$ for all connections $\nabla = d + A_{\nabla}$. The exterior
 derivative operators, that are themselves connections, on the gluing
-units of $\BBun^V_{\s{C}}$ -- that is, the cylinders on boundaries -- suffice
+units of $\BBun^V_{\s{C}}$ --- that is, the cylinders on boundaries --- suffice
 as the gluing units for connections. The unitors carry over like associators.
 \end{proof}
 
@@ -1436,9 +1435,9 @@ We visualize this graph as follows:
 Thinking of individual edges in the above graph as mappings $A \to A$ of some
 bimonoid $A$ with product $m : A \otimes A \to A$ and $c : A \to A \otimes A$
 in some monoidal category, we can think of multiple
-incoming edges on a vertex -- for example, the incoming edges on $3$ -- as a
-multiplication $\cwedge$ of maps and multiple outgoing edges -- for example, the
-outgoing edges of $1$ -- as a comultiplication $\cvee$ of maps.
+incoming edges on a vertex --- for example, the incoming edges on $3$ --- as a
+multiplication $\cwedge$ of maps and multiple outgoing edges --- for example, the
+outgoing edges of $1$ --- as a comultiplication $\cvee$ of maps.
 A bit of clarification is in order: for maps
 $f : B \to A, g : C \to A, h : A \to B, k : A \to C$ in the
 ambient monoidal category, by the multiplication $f \cwedge g$, we mean the
@@ -1489,8 +1488,8 @@ We can then modify the graph as follows:
 \midarrow{v7}{v9}
 \end{tikzpicture}\]
 Thinking of edges between copies of the same vertex, which did not originally
-exist, as the identity map and crossing edges as a twist operation -- denoted
-$\boxtimes$ -- of maps, we can capture the graph into an algebraic expression of
+exist, as the identity map and crossing edges as a twist operation --- denoted
+$\boxtimes$ --- of maps, we can capture the graph into an algebraic expression of
 the following form:
 \begin{align*}
         & ((5, 8) \tensor ((6, 9) \cwedge (7, 9))) \\
@@ -1509,7 +1508,7 @@ W \otimes Y \ar[r, "f \otimes g"] & X \otimes Z \ar[r, "\tau_{X, Z}"] &
 \end{tikzcd}\]
 
 Observe that we have taken a directed acyclic graph and converted it to a
-diagram in $\Cob_{2}$ -- the symmetric monoidal category of cobordisms of
+diagram in $\Cob_{2}$ --- the symmetric monoidal category of cobordisms of
 dimension $2$. This, in turn, yields an expression involving operations on
 endomorphisms of a monoid in some monoidal category. However, we should note
 that this is just one possible interpretation of the graph above.
@@ -1527,10 +1526,10 @@ Let $G = (V, E)$ be any graph. We make the following modifications to $G$:
 outgoing edges.
 
 \item Let $S(G)$ be the set consisting of vertices with no incoming
-edges -- called the source vertices of $G$ -- and $T(G)$, the set consisting of
-vertices with no outgoing edges -- called the target vertices of $G$. We then
+edges --- called the source vertices of $G$ --- and $T(G)$, the set consisting of
+vertices with no outgoing edges --- called the target vertices of $G$. We then
 choose an ordering of $S(G)$. Note that $S(G) \cap T(G)$ might be non-empty
-because of vertices with no edges, incoming or outgoing -- these will be called
+because of vertices with no edges, incoming or outgoing --- these will be called
 the edgeless vertices. These choices induce more structure on $G$:
 
 \begin{lem}\label{lem:level-ordering}
@@ -1549,7 +1548,7 @@ $1 < i \leq n$.
 \begin{proof}
 We construct the sets $V_i$ as follows:
 \begin{enmrt}
-\li Let $V_1$ be the set of vertices with no incoming edges -- i.e.,
+\li Let $V_1$ be the set of vertices with no incoming edges --- i.e.,
 $V_1 := S(G)$
 \li Let $V_{k + 1}$ be the set of vertices in
 $G \setminus (V_1 \cup \cdots \cup V_k)$ with incoming edges only from
@@ -1675,8 +1674,8 @@ previous step:
 \]
 
 \item At this point, every vertex has both indegree and outdegree at most $2$.
-The chosen edge orderings induces a local orientation -- in an
-informal sense -- on the graph. By this we mean, that this allows us to
+The chosen edge orderings induces a local orientation --- in an
+informal sense --- on the graph. By this we mean, that this allows us to
 distinguish the following diagrams in a precise sense:
 \[
 \begin{tikzpicture}
@@ -1838,8 +1837,8 @@ way, noting that these vertices are placed in the first level during the level
 ordering.
 \end{rmk}
 
-\item For each level-skipping edge $(u, v)$ -- that is, with $u \in V_k$ and
-$v \in V_{k'}$ for some $k' > k + 1$ -- we insert a copy of $u$ in $V_{i}$ for
+\item For each level-skipping edge $(u, v)$ --- that is, with $u \in V_k$ and
+$v \in V_{k'}$ for some $k' > k + 1$ --- we insert a copy of $u$ in $V_{i}$ for
 each $k < i < k'$ in positions similar to the insertions in the last step. We
 call this copy $u'$. We then add an edge $(u, u')$. We repeat this with
 $V_{i + 1}$ in place of $V_{i}$ and $u'$ in place of $u$. After this process
@@ -1929,7 +1928,7 @@ taken to be the expression of the original graph $G$.
 Given a graph $G$, the modified graph resulting from the above algorithm will be
 called a reduction of $G$ and will be denoted $G'$.
 Any graph with the properties that were introduced in $G'$ through the
-algorithm -- we will skip listing them again -- is called reduced.
+algorithm --- we will skip listing them again --- is called reduced.
 The expression resulting from the algorithm above is called
 an expression of $G$ and denoted $\Exp{G}$. In particular, given a reduced
 graph $H$, we may apply the last step to directly obtain an expression
@@ -2114,7 +2113,7 @@ we consider the case that $v \in G \subset H * G$. Since $v \not\in S(G)$ and
 gluing does not delete edges, $v$ must have an incoming edge in $G$. We then
 consider the case that $v \in H \subset H * G$. Here, we can assume
 $v \not\in S(H)$ because $S(H) = T(G)$ in $H * G$ so that in this case, $v$ has
-an incoming edge in $H$. In either case, $v \not\in S(H * G)$ -- a contradiction
+an incoming edge in $H$. In either case, $v \not\in S(H * G)$ --- a contradiction
 showing that $S(H * G) \setminus S(G)$ is empty.
 Thus, $S(H * G) \subseteq S(G)$.
 If $v \in S(G)$, then $v$ has no incoming edges in $G$. It is clear that gluing
@@ -2269,7 +2268,7 @@ consider two expressions to be the same and so we make the following definition.
 \begin{defn}[Equivalence of Expressions]
 Given graphs $G$ and $H$, we will consider $\Exp{G}$ and $\Exp{H}$ equivalent
 if their reductions $G'$ and $H'$ differ by insertion or contraction of identity
-edges -- edges whose source and target labels are the same and that are not
+edges --- edges whose source and target labels are the same and that are not
 part of a pair-of-pants or a co-pair-of-pants. In this case, we will simply
 write them as equal:
 \[
@@ -2398,7 +2397,7 @@ between levels by the above theorem. Applying the seventh step after gluing
 results in movement of vertices and then ``extending'' some vertices to the last
 level. In either case, even though we do not obtain the same graph, the parts
 that differ, do so only by prefixes and suffixes of edges between copies of the
-same vertex that are not part of a pair-of-pants or a co-pair-of-pants -- that
+same vertex that are not part of a pair-of-pants or a co-pair-of-pants --- that
 is, identity edges.
 
 For the eighth step, observe that a vertex $v \in S(H)$ after the seventh step
@@ -2476,7 +2475,7 @@ provide us with a way to associate linear maps to manifolds.
 \begin{exm}\label{exm:geomegraph}
 Consider the graph in example \ref{exm:egraph1}. Then, we consider a mapping of
 the edges to paths on a surface as shown below. Note that here we have
-$\gamma_{u, v}(1) = \gamma_{v, w}(0)$ for most points but not all -- for
+$\gamma_{u, v}(1) = \gamma_{v, w}(0)$ for most points but not all --- for
 instance, $\gamma_{2, 3}$ and $\gamma_{3, 5}$ do not share any end-points.
 \begin{figure}[H]\label{fig:geomegraph}
 \begin{center}
@@ -2597,173 +2596,6 @@ We would like analogous structures for expression graphs. We can use vertex
 colouring to distinguish between copies of the empty manifold and copies of
 $S^1$ in the result of the expression construction. So, we consider vertex
 coloured expression graphs.
-%Visually, loops
-%attached to the source or target of an edge seem like possible candidates for
-%these structures:
-%\[\begin{tikzpicture}
-%\node[circle, fill, inner sep=1.5pt] at (0, 0) (a) {};
-%\node[circle, fill, inner sep=1.5pt] at (1, 0) (b) {};
-%\draw[->] (a) [out=130, in=230, looseness=25] to (a);
-%\midarrow{a}{b}
-%\end{tikzpicture}
-%\qquad \qquad \qquad
-%\begin{tikzpicture}
-%\node[circle, fill, inner sep=1.5pt] at (0, 0) (a) {};
-%\node[circle, fill, inner sep=1.5pt] at (1, 0) (b) {};
-%\draw[->] (b) [out=50, in=-50, looseness=25] to (b);
-%\midarrow{a}{b}
-%\end{tikzpicture}\]
-%We will show that if we allow loops on vertices except for the ones which do not
-%have any incoming or outgoing edges to begin with, then we can adapt the
-%theory to this new setting.
-
-%As a start, the expression construction algorithm is extended as follows:
-%\begin{alg}
-%Let $G$ be a graph where vertices, except for those without any edges from or to
-%other vertices, can have loops. We then make the following modifications to $G$:
-%\begin{enumerate}[(1)]
-%\setlength{\itemsep}{0pt}
-%
-%\item Colour every vertex with a single colour -- say blue.
-%
-%\item If $u$ has no incoming edges except for a loop $(u, u)$ but has outgoing
-%edges, then we add another copy $u'$ of $u$, color it green, add the edge
-%$(u', u)$ and delete the loop $(u, u)$.
-%\[\begin{tikzpicture}
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (0, 0) (a) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (1, 0.5) (b1) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (1, -0.5) (bn) {};
-%\midarrow{a}{b1}
-%\midarrow{a}{bn}
-%\draw[->] (a) [out=130, in=230, looseness=15] to (a);
-%\draw[loosely dotted, thick] (b1) -- (bn);
-%\end{tikzpicture}
-%\qquad
-%\begin{tikzpicture}
-%\node at (0, 0.5)   (TOP)     {};
-%\node at (0, 0)   (TO)      {$\Longrightarrow$};
-%\node at (0, -0.5)  (BOTTOM)  {};
-%\end{tikzpicture}
-%\qquad
-%\begin{tikzpicture}
-%\node[circle, fill, inner sep=1.5pt, color=green!55!black] at (0, 0) (a1) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (1, 0) (a2) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (2, 0.5) (b1) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (2, -0.5) (bn) {};
-%\midarrow{a1}{a2}
-%\midarrow{a2}{b1}
-%\midarrow{a2}{bn}
-%\draw[loosely dotted, thick] (b1) -- (bn);
-%\end{tikzpicture}\]
-%
-%\item If $u$ has incoming edges but no outgoing edges except for a loop
-%$(u, u)$, then we add a green copy $u'$ of $u$ as before, add the edge $(u, u')$
-%and delete the loop $(u, u)$.
-%\[\begin{tikzpicture}
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (0, 0) (a) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (-1, 0.5) (b1) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (-1, -0.5) (bn) {};
-%\midarrow{b1}{a}
-%\midarrow{bn}{a}
-%\draw[->] (a) [out=50, in=-50, looseness=15] to (a);
-%\draw[loosely dotted, thick] (b1) -- (bn);
-%\end{tikzpicture}
-%\qquad
-%\begin{tikzpicture}
-%\node at (0, 0.5)   (TOP)     {};
-%\node at (0, 0)   (TO)      {$\Longrightarrow$};
-%\node at (0, -0.5)  (BOTTOM)  {};
-%\end{tikzpicture}
-%\qquad
-%\begin{tikzpicture}
-%\node[circle, fill, inner sep=1.5pt, color=green!55!black] at (0, 0) (a1) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (-1, 0) (a2) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (-2, 0.5) (b1) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (-2, -0.5) (bn) {};
-%\midarrow{a2}{a1}
-%\midarrow{b1}{a2}
-%\midarrow{bn}{a2}
-%\draw[loosely dotted, thick] (b1) -- (bn);
-%\end{tikzpicture}\]
-%
-%\item If $u$ has both incoming and outgoing edges along with a loop $(u, u)$,
-%we replace the loop with a path $u, u', u''$, where $u'$ is a green copy of $u$
-%and $u''$ is another blue copy of $u$.
-%\[\begin{tikzpicture}
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (0, 0) (a) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (1, 0.35) (b1) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (1, -0.35) (bn) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (-1, 0.35) (c1) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (-1, -0.35) (cn) {};
-%\midarrow{a}{b1}
-%\midarrow{a}{bn}
-%\draw[->] (a) [out=60, in=120, looseness=15] to (a);
-%\midarrow{c1}{a}
-%\midarrow{cn}{a}
-%\draw[loosely dotted, thick] (b1) -- (bn);
-%\draw[loosely dotted, thick] (c1) -- (cn);
-%\end{tikzpicture}
-%\qquad
-%\begin{tikzpicture}
-%\node at (0, 0.35)   (TOP)     {};
-%\node at (0, 0)   (TO)      {$\Longrightarrow$};
-%\node at (0, -0.35)  (BOTTOM)  {};
-%\end{tikzpicture}
-%\qquad
-%\begin{tikzpicture}
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (-1, 0) (a1) {};
-%\node[circle, fill, inner sep=1.5pt, color=green!55!black] at (0, 0) (a2) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (1, 0) (a3) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (2, 0.35) (b1) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (2, -0.35) (bn) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (-2, 0.35) (c1) {};
-%\node[circle, fill, inner sep=1.5pt, color=blue] at (-2, -0.35) (cn) {};
-%\midarrow{a3}{b1}
-%\midarrow{a3}{bn}
-%\midarrow{c1}{a1}
-%\midarrow{cn}{a1}
-%\midarrow{a1}{a2}
-%\midarrow{a2}{a3}
-%\draw[loosely dotted, thick] (b1) -- (bn);
-%\draw[loosely dotted, thick] (c1) -- (cn);
-%\end{tikzpicture}\]
-%
-%\item If $G$ is a disjoint union $\coprod_i G_i$ and some $G_i = \varnothing$,
-%we replace $G_i$ with an edge $(u_{G_i}, v_{G_i})$, where both the vertices are
-%green:
-%\[\begin{tikzpicture}
-%\node at (0, 0) (a) {$\varnothing$};
-%\end{tikzpicture}
-%\qquad
-%\begin{tikzpicture}
-%\node at (0, 0)   (TO)      {$\Longrightarrow$};
-%\end{tikzpicture}
-%\qquad
-%\begin{tikzpicture}
-%\node[circle, fill, inner sep=1.5pt, color=green!55!black] at (0, 0) (a1) {};
-%\node[circle, fill, inner sep=1.5pt, color=green!55!black] at (2, 0) (a3) {};
-%\midarrow{a1}{a3}
-%\end{tikzpicture}\]
-%\begin{rmk}
-%This is a case we ignored in the first expression construction aglorithm -- we
-%did so for simplicity. We handle this now because we now have a way to deal with
-%empty sources and targets.
-%\end{rmk}
-%
-%\item We apply the steps of the first expression construction algorithm with
-%copied vertices having the same colour as the original.
-%
-%\item We then identify green vertices with the empty manifold and obtain our
-%expression from the identification of the graph in its final state with some
-%cobordism in $\Cob_2$.
-%
-%\end{enumerate}
-%\end{alg}
-
-%Disjoint unions are easily adapted as well. However, we will change our
-%definitions of source and target expression graphs since we will now interpret
-%looped vertices as cobordisms of the empty manifold. We first adapt expression
-%graphs to include loops.
 
 \begin{defn}[Pretransport Graph]
 A pretransport graph is an expression graph $G$ with a colour function
@@ -2776,11 +2608,6 @@ vertices).
 A pretransport homomorphism is an expression homomorphism that preserves the
 colouring of vertices.
 \end{defn}
-
-%\begin{rmk}
-%We note that pretransport homomorphisms, being graph homomorphisms must preserve
-%loops.
-%\end{rmk}
 
 From \ref{cor:expiso_unique}, it is immediate that:
 
@@ -2883,7 +2710,7 @@ notion of gluing geometric realizations.
 
 We first observe that if $G$ and $H$ are transport graphs with a transport
 isomorphism $S(H) \to T(G)$, it is unique by \ref{cor:expiso_unique}, since
-there is only one map of path sets -- the empty map which always makes the
+there is only one map of path sets --- the empty map which always makes the
 rquired diagram commute. We then have the following basic fact.
 
 \begin{cor}
@@ -2949,7 +2776,7 @@ $S(\dom h) \to S(\codom h)$
 
 \li Target functor: $T : G \mapsto T(G)$, defined similarly as $S$
 
-\li Unit functor: $U : V \mapsto V$; $U : f \mapsto f$ -- each finite,
+\li Unit functor: $U : V \mapsto V$; $U : f \mapsto f$ --- each finite,
 totally-ordered, $2$--coloured set is a transport graph with no edges and
 order- and colour- preserving bijections between finite sets are unique
 transport isomorphisms
@@ -2987,7 +2814,7 @@ for some $\K$--algebra $A$.
 For every unique order- and colour-preserving bijection $f : V \to V'$ in
 $\TG(M)_0$, we set $F(f) := \id_{F(V)} = \id_{F(V')}$.
 
-For a transport graph $(G, \gamma)$ in $M$ -- an object in $\TG(M)_1$ -- and an
+For a transport graph $(G, \gamma)$ in $M$ --- an object in $\TG(M)_1$ --- and an
 edge $(u, v) \in G$, we denote $\nabla^{\gamma_{u, v}}$ to be the linear map
 $A \to A$ obtained by parallel transport along $\gamma_{u, v}$, with respect to
 $\nabla$. Fixing some element $a_{u, v} \in A$, we then define:
@@ -2995,7 +2822,7 @@ $\nabla$. Fixing some element $a_{u, v} \in A$, we then define:
   F(u, v) := \begin{cases}
     \id_A
       & u = v \text{ is blue} \\
-    \id_{\K} % 1 \mapsto \text{trace}\br{\nabla^{\gamma_{u, v}}(a_{u, v})}
+    \id_{\K} 
       & u \text{ is green and } v \text{ is green} \\
     \nabla^{\gamma_{u, v}}
       & u \text{ is blue and } v \text{ is blue} \\
@@ -3063,7 +2890,7 @@ next.
 
 %\input{./field_theory_1}
 
-\subsection{Double Category of Finite Dimensional Vector Spaces}
+\subsection{Double Category of Finite-Dimensional Vector Spaces}
 
 We consider as the object or $0$--morphism category of the codomain double
 category the monoidal category of finite-dimensional, real (or complex) vector
@@ -3096,7 +2923,7 @@ from $\iota(a)$ to $\iota(a')$ in $\s{B}$, which we denote as
 $\alpha : a \To a'$. By the fact that the fundamental groupoid
 $\Pi_1(\s{B})$ is a category, our $2$--morphisms have a strictly associative and
 unital composition.  We note that the fundamental groupoid $\Pi_1(\s{B})$ is not
-our morphism category -- it only supplies morphisms for $\s{L}$. An instance of
+our morphism category --- it only supplies morphisms for $\s{L}$. An instance of
 why the distinction is important is that a single morphism in $\Pi_1(\s{B})$
 might represent morphisms between two different pairs of objects in $\s{L}$,
 depending on the chosen matrix representations.
@@ -3177,11 +3004,9 @@ so that the constant path on $\iota(a)$ functions as a left and right unitor.
 
 We then take horizontal composition to be given by composition of linear maps
 which is strictly associative and unital, with coherence following from that in
-the category of vector spaces. The source and target functors are obvious -- we
+the category of vector spaces. The source and target functors are obvious --- we
 send each linear map to its domain and codomain respectively. The unit functor
-is also obvisous -- we send each object to its identity linear map.
-%The axioms of a monoidal double category given in the unpacked version of
-%definition 2.9 in \cite[5]{SymMonBicat} are also easily verified.
+is also obvious --- we send each object to its identity linear map.
 
 We compile these results into the following definition:
 \begin{defn}[Double Category of Finite Dimensional Vector Spaces]
@@ -3214,31 +3039,6 @@ spaces and is denoted $\FFVect_{\K}$.
 We finally note that if the choice of matrix representations poses foundational
 problems, we can easily switch to the skeleton of $\FVect_{\K}$ consisting of
 the spaces $\K^n$ for all $n \in \N$.
-
-%\begin{enmrt}
-%
-%\li The object category is easily seen to be a monoidal category -- it is the
-%monoidal category generated by a single object $A$ in a monoidal category (of
-%vector spaces) and associators and unitors between its monoidal products.
-%
-%The morphism category consists of linear maps of the form:
-%\[
-%  a : A^{\tensor n} \to A^{\tensor m} \text{ and }
-%  b : A^{\tensor n'} \to A^{\tensor m'}
-%\]
-%with some parenthesizing pattern for each domain or codomain tensor power. The
-%tensor product $a \tensor b$ gives the object function of the monoidal product
-%functor. The pointwise tensor product \ref{eqn:pointwise_tensor} is the morphism
-%function of the monoidal product functor.
-%
-%\li The monoidal unit of the object category is the base field, say $\C$, and
-%the unit horizontal $1$--morphism is also the monoidal unit for horizontal
-%$1$--morphisms:
-%\[
-%  a \tensor 1_{\C} = a = 1_{\C} \tensor a
-%\]
-%\end{enmrt}
-
 
 %\input{./field_theory_2}
 
@@ -3543,7 +3343,7 @@ cylinders of the following form shown before:
 
 Naturally, the object category consists of the sources and targets of the
 horizontal $1$--morphisms and transport isomorphisms between them that are also
-connection isomorphisms -- similar to the monoidal double category $\TG(M)$ of
+connection isomorphisms --- similar to the monoidal double category $\TG(M)$ of
 transport graphs in a manifold $M$ defined in subsection
 \ref{subsec:sing_man_tqft}. The morphism category consists of the horizontal
 $1$--morphisms along with transport isomorphisms that are also connection
@@ -3675,7 +3475,7 @@ and computing in the next subsection.
 Take $A$ to be the complex matrix algebra $\M_2(\C)$ of $2 \times 2$ complex
 matrices with the usual multiplication. Let
 $\mathcal{U} = \set{u_1, \dots, u_n}$ be a set
-of single qubit quantum gates -- unitary matrices -- in $\M_2(\C)$ such that
+of single qubit quantum gates --- unitary matrices --- in $\M_2(\C)$ such that
 each $u_k$ is accessible from $\DThick$. Let the thick tangle with a bundle,
 a connection and an admissible transport graph that realizes the accessibility
 of the $u_k$ be $M_k$, for each $k \in \set{1, \dots, n}$.
@@ -3707,7 +3507,7 @@ the following transport graph in the pair-of-pants:
 \midarrow{s2}{t}
 \end{tikzpicture}\]
 where each edge is geometrically realized as a constant path on a single point
--- shown as a blue dot -- in the pair-of-pants. This graph is admissible and
+-- shown as a blue dot --- in the pair-of-pants. This graph is admissible and
 provides a binary operation on thick tangles with target $I$ in the obvious way.
 We denote this operation as $\wedge$. It is then easy to see that
 \[
@@ -3743,7 +3543,7 @@ in the language of parallel transport calculi, we need a notion of addition for
 cobordisms. We will return to this idea in the next subsection. For now, we
 observe another approach to quantum computing using parallel transport calculi.
 
-We now take the fibres of our bundles to be $\C^2$ -- the space where a single
+We now take the fibres of our bundles to be $\C^2$ --- the space where a single
 qubit lives (recall \ref{rmk:any_vect_space}).
 We view our previous collection of quantum gates
 $g_{i, j} \in \M_2(\C)$ as a collection of linear maps
@@ -3843,7 +3643,7 @@ to name these shapes as follows.
 \begin{defn}
 For thick tangles $M, N, S_0, T_0, S_1, T_1$ as above, $M + N$ is called a
 multitangle $S_1 \to T_1$. In particular, we take the empty manifold to be
-the empty sum -- a multitangle between any pair of objects in $\DThick$.
+the empty sum --- a multitangle between any pair of objects in $\DThick$.
 \end{defn}
 
 \begin{rmk}
@@ -3865,7 +3665,7 @@ double category:
 \li Object category: same as $\TG\br{\CConn^V_{\DThick}}$
 \li Morphism category: objects are sums of objects in
 $\TG\br{\CConn^V_{\DThick}}$, including the empty sum, and morphisms are
-piecewise isomorphisms -- that is, they are tuples of $2$--morphisms in
+piecewise isomorphisms --- that is, they are tuples of $2$--morphisms in
 $\TG\br{\CConn^V_{\DThick}}$, one for each summand
 \end{enmrt}
 
@@ -3973,7 +3773,7 @@ In pictures:
 \end{tikzpicture}\]
 If, in addition, $M_1 = Y \times I$, then we easily see that there is a
 piecewise isomorphism $(N_1 + N_2) * M_1 \to N_1 + N_2$. It also easy to see for
-arbitrarily many $N_1, \dots, N_n$ -- that is, horizontal
+arbitrarily many $N_1, \dots, N_n$ --- that is, horizontal
 composition is right unital up to isomorphism. Left unitality is similar --
 consider $N_1 * (M_1 + M_2)$ and take $N_1 = Y \times I$. We should note that
 the addition of (multi-)cobordisms does not have immediate inverses but it is
@@ -3988,7 +3788,7 @@ $I^{\amalg m'}$, we define
 \]
 Without strictly verifying (or even defining) axioms further, we propose that
 multitangles form a structure akin to an additive double category with
-monoidal structure (given by disjoint union) -- in some loose sense, at the very
+monoidal structure (given by disjoint union) --- in some loose sense, at the very
 least. We invite the reader to formulate this notion of double category with
 fully defined axioms to make our structure fit the definition.
 
@@ -4212,7 +4012,7 @@ $\circ_{\set{2, 3}}$.
 In this example, we also considered coloured vertices and hence what we really
 require is a coloured variant of PROPs, in the same spirit of introducing
 colours to ordinary operads. Gluing different coloured
-vertices requires some intermediary -- say, an arrow from green to blue -- but
+vertices requires some intermediary --- say, an arrow from green to blue --- but
 the choice of this intermediary is not unique. Hence, it is easier to
 require gluing of vertices of the same colour only.
 \end{exm}
@@ -4314,7 +4114,7 @@ Finally, one may ask how the constructions in this paper might be realized in a 
 %\printbibliography
 
 \bibliography{TQFT_QC}{}
-\bibliographystyle{plain}
+\bibliographystyle{acm}
 
 \end{document}
 
