@@ -656,8 +656,8 @@ product. By $s \tensor dr$, what we really mean is the map:
 \end{equation}
 
 We will now see that isomorphisms of vector bundles have an action on the
-connections on these bundles, leading to a notion of morphism for connections --
-a first step in developing a double category of
+connections on these bundles, leading to a notion of morphism for connections
+--- a first step in developing a double category of
 ``parallel transport machinery''.
 
 % \input{./connections_1}
@@ -665,9 +665,9 @@ a first step in developing a double category of
 \subsection{Gauge Transformations}
 
 Suppose we have $\pi_E : E \to M$ and $\nabla$ as before as well as another
-bundle $\pi_{E'} : E \to M$ with a bundle isomorphism $f = (u, v) : E \to E'$ --
-a pair of maps $u : M \to M'$ and $v : E \to E'$ with $v$ linear on each fibre
-of $E$, making the following diagram commute:
+bundle $\pi_{E'} : E' \to M$ with a bundle isomorphism $f = (u, v) : E \to E'$
+--- a pair of maps $u : M \to M'$ and $v : E \to E'$ with $v$ linear on each
+fibre of $E$, making the following diagram commute:
 \[\begin{tikzcd}
 E \ar[d, "\pi_E" left] \ar[r, "v" above] & E' \ar[d, "\pi_{E'}" right]\\
 M \ar[r, "u" below] & M'
@@ -2464,10 +2464,10 @@ $u$ to $v$ we write $\gamma_{u, v}$ to denote the path associated to that edge.
 \begin{rmk}
 A geometric graph is essentially a collection of paths in a manifold but we
 consider one or more copies of each path and ``identify'' their end-points in a
-pattern encoded by a graph, even though these paths need not share end-points --
-that is, we do not strictly require $\gamma_{u, v}(1) = \gamma_{v, w}(0)$. We
-will see that this relaxation is essential to defining our notion of TQFTs. We
-will ultimately be interested in expression graphs in manifolds, which will
+pattern encoded by a graph, even though these paths need not share end-points
+--- that is, we do not strictly require $\gamma_{u, v}(1) = \gamma_{v, w}(0)$.
+We will see that this relaxation is essential to defining our notion of TQFTs.
+We will ultimately be interested in expression graphs in manifolds, which will
 provide us with a way to associate linear maps to manifolds.
 \end{rmk}
 
@@ -2665,7 +2665,8 @@ of $\varnothing$
 
 \begin{defn}[Expression Construction]
 The expression of a pretransport graph $G$ is obtained by running the expression
-construction on $G$ by forgetting colours and then identifying green vertices
+construction on $G$, copying colours whenever vertices are copied,
+and then identifying green vertices
 with the empty manifold in the resulting cobordism in $\Cob_2$, adding caps and
 cups where appropriate.
 \end{defn}
@@ -2947,7 +2948,7 @@ composable pairs of linear maps. We consider the pointwise composites:
     i \in \set{1, 2}
 \end{equation}
 Now, the $\beta_i \circ \alpha_i$ are clearly paths
-$b \circ a \To b' \circ a'$ in $\s{B}$-- we wish to show that
+$b \circ a \To b' \circ a'$ in $\s{B}$ --- we wish to show that
 they are homotopic, making the operation well-defined on homomotopy classes of
 paths. It suffices to observe that $\s{B}$ is simply connected, so that there is
 exactly one class of homotopic paths between two points in $\Pi_1(\s{B})$.
@@ -3773,7 +3774,7 @@ In pictures:
 If, in addition, $M_1 = Y \times I$, then we easily see that there is a
 piecewise isomorphism $(N_1 + N_2) * M_1 \to N_1 + N_2$. It also easy to see for
 arbitrarily many $N_1, \dots, N_n$ --- that is, horizontal
-composition is right unital up to isomorphism. Left unitality is similar --
+composition is right unital up to isomorphism. Left unitality is similar ---
 consider $N_1 * (M_1 + M_2)$ and take $N_1 = Y \times I$. We should note that
 the addition of (multi-)cobordisms does not have immediate inverses but it is
 commutative up to piecewise isomorphism. Hence, the morphism category of
@@ -3807,7 +3808,7 @@ so far as $\TG^+(\CConn^V_{\DThick})$.
 Given a parallel transport calculus as defined so far, we can extend the domain of
 $F$ to the structure $\TG^+\br{\CConn^V_{\DThick}}$ in an obvious way to obtain
 a ``functor'' $F^+$ as follows. $F^+$ is identical to $F$ on the object category
--- there are no issues here since the object category was not modified in
+--- there are no issues here since the object category was not modified in
 constructing $\TG^+\br{\CConn^V_{\DThick}}$. A horizontal $1$--morphism in this
 ``double category'', however, is of the form
 \[
@@ -4034,7 +4035,7 @@ Note, in particular, the similarity with cyclic operads
 \cite{ModOp}. Recall that a cyclic operad $P$ is roughly an operad with the
 action of the symmetric group $S_n$ on $P(n)$ replaced by an action of
 $S_{n + 1}$. This effectively conflates the ``inputs'' and ``outputs'' of an
-operad ``element''. Here, however, we take a different approach --
+operad ``element''. Here, however, we take a different approach ---
 simply allow multiple inputs and multiple outputs. The other difference is that
 a PROP should not require symmetry in a monoidal category for our
 categories of thick tangles and transport graphs are not equipped with symmetry.
